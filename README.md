@@ -1,1 +1,0 @@
-# cosmicforge-frontend
