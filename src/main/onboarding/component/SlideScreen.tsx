@@ -40,17 +40,17 @@ const  SlideScreen: React.FC<ComponentProps> =  ( { banner } ) =>{
                 <span className='text-white font-extrabold font-stretch-expanded md:text-[18px] text-[16px]'>{banner[currentSlide].paragraph}</span>
                 <div className='flex flex-row w-full justify-center gap-3 items-center border-1 border-red-500'>
                     { ( currentSlide <= 2 ) && ( 
-                        <Link className='w-[22%] flex flex-col justify-center items-center rounded-[3px] hover:text-[#272EA7] h-[40px] bg-transparent text-white font-bold text-[17px]' to={'/onboard'}>
+                        <Link className='w-[22%] hover:scale-[105%] flex flex-col justify-center items-center rounded-[3px] hover:text-[#272EA7] h-[40px] bg-transparent text-white font-bold text-[17px]' to={'/onboard'}>
                             Skip
                         </Link>
                     )}
 
                     { currentSlide === 3 ? (
-                        <Link className='md:w-[22%] flex flex-col justify-center items-center  w-[50%] hover:bg-[#272EA7]/80 rounded-[3px] h-[40px] bg-[#272EA7] text-white font-bold text-[17px]' to={'/onboard'}>
+                        <Link className='md:w-[22%] hover:scale-[105%] flex flex-col justify-center items-center  w-[50%] hover:bg-[#272EA7]/80 rounded-[3px] h-[40px] bg-[#272EA7] text-white font-bold text-[17px]' to={'/onboard'}>
                            Get Started
                         </Link>
                     ):(
-                        <button onClick={nextSlide} className='md:w-[22%] w-[50%] hover:bg-[#272EA7]/80 rounded-[3px] h-[40px] bg-[#272EA7] text-white font-bold text-[17px]'>
+                        <button onClick={nextSlide} className='md:w-[22%] hover:scale-[105%] w-[50%] hover:bg-[#272EA7]/80 rounded-[3px] h-[40px] bg-[#272EA7] text-white font-bold text-[17px]'>
                             Next
                         </button>
                     )}
