@@ -10,7 +10,7 @@ const SplashScreen: React.FC = () => {
                     <img src={logo} alt="logo" width={'100%'} height={'100%'} style={{objectFit:'cover'}}/>
                 </div>
                 <Loader/>
-                <span className="text-[#272EA7] md:mb-0 font-extrabold text-[18px] text-center ">Cosmicforge Healthnet Limited</span>
+                <span className="text-[#272EA7] md:mb-0 mb-[50px] font-extrabold text-[18px] text-center ">Cosmicforge Healthnet Limited</span>
             </div>
         </div>
     )
