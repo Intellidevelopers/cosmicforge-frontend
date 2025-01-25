@@ -1,5 +1,6 @@
 import React from "react";
-import logo from '../../../assets/icons/cosmic forge logo 1.svg'
+import logo from '../../../assets/icons/cosmic forge logo 1.svg';
+import Loader from "../../../assets/Loader";
 
 const SplashScreen: React.FC = () => {
     return (
@@ -8,7 +9,7 @@ const SplashScreen: React.FC = () => {
                 <div className="md:w-[400px] md:h-[100px] w-[80%] h-[100px]">
                     <img src={logo} alt="logo" width={'100%'} height={'100%'} style={{objectFit:'cover'}}/>
                 </div>
-                <div className="border-[5px] border-white rounded-full w-[40px] h-[40px]"></div>
+                <Loader/>
                 <span className="text-[#272EA7] md:mb-0 mb-[80px] font-extrabold text-[20px] text-center ">Cosmicforge Healthnet Limited</span>
             </div>
         </div>
