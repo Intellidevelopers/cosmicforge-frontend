@@ -12,9 +12,9 @@ const Onboard:React.FC = () => {
             <div className="md:h-[100%] md:w-[100%] h-[40%] w-[100%]">
                 <img src={OnboardImage} className="h-[100%] w-[100%" alt="welcome image"/>
             </div>
-            <div className="md:bg-gradient-to-b  text-center pb-[100px] flex flex-col md:justify-top justify-around items-center fixed bottom-0 md:h-[58%] h-[65%] md:rounded-t-0 rounded-t-[20px] w-screen md:backdrop-blur-[5px] md:bg-none bg-white from-transparent to-[#272EA7]/60">
+            <div className="md:bg-gradient-to-b  text-center pb-[50px] flex flex-col md:justify-top justify-around items-center fixed bottom-0 md:h-[58%] h-[65%] md:rounded-t-0 rounded-t-[20px] w-screen md:backdrop-blur-[5px] md:bg-none bg-white from-transparent to-[#272EA7]/60">
                 <div className="flex flex-col items-center gap-[15px]">
-                    <div className="h-[70px] w-fit">
+                    <div className="md:h-[70px] h-[45px] w-fit">
                         <img src={logo} alt="cosmicforge logo" className="h-[100%] w-[100%]"/>
                     </div> 
                     <span className="md:text-white text-[18px] font-extrabold text-[#272EA7]">Cosmicforge Healthnet Limited</span>
