@@ -33,35 +33,37 @@ const RolePage:React.FC = () => {
 
     return (
         <div className="bg-gray-100 w-screen h-screen flex flex-col justify-center items-center">
-            <Link className="flex flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit" to={'/'}>
+            <Link className="md:flex hidden flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit" to={'/'}>
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="20" deskSize="30"/>
                 <span>Go back</span>
             </Link>
-            <div className="md:w-[80%] text-center flex flex-col gap-[5px] px-[15%] w-[95%]">
-                <span className="text-[23px] font-extrabold">Select Account Type</span>
-                <span>By selecting your account type, you have automatically set your user role</span>
-                <div className="h-[350px] w-[100%] flex flex-row justify-between items-center">
-                    <button onClick={handleDoctorButton} className={`${isDoctorSelected?'border-[2px] border-[#272EA7] ':''}h-[300px] w-[45%] hover:scale-[105%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
-                        <div className="h-[220px] w-[60%]">
-                            <img src={doctorImage} className="h-[100%] w-[100%]" alt='doctor role'/>
-                        </div>
-                        <span className="font-bold text-[16px] mb-[10px]">Doctor/ Specialist</span>
-                    </button>
-                    <button onClick={handlePatientButton} className={`${isPatientSelected?'border-[2px] border-[#272EA7] ':''}h-[300px] w-[45%] hover:scale-[105%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
-                        <div className="h-[220px] w-[70%]">
-                            <img src={patientImage} className="h-[100%] w-[100%]" alt='doctor role'/>
-                        </div>
-                        <span className="font-bold text-[16px] mb-[10px]">Patient</span>
-                    </button>
-                    
+            <div className="md:w-[80%] md:h-fit h-screen md:text-center text-left flex flex-col md:pb-0 pb-[10%] justify-between md:justify-around md:pt-0 pt-[30px]  gap-[5px] md:px-[15%] px-[3%] w-[100%]">
+                <div className="flex flex-col">
+                    <span className="text-[23px] font-extrabold">Select Account Type</span>
+                    <span>By selecting your account type, you have automatically set your user role</span>
+                    <div className="h-[350px] w-[100%] flex flex-row justify-between items-center">
+                        <button onClick={handleDoctorButton} className={`${isDoctorSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[45%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
+                            <div className="md:h-[220px] h-[180px] w-[60%]">
+                                <img src={doctorImage} className="h-[100%] w-[100%]" alt='doctor role'/>
+                            </div>
+                            <span className="font-bold text-[16px] mb-[10px]">Doctor/ Specialist</span>
+                        </button>
+                        <button onClick={handlePatientButton} className={`${isPatientSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[45%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
+                            <div className="md:h-[220px] h-[180px] md:w-[70%] w-[80%]">
+                                <img src={patientImage} className="h-[100%] w-[100%]" alt='doctor role'/>
+                            </div>
+                            <span className="font-bold text-[16px] mb-[10px]">Patient</span>
+                        </button>
+                        
+                    </div>
                 </div>
                 { !(isDoctorSelected || isPatientSelected) ? (
                     <div className={`h-[48px] w-[100%] bg-[#272EA7]/70 text-white font-bold flex flex-row justify-center items-center rounded-[5px]`} >
-                        Sign Up
+                        continue
                     </div>
                 ): (
                     <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/onboard'}>
-                        Sign Up
+                        Continue
                     </Link> 
                 )}
               
