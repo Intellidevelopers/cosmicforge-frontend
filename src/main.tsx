@@ -5,6 +5,7 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LandingPage from './main/onboarding/pages/LandingPage'
 import Onboard from './main/onboarding/pages/Onboarding'
+import RolePage from './main/onboarding/pages/RolePage'
 
 
 
@@ -17,11 +18,13 @@ const router = createBrowserRouter([
   {
     path:'/onboard',
    element:<Onboard/>
- }
- 
- 
-
+  },
+  {
+    path:'/selectRole',
+    element:<RolePage/>
+  }
 ])
+
 
 
 
