@@ -15,7 +15,10 @@ export default {
         'poppins':['Poppins','sans-serif']
       },
       animation:{
-        'rotate-and-more':'spin 2s linear infinite'
+        'rotate-and-more':'spin 2s linear infinite',
+        'flip':'flipcard 1s linear ',
+        'front':'frontCard',
+        'backCard':'backCard'
       },
       keyframes:{
         spin:{
@@ -28,6 +31,29 @@ export default {
           transform:'rotate(360%)',
           opacity:'0'
         }
+        },
+        flipcard:{
+        
+        '100%':{
+          transform:'rotateY(180deg)',
+       
+        }
+        },
+        frontCard:{
+         
+            '100%':{
+  'background-color':'#f0f0f0',
+  transform:'rotateY(180deg)'
+            }
+             
+          
+        },
+        backCard:{
+          '100%':{
+'background-color':'#ccc',
+transform:'rotateY(180deg)'
+          }
+           
         }
       }
     },
@@ -39,7 +65,11 @@ export default {
       'splash-page-color-one':'rgba(39, 46, 167, 0.5)',
       'splash-page-color-two':'rgba(39, 46, 167, 0.1)',
       'splash-page-color-three':'rgba(39, 46, 167, 0)',
-      'cosmic-primary-color':'rgba(39, 46, 167, 1)'
+      'cosmic-primary-color':'rgba(39, 46, 167, 1)',
+      'home-slidder-color':'rgba(254, 254, 254, 1)',
+      'cosmic-color-lightBlue':'rgba(39, 46, 167, 1)',
+      'cosmic-color-nav-active':'rgba(39, 46, 167, 0.4)',
+      'cosmic-color-warning-color':'rgba(168, 23, 23, 1)'
     }
   },
   plugins: [],
