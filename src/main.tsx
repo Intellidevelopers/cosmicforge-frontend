@@ -4,10 +4,13 @@ import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LandingPage from './main/onboarding/pages/LandingPage'
-import Onboard from './main/onboarding/pages/Onboarding'
+
 import HomeMainPage from './main/home/pages/HomeMainPage'
 import HomePage from './main/home/pages/HomePage'
 
+import SignUpMain from './main/auth/signup/pages/SignUpMain'
+import RolePage from './main/onboarding/pages/RolePage';
+import SignUp1 from './main/auth/signup/pages/SignUp1'
 
 
 
@@ -17,10 +20,6 @@ const router = createBrowserRouter([
      path:'/',
     element:<LandingPage/>
   },
-  {
-    path:'/onboard',
-   element:<Onboard/>
- },
  {
   path:'/',
   element:<HomeMainPage/>,
@@ -30,12 +29,21 @@ const router = createBrowserRouter([
       element:<HomePage/>
     }
   ]
- }
-
-
- 
-
+ },
+{
+    path:'/selectRole',
+    element:<RolePage/>
+  },
+  {
+    path:'/signup',
+   element:<SignUpMain/>
+  },
+  {
+    path:'/signup/verifyEmail',
+   element:<SignUp1/>
+  },
 ])
+
 
 
 

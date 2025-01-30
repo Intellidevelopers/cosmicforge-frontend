@@ -18,7 +18,8 @@ export default {
         'rotate-and-more':'spin 2s linear infinite',
         'flip':'flipcard 1s linear ',
         'front':'frontCard',
-        'backCard':'backCard'
+        'backCard':'backCard',
+        rotate:'spin 0.5s linear infinite'
       },
       keyframes:{
         spin:{
@@ -28,7 +29,7 @@ export default {
 
         },
         '100%':{
-          transform:'rotate(360%)',
+          transform:'rotate(360deg)',
           opacity:'0'
         }
         },
