@@ -38,23 +38,23 @@ const  LandingPage: React.FC =  () =>{
     const [ isImageLoaded, setIsImageLoaded ] = useState(false);
 
     useEffect( () => {
-        setTimeout(() => {
-            setIsImageLoaded(true)
-        }, 5000);
-        // let loadedCount:number = 0;
-        // banner.map( (slide) => {
-        //     const img = new Image;
-        //     img.src = slide.image;
-        //     img.onload = () => {
-        //         loadedCount++;
-        //         if ( loadedCount === banner.length ) {
-        //             setIsImageLoaded(true);
-        //         }
-        //     }
-        //     img.onerror = () => {
-        //         console.log(`error occurred loading frame ${loadedCount+1}`);
-        //     }
-        // })
+        // setTimeout(() => {
+        //     setIsImageLoaded(true)
+        // }, 5000);
+        let loadedCount:number = 0;
+        banner.map( (slide) => {
+            const img = new Image;
+            img.src = slide.image;
+            img.onload = () => {
+                loadedCount++;
+                if ( loadedCount === banner.length ) {
+                    setIsImageLoaded(true);
+                }
+            }
+            img.onerror = () => {
+                console.log(`error occurred loading frame ${loadedCount+1}`);
+            }
+        })
 
     })
 

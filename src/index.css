@@ -86,6 +86,20 @@
   top: 51.52px;
   left: 62.29579px;
 }
+
+.loader {
+  animation: loader 1s ease-in-out linear infinite;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 @keyframes lds-default {
   0%, 20%, 80%, 100% {
     transform: scale(1);

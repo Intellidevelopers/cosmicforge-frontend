@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import IconContainer from "../../containers/IconContainer";
+import IconContainer from "../../generalComponents/IconContainer";
 import backIcon from "../../../assets/icons/Forward.png";
 import doctorImage from "../../../assets/images/doctor-role.png";
 import patientImage from "../../../assets/images/patient-role.png"
@@ -33,7 +33,7 @@ const RolePage:React.FC = () => {
 
     return (
         <div className="bg-gray-100 w-screen h-screen flex flex-col justify-center items-center">
-            <Link className="md:flex hidden flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit" to={'/'}>
+            <Link className="md:flex hidden absolute top-[7%] flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit" to={'/'}>
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="20" deskSize="30"/>
                 <span>Go back</span>
             </Link>
@@ -62,7 +62,7 @@ const RolePage:React.FC = () => {
                         continue
                     </div>
                 ): (
-                    <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/onboard'}>
+                    <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/signup'}>
                         Continue
                     </Link> 
                 )}

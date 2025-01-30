@@ -4,8 +4,9 @@ import './index.css'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import LandingPage from './main/onboarding/pages/LandingPage'
-import Onboard from './main/onboarding/pages/Onboarding'
-import RolePage from './main/onboarding/pages/RolePage'
+import SignUpMain from './main/auth/signup/pages/SignUpMain'
+import RolePage from './main/onboarding/pages/RolePage';
+import SignUp1 from './main/auth/signup/pages/SignUp1'
 
 
 
@@ -16,13 +17,17 @@ const router = createBrowserRouter([
     element:<LandingPage/>
   },
   {
-    path:'/onboard',
-   element:<Onboard/>
-  },
-  {
     path:'/selectRole',
     element:<RolePage/>
-  }
+  },
+  {
+    path:'/signup',
+   element:<SignUpMain/>
+  },
+  {
+    path:'/signup/verifyEmail',
+   element:<SignUp1/>
+  },
 ])
 
 

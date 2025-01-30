@@ -1,12 +1,12 @@
 import React from "react";
-import OnboardImage from '../../../assets/images/introframe.jpeg';
-import logo from '../../../assets/icons/cosmic forge logo 1.svg';
-import fbIcon from '../../../assets/icons/fb.svg';
-import ggIcon from '../../../assets/icons/google.svg';
-import appleIcon from '../../../assets/icons/apple.svg';
+import OnboardImage from '../../../../assets/images/introframe.jpeg';
+import logo from '../../../../assets/icons/cosmic forge logo 1.svg';
+import fbIcon from '../../../../assets/icons/fb.svg';
+import ggIcon from '../../../../assets/icons/google.svg';
+import appleIcon from '../../../../assets/icons/apple.svg';
 import { Link } from "react-router-dom";
 
-const Onboard:React.FC = () => {
+const SignUpMain:React.FC = () => {
     return (
         <div className="h-screen w-screen ">
             <div className="md:h-[100%] md:w-[100%] h-[36%] w-[100%]">
@@ -20,7 +20,7 @@ const Onboard:React.FC = () => {
                     <span className="md:text-white text-[18px] font-extrabold text-[#272EA7]">Cosmicforge Healthnet Limited</span>
                 </div>
                 <div className="flex flex-col gap-[20px] w-[100%] items-center mt-[20px]">
-                    <Link  className="md:h-[40px] h-[45px] flex flex-col justify-center items-center font-extrabold rounded-[4px] md:w-[300px] w-[80%] bg-[#272EA7] text-white hover:bg-[#272EA7]/70 hover:scale-[105%]" to={'/account/signup'}>Sign Up with your Email address</Link>
+                    <Link  className="md:h-[40px] h-[45px] flex flex-col justify-center items-center font-extrabold rounded-[4px] md:w-[300px] w-[80%] bg-[#272EA7] text-white hover:bg-[#272EA7]/70 hover:scale-[105%]" to={'/signup/verifyEmail'}>Sign Up with your Email address</Link>
                     <div className="flex flex-row gap-[20px] w-[100%] justify-center items-center">
                         <button className="md:h-[35px] w-[45px] h-[45px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                             <img src={fbIcon} alt="fb icon" className="h-[70%] w-[70%]"/>
@@ -48,4 +48,4 @@ const Onboard:React.FC = () => {
     )
 }
 
-export default Onboard;
+export default SignUpMain;

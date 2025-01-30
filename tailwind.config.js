@@ -15,7 +15,7 @@ export default {
         'poppins':['Poppins','sans-serif']
       },
       animation:{
-        'rotate-and-more':'spin 2s linear infinite'
+        rotate:'spin 0.5s linear infinite'
       },
       keyframes:{
         spin:{
@@ -25,7 +25,7 @@ export default {
 
         },
         '100%':{
-          transform:'rotate(360%)',
+          transform:'rotate(360deg)',
           opacity:'0'
         }
         }
