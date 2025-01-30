@@ -11,6 +11,12 @@ const RolePage:React.FC = () => {
     const [ isDoctorSelected, setIsDoctorSelected ] = useState(false);
     const [ isPatientSelected, setIsPatientSelected ] = useState(false);
 
+    const saveRole = () => {
+        //place the logic to save role in local storage here
+        console.log(accountRole)
+    }
+    
+
     function handlePatientButton() {
         if (!isPatientSelected) {
             setAccountRole('patient');
@@ -19,6 +25,7 @@ const RolePage:React.FC = () => {
             setAccountRole('none');
         }
         setIsPatientSelected(!isPatientSelected);
+        saveRole();
     }
 
     function handleDoctorButton() {
@@ -29,6 +36,7 @@ const RolePage:React.FC = () => {
             setAccountRole('none');
         }
         setIsDoctorSelected(!isDoctorSelected);
+        saveRole();
     }
 
     return (
