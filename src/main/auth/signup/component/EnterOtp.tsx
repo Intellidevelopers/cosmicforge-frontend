@@ -4,18 +4,30 @@ import { Link } from "react-router-dom";
 import backIcon from "../../../../assets/icons/Forward.png";
 import IconContainer from "../../../generalComponents/IconContainer";
 import cosmicLogo from '../../../../assets/icons/cosmic forge logo 1.svg';
-import fbIcon from '../../../../assets/icons/fb.svg';
-import ggIcon from '../../../../assets/icons/google.svg';
-import appleIcon from '../../../../assets/icons/apple.svg';
 
 interface components {
     step: number,
-    otp: string,
-    setOtp: (e:number)=>void,
     setStep: (e:number)=>void,
 }
 
-const EnterOtp:React.FC<components> = ( { step, setStep, otp, setOtp } ) => {
+const EnterOtp:React.FC<components> = ( { step, setStep } ) => {
+    const [ box1, setBox1 ] = useState<string>('');
+    const [ box2, setBox2 ] = useState<string>('');
+    const [ box3, setBox3 ] = useState<string>('');
+    const [ box4, setBox4 ] = useState<string>('');
+    const [ box5, setBox5 ] = useState<string>('');
+    const [ box6, setBox6 ] = useState<string>('');
+    const [ otp, setOtp ] = useState<string>('');
+
+    const confirmOtp = () => {
+        // place api logic to confirm otp here
+        console.log(otp);
+    }
+
+    const handleOtpInput = (str:string) => {
+        setOtp(str);
+    }
+
 
     const goBack = () => {
         setStep(step-1);
@@ -39,19 +51,19 @@ const EnterOtp:React.FC<components> = ( { step, setStep, otp, setOtp } ) => {
                     </div>
         
                     <div className="flex flex-row gap-2 w-[100%] md:mt-[10px] mt-[20px] justify-center items-center">
-                        <input className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        <input value={box1} onChange={(e)=>{ setBox1(e.target.value); handleOtpInput(`${e.target.value}${box2}${box3}${box4}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        <input value={box2} onChange={(e)=>{ setBox2(e.target.value); handleOtpInput(`${box1}${e.target.value}${box3}${box4}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        <input value={box3} onChange={(e)=>{ setBox3(e.target.value); handleOtpInput(`${box1}${box2}${e.target.value}${box4}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        <input value={box4} onChange={(e)=>{ setBox4(e.target.value); handleOtpInput(`${box1}${box2}${box3}${e.target.value}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        <input value={box5} onChange={(e)=>{ setBox5(e.target.value); handleOtpInput(`${box1}${box2}${box3}${box4}${e.target.value}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        <input value={box6} onChange={(e)=>{ setBox6(e.target.value); handleOtpInput(`${box1}${box2}${box3}${box4}${box5}${e.target.value}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
                     </div>
                     {/* <span className="text-red-500">Invalid OTP code please try again</span> USE THIS TO HANDLE EXCEPTIONS TO THE UI*/}
                     <span className="text-left mt-[10px]">Did&apos;t receive the code?</span>
                     <button className="text-[#272EA7] hover:text-[#272EA7]/70 font-bold text-[18px] w-fit">Resend Code</button>
                 </div>
                 <div className="w-[100%]">
-                    <button className="h-[48px] w-[100%] md:mt-[120px] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]">
+                    <button onClick={confirmOtp} className="h-[48px] w-[100%] md:mt-[120px] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]">
                         Continue
                     </button> 
                     <div className="md:hidden flex flex-col w-[100%] text-center">
