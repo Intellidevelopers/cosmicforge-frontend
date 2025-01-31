@@ -11,6 +11,7 @@ import HomePage from './main/home/pages/HomePage'
 import SignUpMain from './main/auth/signup/pages/SignUpMain'
 import RolePage from './main/onboarding/pages/RolePage';
 import SignUp1 from './main/auth/signup/pages/SignUp1'
+import FindASpecialist from './main/home/pages/FindASpecialist'
 
 
 
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
      path:'/',
     element:<LandingPage/>
   },
+  
  {
   path:'/',
   element:<HomeMainPage/>,
@@ -27,9 +29,14 @@ const router = createBrowserRouter([
     {
       path:'home',
       element:<HomePage/>
+    },
+    {
+      path:'find-a-specialist',
+      element:<FindASpecialist/>
     }
   ]
  },
+
 {
     path:'/selectRole',
     element:<RolePage/>

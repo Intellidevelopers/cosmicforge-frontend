@@ -19,8 +19,7 @@ const WellnessProductCard = ( {
 
 
     return (
-        <div className="m-2 bg-white  min-w-[300px] h-[320px] flex justify-center p-4 ">
-               
+        <div  className="m-2 bg-white  min-w-[300px] h-[320px] flex justify-center p-4 ">
         <div className="relative">
          <img className="min-h-[180px] max-h-[180px]"  src={productImage ?? '/'} />
          <div className="mt-1">
@@ -37,7 +36,7 @@ const WellnessProductCard = ( {
        </div>
         </div>
 
-     </div> 
+     </div>
     )
 }
 export default  WellnessProductCard

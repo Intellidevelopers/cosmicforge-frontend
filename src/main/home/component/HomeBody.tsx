@@ -30,9 +30,11 @@ import arrowIcon from "../../../assets/icons/cosmic-arrow.svg";
 import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProductCard";
 
 import tempProductImage from '../../../assets/images/cosmic-wellness-product-temp.svg'
+import  { useRef } from "react";
+import useSetScrollbar from "../hook/useSetUpScrollbar";
 
 const HomeBody = () => {
-  const specialCards: SpecialistCardProps[] = [
+ const specialCards: SpecialistCardProps[] = [
     {
       title: "General Medicine",
       icon: genMedIcon
@@ -182,9 +184,16 @@ const wellnessProducts:WellnessProductCardProps[] = [
     
   }
 ]
+
+
+const wellnessScrollContainerRef = useRef(null)
+
+
+
+const {scrollWellnessProductCardRight,scrollWellnessProductCardLeft} = useSetScrollbar()
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col">
-      <HomeNavBar />
+      <HomeNavBar title="Home"  />
       <div className=" md:ps-[294px]   ">
         <div className="w-full flex flex-wrap p-10 justify-center gap-5">
           <img
@@ -223,11 +232,15 @@ const wellnessProducts:WellnessProductCardProps[] = [
                 <p className="font-bold min-w-fit">Wellness Product</p>
                 <p className="font-extralight min-w-fit text-cosmic-color-lightBlue">see more</p>
                 <div className="w-[74%] m-2 relative flex justify-end place-content-center gap-5">
-                    <img src={arrowIcon} alt="scroll left"/>
-                    <img src={arrowIcon} className="rotate-[-180deg]" alt="scroll left"/>
+                    <img src={arrowIcon} alt="scroll left" onClick={()=>{
+                      scrollWellnessProductCardRight(wellnessScrollContainerRef)
+                    }}/>
+                    <img src={arrowIcon} className="rotate-[-180deg]" alt="scroll left" onClick={()=>{
+                      scrollWellnessProductCardLeft(wellnessScrollContainerRef)
+                    }}/>
                 </div>
             </div>
-            <div className="cursor-default font-medium  space-x-3  w-[92%] inline-flex  overflow-x-auto" style={{scrollbarWidth:'none'}}>
+            <div ref={wellnessScrollContainerRef} className="cursor-default font-medium  space-x-3  w-[92%] inline-flex  overflow-x-auto" style={{scrollbarWidth:'none'}}>
             
             {
                

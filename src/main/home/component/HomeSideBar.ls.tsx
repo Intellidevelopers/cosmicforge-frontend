@@ -8,10 +8,11 @@ import analyticsIcon from "../../../assets/icons/home/cosmic-home-analytics.svg"
 import firstAidIcon from "../../../assets/icons/cosmic-profile.svg";
 import logOutIcon from "../../../assets/icons/cosmic-logout.svg";
 import useGetActiveRoute from "../hook/useGetActiveRoute";
+import { useNavigate } from "react-router-dom";
 
 const HomeSideBar = () => {
   const {activeRoutePath,setActiveRoutePath} = useGetActiveRoute()
-
+const navigate = useNavigate()
   
   return (
     <div className="  w-[294px] h-full bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-50 hidden md:flex cursor-default">
@@ -39,7 +40,8 @@ const HomeSideBar = () => {
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
-            }}>
+              navigate('/home')
+            }}   >
               <img alt="home" src={homeIcon} />
               <p className="">Home</p>
             </div>
@@ -165,6 +167,7 @@ const HomeSideBar = () => {
                 isFindASpecialistActive:true,
                 isCalenderActive:false
               })
+              navigate('find-a-specialist')
             }}>
               <img alt="home" src={calenderIcon} />
               <p>Find A Specialist</p>

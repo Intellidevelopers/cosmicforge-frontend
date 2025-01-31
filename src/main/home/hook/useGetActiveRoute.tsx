@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export enum ActiveRoutePath {
@@ -28,6 +28,8 @@ const useGetActiveRoute = () => {
   const routePath = useLocation();
   const path = routePath.pathname.split("/")[1];
 
+     
+
   const [activeRoutePath, setActiveRoutePath] = useState<
     ActiveRoutePathProps
   >(() => {
@@ -47,6 +49,20 @@ const useGetActiveRoute = () => {
         };
       }
 
+      case ActiveRoutePath["find-a-specialist"]: {
+        return {
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:true,
+          isCalenderActive:false
+        };
+      }
+
       default:  return {
         isHomeActive: true,
         isRunDiagnosisActive:false,
@@ -60,6 +76,61 @@ const useGetActiveRoute = () => {
       }
     }
   });
+
+  useEffect(()=>{
+    const path = routePath.pathname.split("/")[1];
+    switch (path ) {
+
+      case ActiveRoutePath.home: {
+        setActiveRoutePath( prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: true,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false
+        }})
+        return
+      }
+
+      case ActiveRoutePath["find-a-specialist"]: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:true,
+          isCalenderActive:false
+        }})
+        return 
+      }
+
+      default: setActiveRoutePath(prevState=> {
+      return {   ...prevState,
+        isHomeActive: true,
+        isRunDiagnosisActive:false,
+        isMessageActive: false,
+        isBookAppoinmentActive:false,
+        isAnalyticsActive: false,
+        isFirstAidActive: false,
+        isChatBotActive: false,
+        isFindASpecialistActive:false,
+        isCalenderActive:false
+
+      }
+      })  
+    }
+  },[routePath])
 
   return {activeRoutePath,setActiveRoutePath}
 };

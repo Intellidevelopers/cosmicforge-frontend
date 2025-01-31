@@ -6,15 +6,17 @@ import cartIcon from '../../../assets/icons/home/cosmic-home-cart.svg'
 import botChatIcon from '../../../assets/icons/home/cosmic-home-bot-chat.svg'
 import notificationIcon from '../../../assets/icons/home/cosmic-home-notification.svg'
 
+  interface NavBarProps {
+    title:string
+  }
 
-
-const HomeNavBar = () => {
+const HomeNavBar = ({title}:NavBarProps) => {
 
     return  (
 
         <div className="md:ms-[294px] bg-white w-full h-fit  p-5  sticky top-0  shadow-md shadow-black z-[200px]">
           <div className="md:w-[85%]  w-full flex  flex-wrap relative   ">
-            <p className="font-extrabold p-1">Home</p>
+            <p className="font-extrabold p-1">{title ?? 'Home'}</p>
             <div className=" absolute left-[20%]   flex flex-wrap justify-end  place-items-center gap-2 "> 
 
             <div className="font-extralight border p-[3px] md:w-[300px] rounded-md flex ">
