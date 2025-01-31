@@ -27,8 +27,8 @@ import pulmoIcon from "../../../assets/images/cosmic-specialist-pulmonology.svg"
 import genoIcon from "../../../assets/images/cosmic-specialist-geonomics.svg";
 import hematologyIcon from "../../../assets/images/cosmic-specialist-hematology.svg";
 import arrowIcon from "../../../assets/icons/cosmic-arrow.svg";
-import WellnessProductCard from "./WellnessProductCard";
-
+import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProductCard";
+import tempProductImage from '../../../assets/images/cosmic-wellness-product-temp.svg'
 
 const HomeBody = () => {
   const specialCards: SpecialistCardProps[] = [
@@ -130,7 +130,57 @@ const HomeBody = () => {
       icon: hematologyIcon
     }
   ];
-
+const wellnessProduct:WellnessProductCardProps[ ] = [
+  {
+    productTitle:' Ibuprofen 400mg',
+    productDescription:' 100 tablets',
+    productImage:tempProductImage,
+    productPrice:" N 3,500"
+    
+  },
+  {
+    productTitle:' Ibuprofen 400mg',
+    productDescription:' 100 tablets',
+    productImage:tempProductImage,
+    productPrice:" N 3,500"
+    
+  },
+  {
+    productTitle:' Ibuprofen 400mg',
+    productDescription:' 100 tablets',
+    productImage:tempProductImage,
+    productPrice:" N 3,500"
+    
+  },
+  {
+    productTitle:' Ibuprofen 400mg',
+    productDescription:' 100 tablets',
+    productImage:tempProductImage,
+    productPrice:" N 3,500"
+    
+  },
+  {
+    productTitle:' Ibuprofen 400mg',
+    productDescription:' 100 tablets',
+    productImage:tempProductImage,
+    productPrice:" N 3,500"
+    
+  },
+  {
+    productTitle:' Ibuprofen 400mg',
+    productDescription:' 100 tablets',
+    productImage:tempProductImage,
+    productPrice:" N 3,500"
+    
+  }
+  ,  {
+    productTitle:' Ibuprofen 400mg',
+    productDescription:' 100 tablets',
+    productImage:tempProductImage,
+    productPrice:" N 3,500"
+    
+  }
+]
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col">
       <HomeNavBar />
@@ -179,9 +229,12 @@ const HomeBody = () => {
             <div className="cursor-default font-medium  space-x-3  w-[92%] inline-flex  overflow-x-auto" style={{scrollbarWidth:'none'}}>
             
             {
-                new Array(20).fill({name:'kkdd'}).map((_,index)=>(
-                    <WellnessProductCard key={index}/>
-                ))
+               
+               wellnessProduct.map((item,index)=>(
+                <WellnessProductCard key={index} productTitle={item.productTitle} productDescription={item.productDescription} productImage={item.productImage} productPrice={item.productPrice}/>
+               ))
+
+                
             }
             </div>
           
