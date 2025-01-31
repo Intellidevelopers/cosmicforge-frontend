@@ -2,12 +2,12 @@
     "redirects": [
       {
         "source": "/signup",
-        "destination": "/",
+        "destination": "/signup",
         "permanent": false
       },
       {
         "source": "/home",
-        "destination": "/",
+        "destination": "/home",
         "permanent": false
       }
 
