@@ -27,7 +27,8 @@ import pulmoIcon from "../../../assets/images/cosmic-specialist-pulmonology.svg"
 import genoIcon from "../../../assets/images/cosmic-specialist-geonomics.svg";
 import hematologyIcon from "../../../assets/images/cosmic-specialist-hematology.svg";
 import arrowIcon from "../../../assets/icons/cosmic-arrow.svg";
-import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProductCard";
+import WellnessProductCard from "./WellnessProductCard";
+import {WellnessProductCardProps} from "./WellnessProductCard";
 import tempProductImage from '../../../assets/images/cosmic-wellness-product-temp.svg'
 
 const HomeBody = () => {
@@ -130,7 +131,7 @@ const HomeBody = () => {
       icon: hematologyIcon
     }
   ];
-const wellnessProduct:WellnessProductCardProps[ ] = [
+const wellnessProduct:WellnessProductCardProps[] = [
   {
     productTitle:' Ibuprofen 400mg',
     productDescription:' 100 tablets',
@@ -230,7 +231,7 @@ const wellnessProduct:WellnessProductCardProps[ ] = [
             
             {
                
-               wellnessProduct.map((item,index)=>(
+               wellnessProduct.map((item:WellnessProductCardProps,index)=>(
                 <WellnessProductCard key={index} productTitle={item.productTitle} productDescription={item.productDescription} productImage={item.productImage} productPrice={item.productPrice}/>
                ))
 
