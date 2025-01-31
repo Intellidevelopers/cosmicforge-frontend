@@ -70,7 +70,8 @@ const RolePage:React.FC = () => {
                         continue
                     </div>
                 ): (
-                    <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/signup'}>
+                    //signup here
+                    <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/home'}>
                         Continue
                     </Link> 
                 )}
