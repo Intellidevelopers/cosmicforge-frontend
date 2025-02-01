@@ -69,7 +69,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep } ) => {
             <div className="w-[80%] md:flex hidden h-[50px]">
                     <img src={cosmicLogo} alt="cosmic forge logo" className="h-[100%] w-[100%]"/>
                 </div>
-                <div className="flex flex-col gap-2 w-[100%]">
+                <div className="flex flex-col gap-2 w-[100%] md:mt-0 mt-[30px]">
                     <span className="text-[23px] font-extrabold">OTP Code</span>
                     <div className="flex flex-col gap-0">
                         <span>We sent you a 6-digit code via your email</span>

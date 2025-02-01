@@ -69,20 +69,20 @@ const EnterEmail:React.FC<component> = ( { email, setEmail, step, setStep }) => 
                     {isLoading?<Loader size="30px"/>:'Continue'}
                 </button> 
                 <div className="md:hidden flex flex-col w-[100%] text-center gap-[70px]">
-                    <div className="flex text-[18px] text-gray-300 justify-evenly items-center mb-[40px] flex-row gap-1">
+                    <div className="flex text-[18px] text-gray-300 justify-evenly items-center flex-row gap-1">
                         <div className="w-[40%] h-[3px] bg-gray-300"></div>
                         <span>Or</span>
                         <div className="w-[40%] h-[3px] bg-gray-300"></div>
                     </div>
                     <div className="flex flex-col md:gap-[20px] gap-[15px] w-[100%] items-center">
                         <div className="flex flex-row gap-[20px] w-[100%] justify-center items-center">
-                            <button className="w-[80px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
+                            <button className="w-[55px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                                 <img src={fbIcon} alt="fb icon" className="h-[70%] w-[70%]"/>
                             </button>
-                            <button className="w-[80px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
+                            <button className="w-[55px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                                 <img src={ggIcon} alt="fb icon" className="h-[70%] w-[70%]"/>
                             </button>
-                            <button className="w-[80px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
+                            <button className="w-[55px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                                 <img src={appleIcon} alt="fb icon" className="h-[70%] w-[70%]"/>
                             </button>
                         </div>
