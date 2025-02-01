@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import backIcon from "../../../../assets/icons/Forward.png";
 import IconContainer from "../../../generalComponents/IconContainer";
@@ -11,26 +11,52 @@ interface components {
 }
 
 const EnterOtp:React.FC<components> = ( { step, setStep } ) => {
-    const [ box1, setBox1 ] = useState<string>('');
-    const [ box2, setBox2 ] = useState<string>('');
-    const [ box3, setBox3 ] = useState<string>('');
-    const [ box4, setBox4 ] = useState<string>('');
-    const [ box5, setBox5 ] = useState<string>('');
-    const [ box6, setBox6 ] = useState<string>('');
-    const [ otp, setOtp ] = useState<string>('');
+    const [ activeInput, setActiveInput ] = useState<number>(0);
+    const [ boxArray, setBoxArray ] = useState(['', '', '', '', '', ''])
+
+    useEffect( () => {
+        const inputBox = document.getElementById(`otp-${activeInput}`);
+        if (inputBox) {
+            inputBox.focus();
+        }
+    }, [activeInput])
+
+    const handleInput = ( e:React.ChangeEvent<HTMLInputElement>, index:number) => {
+        const str = e.target.value;
+        // only accept digits. if non-digit ignore
+        if (!/^\d*$/.test(e.target.value)) return 
+
+        // update the OTP state and take only the last digit
+        const newOtp = [...boxArray];
+        newOtp[index] = str.slice(-1);
+        setBoxArray(newOtp);
+
+        // if digit was entered and was not the last digit move to the next box
+        if ( str && (index < boxArray.length-1) ) {
+            setActiveInput(index+1);
+        }
+    };
 
     const confirmOtp = () => {
+        let otpCode = ''
+        boxArray.map((val)=>{
+            otpCode = otpCode.concat(val)
+        });
+        console.log(otpCode);
+
         // place api logic to confirm otp here
-        console.log(otp);
-    }
 
-    const handleOtpInput = (str:string) => {
-        setOtp(str);
-    }
 
+    }
 
     const goBack = () => {
         setStep(step-1);
+    }
+
+    const handleKeyDown = ( e:React.KeyboardEvent<HTMLInputElement>, index:number ) => {
+        if ( e.key === 'Backspace' && boxArray[index] === '' ) {
+            setActiveInput(index-1);
+        }
     }
 
     return (
@@ -39,7 +65,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep } ) => {
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="35" deskSize="30"/>
                 <span className="md:flex hidden">Go back</span>
             </button>
-            <div className="md:w-[400px] md:h-fit h-screen md:text-center text-left md:pt-0 pt-[20%] flex flex-col md:pb-0 pb-[10%] justify-between items-center md:justify-around md:pt-0 pt-[30px]  gap-[15px] w-[100%]">
+            <div className="md:w-[400px] md:h-fit h-screen md:text-center text-left md:pt-0 pt-[23%] flex flex-col md:pb-0 pb-[10%] justify-between items-center md:justify-around md:pt-0 pt-[30px]  gap-[15px] w-[100%]">
             <div className="w-[80%] md:flex hidden h-[50px]">
                     <img src={cosmicLogo} alt="cosmic forge logo" className="h-[100%] w-[100%]"/>
                 </div>
@@ -49,14 +75,12 @@ const EnterOtp:React.FC<components> = ( { step, setStep } ) => {
                         <span>We sent you a 6-digit code via your email</span>
                         <span className="font-bold">example@gmail.com</span>
                     </div>
-        
+
                     <div className="flex flex-row gap-2 w-[100%] md:mt-[10px] mt-[20px] justify-center items-center">
-                        <input value={box1} onChange={(e)=>{ setBox1(e.target.value); handleOtpInput(`${e.target.value}${box2}${box3}${box4}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input value={box2} onChange={(e)=>{ setBox2(e.target.value); handleOtpInput(`${box1}${e.target.value}${box3}${box4}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input value={box3} onChange={(e)=>{ setBox3(e.target.value); handleOtpInput(`${box1}${box2}${e.target.value}${box4}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input value={box4} onChange={(e)=>{ setBox4(e.target.value); handleOtpInput(`${box1}${box2}${box3}${e.target.value}${box5}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input value={box5} onChange={(e)=>{ setBox5(e.target.value); handleOtpInput(`${box1}${box2}${box3}${box4}${e.target.value}${box6}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
-                        <input value={box6} onChange={(e)=>{ setBox6(e.target.value); handleOtpInput(`${box1}${box2}${box3}${box4}${box5}${e.target.value}`) }} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        { boxArray.map( (_, index) => {
+                            return <input key={index} pattern="\d*" onKeyDown={(e) => handleKeyDown(e, index)} inputMode="numeric" id={`otp-${index}`} value={boxArray[index]} onChange={(e)=>{handleInput(e, index)}} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
+                        
+                        })}
                     </div>
                     {/* <span className="text-red-500">Invalid OTP code please try again</span> USE THIS TO HANDLE EXCEPTIONS TO THE UI*/}
                     <span className="text-left mt-[10px]">Did&apos;t receive the code?</span>

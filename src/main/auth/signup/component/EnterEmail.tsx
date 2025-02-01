@@ -18,18 +18,35 @@ interface component {
 
 const EnterEmail:React.FC<component> = ( { email, setEmail, step, setStep }) => {
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
+    const [ notValidError, setNotValid ] = useState<boolean>(false);
 
     const handleEmailInput = (e:React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
-        console.log(email);
+    }
+
+    const validateEmail = ( email:string) => {
+        const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        return regex.test(email);
+    }
+
+    const displayError = () => {
+        setNotValid(true);
+        setTimeout(() => {
+            setNotValid(false)
+        }, 5000);
     }
 
     const toNextScreen = () => {
         //you place function to verify if the email is valid here
-        setIsLoading(true);
-        setTimeout(() => {
-            setStep(step+1);
-        }, 10000);
+        if ( validateEmail(email) ) {
+            setIsLoading(true);
+            setTimeout(() => {
+                setStep(step+1);
+                // you can the setTimeout, place the setStep(step+1) line and the add the API logic below it
+            }, 5000);
+        } else {
+            displayError();
+        }
     }
 
     return (
@@ -46,17 +63,18 @@ const EnterEmail:React.FC<component> = ( { email, setEmail, step, setStep }) => 
                     <span className="text-[23px] font-extrabold">Sign Up</span>
                     <span>Let's get you started.</span>
                     <input onChange={handleEmailInput} value={email} type="text" placeholder="Email address" className="w-[100%] px-[10px] outline-none rounded-[5px] bg-gray-300 md:h-[48px] h-[50px] md:mt-0 mt-[20px]"/>
+                    <span className={`text-red-500 text-[14px] ${notValidError?'opacity-[100%]':'opacity-[0%]'}`}>Invalid email address. please enter a valid email address</span>
                 </div>
-                <button onClick={toNextScreen} className={`${isLoading?'bg-[#272EA7]/80':'bg-[#272EA7]'} h-[48px] w-[100%] md:mt-[200px] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]`}>
+                <button onClick={toNextScreen} className={`${isLoading?'bg-[#272EA7]/80':'bg-[#272EA7]'} h-[48px] w-[100%] md:mt-[190px] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]`}>
                     {isLoading?<Loader size="30px"/>:'Continue'}
                 </button> 
-                <div className="md:hidden flex flex-col w-[100%] text-center gap-[100px]">
-                    <div className="flex text-[18px] text-gray-300 justify-evenly items-center mb-[50px] flex-row gap-1">
+                <div className="md:hidden flex flex-col w-[100%] text-center gap-[70px]">
+                    <div className="flex text-[18px] text-gray-300 justify-evenly items-center mb-[40px] flex-row gap-1">
                         <div className="w-[40%] h-[3px] bg-gray-300"></div>
                         <span>Or</span>
                         <div className="w-[40%] h-[3px] bg-gray-300"></div>
                     </div>
-                    <div className="flex flex-col gap-[20px] w-[100%] items-center">
+                    <div className="flex flex-col md:gap-[20px] gap-[15px] w-[100%] items-center">
                         <div className="flex flex-row gap-[20px] w-[100%] justify-center items-center">
                             <button className="w-[80px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                                 <img src={fbIcon} alt="fb icon" className="h-[70%] w-[70%]"/>
