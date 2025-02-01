@@ -1,5 +1,6 @@
 {
-    "redirects": [
-      { "source": "/((?!index\\.html.*)", "destination":"/index.html" }
+    "routes": [
+      { "handle": "filesystem"},
+      { "src": "/(.*)", "dest":"/index.html" }
     ]
   }
