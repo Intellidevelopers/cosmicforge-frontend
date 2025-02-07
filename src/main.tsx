@@ -12,6 +12,7 @@ import SignUpMain from './main/auth/signup/pages/SignUpMain'
 import RolePage from './main/onboarding/pages/RolePage';
 import SignUp1 from './main/auth/signup/pages/SignUp1'
 import FindASpecialist from './main/home/pages/FindASpecialist'
+import Favorites from './main/favorites/pages/favorites'
 
 
 
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
   {
     path:'/signup/verifyEmail',
    element:<SignUp1/>
+  },
+  {
+    path:'favorites',
+    element:<Favorites/>
   },
 ])
 
