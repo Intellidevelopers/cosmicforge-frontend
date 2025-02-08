@@ -34,6 +34,10 @@ const router = createBrowserRouter([
     {
       path:'find-a-specialist',
       element:<FindASpecialist/>
+    },
+    {
+      path:'favorites',
+      element:<Favorites/>
     }
   ]
  },
@@ -49,10 +53,6 @@ const router = createBrowserRouter([
   {
     path:'/signup/verifyEmail',
    element:<SignUp1/>
-  },
-  {
-    path:'favorites',
-    element:<Favorites/>
   },
 ])
 
