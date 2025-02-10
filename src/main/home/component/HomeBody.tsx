@@ -1,4 +1,4 @@
-import HomeNavBar from "./HomeNavBar";
+// import HomeNavBar from "./HomeNavBar";
 import aiImage from "../../../assets/background/home-card-ai-diagnosis-image.svg";
 import auRealityImage from "../../../assets/background/home-card-augmented-reality.svg";
 import SpecialistCard, { SpecialistCardProps } from "./SpecialistCard";
@@ -32,6 +32,9 @@ import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProduct
 import tempProductImage from '../../../assets/images/cosmic-wellness-product-temp.svg'
 import  { useRef } from "react";
 import useSetScrollbar from "../hook/useSetUpScrollbar";
+
+//Importing here to avoid typing the classes over and over again
+import {changeWidthToFit} from "./HomeNavBar"
 
 const HomeBody = () => {
  const specialCards: SpecialistCardProps[] = [
@@ -192,9 +195,9 @@ const wellnessScrollContainerRef = useRef(null)
 
 const {scrollWellnessProductCardRight,scrollWellnessProductCardLeft} = useSetScrollbar()
   return (
-    <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col">
-      <HomeNavBar title="Home"  />
-      <div className=" md:ps-[294px]   ">
+    <div className=" w-full  relative  h-dvh overflow-x-hidden  overflow-y-auto flex flex-col" >
+      {/* <HomeNavBar title="Home"  /> */}
+      <div className={changeWidthToFit }>
         <div className="w-full flex flex-wrap p-10 justify-center gap-5">
           <img
             src={aiImage}

@@ -8,7 +8,11 @@ const FavoriteHeader = () => {
     let url:string | string[] = window.location.href
     url = url.split('/')
       const location:string|undefined = url.pop()
-    setTitle(location)
+      if(typeof location === 'string'){
+        setTitle(location)
+      }else{
+        setTitle('')
+      }
   },[])
 
   return (
