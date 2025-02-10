@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import HomeNavBar from "./HomeNavBar";
+// import HomeNavBar from "./HomeNavBar";
 import FindASpecialistCard from "./FindASpecialistCard";
 import { SpecialistCardProps } from "./SpecialistCard";
 import genMedIcon from "../../../assets/background/specialist-general-med-image.svg";
@@ -26,7 +26,7 @@ import nephroIcon from "../../../assets/images/cosmic-specialist-nephrology.svg"
 import pulmoIcon from "../../../assets/images/cosmic-specialist-pulmonology.svg";
 import genoIcon from "../../../assets/images/cosmic-specialist-geonomics.svg";
 import hematologyIcon from "../../../assets/images/cosmic-specialist-hematology.svg";
-import backNavigitionIcon from "../../../assets/icons/cosmic-navigate-back.svg";
+// import backNavigitionIcon from "../../../assets/icons/cosmic-navigate-back.svg";
 
 const FindASpecialistBody = () => {
   const specialCards: SpecialistCardProps[] = [
@@ -131,14 +131,14 @@ const FindASpecialistBody = () => {
   const navigate = useNavigate();
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col cursor-default">
-      <HomeNavBar title="Find A Specialist" />
-      <div className=" md:ps-[294px]     ">
+      {/* <HomeNavBar title="Find A Specialist" /> */}
+      <div className=" ps-0 md:ps-[180px] lg:ps-[294px]     ">
         <div className="w-full m-5 flex place-items-center gap-3"  onClick={() => {
               navigate(-1);
             }}>
-          <img src={backNavigitionIcon}  onClick={() => {
+          {/* <img src={backNavigitionIcon}  onClick={() => {
               navigate(-1);
-            }} />
+            }} alt='back'/>
           <p
             className="font-light "
             onClick={() => {
@@ -146,7 +146,7 @@ const FindASpecialistBody = () => {
             }}
           >
             Go Back
-          </p>
+          </p> */}
         </div>
 
         <div className="w-full">
