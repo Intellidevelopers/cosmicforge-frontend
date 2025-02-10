@@ -12,6 +12,8 @@ const dummyCard: FavoriteItem = {
     price: '3,500'
 };
 
+//Redeploying to check what went wrong.
+
 const Favorites = () => {
     const [FavoriteList, setFavoriteList] = useState<FavoriteItem[]>([]);
     const location = useLocation();
@@ -26,6 +28,7 @@ const Favorites = () => {
         }
         setFavoriteList(favoriteArray);
     }, [location]);
+
 
     return (
         <div className={changeWidthToFit + " w-full flex gap-2 justify-center items-center md:justify-start mx-auto mt-4"}>
