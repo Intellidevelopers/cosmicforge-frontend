@@ -19,12 +19,19 @@ const HomeNavBar = () => {
   const [pgTitle,setTitle] = useState<string|undefined>('')
   const windowLocation = useLocation()
 
+  
   useEffect(()=>{
-    let url:string | string[] = window.location.href
+    
+    const sanitizeString = (string:string)=>{
+      return string.split('-').join(' ')
+    }
+
+    let url:string | string[] = window.location.href;
+
     url = url.split('/')
       const location:string|undefined = url.pop()
       if(typeof location === 'string'){
-        setTitle(location.replaceAll('-',' '))
+        setTitle(sanitizeString(location))
       }else{
         setTitle('')
       }
