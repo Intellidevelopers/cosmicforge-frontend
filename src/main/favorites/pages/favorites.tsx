@@ -3,9 +3,10 @@ import { useLocation } from "react-router-dom";
 import { FavoriteItem } from "../components/favorite-card";
 import FavoriteCard from "../components/favorite-card";
 import { changeWidthToFit } from "../../home/component/HomeNavBar";
+import image from '../../../assets/images/image.png';
 
 const dummyCard: FavoriteItem = {
-    image: 'src/assets/Tennin-temp-files/image.png',
+    image: image,
     title: 'Ibuprofen 400mg',
     quantity: '100 Tablets',
     location: 'Lagos, Zenith Pharmacy',
