@@ -8,8 +8,8 @@ export interface FavoriteItem {
 
 const FavoriteCard = (props:FavoriteItem) => {
 
-  return <div className="w-[170px] border p-2 rounded-md space-y-1.5 ring-[3px] self-center justify-self-center ring-neutral-200  md:w-full md:max-w-[240px] md:min-w-[190px] flex flex-1 flex-col justify-center items-center" >
-            <div className="border-2 w-[150px] h-[80px] flex items-center justify-center rounded-md md:w-[90%] md:h-auto">
+  return <div className="xs:max-w-[200px] w-[100%] border p-2 rounded-md space-y-1.5 ring-[3px] self-center justify-self-center max-w-[170px] ring-neutral-200  md:w-full md:max-w-[240px] md:min-w-[190px] flex flex-1 flex-col justify-center items-center" >
+            <div className="border-2 xs:w-[180px] w-[140px] h-[80px] flex items-center justify-center rounded-md md:w-[90%] md:h-auto">
               <img className="max-w-[70px] md:max-w-full" src={props.image} alt={props.title}/>
             </div>
             <div className="md:min-w-[90%] space-y-1.5">

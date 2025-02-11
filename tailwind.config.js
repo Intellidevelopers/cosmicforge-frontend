@@ -56,6 +56,9 @@ transform:'rotateY(180deg)'
           }
            
         }
+      },
+      screens:{
+        'xs':{'max' :' 390px'}
       }
     },
     
