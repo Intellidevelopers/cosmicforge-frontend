@@ -13,7 +13,6 @@ const dummyCard: FavoriteItem = {
     price: '3,500'
 };
 
-//Redeploying to check what went wrong.
 
 const Favorites = () => {
     const [FavoriteList, setFavoriteList] = useState<FavoriteItem[]>([]);
@@ -34,7 +33,7 @@ const Favorites = () => {
     return (
         <div className={changeWidthToFit + " w-full flex gap-2 justify-center items-center md:justify-start mx-auto mt-4"}>
             {/* <FavoriteHeader/> */}
-            <div className="flex w-[80%] xs:w-full justify-center md:pl-4 md:justify-start">
+            <div className="flex w-[80%] xs:w-[90%] justify-center md:pl-4 md:justify-start">
                 <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 w-full gap-4" >
                     {FavoriteList.map((item, index) => (
                         <FavoriteCard key={index} {...item} />
