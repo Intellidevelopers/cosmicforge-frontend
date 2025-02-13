@@ -39,7 +39,7 @@ const HomeNavBar = () => {
 
     return  (
 
-        <div className="ms-[0] md:ms-[180px] lg:ms-[294px] bg-white w-full h-fit mb-4 p-5  sticky top-0  shadow-md shadow-black z-[200px]">
+        <div className="ms-[0] md:ms-[180px] lg:ms-[294px] border-b-2 bg-white w-full h-fit mb-4 p-5  sticky top-0   z-[200px]">
           <div className="relative flex flex-row-reverse justify-start items-start md:flex-col  md:gap-4">
             <div className="md:w-[85%]  w-full flex  flex-wrap relative justify-center items-center md:justify-start">
               <p className="font-extrabold p-1 capitalize">{pgTitle}</p>

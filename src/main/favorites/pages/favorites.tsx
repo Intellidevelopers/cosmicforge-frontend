@@ -34,7 +34,7 @@ const Favorites = () => {
         <div className={changeWidthToFit + " w-full flex gap-2 justify-center items-center md:justify-start mx-auto mt-4"}>
             {/* <FavoriteHeader/> */}
             <div className="flex w-[80%] xs:w-[90%] justify-center md:pl-4 md:justify-start">
-                <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 w-full gap-4" >
+                <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 w-full gap-4 pb-6" >
                     {FavoriteList.map((item, index) => (
                         <FavoriteCard key={index} {...item} />
                     ))}

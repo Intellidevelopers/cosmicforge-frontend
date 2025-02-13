@@ -8,7 +8,7 @@ export interface FavoriteItem {
 
 const FavoriteCard = (props:FavoriteItem) => {
 
-  return <div className="xs:max-w-[200px] w-[100%] border p-2 rounded-md space-y-1.5 ring-[3px] self-center justify-self-center max-w-[170px] ring-neutral-200  md:w-full md:max-w-[240px] md:min-w-[190px] flex flex-1 flex-col justify-center items-center" >
+  return <div className="xs:max-w-[200px] w-[100%] border p-2 rounded-md space-y-1.5  self-center justify-self-center max-w-[170px] md:w-full md:max-w-[240px] md:min-w-[190px] flex flex-1 flex-col justify-center items-center" >
             <div className=" xs:w-[130px] w-[140px] h-[80px] flex items-center justify-center rounded-md md:w-[90%] md:h-auto">
               <img className="max-w-[70px] md:max-w-full" src={props.image} alt={props.title}/>
             </div>
@@ -25,7 +25,7 @@ const FavoriteCard = (props:FavoriteItem) => {
                 <div className="text-cosmic-primary-color font-bold " >
                   <p >N{props.price}</p>
                 </div>
-                <div className="bg-cosmic-primary-color px-2 py-1 font-bold text-white rounded text-xs">Cart <i className="fas fa-shopping-cart text-white"></i></div>
+                <div className="bg-cosmic-primary-color px-2 py-1 cur font-bold text-white rounded text-xs">Cart <i className="fas fa-shopping-cart text-white"></i></div>
               </div>
             </div>
         </div>;
