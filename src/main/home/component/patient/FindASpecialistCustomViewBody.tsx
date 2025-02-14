@@ -86,7 +86,7 @@ const FindASpecalistCustomViewBody = () => {
             <div className="w-full md:ps-[294px]  ">
 
 
-                <div className="m-8 flex place-items-center gap-1">
+                <div className="hidden m-8 md:flex place-items-center gap-1">
                     <i className="fa fa-chevron-left fa-2xl" aria-hidden="true" onClick={() => {
                         navigate(-1)
                     }}></i>
