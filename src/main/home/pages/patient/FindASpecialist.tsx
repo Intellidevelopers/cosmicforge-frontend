@@ -1,9 +1,10 @@
-import FindASpecialistBody from "../../component/patient/FindASpecialistBody"
+import { Outlet } from "react-router-dom"
+
 
 const FindASpecialist = () =>{
     return (
 
-      <FindASpecialistBody/>
+      <Outlet/>
     )
 }
 

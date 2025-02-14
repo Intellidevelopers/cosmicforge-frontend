@@ -18,11 +18,11 @@ const HomeNavBar = ({ title }: NavBarProps) => {
 
   return (
 
-    <div className="  hidden md:block md:ms-[294px] bg-white w-full h-fit  p-5  sticky top-0  shadow-md shadow-black z-[200px]">
+    <div className="  hidden md:block md:ms-[294px] bg-white w-full min-h-[70px] h-fit  p-5  sticky top-0  shadow-md shadow-black z-[200px]">
 
       <div className="md:w-[70%] lg:w-[80%] w-full flex  relative   ">
 
-        <p className="font-extrabold pt-2 min-w-[150px] mt-1 ">{title ?? 'Home'}</p>
+        <p className="font-extrabold pt-2 min-w-[200px]  ">{title ?? 'Home'}</p>
 
         <div className=' p-1 w-dvw  relative '>
 

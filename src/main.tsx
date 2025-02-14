@@ -17,6 +17,8 @@ import FindASpecialist from './main/home/pages/patient/FindASpecialist'
 import DoctorHomeMainPage from './main/home/pages/doctor/DoctorHomeMainPage'
 import DoctorHome from './main/home/pages/doctor/DoctorHome'
 import FindASpecialistCardPage from './main/home/pages/patient/FindASpecalistCardPage'
+import FindSpecialistViewPage from './main/home/pages/patient/FindSpecialistViewPage'
+import VirtualConsultPage from './main/onboarding/pages/VideoAndVoiceCall/VirtualConsultPage'
 
 
 
@@ -45,7 +47,11 @@ const router = createBrowserRouter([
         },
         {
           path:'find-a-specialist/view',
-          element:<div>kkk</div>
+          element:<FindSpecialistViewPage/>
+        },
+        {
+          path:'find-a-specialist/consult',
+          element:<VirtualConsultPage/>
         }
       ]
     },
