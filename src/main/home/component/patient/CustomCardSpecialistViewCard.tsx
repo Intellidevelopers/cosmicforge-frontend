@@ -21,8 +21,8 @@ const CustomCardSpecialistViewCard = ({details}:CustomCardSpecialistViewCardProp
    const navigate = useNavigate()
     return (
 
-        <div className="bg-white min-h-[200px] md:min-h-[150px] flex m-2 relative">
-            <div className=" w-[200px] h-[150px] relative border border-cosmic-color-border-color rounded-md">
+        <div className="bg-white min-h-fit md:min-h-[200px] flex m-2 relative">
+            <div className=" w-[200px] h-[200px] relative border border-cosmic-color-border-color rounded-md">
                 <p className="bg-cosmic-primary-color absolute text-white  rounded-br-md font-light p-1 ">Top</p>
                 <img className="bg-green-500 object-cover h-full w-full" src={details.doctorImage} />
             </div>
@@ -33,7 +33,7 @@ const CustomCardSpecialistViewCard = ({details}:CustomCardSpecialistViewCardProp
                 <img className=' h-[24px] ' src={verifiedThick}/>
               
                 </div>
-               <div className='absolute mt-2 right-2 flex justify-center place-items-center gap-2'>
+               <div className='md:absolute md:mt-2 right-2  flex jmd:ustify-center  place-items-center gap-2'>
                     <img src={ratingStar} alt='ratings' />
                     <p className='text-cosmic-silver-color'>4.5</p>
                 </div>

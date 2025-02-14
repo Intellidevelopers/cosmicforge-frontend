@@ -6,6 +6,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html{
+  box-sizing: border-box;
+}
+
+*,
+*::before, *::after {
+  box-sizing: inherit;
+}
+
 /* loader styles */
 
 .lds-default,
