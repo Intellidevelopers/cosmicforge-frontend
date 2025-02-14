@@ -1,4 +1,4 @@
-import FindASpecialistBody from "../component/FindASpecialistBody"
+import FindASpecialistBody from "../../component/patient/FindASpecialistBody"
 
 const FindASpecialist = () =>{
     return (

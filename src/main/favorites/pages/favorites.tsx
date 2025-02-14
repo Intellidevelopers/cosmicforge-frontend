@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FavoriteItem } from "../components/favorite-card";
 import FavoriteCard from "../components/favorite-card";
-import { changeWidthToFit } from "../../home/component/HomeNavBar";
+
 import image from '../../../assets/images/image.png';
 
 const dummyCard: FavoriteItem = {
@@ -31,7 +31,7 @@ const Favorites = () => {
 
 
     return (
-        <div className={changeWidthToFit + " w-full flex gap-2 justify-center items-center md:justify-start mx-auto mt-4"}>
+        <div className={  " w-full flex gap-2 justify-center items-center md:justify-start mx-auto mt-4"}>
             {/* <FavoriteHeader/> */}
             <div className="flex w-[80%] xs:w-[90%] justify-center md:pl-4 md:justify-start">
                 <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 w-full gap-4 pb-6" >

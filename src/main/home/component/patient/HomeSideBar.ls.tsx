@@ -1,13 +1,13 @@
-import logo from "../../../assets/logo/logo_comsic_splash.svg";
-import profileIconTmp from "../../../assets/icons/home/cosmic-home-profile-pic-temp.svg";
-import homeIcon from "../../../assets/icons/home/cosmic-home-active.svg";
-import calenderIcon from "../../../assets/icons/home/cosmic-home-calander.svg";
-import appointmentIcon from "../../../assets/icons/home/cosmic-shop-medium.svg";
-import messageIcon from "../../../assets/icons/cosmic-chat.svg";
-import analyticsIcon from "../../../assets/icons/home/cosmic-home-analytics.svg";
-import firstAidIcon from "../../../assets/icons/cosmic-profile.svg";
-import logOutIcon from "../../../assets/icons/cosmic-logout.svg";
-import useGetActiveRoute from "../hook/useGetActiveRoute";
+import logo from "../../../../assets/logo/logo_comsic_splash.svg";
+import profileIconTmp from "../../../../assets/icons/home/cosmic-home-profile-pic-temp.svg";
+import homeIcon from "../../../../assets/icons/home/cosmic-home-active.svg";
+import calenderIcon from "../../../../assets/icons/home/cosmic-home-calander.svg";
+import appointmentIcon from "../../../../assets/icons/home/cosmic-shop-medium.svg";
+import messageIcon from "../../../../assets/icons/cosmic-chat.svg";
+import analyticsIcon from "../../../../assets/icons/home/cosmic-home-analytics.svg";
+import firstAidIcon from "../../../../assets/icons/cosmic-profile.svg";
+import logOutIcon from "../../../../assets/icons/cosmic-logout.svg";
+import useGetActiveRoute from "../../hook/patient/useGetActiveRoute";
 import { useNavigate } from "react-router-dom";
 
 const HomeSideBar = () => {
@@ -15,7 +15,7 @@ const HomeSideBar = () => {
 const navigate = useNavigate()
   
   return (
-    <div className=" md:w-[180px] lg:w-[294px] h-full bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-50 hidden md:flex cursor-default">
+    <div className=" w-[294px] h-full bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-50 hidden md:flex cursor-default">
       <div className="w-full ">
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
@@ -26,7 +26,7 @@ const navigate = useNavigate()
             Edit Profile
           </p>
 
-          <div className="nav-bar-links-container w-1/2 lg:w-full flex flex-col justify-center place-items-center gap-4">
+          <div className="nav-bar-links-container  w-full flex flex-col justify-center place-items-center gap-4">
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
@@ -43,7 +43,7 @@ const navigate = useNavigate()
               navigate('/home')
             }}   >
               <img alt="home" src={homeIcon} />
-              <p className="md:hidden lg:block">Home</p>
+              <p className="">Home</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isRunDiagnosisActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -61,7 +61,7 @@ const navigate = useNavigate()
               })
             }}>
               <img alt="home" src={calenderIcon} />
-              <p className="md:hidden lg:block">Run Diagnosis</p>
+              <p className="">Run Diagnosis</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isMessageActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -79,7 +79,7 @@ const navigate = useNavigate()
               })
             }}>
               <img alt="home" src={messageIcon} />
-              <p className="md:hidden lg:block">Messages</p>
+              <p className="">Messages</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isBookAppoinmentActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -97,7 +97,7 @@ const navigate = useNavigate()
               })
             }}>
               <img alt="home" src={appointmentIcon} />
-              <p className="md:hidden lg:block">Book Appointment</p>
+              <p className="">Book Appointment</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -115,7 +115,7 @@ const navigate = useNavigate()
               })
             }}>
               <img alt="home" src={analyticsIcon} />
-              <p className="md:hidden lg:block">Analytics</p>
+              <p className="">Analytics</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isFirstAidActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -133,7 +133,7 @@ const navigate = useNavigate()
               })
             }}>
               <img alt="home" src={firstAidIcon} />
-              <p className="md:hidden lg:block">First Aid</p>
+              <p className="">First Aid</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isChatBotActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -151,7 +151,7 @@ const navigate = useNavigate()
               })
             }}>
               <img alt="home" src={calenderIcon} />
-              <p className="md:hidden lg:block">Chat bot</p>
+              <p className="">Chat bot</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isFindASpecialistActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -170,7 +170,7 @@ const navigate = useNavigate()
               navigate('find-a-specialist')
             }}>
               <img alt="home" src={calenderIcon} />
-              <p className="md:hidden lg:block">Find A Specialist</p>
+              <p className="">Find A Specialist</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isCalenderActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
@@ -188,12 +188,12 @@ const navigate = useNavigate()
               })
             }}>
               <img alt="home" src={calenderIcon} />
-              <p className="md:hidden lg:block">Calendar</p>
+              <p className="">Calendar</p>
             </div>
 
             <div className="w-full flex justify-start ms-5 text-cosmic-color-warning-color  hover:underline ">
             <img alt="home" src={logOutIcon} />
-              <p className="md:hidden lg:block">Log out</p>
+              <p className="">Log out</p>
             </div>
           </div>
         </div>

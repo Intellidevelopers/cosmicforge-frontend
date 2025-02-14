@@ -1,5 +1,5 @@
 
-import cartImage from '../../../assets/icons/cosmic-cart-white-s-icon.svg'
+import cartImage from '../../../../assets/icons/cosmic-cart-white-s-icon.svg'
 
     export interface WellnessProductCardProps  {
   productImage:string,

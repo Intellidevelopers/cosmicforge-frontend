@@ -1,4 +1,4 @@
-import HomeBody from "../component/HomeBody"
+import HomeBody from "../../component/patient/HomeBody"
 
 const HomePage = () => {
 
