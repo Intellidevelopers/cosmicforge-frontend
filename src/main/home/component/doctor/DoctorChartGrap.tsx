@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { LineChart } from "@mui/x-charts";
-import { mangoFusionPalette } from '@mui/x-charts/colorPalettes';
+//import { mangoFusionPalette } from '@mui/x-charts/colorPalettes';
 
 const DoctorChartGraph = () =>{
 
