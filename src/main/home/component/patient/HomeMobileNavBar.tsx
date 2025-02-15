@@ -2,12 +2,16 @@ import profileIconTmp from "../../../../assets/icons/home/cosmic-home-profile-pi
 import tuneIcon from '../../../../assets/icons/home/cosmic-home-tune.svg'
 import searchIcon from '../../../../assets/icons/home/cosmic-home-search-dark.svg'
 import notificationIcon from '../../../../assets/icons/home/cosmic-home-notification.svg'
+import { openSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
+import { useNavigate } from "react-router-dom";
 
  interface NavBarProps {
     title:string
+   
   }
 
  const HomeMobileNavBar  =  ({title}:NavBarProps) =>{
+  const navigate =  useNavigate()
     return (
         <div className="block md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  p-5  sticky top-0  ">
        
@@ -16,23 +20,28 @@ import notificationIcon from '../../../../assets/icons/home/cosmic-home-notifica
             {
             
                 (title === "Home") ?
-                <div className="w-full flex place-items-center gap-5">
-                 <i className="fa fa-bars fa-2xl"   aria-hidden="true"></i>
+                <div className="w-full flex place-items-center gap-6">
+                 <i className="fa fa-bars fa-2xl"   aria-hidden="true" onClick={()=>{
+
+                  openSideBar()
+                 }}></i>
                   <div className="flex gap-4 ">
-                  <img src={profileIconTmp} className="h-[44px]" />
+                  <img src={profileIconTmp} className="h-[44px]"  />
                    
-                   <div>
+                   <div className="w-full relative">
 
                    <p className="font-semibold">Hi Grace</p>
-                   <p>How are you feeling today?</p>
+                   <p className="font-light text-[14px]">How are you feeling today?</p>
                     </div>
-                    <div className="absolute right-4 top-2 rounded-lg border  p-1">
+                    <div className="absolute right-0 top-2 rounded-lg border  p-1">
                     <img src={notificationIcon}  />
                     </div>
                     </div>
 
                     </div>:    <div className="w-full flex justify-center">
-                    <i className="fa fa-arrow-left fa-xl absolute left-0 top-3" aria-hidden="true"></i>
+                    <i className="fa fa-arrow-left fa-xl absolute left-0 top-3" aria-hidden="true" onClick={()=>{
+                     navigate(-1)
+                  }}></i>
                     <p className="font-extrabold p-1">{title ?? 'Home'}</p>
                       </div>
                     

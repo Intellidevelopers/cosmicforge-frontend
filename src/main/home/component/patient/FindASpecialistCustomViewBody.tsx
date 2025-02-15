@@ -93,8 +93,10 @@ const FindASpecalistCustomViewBody = () => {
                     <p className="font-extralight">Go back</p>
                 </div>
 
-                <div className="w-full flex justify-center gap-3 font-bold text-cosmic-primary-color">
-                    <p className={`${(activState.all) && 'bg-cosmic-primary-color text-white '}  md:w-[16%] w-[30%] flex justify-center place-items-center  text-center p-2 rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
+
+
+                <div className="w-full flex justify-center gap-3  text-cosmic-primary-color">
+                    <p className={`${(activState.all) && 'bg-cosmic-primary-color text-white '}  md:w-[16%] w-[30%] flex justify-center place-items-center  text-center  rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
                         setActiveState({
                             ...activState,
                             all: true,
@@ -109,7 +111,7 @@ const FindASpecalistCustomViewBody = () => {
 
 
                     }}>All</p>
-                    <p className={`${(activState.topRatings) && 'bg-cosmic-primary-color text-white '}   md:w-[16%] w-[30%] flex justify-center place-items-center  p-2 rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
+                    <p className={`${(activState.topRatings) && 'bg-cosmic-primary-color text-white '}   md:w-[16%] w-[30%] flex flex:1 justify-center place-items-center   rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
 
                         setActiveState({
                             ...activState,
@@ -142,7 +144,7 @@ const FindASpecalistCustomViewBody = () => {
                 <div className={`${(loading) ? 'flex' : 'hidden'}  w-full h-dvh  justify-center mt-[20%]`}>
                     <Loader />
                 </div>
-                <div className={`${(!loading) ? 'flex' : 'hidden'} w-full h-dvh  p-8   flex-col gap-3 overflow-y-auto `}>
+                <div className={`${(!loading) ? 'flex' : 'hidden'} w-full h-[45%] md:h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
 
                     {
                         details.map((items, index) => (

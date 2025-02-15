@@ -11,6 +11,7 @@ const FindASpecialistCard = ({title,icon}:SpecialistCardProps) => {
                 title
             }})
         }}>
+            
             <div className="m-2 w-full  flex place-items-center gap-4">
             <img alt="specialistCard" src={icon} className="object-center bg-gray-600 object-cover  h-[50px] rounded-full" />
             <p className='w-fit font-extralight'>{title}</p>

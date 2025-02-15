@@ -21,21 +21,23 @@ const CustomCardSpecialistViewCard = ({details}:CustomCardSpecialistViewCardProp
    const navigate = useNavigate()
     return (
 
-        <div className="bg-white min-h-fit md:min-h-[200px] flex m-2 relative">
-            <div className=" w-[200px] h-[200px] relative border border-cosmic-color-border-color rounded-md">
+        <div className="bg-white w-full h-fit flex  relative  ">
+
+            <div className=" w-[200px] h-[150px]  relative border border-cosmic-color-border-color rounded-md">
+
                 <p className="bg-cosmic-primary-color absolute text-white  rounded-br-md font-light p-1 ">Top</p>
                 <img className="bg-green-500 object-cover h-full w-full" src={details.doctorImage} />
             </div>
 
-            <div className="w-full flex flex-col gap-4 ms-4 relative">
+            <div className="w-full flex flex-col gap-4 md:ms-4 relative">
                 <div className='flex  place-items-center mt-2'>
-                <p className="font-bold "> {details.doctorName}</p>
+                <p className="font-bold  "> {details.doctorName}</p>
                 <img className=' h-[24px] ' src={verifiedThick}/>
               
                 </div>
-               <div className='md:absolute md:mt-2 right-2  flex jmd:ustify-center  place-items-center gap-2'>
-                    <img src={ratingStar} alt='ratings' />
-                    <p className='text-cosmic-silver-color'>4.5</p>
+               <div className='absolute mt-2 right-2  flex md:ustify-center  place-items-center gap-2'>
+                    <img className="w-[24px] h-[24px]" src={ratingStar} alt='ratings' />
+                    <p className='text-cosmic-silver-color '>4.5</p>
                 </div>
                 <p className="font-extralight"> {details.doctorSpecialization}</p>
                 <p className="font-extralight"> {details.clinic}</p>
