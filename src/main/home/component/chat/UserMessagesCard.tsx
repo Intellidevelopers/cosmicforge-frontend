@@ -20,8 +20,8 @@ const UserMessagesCard = ({
     doctorName,
     lastMessageTime,
     numberOfUnreadMessages,
-    messageType,
-    messageRead,
+   // messageType,
+    //messageRead,
     message
     
      }:UserMessagesCardProps
