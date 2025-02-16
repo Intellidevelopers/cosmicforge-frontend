@@ -13,7 +13,7 @@ const HomeMainPage = () => {
     return (
         <div className="font-poppins relative w-full h-dvh bg-[#F5F5F5] overflow-x-hidden">
             <HomeSideBar />
-            <HomeSideBarMobile  openSideBarButton={()=>{}} />
+            <HomeSideBarMobile   />
             <Outlet/>
         </div>
     )

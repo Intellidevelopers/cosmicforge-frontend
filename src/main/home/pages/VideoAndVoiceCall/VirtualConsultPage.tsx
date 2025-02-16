@@ -1,4 +1,4 @@
-import VirtualConsultBody from "../../../home/component/patient/VirtualConsultBody"
+import VirtualConsultBody from "../../component/patient/VirtualConsultBody"
 
 const VirtualConsultPage = () =>{
 

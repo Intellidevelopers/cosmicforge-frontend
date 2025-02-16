@@ -49,7 +49,11 @@ const CustomCardSpecialistViewCard = ({details}:CustomCardSpecialistViewCardProp
                 <div className=" relative md:absolute bottom-5 right-5 inline-flex  justify-end mt-2    flex-row gap-3">
 
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={()=>{
-                        navigate('/find-a-specialist/consult')
+                        navigate('/find-a-specialist/consult',{state:{
+                            doctorImage:details.doctorImage,
+                            doctorName:details.doctorName,
+                            doctorSpecialization:details.doctorSpecialization,
+                        }})
                     }}>
                        <img src={callIcon} alt="call button"/>
                     </div>

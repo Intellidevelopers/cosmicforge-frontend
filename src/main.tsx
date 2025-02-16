@@ -18,7 +18,7 @@ import DoctorHomeMainPage from './main/home/pages/doctor/DoctorHomeMainPage'
 import DoctorHome from './main/home/pages/doctor/DoctorHome'
 import FindASpecialistCardPage from './main/home/pages/patient/FindASpecalistCardPage'
 import FindSpecialistViewPage from './main/home/pages/patient/FindSpecialistViewPage'
-import VirtualConsultPage from './main/onboarding/pages/VideoAndVoiceCall/VirtualConsultPage'
+import VirtualConsultPage from './main/home/pages/VideoAndVoiceCall/VirtualConsultPage'
 
 
 

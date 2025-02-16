@@ -205,7 +205,7 @@ const HomeBody = () => {
       <HomeMobileNavBar title="Home" />
 
       <div className=" md:ps-[294px] ">
-        <div className="w-full  md:justify-center   inline-flex overflow-x-auto">
+        <div className="w-full  p-2  md:justify-center   inline-flex overflow-x-auto">
           <img
             src={aiImage}
             alt="Ai diagnosis image"
