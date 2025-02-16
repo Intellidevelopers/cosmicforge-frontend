@@ -7,7 +7,7 @@ import videoButton from '../../../../assets/icons/cosmic-video-call-button.svg'
 import muteMic from '../../../../assets/icons/cosmic-mute-mic.svg'
 import messageIcon from '../../../../assets/icons/cosmic-video-chat-icon.svg'
 
-import { MutableRefObject, useEffect, useRef } from "react"
+import { MutableRefObject,  useRef } from "react"
 
 
 const VirtualConsultBody = ()=>{
@@ -29,7 +29,7 @@ const VirtualConsultBody = ()=>{
    let {state} = useLocation()
      let data = state as ConsultProps
 
-   const {mediaStream ,cancelMediaStream,toggleVideo,toggleMic,startStream,switchToAudio,mode} = useGetMediaStream(localVideoStream,localAudioStream)
+   const {cancelMediaStream,toggleVideo,toggleMic,switchToAudio,mode} = useGetMediaStream(localVideoStream,localAudioStream)
 
     const navigate = useNavigate()
 
