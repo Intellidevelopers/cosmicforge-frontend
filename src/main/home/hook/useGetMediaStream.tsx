@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+
 
 const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElement | null>, localAudioStreamRef: MutableRefObject<HTMLAudioElement | null>) => {
 
@@ -16,7 +16,7 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
         }
     })
 
-    const navigate = useNavigate()
+  
 
 
     const cancelMediaStream = async () => {
