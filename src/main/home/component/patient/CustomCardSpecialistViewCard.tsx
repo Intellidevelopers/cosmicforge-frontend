@@ -31,11 +31,11 @@ const CustomCardSpecialistViewCard = ({details}:CustomCardSpecialistViewCardProp
 
             <div className="w-full flex flex-col gap-4 md:ms-4 relative">
                 <div className='flex  place-items-center mt-2'>
-                <p className="font-bold  "> {details.doctorName}</p>
+                <p className="font-bold text-[14px]  "> {details.doctorName}</p>
                 <img className=' h-[24px] ' src={verifiedThick}/>
               
                 </div>
-               <div className='absolute mt-2 right-2  flex md:ustify-center  place-items-center gap-2'>
+               <div className='absolute mt-2 right-2  text-[14px]  flex md:ustify-center  place-items-center gap-2'>
                     <img className="w-[24px] h-[24px]" src={ratingStar} alt='ratings' />
                     <p className='text-cosmic-silver-color '>4.5</p>
                 </div>

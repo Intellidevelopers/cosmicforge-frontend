@@ -13,19 +13,19 @@ import { useNavigate } from "react-router-dom";
  const HomeMobileNavBar  =  ({title}:NavBarProps) =>{
   const navigate =  useNavigate()
     return (
-        <div className="block md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  p-5  sticky top-0  ">
+        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-3 sticky top-0  ">
        
         <div className="md:w-[85%]  w-full flex   flex-wrap relative   ">
 
             {
             
                 (title === "Home") ?
-                <div className="w-full flex place-items-center gap-6">
+                <div className="w-full flex place-items-center gap-2 b">
                  <i className="fa fa-bars fa-2xl"   aria-hidden="true" onClick={()=>{
 
                   openSideBar()
                  }}></i>
-                  <div className="flex gap-4 ">
+                  <div className="flex gap-2 w-full  ">
                   <img src={profileIconTmp} className="h-[44px]"  />
                    
                    <div className="w-full relative">
@@ -33,7 +33,7 @@ import { useNavigate } from "react-router-dom";
                    <p className="font-semibold">Hi Grace</p>
                    <p className="font-light text-[14px]">How are you feeling today?</p>
                     </div>
-                    <div className="absolute right-0 top-2 rounded-lg border  p-1">
+                    <div className="absolute right-1   rounded-lg border  p-2 ">
                     <img src={notificationIcon}  />
                     </div>
                     </div>
@@ -49,14 +49,14 @@ import { useNavigate } from "react-router-dom";
             }
            
 
-           <div className="w-full mt-5 flex flex-wrap justify-center  place-items-center gap-2 "> 
+           <div className="w-full mt-5 flex flex-wrap   place-items-center gap-2 "> 
 
-            <div className="font-extralight border p-[3px] w-[80%] rounded-md flex ">
+            <div className="font-extralight border p-[5px] w-[84%] rounded-md flex ">
                 <img alt='search' src={searchIcon} />
                 <textarea className='w-full resize-none h-[25px] outline-none bg-[#F5F5F5]' />
 
             </div>
-            <div className="font-extralight min-w-[40px] rounded-md border p-1">
+            <div className="font-extralight min-w-[40px] rounded-md border pt-[7px] pb-[7px] flex justify-center">
               <img alt='tune' src={tuneIcon} />
             </div>
             </div>

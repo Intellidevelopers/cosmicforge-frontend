@@ -133,6 +133,7 @@ import FindASpecialistCard from "../../component/patient/FindASpecialistCard";
       icon: hematologyIcon
     }
   ];
+  
 
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col cursor-default">

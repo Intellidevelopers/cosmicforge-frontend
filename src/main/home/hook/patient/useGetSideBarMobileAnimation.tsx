@@ -12,9 +12,13 @@ const useGetSideBarMobileAnimation = (sideBarRef:MutableRefObject<HTMLDivElement
 
 
 
+
+
+
  export const openSideBar = () =>{
    
     if(ref.current){
+           ref.current.style.display = 'flex'
         ref.current.animate([
             {
              transform:'translateX(-100%)'
@@ -30,6 +34,7 @@ const useGetSideBarMobileAnimation = (sideBarRef:MutableRefObject<HTMLDivElement
 
  export const closeSideBar = () =>{
     if(ref.current){
+     
         ref.current.animate([
             {
              transform:'translateX(0%)'

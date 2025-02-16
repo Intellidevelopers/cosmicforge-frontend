@@ -95,7 +95,7 @@ const FindASpecalistCustomViewBody = () => {
 
 
 
-                <div className="w-full flex justify-center gap-3  text-cosmic-primary-color">
+                <div className="w-full flex justify-center gap-3  text-cosmic-primary-color mt-5">
                     <p className={`${(activState.all) && 'bg-cosmic-primary-color text-white '}  md:w-[16%] w-[30%] flex justify-center place-items-center  text-center  rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
                         setActiveState({
                             ...activState,

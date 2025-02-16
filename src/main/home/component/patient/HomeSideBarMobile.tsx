@@ -32,7 +32,7 @@ useGetSideBarMobileAnimation(sideBarRef)
 
   
   return (
-    <div ref={sideBarRef} className=" md:hidden w-[294px] h-[100%] bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-50 flex cursor-default overflow-y-hidden">
+    <div ref={sideBarRef} className="hidden md:hidden w-[294px] h-[100%] bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-50  cursor-default overflow-y-hidden">
 
       <div className="w-full ">
 
@@ -193,7 +193,7 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isFindASpecialistActive:true,
                 isCalenderActive:false
               })
-              closeSideBar()
+                closeSideBar()
               navigate('find-a-specialist')
             }}>
               <img alt="home" src={calenderIcon} />

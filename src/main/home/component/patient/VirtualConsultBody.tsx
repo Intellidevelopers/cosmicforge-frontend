@@ -40,11 +40,11 @@ const VirtualConsultBody = ()=>{
    
 
     return (
-        <div className="w-full">
+        <div className="w-full ">
             <HomeNavBar title="Virtual Consult"/>
             <HomeMobileNavBar title="Virtual Consult"/>
 
-            <div className="w-full ps-0 md:ps-[294px]">
+            <div className="w-full ps-0 md:ps-[294px] mt-4">
             <div className="hidden m-8 md:flex place-items-center gap-1">
 
 
@@ -56,19 +56,19 @@ const VirtualConsultBody = ()=>{
 
                 <div className="w-full relative ">
 
-                 <div className="w-fit right-[22%]  absolute  mt-6 z-50  font-light">
+                 <div className="w-full md:right-[22%]  flex justify-center place-items-center absolute  mt-6 z-50  font-light">
                     <div className={`w-[600px] ${(mode.video) && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
                     <p>{data.doctorName}</p>
                     <p>{data.doctorSpecialization}</p>
                     </div>
                  </div>
 
-                    <div className="ps-10 pe-10 h-[450px] ">
+                    <div className="md:ps-10 md:pe-10 h-[450px] ">
 
                         <div className={`w-full  ${(mode.video)?'block':'hidden'}`}>
                         <video ref={remoteVideoSteam}  autoPlay className="h-[450px] w-full  bg-black  opacity-90  object-cover"   />
                         <div className="z-50 rounded-lg">
-                    <video ref={localVideoStream}  autoPlay  className="absolute  rounded-lg  h-[250px] w-[200px]  bg-black  opacity-40 right-[60px] bottom-5 z-50 object-cover "  src="/"  />
+                    <video ref={localVideoStream}  autoPlay  className="absolute  rounded-lg h-[200px] w-[150px]  md:h-[250px] md:w-[200px]  bg-black  opacity-40 md:right-[60px]  bottom-0 right-0   md:bottom-5 z-50 object-cover "  src="/"  />
                     </div>
                         </div>
 

@@ -6,7 +6,7 @@
 const SpecialistCard = ({icon,title}:SpecialistCardProps) => {
       return (
 
-        <div className="m-3 min-w-fit flex flex-col justify-center place-items-center gap-2 ">
+        <div className="m-3 min-w-[160px] flex flex-col justify-center place-items-center gap-2 ">
             <img src={icon} className="object-center object-cover  w-[80px] h-[80px] rounded-full" />
             <p className='w-fit font-light text-[14px]'>{title} </p>
         </div>
