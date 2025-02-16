@@ -103,6 +103,8 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
+              closeSideBar()
+              navigate('/messages')
             }}>
               <img alt="home" src={messageIcon} />
               <p className="">Messages</p>
