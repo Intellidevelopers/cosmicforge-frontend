@@ -4,7 +4,7 @@ import { useLocation } from "react-router-dom";
 export enum ActiveRoutePath {
   home="home",
   "run-diagnosis"="run-diagnosis",
-  message="messages",
+  "messages"="messages",
   "book-appointment"="book-appointment",
   analytics="analytics",
   "first-aid"="first-aid",
@@ -28,8 +28,8 @@ const useGetActiveRoute = () => {
   const routePath = useLocation();
   const path = routePath.pathname.split("/")[1];
 
-     
 
+ 
   const [activeRoutePath, setActiveRoutePath] = useState<
     ActiveRoutePathProps
   >(() => {
@@ -40,6 +40,22 @@ const useGetActiveRoute = () => {
           isHomeActive: true,
           isRunDiagnosisActive:false,
           isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false
+        };
+      }
+
+      case ActiveRoutePath['messages']: {
+       
+        return {
+
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: true,
           isBookAppoinmentActive:false,
           isAnalyticsActive: false,
           isFirstAidActive: false,
@@ -64,7 +80,7 @@ const useGetActiveRoute = () => {
       }
 
       default:  return {
-        isHomeActive: true,
+        isHomeActive: false,
         isRunDiagnosisActive:false,
         isMessageActive: false,
         isBookAppoinmentActive:false,
@@ -98,6 +114,27 @@ const useGetActiveRoute = () => {
         return
       }
 
+      case ActiveRoutePath['messages']: {
+
+
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+            isHomeActive: false,
+            isRunDiagnosisActive:false,
+            isMessageActive: true,
+            isBookAppoinmentActive:false,
+            isAnalyticsActive: false,
+            isFirstAidActive: false,
+            isChatBotActive: false,
+            isFindASpecialistActive:false,
+            isCalenderActive:false
+          
+        }})
+        return 
+       
+        
+      }
       case ActiveRoutePath["find-a-specialist"]: {
         setActiveRoutePath(prevState=>{
           return{

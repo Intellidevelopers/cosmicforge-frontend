@@ -118,6 +118,7 @@ const VirtualConsultBody = ()=>{
                         
                         <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async()=>{
                             cancelMediaStream()
+                          
                         }}>
                         <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>
                         </div>

@@ -1,8 +1,11 @@
 import { MutableRefObject, useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
 
 const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElement | null>, localAudioStreamRef: MutableRefObject<HTMLAudioElement | null>) => {
 
+     const navigate = useNavigate()
+     const {state} = useLocation()
     interface ModeProps {
         video:boolean,
         audio:boolean
@@ -23,7 +26,7 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
 
         if(mediaStream){
             mediaStream.getTracks().forEach(track => {
-                mediaStream.removeTrack(track)
+               track.stop()
             }) 
 
             setMediaStream(null)
@@ -33,6 +36,8 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
             if(localAudioStreamRef.current){
                 localAudioStreamRef.current.srcObject = null
             }
+
+   
 
             
         }

@@ -19,6 +19,8 @@ import DoctorHome from './main/home/pages/doctor/DoctorHome'
 import FindASpecialistCardPage from './main/home/pages/patient/FindASpecalistCardPage'
 import FindSpecialistViewPage from './main/home/pages/patient/FindSpecialistViewPage'
 import VirtualConsultPage from './main/home/pages/VideoAndVoiceCall/VirtualConsultPage'
+import MainChatPage from './main/home/pages/chat/MainChatPage'
+import UserMessagesPage from './main/home/pages/chat/UserMessagesPage'
 
 
 
@@ -52,13 +54,27 @@ const router = createBrowserRouter([
         {
           path:'find-a-specialist/consult',
           element:<VirtualConsultPage/>
-        }
+        },
+
+       
       ]
     },
     {
       path:'favorites',
       element:<Favorites/>
+    },
+    {
+      path:'/',
+      element:<MainChatPage/>,
+      children:[
+        {
+          path:'messages',
+          element:<UserMessagesPage/>
+        }
+      ]
+      
     }
+  
   ]
  },
  {
