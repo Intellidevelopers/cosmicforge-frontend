@@ -1,6 +1,6 @@
-import readMessage  from '../../../../assets/icons/cosmicforge-read-mesages.svg'
+//import readMessage  from '../../../../assets/icons/cosmicforge-read-mesages.svg'
 import unReadMessage  from '../../../../assets/icons/cosmicforge-unread-messages.svg'
-import profile from '../../../../assets/images/cosmic-doctor-profile.svg'
+//import profile from '../../../../assets/images/cosmic-doctor-profile.svg'
 
  export interface UserMessagesCardProps {
  doctorImage:string,
