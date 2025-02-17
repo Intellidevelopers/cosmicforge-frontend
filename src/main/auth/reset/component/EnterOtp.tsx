@@ -14,14 +14,6 @@ interface components {
 const EnterOtp:React.FC<components> = ( { step, setStep, email } ) => {
     const [ activeInput, setActiveInput ] = useState<number>(0);
     const [ boxArray, setBoxArray ] = useState(['', '', '', '', '', '']);
-    const [ pageWidth, setPageWidth ] = useState('w-0');
-    const [ pageOp, setPageOp ] = useState('opacity-0')
-
-    useEffect( () => {
-        setPageWidth('w-screen');
-        setPageOp('opacity-100');
-    }, [])
-
     const navigate = useNavigate();
 
     useEffect( () => {
@@ -53,7 +45,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep, email } ) => {
             otpCode = otpCode.concat(val)
         });
         console.log(otpCode);
-        navigate('/account/signup/enter-personal-info')
+        navigate('/account/password-reset/success')
 
         // place api logic to confirm otp here
 
@@ -71,7 +63,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep, email } ) => {
     }
 
     return (
-        <div className={`h-screen ${pageWidth} ${pageOp} overflow-hidden bg-gray-100 md:px-0 transition-all duration-500 ease-in-out px-[5%] flex flex-col justify-center items-center`}>
+        <div className="h-screen w-screen bg-gray-100 md:px-0 px-[5%] flex flex-col justify-center items-center">
             <button onClick={goBack} className="flex absolute md:top-[7%] top-[3%] flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit">
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="35" deskSize="30"/>
                 <span className="md:flex hidden">Go back</span>
@@ -81,13 +73,13 @@ const EnterOtp:React.FC<components> = ( { step, setStep, email } ) => {
                     <img src={cosmicLogo} alt="cosmic forge logo" className="h-[100%] w-[100%]"/>
                 </div>
                 <div className="flex flex-col gap-2 w-[100%] md:mt-0 mt-[30px]">
-                    <span className="text-[20px] font-bold">OTP Code</span>
+                    <span className="text-[23px] font-extrabold">OTP Code</span>
                     <div className="flex flex-col gap-0">
                         <span>We sent you a 6-digit code via your email</span>
                         <span className="font-bold">{email}</span>
                     </div>
 
-                    <div className={`flex flex-row ${pageOp} transition-all duration-500 ease-in-out gap-2 w-[100%] md:mt-[10px] mt-[20px] justify-center items-center`}>
+                    <div className="flex flex-row gap-2 w-[100%] md:mt-[10px] mt-[20px] justify-center items-center">
                         { boxArray.map( (_, index) => {
                             return <input key={index} pattern="\d*" onKeyDown={(e) => handleKeyDown(e, index)} inputMode="numeric" id={`otp-${index}`} value={boxArray[index]} onChange={(e)=>{handleInput(e, index)}} className='h-[44px] w-[43px] border-[1px] border-gray-400 rounded-[5px] text-center bg-transparent' type="tel" maxLength={1} />
                         
