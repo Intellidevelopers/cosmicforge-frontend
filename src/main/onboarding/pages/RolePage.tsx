@@ -1,15 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import IconContainer from "../../generalComponents/IconContainer";
 import backIcon from "../../../assets/icons/Forward.png";
 import doctorImage from "../../../assets/images/doctor-role.png";
 import patientImage from "../../../assets/images/patient-role.png"
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../store/initStore";
 
 const RolePage:React.FC = () => {
     const [ accountRole, setAccountRole ] = useState('none');
     const [ isDoctorSelected, setIsDoctorSelected ] = useState(false);
     const [ isPatientSelected, setIsPatientSelected ] = useState(false);
+
+    const user = useSelector((state:RootReducer)=> state.user)
+ 
+    if(!user.emailValidated && !user.isAunthenticated){
+        return <Navigate to={'/signup/verifyEmail'} />
+    }
 
     const saveRole = () => {
         //place the logic to save role in local storage here

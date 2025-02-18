@@ -12,7 +12,7 @@ const SignUp1:React.FC = () => {
     return (
         <div>
             { step===1 && <EnterEmail step={step} setStep={setStep} email={email} setEmail={setEmail}/> }
-            { step===2 && <EnterOtp step={step} setStep={setStep}/> }
+            { step===2 && <EnterOtp email={email} step={step} setStep={setStep}/> }
         </div>
     )
 }

@@ -1,13 +1,22 @@
 
 
-import { Outlet } from "react-router-dom"
+import { Navigate, Outlet } from "react-router-dom"
 
 import HomeSideBar from "../../component/patient/HomeSideBar.ls"
 import HomeSideBarMobile from "../../component/patient/HomeSideBarMobile"
+import { useSelector } from "react-redux"
+import { RootReducer } from "../../../store/initStore"
 
 
 const HomeMainPage = () => {
 
+    const user = useSelector((state:RootReducer)=>state.user)
+
+   
+      if(!user.isAunthenticated){
+        return  <Navigate to={'/signup'}/>
+     
+      }
 
 
     return (

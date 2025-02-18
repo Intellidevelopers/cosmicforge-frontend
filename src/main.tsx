@@ -21,6 +21,9 @@ import FindSpecialistViewPage from './main/home/pages/patient/FindSpecialistView
 import VirtualConsultPage from './main/home/pages/VideoAndVoiceCall/VirtualConsultPage'
 import MainChatPage from './main/home/pages/chat/MainChatPage'
 import UserMessagesPage from './main/home/pages/chat/UserMessagesPage'
+import { Provider } from 'react-redux'
+import { persistore, store } from './main/store/initStore'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
 
@@ -36,7 +39,7 @@ const router = createBrowserRouter([
   element:<HomeMainPage/>,
   children:[
     {
-      path:'home',
+      path:'patient/home',
       element:<HomePage/>
     },
     {
@@ -107,7 +110,13 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <Provider store={store}>
+      <PersistGate persistor={persistore}>
+      <RouterProvider router={router}/>
+      </PersistGate>
+   
+    </Provider>
+    
 
  
    
