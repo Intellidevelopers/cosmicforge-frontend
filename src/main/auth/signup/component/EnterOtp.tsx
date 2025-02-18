@@ -12,10 +12,11 @@ import { authenticateUser } from "../../../store/reducers/userReducers";
 interface components {
     step: number,
     setStep: (e:number)=>void,
-    email:string
+    email:string,
+    userRole:string
 }
 
-const EnterOtp:React.FC<components> = ( { step, setStep,email} ) => {
+const EnterOtp:React.FC<components> = ( { step, setStep,email,userRole} ) => {
     const [ activeInput, setActiveInput ] = useState<number>(0);
     const [ boxArray, setBoxArray ] = useState(['', '', '', '', '', ''])
     const [counter,setCounter] = useState<string>('0:00')
@@ -27,7 +28,6 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email} ) => {
 
      const navigate = useNavigate()
      
-    
 
 
     const startTimer = () => {
@@ -142,16 +142,17 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email} ) => {
             
             const result = await validate_otp({
                 email,
-                otp:otpCode
+                otp:Number(otpCode)
             })
            
             if(result.status === 200){
                 stopAndClearTimer()
                 // move to next screen
                 dispatch(authenticateUser({emailValidated:true}))
-                navigate('/selectRole',{
+                navigate('/account/signup/enter-personal-info',{
                     state:{
-                        otp:result.otp
+                        otp:result.otp,
+                        role:userRole
                     }
                 })
                 return
@@ -216,6 +217,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email} ) => {
                     <button className={"  text-[#272EA7] hover:underline decoration-blue-600  text-[16px] w-fit"} disabled={(!counter.startsWith('0') && !counter.endsWith('0'))} onClick={ async()=>{
                         
                         setErrorMesage('')
+                        stopAndClearTimer()
                         if(errorMessage && boxArray.some(it=>{
                             return it != ''
                         })){
@@ -228,6 +230,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email} ) => {
                           const result = await   resend_otp({email})
                            if(result.status === 200){
                             setIsLoading(false)
+                           
                              startTimer()
 
                              return

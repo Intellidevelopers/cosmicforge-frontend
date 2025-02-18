@@ -26,6 +26,12 @@ import { persistore, store } from './main/store/initStore'
 import { PersistGate } from 'redux-persist/integration/react'
 
 
+import SignUp2 from './main/auth/signup/pages/Signup2';
+import RegSuccess from './main/auth/signup/pages/RegSuccess';
+import ResetLogins from './main/auth/reset/pages/ResetLogins';
+import LoginPage from './main/auth/login/pages/LoginPage';
+import EnterNewPassword from './main/auth/reset/pages/EnterNewPassword';
+import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 
 
 const router = createBrowserRouter([
@@ -96,12 +102,36 @@ const router = createBrowserRouter([
     element:<RolePage/>
   },
   {
-    path:'/signup',
+    path:'/account',
    element:<SignUpMain/>
   },
   {
-    path:'/signup/verifyEmail',
+    path:'/account/signup/verify-email',
    element:<SignUp1/>
+  },
+  {
+    path:'/account/signup/enter-personal-info',
+   element:<SignUp2/>
+  },
+  {
+    path:'/account/signup/registration-success',
+   element:<RegSuccess/>
+  },
+  {
+    path:'/account/password-reset',
+   element:<ResetLogins/>
+  },
+  {
+    path:'/account/password-reset/new-password',
+   element:<EnterNewPassword/>
+  },
+  {
+    path:'/account/password-reset/success',
+   element:<ResetSuccess/>
+  },
+  {
+    path:'/account/login',
+   element:<LoginPage/>
   },
 ])
 

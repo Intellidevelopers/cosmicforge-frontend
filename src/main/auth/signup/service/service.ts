@@ -46,3 +46,19 @@ import { ResponseBodyProps } from "../../../util/ApiResponseBodyProps"
    }
 
 
+   export const complete_registration = async (data:{}) =>{
+    let response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/user/complete-registration`,{
+          method:'post',
+          headers:{
+              'Content-Type':'application/json'
+          },
+          body:JSON.stringify(data)
+      })
+  
+     const result = await response.json() as ResponseBodyProps
+  
+      return result
+   }
+
+
+
