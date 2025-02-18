@@ -23,10 +23,10 @@ import MainChatPage from './main/home/pages/chat/MainChatPage'
 import UserMessagesPage from './main/home/pages/chat/UserMessagesPage'
 import SignUp2 from './main/auth/signup/pages/Signup2';
 import RegSuccess from './main/auth/signup/pages/RegSuccess';
-import ResetLogins from './main/auth/reset/pages/ResetLogins'
-import LoginPage from './main/auth/login/pages/LoginPage'
-import EnterNewPassword from './main/auth/reset/pages/EnterNewPassword'
-import ResetSuccess from './main/auth/reset/pages/ResetSuccess'
+import ResetLogins from './main/auth/reset/pages/ResetLogins';
+import LoginPage from './main/auth/login/pages/LoginPage';
+import EnterNewPassword from './main/auth/reset/pages/EnterNewPassword';
+import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 
 
 const router = createBrowserRouter([
@@ -118,7 +118,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/account/password-reset/new-password',
-   element:<ResetLogins/>
+   element:<EnterNewPassword/>
   },
   {
     path:'/account/password-reset/success',
