@@ -21,6 +21,7 @@ import FindSpecialistViewPage from './main/home/pages/patient/FindSpecialistView
 import VirtualConsultPage from './main/home/pages/VideoAndVoiceCall/VirtualConsultPage'
 import MainChatPage from './main/home/pages/chat/MainChatPage'
 import UserMessagesPage from './main/home/pages/chat/UserMessagesPage'
+import ProfileSetup from './main/profileSetup/pages/profileSetup'
 
 
 
@@ -100,6 +101,11 @@ const router = createBrowserRouter([
     path:'/signup/verifyEmail',
    element:<SignUp1/>
   },
+  {
+    path:'/profilesetup',
+   element:<ProfileSetup/>
+  },
+
 ])
 
 
