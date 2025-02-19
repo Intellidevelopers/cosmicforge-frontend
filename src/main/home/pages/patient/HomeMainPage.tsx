@@ -13,11 +13,18 @@ const HomeMainPage = () => {
     const user = useSelector((state:RootReducer)=>state.user)
 
    
-      if(!user.isAunthenticated){
-        return  <Navigate to={'/signup'}/>
+      if(!user.isAunthenticated ){
+        return  <Navigate to={'/account'}/>
      
       }
 
+      if(!user.keepMeSignedIn){
+        return  <Navigate to={'/account'}/>
+      }
+ 
+      if( user.data && user.data.role !== "client"){
+        return  <Navigate to={'/account'}/>
+      }
 
     return (
         <div className="font-poppins relative w-full h-dvh bg-[#F5F5F5] overflow-x-hidden">

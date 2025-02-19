@@ -40,7 +40,7 @@ const navigate = useNavigate()
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
-              navigate('/home')
+              navigate('/patient/home')
             }}   >
               <img alt="home" src={homeIcon} />
               <p className="">Home</p>

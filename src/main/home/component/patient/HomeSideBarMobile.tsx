@@ -66,7 +66,7 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isCalenderActive:false
               })
               closeSideBar()
-              navigate('/home')
+              navigate('/patient/home')
             }}   >
               <img alt="home" src={homeIcon} />
               <p className="">Home</p>
