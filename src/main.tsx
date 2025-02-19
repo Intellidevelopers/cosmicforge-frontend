@@ -33,6 +33,7 @@ import ResetLogins from './main/auth/reset/pages/ResetLogins';
 import LoginPage from './main/auth/login/pages/LoginPage';
 import EnterNewPassword from './main/auth/reset/pages/EnterNewPassword';
 import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
+import ComingSoonPage from './main/onboarding/pages/ComingSoonPage'
 
 
 const router = createBrowserRouter([
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
   ]
  },
  {
+  path:'/coming-soon',
+  element:<ComingSoonPage/>
+ },
+ {
   path:'/doctor',
   element:<DoctorHomeMainPage/>,
   children:[
@@ -111,7 +116,7 @@ const router = createBrowserRouter([
    element:<SignUp1/>
   },
   {
-    path:'/profilesetup',
+    path:'/profile/setup',
    element:<ProfileSetup/>
   },
 

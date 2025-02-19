@@ -55,10 +55,11 @@ const LoginPage: React.FC = () => {
        if(result.status === 200){
           setIsLoading(false)
         dispatch(authenticateUser({keepMeSignedIn:stayLoggedIn,data:result.data,isAunthenticated:true}))
-        switch(result.data.role){
+        navigate('/coming-soon')
+       /* switch(result.data.role){
             case  'client':  return navigate('/patient/home')
             case 'doctor':  return  navigate('/doctor/home')
-          }
+          }*/
         return
        }
 
