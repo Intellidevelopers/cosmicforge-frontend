@@ -22,8 +22,17 @@ import VirtualConsultPage from './main/home/pages/VideoAndVoiceCall/VirtualConsu
 import MainChatPage from './main/home/pages/chat/MainChatPage'
 import UserMessagesPage from './main/home/pages/chat/UserMessagesPage'
 import ProfileSetup from './main/profileSetup/pages/profileSetup'
+import { Provider } from 'react-redux'
+import { persistore, store } from './main/store/initStore'
+import { PersistGate } from 'redux-persist/integration/react'
 
 
+import SignUp2 from './main/auth/signup/pages/Signup2';
+import RegSuccess from './main/auth/signup/pages/RegSuccess';
+import ResetLogins from './main/auth/reset/pages/ResetLogins';
+import LoginPage from './main/auth/login/pages/LoginPage';
+import EnterNewPassword from './main/auth/reset/pages/EnterNewPassword';
+import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 
 
 const router = createBrowserRouter([
@@ -37,7 +46,7 @@ const router = createBrowserRouter([
   element:<HomeMainPage/>,
   children:[
     {
-      path:'home',
+      path:'patient/home',
       element:<HomePage/>
     },
     {
@@ -94,11 +103,11 @@ const router = createBrowserRouter([
     element:<RolePage/>
   },
   {
-    path:'/signup',
+    path:'/account',
    element:<SignUpMain/>
   },
   {
-    path:'/signup/verifyEmail',
+    path:'/account/signup/verify-email',
    element:<SignUp1/>
   },
   {
@@ -106,6 +115,29 @@ const router = createBrowserRouter([
    element:<ProfileSetup/>
   },
 
+    {path:'/account/signup/enter-personal-info',
+   element:<SignUp2/>
+  },
+  {
+    path:'/account/signup/registration-success',
+   element:<RegSuccess/>
+  },
+  {
+    path:'/account/password-reset',
+   element:<ResetLogins/>
+  },
+  {
+    path:'/account/password-reset/new-password',
+   element:<EnterNewPassword/>
+  },
+  {
+    path:'/account/password-reset/success',
+   element:<ResetSuccess/>
+  },
+  {
+    path:'/account/login',
+   element:<LoginPage/>
+  },
 ])
 
 
@@ -113,7 +145,13 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router}/>
+    <Provider store={store}>
+      <PersistGate persistor={persistore}>
+      <RouterProvider router={router}/>
+      </PersistGate>
+   
+    </Provider>
+    
 
  
    
