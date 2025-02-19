@@ -21,6 +21,7 @@ import FindSpecialistViewPage from './main/home/pages/patient/FindSpecialistView
 import VirtualConsultPage from './main/home/pages/VideoAndVoiceCall/VirtualConsultPage'
 import MainChatPage from './main/home/pages/chat/MainChatPage'
 import UserMessagesPage from './main/home/pages/chat/UserMessagesPage'
+import ProfileSetup from './main/profileSetup/pages/profileSetup'
 import { Provider } from 'react-redux'
 import { persistore, store } from './main/store/initStore'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -110,7 +111,11 @@ const router = createBrowserRouter([
    element:<SignUp1/>
   },
   {
-    path:'/account/signup/enter-personal-info',
+    path:'/profilesetup',
+   element:<ProfileSetup/>
+  },
+
+    {path:'/account/signup/enter-personal-info',
    element:<SignUp2/>
   },
   {
