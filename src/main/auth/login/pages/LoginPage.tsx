@@ -1,23 +1,77 @@
 import React, { useState } from "react";
 import cosmicLogo from '../../../../assets/icons/cosmic forge logo 1.svg';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import IconContainer from "../../../generalComponents/IconContainer";
 import backIcon from "../../../../assets/icons/Forward.png";
 import fbIcon from '../../../../assets/icons/fb.svg';
 import ggIcon from '../../../../assets/icons/google.svg';
 import appleIcon from '../../../../assets/icons/apple.svg';
+import Loader from "../../../generalComponents/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
+import { login_user } from "../service/service";
+import { authenticateUser } from "../../../store/reducers/userReducers";
 
 
 const LoginPage: React.FC = () => {
-    const [ username, setUsername ] = useState('');
+
+    const user = useSelector((state:RootReducer)=>state.user)
+    const dispatch = useDispatch()
+
+      if(user.keepMeSignedIn && user.isAunthenticated && user.data){
+           switch(user.data.role){
+             case  'client':  return <Navigate to={'/patient/home'} />
+             case 'doctor':  return <Navigate to={'/doctor/home'} />
+           }
+        return
+      }
+
+    const [ userEmail, setUserEmail ] = useState('');
     const [ password, setPassword ] = useState('');
     const [ stayLoggedIn, setStayLoggedIn ] = useState(false);
+    const  [errorMessage,setErrorMesage] = useState<string>('')
+   const [ isLoading, setIsLoading ] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
-    const startReg = () =>{
+    const startReg = async () =>{
+        setErrorMesage('')
         //form validation here
-        navigate('/home');
+      //  navigate('/home');
+      if(!userEmail || !password){
+        setErrorMesage('please enter required fields')
+        return
+      }
+      
+       try {
+        setErrorMesage('')
+        setIsLoading(true)
+
+          const result = await login_user({
+            email:userEmail,
+            password
+          })
+
+       if(result.status === 200){
+          setIsLoading(false)
+        dispatch(authenticateUser({keepMeSignedIn:stayLoggedIn,data:result.data,isAunthenticated:true}))
+        navigate('/coming-soon')
+       /* switch(result.data.role){
+            case  'client':  return navigate('/patient/home')
+            case 'doctor':  return  navigate('/doctor/home')
+          }*/
+        return
+       }
+
+       setIsLoading(false)
+       setErrorMesage(result.error ?? result.message)
+        
+
+       } catch (error) {
+        setIsLoading(false)
+        setErrorMesage('failed to fetch.')
+       }
+
     }
 
     const goToFP = () => {
@@ -30,7 +84,7 @@ const LoginPage: React.FC = () => {
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="35" deskSize="30"/>
                 <span className="md:flex hidden">Go back</span>
             </button>
-            <div className="flex-col items-center mt-[10%] md:mt-0 h-[90%] flex md:w-[400px] w-[90%] md:h-fit">
+            <div className="flex-col items-center mt-[10%] md:mt-8 h-[90%] flex md:w-[400px] w-[90%] md:h-fit">
                 <div className="w-[80%] md:flex hidden h-[50px]">
                     <img src={cosmicLogo} alt="cosmic forge logo" className="h-[100%] w-[100%]"/>
                 </div>
@@ -38,10 +92,10 @@ const LoginPage: React.FC = () => {
                 <span className="mt-2 text-[17px] md:text-[16px] self-start md:self-center">Welcome back.</span>
                 <div onSubmit={startReg} className="mt-[17px] w-[100%] flex flex-col gap-3 md:gap-2">
                     <div className="flex flex-col gap-1">
-                        <label className="text-[17px] md:text-[16px]">Email/ Username</label>
+                        <label className="text-[17px] md:text-[16px]">Email</label>
                         <input 
-                            value={username} 
-                            onChange={(e)=>{setUsername(e.target.value)}}
+                            value={userEmail} 
+                            onChange={(e)=>{setUserEmail(e.target.value)}}
                             className="w-[100%] px-[10px] outline-none rounded-[5px] bg-gray-300 md:h-[40px] h-[50px]" 
                             type="text" />
                     </div>
@@ -53,6 +107,12 @@ const LoginPage: React.FC = () => {
                             className="w-[100%] px-[10px] outline-none rounded-[5px] bg-gray-300 md:h-[40px] h-[50px]" 
                             type="text" />
                     </div>
+                    <div className="w-full flex flex-col place-items-center justify-center ">
+                    <p className={`${(errorMessage) ?'block':'hidden'} text-red-600`}>{errorMessage}</p>
+                          {
+                            isLoading &&   <Loader size="30px"/>
+                          }
+                        </div>
                     <div className="flex flex-row justify-between mt-[10px] items-center">
                         <div className="flex gap-2 flex-row items-center">
                             <input 

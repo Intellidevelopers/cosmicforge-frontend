@@ -1,13 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
+   interface UserPropsData {
+     role?:string,
+     token?:string,
+     email?:string,
+     fullname?:string,
+     lastName?:string
+   }
+
 
   export interface UserProps {
     isAunthenticated?:boolean,
     success?:boolean,
     failed?:boolean,
     message?:string,
-    data?:{} | null,
-    emailValidated?:boolean
+    data?:UserPropsData | null,
+    emailValidated?:boolean,
+    keepMeSignedIn?:boolean
  }
 
  const  initialState:UserProps = {
@@ -17,7 +26,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     failed:false,
     data: null,
     message:'',
-    emailValidated:false
+    emailValidated:false,
+    keepMeSignedIn:false
  }
 
 
@@ -32,6 +42,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
             state.success = action.payload.success ?? state.success,
             state.data = action.payload.data ?? state.data
             state.emailValidated = action.payload.emailValidated ?? state.emailValidated
+            state.keepMeSignedIn = action.payload.keepMeSignedIn ?? state.keepMeSignedIn
         }
     }
 

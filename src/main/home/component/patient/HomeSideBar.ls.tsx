@@ -15,19 +15,19 @@ const HomeSideBar = () => {
 const navigate = useNavigate()
   
   return (
-    <div className=" w-[294px] h-full bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-50 hidden md:flex cursor-default">
+    <div className=" w-[250px] h-screen bg-home-slidder-color shadow-md shadow-black/20 absolute left-0  p-4 z-50 hidden md:flex cursor-default">
       <div className="w-full ">
-        <img alt="logo" src={logo} />
+        <img alt="logo" className="h-[50px] w-[60%] mx-auto" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500">
-            <img alt="profile-image" src={profileIconTmp} />
+            <img className="h-[100px] w-[100px]" alt="profile-image" src={profileIconTmp} />
           </div>
           <p className="font-extralight text-cosmic-primary-color ">
             Edit Profile
           </p>
 
-          <div className="nav-bar-links-container  w-full flex flex-col justify-center place-items-center gap-4">
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+          <div className="nav-bar-links-container  w-full flex flex-col items-center gap-2">
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out pl-[15%]  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-100 pl-[15%]  text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md pl-[15%]  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: true,
@@ -40,13 +40,13 @@ const navigate = useNavigate()
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
-              navigate('/home')
+              navigate('/patient/home')
             }}   >
-              <img alt="home" src={homeIcon} />
-              <p className="">Home</p>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={homeIcon} />
+              <p className=" text-[15.5px]">Home</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isRunDiagnosisActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isRunDiagnosisActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -60,11 +60,11 @@ const navigate = useNavigate()
                 isCalenderActive:false
               })
             }}>
-              <img alt="diagnosis" src={calenderIcon} />
-              <p className="">Run Diagnosis</p>
+              <img className={"h-[25px] w-[25px]"} alt="diagnosis" src={calenderIcon} />
+              <p className=" text-[15.5px]">Run Diagnosis</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isMessageActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isMessageActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -80,13 +80,13 @@ const navigate = useNavigate()
               navigate('messages')
             }}>
               
-              <img alt="messages" src={messageIcon} />
-              <p className="">Messages</p>
+              <img className={"h-[25px] w-[25px]"} alt="messages" src={messageIcon} />
+              <p className=" text-[15.5px]">Messages</p>
             </div>
 
 
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isBookAppoinmentActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isBookAppoinmentActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -100,11 +100,11 @@ const navigate = useNavigate()
                 isCalenderActive:false
               })
             }}>
-              <img alt="home" src={appointmentIcon} />
-              <p className="">Book Appointment</p>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={appointmentIcon} />
+              <p className=" text-[15.5px]">Book Appointment</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -118,11 +118,11 @@ const navigate = useNavigate()
                 isCalenderActive:false
               })
             }}>
-              <img alt="home" src={analyticsIcon} />
-              <p className="">Analytics</p>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={analyticsIcon} />
+              <p className=" text-[15.5px]">Analytics</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isFirstAidActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isFirstAidActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -136,11 +136,11 @@ const navigate = useNavigate()
                 isCalenderActive:false
               })
             }}>
-              <img alt="home" src={firstAidIcon} />
-              <p className="">First Aid</p>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={firstAidIcon} />
+              <p className=" text-[15.5px]">First Aid</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isChatBotActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isChatBotActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -154,11 +154,11 @@ const navigate = useNavigate()
                 isCalenderActive:false
               })
             }}>
-              <img alt="home" src={calenderIcon} />
-              <p className="">Chat bot</p>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
+              <p className=" text-[15.5px]">Chat bot</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isFindASpecialistActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isFindASpecialistActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -173,11 +173,11 @@ const navigate = useNavigate()
               })
               navigate('find-a-specialist')
             }}>
-              <img alt="home" src={calenderIcon} />
-              <p className="">Find A Specialist</p>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
+              <p className=" text-[15.5px]">Find A Specialist</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isCalenderActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isCalenderActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ':'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -191,13 +191,13 @@ const navigate = useNavigate()
                 isCalenderActive:true
               })
             }}>
-              <img alt="home" src={calenderIcon} />
-              <p className="">Calendar</p>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
+              <p className=" text-[15.5px]">Calendar</p>
             </div>
 
-            <div className="w-full flex justify-start ms-5 text-cosmic-color-warning-color  hover:underline ">
-            <img alt="home" src={logOutIcon} />
-              <p className="">Log out</p>
+            <div className="w-full pl-[15%] flex justify-start transition-all duration-200 ease-out text-cosmic-color-warning-color  hover:underline ">
+            <img className={"h-[25px] w-[25px]"} alt="home" src={logOutIcon} />
+              <p className=" text-[15.5px]">Log out</p>
             </div>
           </div>
         </div>
