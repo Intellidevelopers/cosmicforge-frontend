@@ -13,7 +13,7 @@ const ProfileSetup = () => {
     
     const [formData, setFormData] = useState({
         gender: '',
-        age: 0,
+        age: '',
         bodyTemperature: '',
         bloodPressure: '',
         oxygenSaturation: '',
@@ -22,8 +22,8 @@ const ProfileSetup = () => {
     });
 
     const steps: number = 8;
-    const minHeight = "min-h-[70dvh]"; // Define the minHeight variable
-    const maxButtonWidth = ' w-[90%] md:w-[500px]'
+    const minHeight = "min-h-[50dvh]"; // Define the minHeight variable
+    const maxButtonWidth = ' w-[90%] sm:max-w-[500px]';
 
     const handleNext = () => {
         if (step < steps) {
@@ -43,9 +43,6 @@ const ProfileSetup = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
-    const setRadio = (value:string) => {
-        setFormData({ ...formData, profileType:value });
     };
 
     const handleGenderSelect = (gender: string) => {
@@ -75,7 +72,7 @@ const ProfileSetup = () => {
             case 1:
                 return formData.gender !== '';
             case 2:
-                return formData.age > 0;
+                return formData.age !== '';
             case 3:
                 return formData.bodyTemperature !== '';
             case 4:
@@ -100,7 +97,7 @@ const ProfileSetup = () => {
                     timeout={300}
                     classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
                 >
-                    <div className={`p-4 bg-white rounded shadow-md ${minHeight}`}>
+                    <div className={`p-4 bg-white ${minHeight}`}>
                         {step === 1 && (
                             <div className={`flex flex-col items-center ${minHeight}`}>
                                 <h2 className="text-xl font-bold mb-4 text-center">How do you identify?</h2>
@@ -130,7 +127,7 @@ const ProfileSetup = () => {
                                     name="age"
                                     value={formData.age}
                                     onChange={handleChange}
-                                    max={100}
+                                    max={150}
                                     className="border p-2 w-full"
                                     placeholder="Enter your age"
                                 />
@@ -145,20 +142,7 @@ const ProfileSetup = () => {
                                     <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
                                 ) : (
                                     <>
-                                        <button
-                                            onClick={() => handleDeviceConnect('bodyTemperature')}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-                                        >
-                                            Connect to Device
-                                        </button>
-                                        {connectionError && (
-                                            <button
-                                                onClick={() => handleDeviceConnect('bodyTemperature')}
-                                                className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-                                            >
-                                                Try Again
-                                            </button>
-                                        )}
+                                        <div>Connect to device section</div>
                                     </>
                                 )}
                             </div>
@@ -172,20 +156,7 @@ const ProfileSetup = () => {
                                     <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
                                 ) : (
                                     <>
-                                        <button
-                                            onClick={() => handleDeviceConnect('bloodPressure')}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-                                        >
-                                            Connect to Device
-                                        </button>
-                                        {connectionError && (
-                                            <button
-                                                onClick={() => handleDeviceConnect('bloodPressure')}
-                                                className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-                                            >
-                                                Try Again
-                                            </button>
-                                        )}
+                                        <div>Connect to device section</div>
                                     </>
                                 )}
                             </div>
@@ -199,20 +170,7 @@ const ProfileSetup = () => {
                                     <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
                                 ) : (
                                     <>
-                                        <button
-                                            onClick={() => handleDeviceConnect('oxygenSaturation')}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-                                        >
-                                            Connect to Device
-                                        </button>
-                                        {connectionError && (
-                                            <button
-                                                onClick={() => handleDeviceConnect('oxygenSaturation')}
-                                                className="bg-red-500 text-white px-4 py-2 rounded mt-4"
-                                            >
-                                                Try Again
-                                            </button>
-                                        )}
+                                        <div>Connect to device section</div>
                                     </>
                                 )}
                             </div>
@@ -221,7 +179,7 @@ const ProfileSetup = () => {
                             <div className={minHeight}>
                                 <h2 className="text-xl font-bold mb-4 text-center">Step 6: Enter Weight</h2>
                                 <input
-                                    type="text"
+                                    type="number"
                                     name="weight"
                                     value={formData.weight}
                                     onChange={handleChange}
@@ -235,7 +193,10 @@ const ProfileSetup = () => {
                                 <h2 className="text-xl font-bold mb-4 text-center">Step 7: Select Profile Type</h2>
                                 <div id='radio-section' className='flex flex-col justify-center items-center'>
                                     <div className='flex flex-col rounded-md shadow-slate-300 shadow-md justify-center items-center w-80% md:w-[50%]'>
-                                        <div className='flex border-[0.5px] p-2 border-slate-100 rounded-lg justify-between items-center w-full'>
+                                        <div
+                                            className='flex border-[0.5px] p-2 border-slate-100 rounded-lg justify-between items-center w-full cursor-pointer'
+                                            onClick={() => setFormData({ ...formData, profileType: 'Personal' })}
+                                        >
                                             <label htmlFor='option1' className='font-bold'>Personal</label>
                                             <input
                                                 type="radio"
@@ -248,7 +209,10 @@ const ProfileSetup = () => {
                                                 placeholder="Enter your profile type"
                                             />
                                         </div>
-                                        <div  className='flex border-[0.5px] p-2 border-slate-100 rounded-lg justify-between items-center w-full'>
+                                        <div
+                                            className='flex border-[0.5px] p-2 border-slate-100 rounded-lg justify-between items-center w-full cursor-pointer'
+                                            onClick={() => setFormData({ ...formData, profileType: 'Family' })}
+                                        >
                                             <label htmlFor='option2' className='font-bold'>Family</label>
                                             <input
                                                 type="radio"
@@ -278,6 +242,22 @@ const ProfileSetup = () => {
                                     className={maxButtonWidth + " bg-gray-500 text-white px-4 py-2 rounded"}
                                 >
                                     Back
+                                </button>
+                            )}
+                            {(!measurementRecorded && !connecting && (step === 3 || step === 4 || step === 5)) && (
+                                <button
+                                    onClick={() => handleDeviceConnect(step === 3 ? 'bodyTemperature' : step === 4 ? 'bloodPressure' : 'oxygenSaturation')}
+                                    className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                                >
+                                    Connect to Device
+                                </button>
+                            )}
+                            {connectionError && (step === 3 || step === 4 || step === 5) && (
+                                <button
+                                    onClick={() => handleDeviceConnect(step === 3 ? 'bodyTemperature' : step === 4 ? 'bloodPressure' : 'oxygenSaturation')}
+                                    className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+                                >
+                                    Try Again
                                 </button>
                             )}
                             <button
