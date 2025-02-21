@@ -88,19 +88,22 @@ const ProfileSetup = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className=" font-poppins container mx-auto pt-12">
             <ProgressBar completedSteps={step} totalSteps={steps} />
+
             <TransitionGroup>
+
                 <CSSTransition
+                     
                     key={step}
                     timeout={300}
                     classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
                 >
-                    <div className={`p-4 bg-white rounded shadow-md ${minHeight}`}>
+                    <div className={`p-4 mt-32   ${minHeight}`}>
                         {step === 1 && (
                             <div className={`flex flex-col items-center ${minHeight}`}>
-                                <h2 className="text-xl font-bold mb-4 text-center">How do you identify?</h2>
-                                <div className="flex space-x-4">
+                                <h2 className="text-[24px]  font-extrabold mb-12 text-center">How do you identify?</h2>
+                                <div className="flex gap-8 space-x-4">
                                     <div
                                         className={`cursor-pointer border-2 p-2 rounded ${formData.gender === 'male' ? 'border-blue-500' : 'border-gray-300'}`}
                                         onClick={() => handleGenderSelect('male')}
@@ -119,14 +122,15 @@ const ProfileSetup = () => {
                             </div>
                         )}
                         {step === 2 && (
-                            <div className={minHeight}>
+                            <div className={`${minHeight} flex flex-col  place-items-center` }>
                                 <h2 className="text-xl font-bold mb-4 text-center">Step 2: Enter Age</h2>
                                 <input
-                                    type="number"
+                                
+                                    type="text"
                                     name="age"
                                     value={formData.age}
                                     onChange={handleChange}
-                                    className="border p-2 w-full"
+                                    className="border p-2 w-[60%] md:w-[30%] rounded-md "
                                     placeholder="Enter your age"
                                 />
                             </div>
@@ -256,13 +260,15 @@ const ProfileSetup = () => {
                             <button
                                 onClick={handleNext}
                                 disabled={!isStepCompleted() && !measurementRecorded}
-                                className={`px-4 py-2 rounded ${isStepCompleted() || measurementRecorded ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
+                                className={`px-4 py-2 w-[60%] md:w-[30%] self-center rounded ${isStepCompleted() || measurementRecorded ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
                             >
                                 {step < steps ? 'Continue' : 'Submit'}
                             </button>
                         </div>
                     </div>
                 </CSSTransition>
+
+
             </TransitionGroup>
             <style>{`
                 .slide-forward-enter {

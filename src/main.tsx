@@ -34,6 +34,7 @@ import LoginPage from './main/auth/login/pages/LoginPage';
 import EnterNewPassword from './main/auth/reset/pages/EnterNewPassword';
 import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 import ComingSoonPage from './main/onboarding/pages/ComingSoonPage'
+import CustomCalender from './main/generalComponents/CustomCalender'
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,11 @@ const router = createBrowserRouter([
      path:'/',
     element:<LandingPage/>
   },
+
+  {
+    path:'/calender',
+   element:<CustomCalender/>
+ },
   
  {
   path:'/',
