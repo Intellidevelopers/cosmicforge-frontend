@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 
 interface CalenderProps {
     onDateSelected: (age: number, dateSelected: string) => void
+    setCalenderState: boolean
 }
 
 const CustomCalender = (props: CalenderProps) => {
@@ -23,7 +24,7 @@ const CustomCalender = (props: CalenderProps) => {
 
     const selectRef: MutableRefObject<HTMLSelectElement | null> = useRef(null)
 
-
+    const [closeCalender, setCloseCalender] = useState<boolean>(true)
 
 
 
@@ -31,6 +32,9 @@ const CustomCalender = (props: CalenderProps) => {
     const endYear = dayjs().year()
 
 
+    useEffect(() => {
+        setCloseCalender(props.setCalenderState)
+    }, [props.setCalenderState])
 
     useEffect(() => {
         let customYears: number[] = []
@@ -105,7 +109,9 @@ const CustomCalender = (props: CalenderProps) => {
         }
     }
 
-    return <div className="font-poppins w-full h-dvh  flex justify-center place-items-center">
+
+
+    return <div className={`${(closeCalender) && 'hidden'} bg-transparent font-poppins w-full h-fit flex justify-center `}>
 
 
         <div className="md:w-[50%] w-[80%]  min-h-[350px] bg-white shadow shadow-black p-4">
@@ -113,17 +119,18 @@ const CustomCalender = (props: CalenderProps) => {
             <div className="w-full flex  mt-2 md:m-10">
 
 
-                <select ref={selectRef} className="p-2 rounded-md outline-none bg-transparent" onChange={(e) => {
+                <select ref={selectRef} defaultValue={currentYear} className="p-2 rounded-md outline-none bg-transparent" onChange={(e) => {
 
                     setCurrentYear(Number(e.currentTarget.value))
 
+                }} onClick={(e) => {
+                    setCurrentYear(Number(e.currentTarget.value))
                 }}>
-                    <option selected>{currentYear}</option>
+
 
                     {
                         years.length > 0 && years.map((year, index) => (
-
-                            (index !== 0) && <option key={index}>{year}</option>
+                            <option key={index}>{year}</option>
                         ))
                     }
                 </select>
@@ -215,8 +222,8 @@ const CustomCalender = (props: CalenderProps) => {
 
             </div>
 
-            <div className="w-full flex justify-end space-x-4 text-cosmic-primary-color mt-2 cursor-default">
-                <p className="" onClick={() => {
+            <div className="w-full flex justify-end space-x-6   text-cosmic-primary-color mt-2 cursor-default">
+                <p className="hover:underline hover:decoration-cosmic-primary-color" onClick={() => {
 
                     let customYears: number[] = []
                     let customMonths: string[] = []
@@ -243,7 +250,7 @@ const CustomCalender = (props: CalenderProps) => {
 
                     }
                 }}>Reset</p>
-                <p onClick={() => {
+                <p className="hover:underline hover:decoration-cosmic-primary-color" onClick={() => {
                     let age = Number(dayjs().format('YYYY')) - currentYear!!
                     const day = dayjs().format('D')
                     const month = months.findIndex((item) => {
@@ -264,9 +271,14 @@ const CustomCalender = (props: CalenderProps) => {
 
 
                     props.onDateSelected(age, selectedDate!!)
-                }}>OK</p>
 
+                    setCloseCalender(true)
+                }}>OK</p>
+                <p className="text-cosmic-color-warning-color hover:underline hover:decoration-cosmic-color-warning-color" onClick={() => {
+                    setCloseCalender(true)
+                }}>cancel</p>
             </div>
+
 
 
 

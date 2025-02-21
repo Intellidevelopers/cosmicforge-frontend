@@ -3,6 +3,7 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ProgressBar from '../component/progressBar';
 import femaleImg from '../../../assets/images/cosmic-doc-2.png';
 import maleImg from '../../../assets/images/doctor-image.jpeg';
+import CustomCalender from '../../generalComponents/CustomCalender';
 
 const ProfileSetup = () => {
     const [step, setStep] = useState<number>(1);
@@ -10,10 +11,15 @@ const ProfileSetup = () => {
     const [connectionError, setConnectionError] = useState<boolean>(false);
     const [measurementRecorded, setMeasurementRecorded] = useState<boolean>(false);
     const [connecting, setConnecting] = useState<boolean>(false);
-    
+    const [toggleCalender, setToggleCalender] = useState<boolean>(true)
+
+    const [age, setAge] = useState<number>(0)
+
+    const [dateSelected, setDateSelected] = useState<string>('')
+
     const [formData, setFormData] = useState({
         gender: '',
-        age: 0,
+        age: '',
         bodyTemperature: '',
         bloodPressure: '',
         oxygenSaturation: '',
@@ -71,7 +77,7 @@ const ProfileSetup = () => {
             case 1:
                 return formData.gender !== '';
             case 2:
-                return formData.age > 0;
+                return formData.age !== '';
             case 3:
                 return formData.bodyTemperature !== '';
             case 4:
@@ -94,14 +100,14 @@ const ProfileSetup = () => {
             <TransitionGroup>
 
                 <CSSTransition
-                     
+
                     key={step}
                     timeout={300}
                     classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
                 >
-                    <div className={`p-4 mt-32   ${minHeight}`}>
+                    <div className={`p-4   ${minHeight}`}>
                         {step === 1 && (
-                            <div className={`flex flex-col items-center ${minHeight}`}>
+                            <div className={`flex flex-col items-center mt-20 ${minHeight}`}>
                                 <h2 className="text-[24px]  font-extrabold mb-12 text-center">How do you identify?</h2>
                                 <div className="flex gap-8 space-x-4">
                                     <div
@@ -122,34 +128,57 @@ const ProfileSetup = () => {
                             </div>
                         )}
                         {step === 2 && (
-                            <div className={`${minHeight} flex flex-col  place-items-center` }>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 2: Enter Age</h2>
-                                <input
-                                
-                                    type="text"
-                                    name="age"
-                                    value={formData.age}
-                                    onChange={handleChange}
-                                    className="border p-2 w-[60%] md:w-[30%] rounded-md "
-                                    placeholder="Enter your age"
-                                />
+                            <div className={`${minHeight} mt-6 flex flex-col gap-4  place-items-center `} >
+
+                                <div className='font-bold space-y-2'>
+                                    <p className='text-[24px]'>How old are you?</p>
+                                    <p className='text-cosmic-primary-color text-center md:text-start'>{age} years old</p>
+                                </div>
+                                <h2 className="text-xl font-bold mt-6 text-center">Step 2: Enter Age</h2>
+                                <div className="relative border p-2 w-[60%] md:w-[40%] h-[40px] rounded-md  flex">
+                                    <p
+
+
+                                        className='min:w-[90%]'
+
+                                    >{dateSelected}</p>
+                                    <i className='fa fa-angle-down absolute right-2 md:w-[50px]' onClick={() => {
+                                        setToggleCalender(!toggleCalender)
+                                    }} />
+                                </div>
+
+                                <div className='md:w-[800px]  mt-6'>
+                                    <CustomCalender onDateSelected={(age, date) => {
+                                        setAge(age)
+                                        setDateSelected(date)
+
+                                        if (age && date) {
+                                            setFormData({
+                                                ...formData,
+                                                age: date.concat(' ').concat(age.toString())
+                                            })
+                                        }
+                                    }} setCalenderState={toggleCalender} />
+                                </div>
                             </div>
                         )}
                         {step === 3 && (
                             <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 3: Enter Body Temperature</h2>
+                                <h2 className="text-xl mt-20 font-bold mb-4 text-center">Step 3: Enter Body Temperature</h2>
                                 {measurementRecorded ? (
                                     <p className="text-center text-green-500">Measurement recorded: {formData.bodyTemperature}</p>
                                 ) : connecting ? (
                                     <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
                                 ) : (
                                     <>
-                                        <button
-                                            onClick={() => handleDeviceConnect('bodyTemperature')}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-                                        >
-                                            Connect to Device
-                                        </button>
+                                        <div className='w-full flex justify-center mt-6 '>
+                                            <button
+                                                onClick={() => handleDeviceConnect('bodyTemperature')}
+                                                className="bg-blue-500 text-white px-4 py-2 rounded mt-4 "
+                                            >
+                                                Connect to Device
+                                            </button>
+                                        </div>
                                         {connectionError && (
                                             <button
                                                 onClick={() => handleDeviceConnect('bodyTemperature')}
@@ -164,19 +193,22 @@ const ProfileSetup = () => {
                         )}
                         {step === 4 && (
                             <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 4: Enter Blood Pressure</h2>
+                                <h2 className="text-xl  mt-20 font-bold mb-4 text-center">Step 4: Enter Blood Pressure</h2>
                                 {measurementRecorded ? (
                                     <p className="text-center text-green-500">Measurement recorded: {formData.bloodPressure}</p>
                                 ) : connecting ? (
                                     <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
                                 ) : (
                                     <>
-                                        <button
-                                            onClick={() => handleDeviceConnect('bloodPressure')}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-                                        >
-                                            Connect to Device
-                                        </button>
+                                        <div className='w-full flex justify-center mt-6 '>
+                                            <button
+                                                onClick={() => handleDeviceConnect('bloodPressure')}
+                                                className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                                            >
+                                                Connect to Device
+                                            </button>
+                                        </div>
+
                                         {connectionError && (
                                             <button
                                                 onClick={() => handleDeviceConnect('bloodPressure')}
@@ -191,19 +223,24 @@ const ProfileSetup = () => {
                         )}
                         {step === 5 && (
                             <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 5: Enter Oxygen Saturation</h2>
+                                <h2 className="text-xl mt-20 font-bold mb-4 text-center">Step 5: Enter Oxygen Saturation</h2>
                                 {measurementRecorded ? (
                                     <p className="text-center text-green-500">Measurement recorded: {formData.oxygenSaturation}</p>
                                 ) : connecting ? (
                                     <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
                                 ) : (
                                     <>
-                                        <button
-                                            onClick={() => handleDeviceConnect('oxygenSaturation')}
-                                            className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
-                                        >
-                                            Connect to Device
-                                        </button>
+
+                                        <div className='w-full flex justify-center mt-6 '>
+
+                                            <button
+                                                onClick={() => handleDeviceConnect('oxygenSaturation')}
+                                                className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                                            >
+                                                Connect to Device
+                                            </button>
+                                        </div>
+
                                         {connectionError && (
                                             <button
                                                 onClick={() => handleDeviceConnect('oxygenSaturation')}
@@ -218,7 +255,7 @@ const ProfileSetup = () => {
                         )}
                         {step === 6 && (
                             <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 6: Enter Weight</h2>
+                                <h2 className="text-xl mt-20 font-bold mb-4 text-center">Step 6: Enter Weight</h2>
                                 <input
                                     type="text"
                                     name="weight"
@@ -244,7 +281,7 @@ const ProfileSetup = () => {
                         )}
                         {step === 8 && (
                             <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 8: Review and Submit</h2>
+                                <h2 className="text-xl mt-20 font-bold mb-4 text-center">Step 8: Review and Submit</h2>
                                 <pre className="border p-2 w-full">{JSON.stringify(formData, null, 2)}</pre>
                             </div>
                         )}
@@ -252,7 +289,7 @@ const ProfileSetup = () => {
                             {step > 1 && (
                                 <button
                                     onClick={handleBack}
-                                    className="bg-gray-500 text-white px-4 py-2 rounded"
+                                    className="bg-gray-500 text-white px-4 py-2 w-[60%] md:w-[30%] self-center rounded"
                                 >
                                     Back
                                 </button>

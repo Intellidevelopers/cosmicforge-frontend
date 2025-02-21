@@ -204,17 +204,17 @@ const HomeBody = () => {
       <HomeNavBar title="Home" />
       <HomeMobileNavBar title="Home" />
 
-      <div className=" md:ps-[294px] ">
+      <div className=" md:ps-[250px] ">
         <div className="w-full  p-2  md:justify-center   inline-flex overflow-x-auto">
           <img
             src={aiImage}
             alt="Ai diagnosis image"
-            className=" bg-blue-400 max-h-[150px] rounded-xl me-8 mt-1"
+            className=" bg-blue-400 max-h-[125px] rounded-xl me-8 mt-1"
           />
           <img
             src={auRealityImage}
             alt="Ai diagnosis image"
-            className=" bg-orange-400   max-h-[150px] rounded-xl m-1"
+            className=" bg-orange-400   max-h-[125px] rounded-xl m-1"
           />
         </div>
 
@@ -224,7 +224,7 @@ const HomeBody = () => {
             <p className="font-extrabold w-fit md:w-[30%] mt-2 ms-2">
               Find a specialist
             </p>
-            <p className=" absolute right-0 md:right-10 md:ms-0 mt-2 me-2  md:w-[66%] text-end md:pe-12 font-extralight text-cosmic-primary-color">
+            <p className=" absolute right-0 hover:cursor-pointer hover:opacity-70 md:right-10 md:ms-0 mt-2 me-2  md:w-[66%] text-end md:pe-12 text-cosmic-primary-color">
               see more
             </p>
           </div>
@@ -238,22 +238,22 @@ const HomeBody = () => {
           </div>
         </div>
 
-        <div className="relative md:ps-7 w-full " >
-          <div className="relative mt-2 md:m-3 flex gap-4 place-items-center md:w-[92%] ">
+        <div className="relative w-[95%] pl-[4%] pb-[20px]" >
+          <div className="relative flex gap-4 place-items-center md:w-[100%] ">
             <p className="font-bold min-w-fit ms-2">Wellness Product</p>
 
-            <p className="absolute right-0 md:right-3  md:relative  font-extralight min-w-fit text-cosmic-color-lightBlue me-2">see more</p>
+            <p className="absolute right-0 md:ml-2 hover:opacity-70 cursor-pointer  md:relative  font-extralight min-w-fit text-cosmic-color-lightBlue me-2">see more</p>
             <div className="hidden w-[74%] m-2 relative md:flex justify-end place-content-center gap-5">
-              <img src={arrowIcon} alt="scroll left" onClick={() => {
+              <img src={arrowIcon} className="hover:scale-110 h-[30px] w-[35px] cursor-pointer" alt="scroll left" onClick={() => {
                 scrollWellnessProductCardRight(wellnessScrollContainerRef)
               }} />
-              <img src={arrowIcon} className="rotate-[-180deg]" alt="scroll left" onClick={() => {
+              <img src={arrowIcon} className="rotate-[-180deg] hover:scale-110 h-[30px] w-[35px] cursor-pointer" alt="scroll left" onClick={() => {
                 scrollWellnessProductCardLeft(wellnessScrollContainerRef)
               }} />
 
             </div>
           </div>
-          <div ref={wellnessScrollContainerRef} className="cursor-default font-medium  space-x-3  md:w-[92%] w-[98%] inline-flex  overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+          <div ref={wellnessScrollContainerRef} className="cursor-default font-medium  space-x-2  md:w-[100%] w-[98%] inline-flex  overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
 
             {
 
@@ -266,10 +266,10 @@ const HomeBody = () => {
           </div>
 
         </div>
+        </div>
 
 
       </div>
-    </div>
   );
 };
 
