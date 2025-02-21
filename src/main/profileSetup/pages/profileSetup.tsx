@@ -22,7 +22,8 @@ const ProfileSetup = () => {
     });
 
     const steps: number = 8;
-    const minHeight = "min-h-[50dvh]"; // Define the minHeight variable
+    const minHeight = "min-h-[70dvh]"; // Define the minHeight variable
+    const maxButtonWidth = ' w-[90%] md:w-[500px]'
 
     const handleNext = () => {
         if (step < steps) {
@@ -42,6 +43,9 @@ const ProfileSetup = () => {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+    const setRadio = (value:string) => {
+        setFormData({ ...formData, profileType:value });
     };
 
     const handleGenderSelect = (gender: string) => {
@@ -88,7 +92,7 @@ const ProfileSetup = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto p-4 min-h-[100dvh]">
             <ProgressBar completedSteps={step} totalSteps={steps} />
             <TransitionGroup>
                 <CSSTransition
@@ -126,6 +130,7 @@ const ProfileSetup = () => {
                                     name="age"
                                     value={formData.age}
                                     onChange={handleChange}
+                                    max={100}
                                     className="border p-2 w-full"
                                     placeholder="Enter your age"
                                 />
@@ -228,14 +233,36 @@ const ProfileSetup = () => {
                         {step === 7 && (
                             <div className={minHeight}>
                                 <h2 className="text-xl font-bold mb-4 text-center">Step 7: Select Profile Type</h2>
-                                <input
-                                    type="text"
-                                    name="profileType"
-                                    value={formData.profileType}
-                                    onChange={handleChange}
-                                    className="border p-2 w-full"
-                                    placeholder="Enter your profile type"
-                                />
+                                <div id='radio-section' className='flex flex-col justify-center items-center'>
+                                    <div className='flex flex-col rounded-md shadow-slate-300 shadow-md justify-center items-center w-80% md:w-[50%]'>
+                                        <div className='flex border-[0.5px] p-2 border-slate-100 rounded-lg justify-between items-center w-full'>
+                                            <label htmlFor='option1' className='font-bold'>Personal</label>
+                                            <input
+                                                type="radio"
+                                                id='option1'
+                                                name="profileType"
+                                                value={'Personal'}
+                                                onChange={handleChange}
+                                                checked={formData.profileType === 'Personal'}
+                                                className="border p-2 w-fit"
+                                                placeholder="Enter your profile type"
+                                            />
+                                        </div>
+                                        <div  className='flex border-[0.5px] p-2 border-slate-100 rounded-lg justify-between items-center w-full'>
+                                            <label htmlFor='option2' className='font-bold'>Family</label>
+                                            <input
+                                                type="radio"
+                                                id='option2'
+                                                name="profileType"
+                                                value={'Family'}
+                                                onChange={handleChange}
+                                                checked={formData.profileType === 'Family'}
+                                                className="border p-2 w-fit"
+                                                placeholder="Enter your profile type"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         )}
                         {step === 8 && (
@@ -244,11 +271,11 @@ const ProfileSetup = () => {
                                 <pre className="border p-2 w-full">{JSON.stringify(formData, null, 2)}</pre>
                             </div>
                         )}
-                        <div className="flex flex-col gap-4 justify-between mt-4">
+                        <div className="flex flex-col gap-4 justify-between mt-4 items-center">
                             {step > 1 && (
                                 <button
                                     onClick={handleBack}
-                                    className="bg-gray-500 text-white px-4 py-2 rounded"
+                                    className={maxButtonWidth + " bg-gray-500 text-white px-4 py-2 rounded"}
                                 >
                                     Back
                                 </button>
@@ -256,7 +283,7 @@ const ProfileSetup = () => {
                             <button
                                 onClick={handleNext}
                                 disabled={!isStepCompleted() && !measurementRecorded}
-                                className={`px-4 py-2 rounded ${isStepCompleted() || measurementRecorded ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
+                                className={` ${maxButtonWidth} px-4 py-2 rounded ${isStepCompleted() || measurementRecorded ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
                             >
                                 {step < steps ? 'Continue' : 'Submit'}
                             </button>
