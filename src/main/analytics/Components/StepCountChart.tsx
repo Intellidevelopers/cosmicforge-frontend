@@ -53,7 +53,6 @@ const StepCountChart:React.FC = () => {
     valueAxis.strictMinMax = true; // Enforce the min and max values
     valueAxis.numberFormatter.numberFormat = "#'%'"; // Format as percentages
 
-    console.log(valueAxis)
 
     // Create series (column series)
     const series = chart.series.push(new am4charts.ColumnSeries());
@@ -64,8 +63,7 @@ const StepCountChart:React.FC = () => {
     series.columns.template.fill = am4core.color("#921009"); // Bar fill color
 
     // Add horizontal gradient fill to bars
-    series.columns.template.adapter.add("fill", (fill, target) => {
-      console.log(fill, target)
+    series.columns.template.adapter.add("fill", () => {
       const gradient = new am4core.LinearGradient();
       gradient.rotation = 90; // Rotate gradient to make it horizontal
       gradient.addColor(am4core.color("#961711")); // Start color (left)
