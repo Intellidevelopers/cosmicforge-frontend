@@ -34,6 +34,8 @@ import LoginPage from './main/auth/login/pages/LoginPage';
 import EnterNewPassword from './main/auth/reset/pages/EnterNewPassword';
 import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 import ComingSoonPage from './main/onboarding/pages/ComingSoonPage'
+import PatientAnalytics from './main/analytics/pages/PatientAnalytics'
+import ComingSoon from './main/analytics/pages/ComingSoon'
 
 
 
@@ -145,6 +147,14 @@ const router = createBrowserRouter([
   {
     path:'/account/login',
    element:<LoginPage/>
+  },
+  {
+    path:'/patient/analytics',
+   element:<PatientAnalytics/>
+  },
+  {
+    path:'/patient/analytics-coming-soon',
+   element:<ComingSoon/>
   },
 ])
 
