@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { CanvasJSChart } from "canvasjs-react-charts";
-import { useEffect, useRef, useState } from "react";
 
-interface component {
-    color:String,
+interface ComponentProps {
+  color: string;
 }
 
-const AreaChart: React.FC<component> = ( { color }) => {
-  const chartContainerRef = useRef<HTMLDivElement>(null); // Ref for the container
-  const [dimensions, setDimensions] = useState({ width: 0, height: 0 }); // State for dimensions
+const AreaChart: React.FC<ComponentProps> = ({ color }) => {
+  const chartContainerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [isCanvasJSLoaded, setIsCanvasJSLoaded] = useState(false);
+
+  // Check if CanvasJS is loaded
+  useEffect(() => {
+    if (window.CanvasJS) {
+      setIsCanvasJSLoaded(true);
+    } else {
+      const interval = setInterval(() => {
+        if (window.CanvasJS) {
+          setIsCanvasJSLoaded(true);
+          clearInterval(interval);
+        }
+      }, 100);
+      return () => clearInterval(interval);
+    }
+  }, []);
 
   // Update dimensions on mount and window resize
   useEffect(() => {
@@ -19,38 +34,33 @@ const AreaChart: React.FC<component> = ( { color }) => {
       }
     };
 
-    // Initial update
     updateDimensions();
-
-    // Update on window resize
     window.addEventListener("resize", updateDimensions);
-
-    // Cleanup
     return () => window.removeEventListener("resize", updateDimensions);
   }, []);
 
   // Chart options
   const options = {
-    theme: "light2", // Use "light2", "dark1", "dark2", etc.
-    backgroundColor: "transparent", // Set background color to transparent
-    animationEnabled: true, // Enable animations
+    theme: "light2",
+    backgroundColor: "transparent",
+    animationEnabled: true,
     title: {
-      text: "", // Chart title
+      text: "",
     },
     axisX: {
-      valueFormatString: "MMM", // Format for X-axis labels
+      valueFormatString: "MMM",
     },
     axisY: {
-      title: "Value", // Y-axis title
-      includeZero: false, // Start Y-axis from zero
+      title: "Value",
+      includeZero: false,
       suffix: "K",
     },
-    width: dimensions.width, // Set chart width dynamically
+    width: dimensions.width,
     height: dimensions.height,
     data: [
       {
-        type: "area", // Set chart type to spline area
-        color: color, // Customize spline color
+        type: "area",
+        color: color,
         markerType: "none",
         toolTipContent: "{x}: {y}",
         dataPoints: [
@@ -67,23 +77,22 @@ const AreaChart: React.FC<component> = ( { color }) => {
           { x: new Date("2025-11-01"), y: 2 },
           { x: new Date("2025-12-01"), y: 4 },
         ],
-        // Use colorSet to create the gradient effect
-        fillColor: "transparent", // Remove any predefined solid fill
+        fillColor: "transparent",
         fillOpacity: 0.5,
         colorSet: "gradientColors",
       },
     ],
     colorSets: {
-      gradientColors: [
-        color, // Light pink
-        color, // Keep pink for initial gradient
-        "#FFFFFF", // White color at the end for the fade effect
-      ],
+      gradientColors: [color, color, "#FFFFFF"],
     },
   };
 
+  if (!isCanvasJSLoaded) {
+    return <div>Loading chart...</div>; // Show a loading state
+  }
+
   return (
-    <div ref={chartContainerRef} className="h-[210px]">
+    <div ref={chartContainerRef} style={{ width: "100%", height: "210px" }}>
       <CanvasJSChart options={options} />
     </div>
   );

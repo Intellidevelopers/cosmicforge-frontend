@@ -83,7 +83,7 @@ const SplineAreaChart: React.FC<component> = ( { color }) => {
   };
 
   return (
-    <div ref={chartContainerRef} className="h-[210px]">
+    <div ref={chartContainerRef} style={{ width: "100%", height: "210px" }}>
       <CanvasJSChart options={options} />
     </div>
   );
