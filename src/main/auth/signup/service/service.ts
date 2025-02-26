@@ -60,5 +60,20 @@ import { ResponseBodyProps } from "../../../util/ApiResponseBodyProps"
       return result
    }
 
+   export const sign_up_user_wih_google = async (data:any) =>{
+    let response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/auth/google/userRole`,{
+        method:'post',
+        headers:{
+            'Content-Type':'application/json'
+        },
+        body:JSON.stringify(data)
+        
+    })
+
+   const result = await response.json() as ResponseBodyProps
+
+    return result
+   }
+
 
 
