@@ -1,8 +1,14 @@
 import React, { useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ProgressBar from '../component/progressBar';
-import femaleImg from '../../../assets/images/cosmic-doc-2.png';
-import maleImg from '../../../assets/images/doctor-image.jpeg';
+import femaleImg from '../../../assets/images/femaleGender.svg';
+import maleImg from '../../../assets/images/maleGender.svg';
+import { getBirthDate } from '../utils/datePicker.utils';
+import ConnectDevice from '../component/connectDevice';
+import TakeMeasurement from '../component/takeMeasurement';
+// import { TemperatureTaken,TemperatureNotTaken } from '../component/temperatureTaken';
+
+
 
 const ProfileSetup = () => {
     const [step, setStep] = useState<number>(1);
@@ -10,6 +16,7 @@ const ProfileSetup = () => {
     const [connectionError, setConnectionError] = useState<boolean>(false);
     const [measurementRecorded, setMeasurementRecorded] = useState<boolean>(false);
     const [connecting, setConnecting] = useState<boolean>(false);
+    const [age,setAge] = useState<number>(0)
     
     const [formData, setFormData] = useState({
         gender: '',
@@ -17,13 +24,17 @@ const ProfileSetup = () => {
         bodyTemperature: '',
         bloodPressure: '',
         oxygenSaturation: '',
-        weight: '',
+        weight: {
+            value:0,
+            unit:''
+        },
         profileType: '',
     });
 
     const steps: number = 8;
     const minHeight = "min-h-[50dvh]"; // Define the minHeight variable
-    const maxButtonWidth = ' w-[90%] sm:max-w-[500px]';
+    const maxButtonWidth = ' w-[90%] max-w-[350px]';
+    const bodyLayout = ' flex flex-col justify-start items-center width-full gap-2'
 
     const handleNext = () => {
         if (step < steps) {
@@ -42,8 +53,32 @@ const ProfileSetup = () => {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if(step ===2 ){
+            setAge(9)
+            setFormData({ ...formData, [e.target.name]: getBirthDate(e.target.value) });
+            console.log(formData)
+            return    
+        }
+        if (step === 6) {
+            setFormData({ ...formData, [e.target.name]: {[formData.weight.value]: e.target.value} });
+        }
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
+
+    const setUnit = (quantity:string,weightUnit:string)=>{
+        if (quantity==='weight') {
+            setFormData((prevState)=>{
+                const newState = prevState
+                newState[weight]=weightUnit
+                console.log(newState)
+                return newState
+                }
+            );
+        }
+        // if (quantity==='height') {
+            
+        // }
+    }
 
     const handleGenderSelect = (gender: string) => {
         setFormData({ ...formData, gender });
@@ -80,7 +115,7 @@ const ProfileSetup = () => {
             case 5:
                 return formData.oxygenSaturation !== '';
             case 6:
-                return formData.weight !== '';
+                return formData.weight.value !== 0;
             case 7:
                 return formData.profileType !== '';
             default:
@@ -89,75 +124,75 @@ const ProfileSetup = () => {
     };
 
     return (
-        <div className="container mx-auto p-4 min-h-[100dvh]">
+        <div className="container mx-auto p-4 min-h-[100dvh] space-y-[5%]">
             <ProgressBar completedSteps={step} totalSteps={steps} />
             <TransitionGroup>
                 <CSSTransition
                     key={step}
                     timeout={300}
-                    classNames={direction === 'forward' ? 'slide-forward' : 'slide-backward'}
+                    classNames={'flex justify-center items-center ' + direction === 'forward' ? 'slide-forward' : 'slide-backward'}
                 >
-                    <div className={`p-4 bg-white ${minHeight}`}>
+                    <div className={`p-4 bg-white ${minHeight} `}>
                         {step === 1 && (
-                            <div className={`flex flex-col items-center ${minHeight}`}>
+                            <div className={`flex flex-col items-center ${minHeight} ${bodyLayout}`}>
                                 <h2 className="text-xl font-bold mb-4 text-center">How do you identify?</h2>
                                 <div className="flex space-x-4">
                                     <div
-                                        className={`cursor-pointer border-2 p-2 rounded ${formData.gender === 'male' ? 'border-blue-500' : 'border-gray-300'}`}
+                                        className={`cursor-pointer  p-2 rounded `}
                                         onClick={() => handleGenderSelect('male')}
                                     >
-                                        <img src={maleImg} alt="Male" className="rounded-full w-24 border-2 border-black h-24" />
+                                        <img src={maleImg} alt="Male" className={` ${formData.gender === 'male' ? 'border-blue-500' : 'border-gray-300'} border-2 rounded-full w-24 h-24`} />
                                         <p className="text-center mt-2">Male</p>
                                     </div>
                                     <div
-                                        className={`cursor-pointer border-2 p-2 rounded ${formData.gender === 'female' ? 'border-blue-500' : 'border-gray-300'}`}
+                                        className={`cursor-pointer  p-2 rounded `}
                                         onClick={() => handleGenderSelect('female')}
                                     >
-                                        <img src={femaleImg} alt="Female" className=" rounded-full border-2 border-black w-24 h-24" />
+                                        <img src={femaleImg} alt="Female" className={` ${formData.gender === 'female' ? 'border-blue-500' : 'border-gray-300'} rounded-full border-2 w-24 h-24`} />
                                         <p className="text-center mt-2">Female</p>
                                     </div>
                                 </div>
                             </div>
                         )}
                         {step === 2 && (
-                            <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 2: Enter Age</h2>
+                            <div className={minHeight +  bodyLayout}>
+                                <h2 className="sm:text-2xl font-bold  text-center">How old are you?</h2>
+                                <p className='font-bold sm:text-2xl text-cosmic-primary-color'>{age} years old.</p>
                                 <input
-                                    type="number"
+                                    type="date"
                                     name="age"
-                                    value={formData.age}
+                                    // value={formData.age}
                                     onChange={handleChange}
-                                    max={150}
                                     className="border p-2 w-full"
                                     placeholder="Enter your age"
                                 />
                             </div>
                         )}
                         {step === 3 && (
-                            <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 3: Enter Body Temperature</h2>
+                            <div className={minHeight// + ' flex flex-col items-center'
+                                + bodyLayout
+                            }>
+                                <h2 className="text-xl font-bold mb-4 text-center">Enter Body Temperature</h2>
                                 {measurementRecorded ? (
-                                    <p className="text-center text-green-500">Measurement recorded: {formData.bodyTemperature}</p>
+                                    // <TemperatureTaken/>
+                                    // <TemperatureNotTaken temperature={formData.bodyTemperature}/>
+                                    <div>Measurement success</div>
                                 ) : connecting ? (
-                                    <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
+                                    <TakeMeasurement recorded='Body Temperature'/>
                                 ) : (
-                                    <>
-                                        <div>Connect to device section</div>
-                                    </>
+                                        <ConnectDevice device={'Thermometer'}/>
                                 )}
                             </div>
                         )}
                         {step === 4 && (
-                            <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 4: Enter Blood Pressure</h2>
+                            <div className={minHeight + bodyLayout}>
+                                <h2 className="text-xl font-bold mb-4 text-center">Blood Pressure</h2>
                                 {measurementRecorded ? (
                                     <p className="text-center text-green-500">Measurement recorded: {formData.bloodPressure}</p>
                                 ) : connecting ? (
-                                    <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
+                                    <TakeMeasurement recorded='Blood pressure'/>
                                 ) : (
-                                    <>
-                                        <div>Connect to device section</div>
-                                    </>
+                                   <ConnectDevice device='Sphygmamometer'/>
                                 )}
                             </div>
                         )}
@@ -167,32 +202,40 @@ const ProfileSetup = () => {
                                 {measurementRecorded ? (
                                     <p className="text-center text-green-500">Measurement recorded: {formData.oxygenSaturation}</p>
                                 ) : connecting ? (
-                                    <p className="text-center text-blue-500">Please wait while the device takes the measurement...</p>
+                                    <TakeMeasurement recorded='Oxygen Saturation'/>
                                 ) : (
-                                    <>
-                                        <div>Connect to device section</div>
-                                    </>
+                                    <ConnectDevice device='wireless supported Pulse Oximeter'/>
                                 )}
                             </div>
                         )}
+                                    {/* WEIGHT INPUT */}
                         {step === 6 && (
-                            <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 6: Enter Weight</h2>
-                                <input
-                                    type="number"
-                                    name="weight"
-                                    value={formData.weight}
-                                    onChange={handleChange}
-                                    className="border p-2 w-full"
-                                    placeholder="Enter your weight"
-                                />
+                            <div className={minHeight + bodyLayout }>
+                                <h2 className="text-xl font-bold mb-4 text-center">Weight</h2>
+                                <p>Enter your weight manually:</p>
+                                <div className={'h-[40vh] max-h-[250px] w-[90%] max-w-[250px] border-2 border-neutral-300 rounded-[50%] justify-center p-4' + bodyLayout }>
+                                    <h3 className='text-sm sm:text-sm'>Enter weight:</h3>
+                                    <input
+                                        title='Weight'
+                                        type="number"
+                                        name="weight"
+                                        value={formData.weight.value}
+                                        onChange={handleChange}
+                                        className="p-2 text-cosmic-primary-color text-xl text-center font-bold focus:border-0 border-0 border-b-2 border-black w-[40%]"
+                                        placeholder="0"
+                                    /> 
+                                    <div className='flex gap-4'>
+                                        <p onClick={()=>{setUnit('weight','Kg')}}>Kg</p>
+                                        <p onClick={()=>{setUnit('weight','Lb')}}>Lb</p>
+                                    </div>
+                                </div>
                             </div>
                         )}
                         {step === 7 && (
                             <div className={minHeight}>
                                 <h2 className="text-xl font-bold mb-4 text-center">Step 7: Select Profile Type</h2>
                                 <div id='radio-section' className='flex flex-col justify-center items-center'>
-                                    <div className='flex flex-col rounded-md shadow-slate-300 shadow-md justify-center items-center w-80% md:w-[50%]'>
+                                    <div className='flex flex-col rounded-md shadow-slate-300 shadow-md justify-center items-center w-[80vw] md:w-[50%]'>
                                         <div
                                             className='flex border-[0.5px] p-2 border-slate-100 rounded-lg justify-between items-center w-full cursor-pointer'
                                             onClick={() => setFormData({ ...formData, profileType: 'Personal' })}
@@ -235,7 +278,8 @@ const ProfileSetup = () => {
                                 <pre className="border p-2 w-full">{JSON.stringify(formData, null, 2)}</pre>
                             </div>
                         )}
-                        <div className="flex flex-col gap-4 justify-between mt-4 items-center">
+                        {/* BUTTON SECTION */}
+                        <div className="flex flex-col sm:flex-row gap-4 justify-between sm:justify-center mt-4 items-center">
                             {step > 1 && (
                                 <button
                                     onClick={handleBack}
@@ -244,10 +288,10 @@ const ProfileSetup = () => {
                                     Back
                                 </button>
                             )}
-                            {(!measurementRecorded && !connecting && (step === 3 || step === 4 || step === 5)) && (
+                            {(!measurementRecorded && !connecting && !connectionError && (step === 3 || step === 4 || step === 5)) && (
                                 <button
                                     onClick={() => handleDeviceConnect(step === 3 ? 'bodyTemperature' : step === 4 ? 'bloodPressure' : 'oxygenSaturation')}
-                                    className="bg-blue-500 text-white px-4 py-2 rounded mt-4"
+                                    className={maxButtonWidth + " bg-cosmic-primary-color text-white px-4 py-2 rounded "}
                                 >
                                     Connect to Device
                                 </button>
@@ -255,7 +299,7 @@ const ProfileSetup = () => {
                             {connectionError && (step === 3 || step === 4 || step === 5) && (
                                 <button
                                     onClick={() => handleDeviceConnect(step === 3 ? 'bodyTemperature' : step === 4 ? 'bloodPressure' : 'oxygenSaturation')}
-                                    className="bg-red-500 text-white px-4 py-2 rounded mt-4"
+                                    className={maxButtonWidth + " bg-cosmic-primary-color text-white px-4 py-2 rounded "}
                                 >
                                     Try Again
                                 </button>
@@ -263,7 +307,7 @@ const ProfileSetup = () => {
                             <button
                                 onClick={handleNext}
                                 disabled={!isStepCompleted() && !measurementRecorded}
-                                className={` ${maxButtonWidth} px-4 py-2 rounded ${isStepCompleted() || measurementRecorded ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-500'}`}
+                                className={`  px-4 py-2 rounded ${isStepCompleted() || measurementRecorded ? 'bg-cosmic-color-lightBlue text-white ' + maxButtonWidth : 'bg-cosmic-primary-color opacity-50 text-white w-[90%] max-w-[200px]'}`}
                             >
                                 {step < steps ? 'Continue' : 'Submit'}
                             </button>
@@ -272,6 +316,14 @@ const ProfileSetup = () => {
                 </CSSTransition>
             </TransitionGroup>
             <style>{`
+                input[type="number"]{
+                    -moz-appearance:textfield;
+                }
+                input[type="number"]::-webkit-outer-spin-button,
+                input[type="number"]::-webkit-inner-spin-button{
+                    -webkit-appearance:none;
+                    margin:0;
+                }
                 .slide-forward-enter {
                     opacity: 0;
                     transform: translateX(100%);
