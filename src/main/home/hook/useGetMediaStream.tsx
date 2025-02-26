@@ -1,15 +1,15 @@
 import { MutableRefObject, useEffect, useState } from "react"
 
-
+interface ModeProps {
+    video:boolean,
+    audio:boolean
+}
 
 const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElement | null>, localAudioStreamRef: MutableRefObject<HTMLAudioElement | null>) => {
 
      //const navigate = useNavigate()
     // const {state} = useLocation()
-    interface ModeProps {
-        video:boolean,
-        audio:boolean
-    }
+   
     const [mediaStream, setMediaStream] = useState<MediaStream | null>()
 
     const [mode,setMode] = useState<ModeProps>(()=>{
