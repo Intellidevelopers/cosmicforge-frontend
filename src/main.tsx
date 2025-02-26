@@ -145,7 +145,7 @@ const router = createBrowserRouter([
    element:<ResetSuccess/>
   },
   {
-    path:'/account/auth',
+    path:'/auth',
     element:<SignUpMain/>
   },
   {
