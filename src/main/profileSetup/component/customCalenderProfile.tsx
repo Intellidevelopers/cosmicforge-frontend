@@ -2,11 +2,11 @@ import { MutableRefObject, useEffect, useRef, useState } from "react";
 import dayjs from 'dayjs';
 
 interface CalenderProps {
-    onDateSelected: (age: number, dateSelected: string) => void;
+    onDateSelected: (birthDate: Date) => void;
     setCalenderState: boolean;
 }
 
-const CustomCalender = (props: CalenderProps) => {
+const CustomCalenderProfile = (props: CalenderProps) => {
     const [firstDay, setFirstDay] = useState<number>();
     const [days, setDays] = useState<string[]>([]);
     const [years, setYears] = useState<number[]>([]);
@@ -41,12 +41,12 @@ const CustomCalender = (props: CalenderProps) => {
         setMonths(customMonths);
         setCurrentMonth(dayjs().format('MMMM'));
 
-        let shortD = [];
+        const shortD = [];
         for (let i = 0; i < 7; i++) {
             shortD.push(dayjs().day(i).format('ddd'));
         }
         setDays(shortD);
-    }, []);
+    }, [endYear, startYear]);
 
     useEffect(() => {
         const numOfDays = dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`, 'YYYY-MM').daysInMonth();
@@ -57,7 +57,7 @@ const CustomCalender = (props: CalenderProps) => {
         setSelectedDate(
             selectedDay.toString().concat(getDaySuffice(selectedDay)).concat(' ').concat(dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`, 'YYYY-MM').format('MMMM')).concat('  ').concat(dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`).format('YYYY'))
         );
-    }, [currentMonth, currentYear, selectedDay]);
+    }, [currentMonth, currentYear, months, selectedDay]);
 
     const getDaySuffice = (day: number) => {
         if (day >= 11 && day <= 13) {
@@ -77,7 +77,7 @@ const CustomCalender = (props: CalenderProps) => {
     };
 
     return (
-        <div className={`${closeCalender && 'hidden'} bg-transparent font-poppins w-full h-fit flex justify-center`}>
+        <div className={`${closeCalender && 'hidden'} bg-transparent font-poppins absolute top-[2rem] bottom-0 left-0 right-0 w-full h-fit flex justify-center`}>
             <div className="md:w-[50%] w-[80%] min-h-[350px] bg-white shadow shadow-black p-4">
                 <p className="bg-cosmic-primary-color p-4 text-white text-center font-extrabold">{selectedDate}</p>
                 <div className="w-full flex mt-2 md:m-10">
@@ -134,8 +134,8 @@ const CustomCalender = (props: CalenderProps) => {
                 </div>
                 <div className="w-full flex justify-end space-x-6 text-cosmic-primary-color mt-2 cursor-default">
                     <p className="hover:underline hover:decoration-cosmic-primary-color" onClick={() => {
-                        let customYears: number[] = [];
-                        let customMonths: string[] = [];
+                        const customYears: number[] = [];
+                        const customMonths: string[] = [];
                         for (let i = startYear; i <= endYear; i++) {
                             customYears.push(i);
                         }
@@ -148,7 +148,7 @@ const CustomCalender = (props: CalenderProps) => {
                         setMonths(customMonths);
                         setCurrentMonth(dayjs().format('MMMM'));
 
-                        let shortD = [];
+                        const shortD = [];
                         for (let i = 0; i < 7; i++) {
                             shortD.push(dayjs().day(i).format('ddd'));
                         }
@@ -159,20 +159,8 @@ const CustomCalender = (props: CalenderProps) => {
                         }
                     }}>Reset</p>
                     <p className="hover:underline hover:decoration-cosmic-primary-color" onClick={() => {
-                        let age = Number(dayjs().format('YYYY')) - currentYear!;
-                        const day = dayjs().format('D');
-                        const month = months.findIndex((item) => item === currentMonth);
-
-                        if (month > Number(dayjs().month())) {
-                            age -= 1;
-                        }
-
-                        if ((month === Number(dayjs().month())) && selectedDay < Number(day)) {
-                            age -= 1;
-                        }
-
-                        props.onDateSelected(age, selectedDate!);
-                        console.log(age, selectedDate!);
+                        const birthDate = new Date(`${currentYear}-${months.findIndex((item) => item === currentMonth) + 1}-${selectedDay}`);
+                        props.onDateSelected(birthDate);
                         setCloseCalender(true);
                     }}>OK</p>
                     <p className="text-cosmic-color-warning-color hover:underline hover:decoration-cosmic-color-warning-color" onClick={() => {
@@ -184,4 +172,4 @@ const CustomCalender = (props: CalenderProps) => {
     );
 };
 
-export default CustomCalender;
+export default CustomCalenderProfile;
