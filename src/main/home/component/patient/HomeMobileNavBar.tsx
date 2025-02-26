@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
  const HomeMobileNavBar  =  ({title}:NavBarProps) =>{
   const navigate =  useNavigate()
     return (
-        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-3 sticky top-0  ">
+        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0  ">
        
         <div className="md:w-[85%]  w-full flex   flex-wrap relative   ">
 
@@ -49,16 +49,15 @@ import { useNavigate } from "react-router-dom";
             }
            
 
-           <div className="w-full mt-5 flex flex-wrap   place-items-center gap-2 "> 
+           <div className={`w-full ${title!=='Home'?'hidden':''} mt-5 flex flex-wrap   place-items-center gap-2 `}> 
+              <div className={`font-extralight border p-[5px] w-[84%] rounded-md flex `}>
+                  <img alt='search' src={searchIcon} />
+                  <textarea className='w-full resize-none h-[25px] outline-none bg-[#F5F5F5]' />
 
-            <div className="font-extralight border p-[5px] w-[84%] rounded-md flex ">
-                <img alt='search' src={searchIcon} />
-                <textarea className='w-full resize-none h-[25px] outline-none bg-[#F5F5F5]' />
-
-            </div>
-            <div className="font-extralight min-w-[40px] rounded-md border pt-[7px] pb-[7px] flex justify-center">
-              <img alt='tune' src={tuneIcon} />
-            </div>
+              </div>
+              <div className="font-extralight min-w-[40px] rounded-md border pt-[7px] pb-[7px] flex justify-center">
+                <img alt='tune' src={tuneIcon} />
+              </div>
             </div>
       
         

@@ -9,6 +9,7 @@ import TakeMeasurement from '../component/takeMeasurement';
 // import { TemperatureTaken,TemperatureNotTaken } from '../component/temperatureTaken';
 
 
+import CustomCalender from '../../generalComponents/CustomCalender';
 
 const ProfileSetup = () => {
     const [step, setStep] = useState<number>(1);
@@ -17,7 +18,12 @@ const ProfileSetup = () => {
     const [measurementRecorded, setMeasurementRecorded] = useState<boolean>(false);
     const [connecting, setConnecting] = useState<boolean>(false);
     const [age,setAge] = useState<number>(0)
-    
+
+    const [toggleCalender, setToggleCalender] = useState<boolean>(true)
+
+
+    const [dateSelected, setDateSelected] = useState<string>('')
+
     const [formData, setFormData] = useState({
         gender: '',
         age: '',
@@ -69,8 +75,9 @@ const ProfileSetup = () => {
         if (quantity==='weight') {
             setFormData((prevState)=>{
                 const newState = prevState
-                newState[weight]=weightUnit
+                // newState[weight]=weightUnit
                 console.log(newState)
+                console.log(weightUnit)
                 return newState
                 }
             );
@@ -124,18 +131,21 @@ const ProfileSetup = () => {
     };
 
     return (
-        <div className="container mx-auto p-4 min-h-[100dvh] space-y-[5%]">
+        <div className="font-poppins container mx-auto p-4 min-h-[100dvh] pt-12 space-y-[5%]">
             <ProgressBar completedSteps={step} totalSteps={steps} />
+
             <TransitionGroup>
+
                 <CSSTransition
+
                     key={step}
                     timeout={300}
                     classNames={'flex justify-center items-center ' + direction === 'forward' ? 'slide-forward' : 'slide-backward'}
                 >
-                    <div className={`p-4 bg-white ${minHeight} `}>
+                    <div className={`p-4   ${minHeight}`}>
                         {step === 1 && (
-                            <div className={`flex flex-col items-center ${minHeight} ${bodyLayout}`}>
-                                <h2 className="text-xl font-bold mb-4 text-center">How do you identify?</h2>
+                            <div className={`flex flex-col items-center mt-20 ${minHeight} ${bodyLayout}`}>
+                                <h2 className="text-[24px]  font-extrabold mb-12 text-center">How do you identify?</h2>
                                 <div className="flex space-x-4">
                                     <div
                                         className={`cursor-pointer  p-2 rounded `}
@@ -155,17 +165,38 @@ const ProfileSetup = () => {
                             </div>
                         )}
                         {step === 2 && (
-                            <div className={minHeight +  bodyLayout}>
-                                <h2 className="sm:text-2xl font-bold  text-center">How old are you?</h2>
-                                <p className='font-bold sm:text-2xl text-cosmic-primary-color'>{age} years old.</p>
-                                <input
-                                    type="date"
-                                    name="age"
-                                    // value={formData.age}
-                                    onChange={handleChange}
-                                    className="border p-2 w-full"
-                                    placeholder="Enter your age"
-                                />
+                            <div className={`${minHeight} mt-6 +  bodyLayout `} >
+
+                                <div className='font-bold space-y-2'>
+                                    <p className='text-[24px]'>How old are you?</p>
+                                    <p className='text-cosmic-primary-color text-center md:text-start'>{age} years old</p>
+                                </div>
+                                <h2 className="text-xl font-bold mt-6 text-center">Step 2: Enter Age</h2>
+                                <div className="relative border p-2 w-[60%] md:w-[40%] h-[40px] rounded-md  flex">
+                                    <p
+
+
+                                        className='min:w-[90%]'
+
+                                    >{dateSelected}</p>
+                                    <i className='fa fa-angle-down absolute right-2 md:w-[50px]' onClick={() => {
+                                        setToggleCalender(!toggleCalender)
+                                    }} />
+                                </div>
+
+                                <div className='md:w-[800px]  mt-6'>
+                                    <CustomCalender onDateSelected={(age, date) => {
+                                        setAge(age)
+                                        setDateSelected(date)
+
+                                        if (age && date) {
+                                            setFormData({
+                                                ...formData,
+                                                age: date.concat(' ').concat(age.toString())
+                                            })
+                                        }
+                                    }} setCalenderState={toggleCalender} />
+                                </div>
                             </div>
                         )}
                         {step === 3 && (
@@ -198,7 +229,7 @@ const ProfileSetup = () => {
                         )}
                         {step === 5 && (
                             <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 5: Enter Oxygen Saturation</h2>
+                                <h2 className="text-xl mt-20 font-bold mb-4 text-center">Step 5: Enter Oxygen Saturation</h2>
                                 {measurementRecorded ? (
                                     <p className="text-center text-green-500">Measurement recorded: {formData.oxygenSaturation}</p>
                                 ) : connecting ? (
@@ -274,7 +305,7 @@ const ProfileSetup = () => {
                         )}
                         {step === 8 && (
                             <div className={minHeight}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 8: Review and Submit</h2>
+                                <h2 className="text-xl mt-20 font-bold mb-4 text-center">Step 8: Review and Submit</h2>
                                 <pre className="border p-2 w-full">{JSON.stringify(formData, null, 2)}</pre>
                             </div>
                         )}
@@ -283,7 +314,7 @@ const ProfileSetup = () => {
                             {step > 1 && (
                                 <button
                                     onClick={handleBack}
-                                    className={maxButtonWidth + " bg-gray-500 text-white px-4 py-2 rounded"}
+                                    className="bg-gray-500 text-white px-4 py-2 w-[60%] md:w-[30%] self-center rounded"
                                 >
                                     Back
                                 </button>
@@ -314,6 +345,8 @@ const ProfileSetup = () => {
                         </div>
                     </div>
                 </CSSTransition>
+
+
             </TransitionGroup>
             <style>{`
                 input[type="number"]{

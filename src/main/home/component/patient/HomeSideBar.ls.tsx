@@ -15,7 +15,7 @@ const HomeSideBar = () => {
 const navigate = useNavigate()
   
   return (
-    <div className=" w-[250px] h-screen bg-home-slidder-color shadow-md shadow-black/20 absolute left-0  p-4 z-50 hidden md:flex cursor-default">
+    <div className=" w-[250px] h-screen bg-home-slidder-color shadow-md shadow-black/20 fixed left-0  p-4 z-50 hidden md:flex cursor-default">
       <div className="w-full ">
         <img alt="logo" className="h-[50px] w-[60%] mx-auto" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
