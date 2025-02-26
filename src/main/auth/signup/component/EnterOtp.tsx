@@ -22,7 +22,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email,userRole} ) => {
     const [counter,setCounter] = useState<string>('0:00')
      const  [errorMessage,setErrorMesage] = useState<string>('')
      const [ isLoading, setIsLoading ] = useState<boolean>(false);
-     const [counterId,setCounterId] = useState<number>()
+     const [counterId,setCounterId] = useState<NodeJS.Timeout>()
 
      const dispatch = useDispatch()
 
