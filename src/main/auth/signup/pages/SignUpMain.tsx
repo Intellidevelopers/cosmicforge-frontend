@@ -99,8 +99,8 @@ const SignUpMain: React.FC = () => {
 
                                 sign_up_user_wih_google({ userRole })
 
-                                window.location.href = `${import.meta.env.VITE_BASE_REST_URL}/auth/google`
-
+                                window.open( `${import.meta.env.VITE_BASE_REST_URL}/auth/google`,'_blank')
+                            
                             }} />
                         </button>
                         <button className="md:h-[35px] w-[45px] h-[45px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
