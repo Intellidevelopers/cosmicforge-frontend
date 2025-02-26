@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import OnboardImage from '../../../../assets/images/introframe.jpeg';
 import logo from '../../../../assets/icons/cosmic forge logo 1.svg';
 import fbIcon from '../../../../assets/icons/fb.svg';
@@ -31,10 +31,7 @@ const SignUpMain: React.FC = () => {
     const decodedData = JSON.parse(JSON.stringify(jwt.decode(token!!)))
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        
-  alert(params)
-    },[])
+    
 
     if (decodedData && decodedData.token) {
 
