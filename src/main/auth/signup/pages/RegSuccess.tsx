@@ -13,6 +13,7 @@ const RegSuccess: React.FC = () => {
      if(!user.emailValidated && !user.isAunthenticated){
    return <Navigate to={'/account'}/>
      }
+
     return (
         <div className="flex flex-row bg-gray-100 py-[50px] md:px-[25px] justify-center h-screen w-screen">
             <div className="flex-col items-center mt-[10%] md:mt-0 h-[90%] justify-between flex md:w-[400px] w-[90%] md:h-fit">
@@ -31,7 +32,7 @@ const RegSuccess: React.FC = () => {
                         <div className="md:h-[150px] h-[175px] bg-gradient-to-t from-gray-100 to-transparent self-end w-[100%] left-0 absolute"></div>
                     </div>
                 <div className="mt-[17px] w-[100%] flex flex-col items-center gap-2">
-                    <Link to={'/profile-setup'} className="md:h-[40px] flex flex-col justify-center items-center h-[45px] md:w-[100%] mt-[20px] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Profile Set Up</Link>
+                    <Link to={'/profile/setup'} className="md:h-[40px] flex flex-col justify-center items-center h-[45px] md:w-[100%] mt-[20px] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Profile Set Up</Link>
                     <button className="md:h-[40px] h-[45px] md:w-[100%] md:mt-0 mt-[20px] w-[90%] rounded-[5px] bg-[#272EA7]/50 cursor-not-allowed text-white">Home</button>
                 </div>
             </div>

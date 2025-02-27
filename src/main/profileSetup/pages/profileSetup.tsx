@@ -6,22 +6,32 @@ import maleImg from '../../../assets/images/maleGender.svg';
 import { getBirthDate, parseDate, getAge} from '../utils/datePicker.utils';
 import ConnectDevice from '../component/connectDevice';
 import TakeMeasurement from '../component/takeMeasurement';
-// import { TemperatureTaken,TemperatureNotTaken } from '../component/temperatureTaken';
-
-
+import { TemperatureNotTaken, TemperatureTaken } from '../component/temperatureTaken';
+import BloodPressureCard from '../component/bloodPressureCard.tsx'
+import OxySaturationCard from '../component/oxySaturationCard.tsx';
+import {Navigate, useNavigate} from 'react-router-dom';
 import CustomCalenderProfile from '../component/customCalenderProfile.tsx';
+import { useSelector } from 'react-redux';
+import { RootReducer } from '../../store/initStore.tsx';
 
 const ProfileSetup = () => {
+
+
+    const user = useSelector((state:RootReducer)=> state.user)
+ 
+
+     if(!user.emailValidated && !user.isAunthenticated){
+   return <Navigate to={'/account'}/>
+     }
+
+     
     const [step, setStep] = useState<number>(1);
     const [direction, setDirection] = useState<string>('forward');
     const [connectionError, setConnectionError] = useState<boolean>(false);
     const [measurementRecorded, setMeasurementRecorded] = useState<boolean>(false);
     const [connecting, setConnecting] = useState<boolean>(false);
     const [age,setAge] = useState<number>(0)
-
     const [toggleCalender, setToggleCalender] = useState<boolean>(true)
-
-
     const [dateSelected, setDateSelected] = useState<string>('')
 
     const [formData, setFormData] = useState({
@@ -43,8 +53,9 @@ const ProfileSetup = () => {
 
     const steps: number = 8;
     const minHeight = "min-h-[50dvh]"; // Define the minHeight variable
-    const maxButtonWidth = ' w-[90%] max-w-[350px]';
+    const maxButtonWidth = ' w-[90%] max-w-[300px] rounded ';
     const bodyLayout = ' flex flex-col justify-start items-center width-full gap-2'
+    const navigate = useNavigate()
 
     const handleNext = () => {
         if (step < steps) {
@@ -54,16 +65,23 @@ const ProfileSetup = () => {
             setConnecting(false); // Reset connecting state
         }
         else{
-            console.log(formData)
+            //HANDLE FORM SUBMISSION HERE
+            try {
+                console.log(formData)
+                navigate('/profile/complete')
+            } catch (error) {
+                alert(error) 
+            }
         }
     };
 
-    const handleBack = () => {
-        if (step > 1) {
-            setDirection('backward');
-            setStep(step - 1);
-        }
-    };
+    //FUNCTION TO HANDLE BACK MOVEMENT. COMMENTED OUT COZ BACK BUTTON IS DISABLED
+    // const handleBack = () => {
+    //     if (step > 1) {
+    //         setDirection('backward');
+    //         setStep(step - 1);
+    //     }
+    // };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -158,7 +176,7 @@ const ProfileSetup = () => {
                     <div className={`p-4 ${bodyLayout}  ${minHeight}`}>
                         {step === 1 && (
                             <div className={`flex flex-col items-center  ${minHeight} ${bodyLayout}`}>
-                                <h2 className="text-[24px]  font-extrabold mb-12 text-center">How do you identify?</h2>
+                                <h2 className="text-[24px] font-bold sm:font-extrabold mb-6 text-center">How do you identify?</h2>
                                 <div className="flex space-x-4">
                                     <div
                                         className={`cursor-pointer  p-2 rounded `}
@@ -178,11 +196,12 @@ const ProfileSetup = () => {
                             </div>
                         )}
                         {step === 2 && (
-                            <div className={`${minHeight} mt-6 +  bodyLayout `} >
+                            <div className={`${minHeight}  +  bodyLayout `} >
                                 <h2 className="text-xl font-bold mt-6 text-center">Step 2: Enter Age</h2>
                                 <div className={bodyLayout}>
                                     <p className="font-extrabold text-cosmic-primary-color text-lg">{age} years old.</p>
-                                    <div className="relative border p-2 w-full sm:w-[60%] md:w-[40%] h-[40px] rounded-md  flex">
+                                    <div className="relative border p-2 w-full sm:w-[60%] md:w-[60%] h-[40px] rounded-md mt-8 flex">
+                                        <p className='absolute top-[-1rem]  text-xs left-0'>Date of Birth</p>
                                         <p className='min:w-[90%]'>{dateSelected}</p>
                                         <i className='fa fa-angle-down absolute right-2 md:w-[50px]' onClick={() => {
                                             setToggleCalender(!toggleCalender)
@@ -207,11 +226,13 @@ const ProfileSetup = () => {
                         )}
                         {step === 3 && (
                             <div className={minHeight + bodyLayout}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Enter Body Temperature</h2>
+                                <h2 className="text-xl font-bold mb-4 text-center">Body Temperature</h2>
                                 {measurementRecorded ? (
-                                    <div>Measurement success</div>
+                                    // <div>Measurement success</div>
+                                    <TemperatureTaken temperature={formData.bodyTemperature}/>
                                 ) : connecting ? (
-                                    <TakeMeasurement recorded='Body Temperature'/>
+                                    // <TakeMeasurement recorded='Body Temperature'/>
+                                    <TemperatureNotTaken/>
                                 ) : (
                                     <ConnectDevice device={'Thermometer'}/>
                                 )}
@@ -219,9 +240,11 @@ const ProfileSetup = () => {
                         )}
                         {step === 4 && (
                             <div className={minHeight + bodyLayout}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Blood Pressure</h2>
+                                <h2 className="text-xl font-bold mb-1 text-center">Blood Pressure</h2>
+                                {formData.bloodPressure && <p className='font-bold text-cosmic-primary-color text-xl'>{formData.bloodPressure} mmHg</p>}
                                 {measurementRecorded ? (
-                                    <p className="text-center text-green-500">Measurement recorded: {formData.bloodPressure}</p>
+                                    <BloodPressureCard/>
+                                    // <p className="text-center text-green-500"></p>
                                 ) : connecting ? (
                                     <TakeMeasurement recorded='Blood pressure'/>
                                 ) : (
@@ -231,9 +254,10 @@ const ProfileSetup = () => {
                         )}
                         {step === 5 && (
                             <div className={minHeight + bodyLayout}>
-                                <h2 className="text-xl mt-20 font-bold mb-4 text-center">Step 5: Enter Oxygen Saturation</h2>
+                                <h2 className="text-xl  font-bold mb-1 text-center">O<span className='text-xs relative bottom-[-3px]'>2</span> saturation (SpO<span className='text-xs relative bottom-[-3px]'>2</span>)</h2>
+                                {formData.oxygenSaturation && <p className='font-bold text-cosmic-primary-color text-xl'>{formData.oxygenSaturation}%</p>}
                                 {measurementRecorded ? (
-                                    <p className="text-center text-green-500">Measurement recorded: {formData.oxygenSaturation}</p>
+                                    <OxySaturationCard/>
                                 ) : connecting ? (
                                     <TakeMeasurement recorded='Oxygen Saturation'/>
                                 ) : (
@@ -252,7 +276,7 @@ const ProfileSetup = () => {
                                         title='Weight'
                                         type="number"
                                         name="weight"
-                                        value={formData.weight.value}
+                                        // value={formData.weight.value}
                                         onChange={handleChange}
                                         className="p-2 text-cosmic-primary-color text-xl text-center font-bold focus:border-0 border-0 border-b-2 border-black w-[40%]"
                                         placeholder="0"
@@ -273,10 +297,42 @@ const ProfileSetup = () => {
                                     </div>
                                 </div>
                             </div>
+                        )} 
+                        {step === 7 && (
+                            <div className={minHeight + bodyLayout}>
+                                <h2 className="text-xl font-bold mb-4 text-center">Height</h2>
+                                <p>Enter your height manually:</p>
+                                <div className={'h-[40vh] max-h-[250px] w-[90%] max-w-[250px] border-2 border-neutral-300 rounded-[50%] justify-center p-4' + bodyLayout}>
+                                    <h3 className='text-sm sm:text-sm'>Enter height:</h3>
+                                    <input
+                                        title='Height'
+                                        type="number"
+                                        name="height"
+                                        // value={formData.height.value}
+                                        onChange={handleChange}
+                                        className="p-2 text-cosmic-primary-color text-xl text-center font-bold focus:border-0 border-0 border-b-2 border-black w-[40%]"
+                                        placeholder="0"
+                                    /> 
+                                    <div className='flex gap-4'>
+                                        <p
+                                            onClick={() => setUnit('height', 'Cm')}
+                                            className={`p-2 rounded-[50%] cursor-pointer ${formData.height.unit === 'Cm' ? 'bg-cosmic-primary-color text-white' : ''}`} 
+                                        >
+                                            Cm
+                                        </p>
+                                        <p
+                                            onClick={() => setUnit('height', 'In')}
+                                            className={`p-2 rounded-[50%]  cursor-pointer ${formData.height.unit === 'In' ? 'bg-cosmic-primary-color text-white' : ''}`}
+                                        >
+                                            In
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         )}
                         {step === 8 && (
                             <div className={minHeight + bodyLayout}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Step 7: Select Profile Type</h2>
+                                <h2 className="text-xl font-bold mb-4 text-center">Select Profile Type</h2>
                                 <div id='radio-section' className='flex flex-col w-[90vw] justify-center items-center'>
                                     <div className='flex flex-col rounded-md shadow-slate-300 shadow-md justify-center items-center w-[80vw] md:w-[50%]'>
                                         <div
@@ -315,52 +371,21 @@ const ProfileSetup = () => {
                                 </div>
                             </div>
                         )}
-                        {step === 7 && (
-                            <div className={minHeight + bodyLayout}>
-                                <h2 className="text-xl font-bold mb-4 text-center">Height</h2>
-                                <p>Enter your height manually:</p>
-                                <div className={'h-[40vh] max-h-[250px] w-[90%] max-w-[250px] border-2 border-neutral-300 rounded-[50%] justify-center p-4' + bodyLayout}>
-                                    <h3 className='text-sm sm:text-sm'>Enter height:</h3>
-                                    <input
-                                        title='Height'
-                                        type="number"
-                                        name="height"
-                                        value={formData.height.value}
-                                        onChange={handleChange}
-                                        className="p-2 text-cosmic-primary-color text-xl text-center font-bold focus:border-0 border-0 border-b-2 border-black w-[40%]"
-                                        placeholder="0"
-                                    /> 
-                                    <div className='flex gap-4'>
-                                        <p
-                                            onClick={() => setUnit('height', 'Cm')}
-                                            className={`p-2 rounded-[50%] cursor-pointer ${formData.height.unit === 'Cm' ? 'bg-cosmic-primary-color text-white' : ''}`}
-                                        >
-                                            Cm
-                                        </p>
-                                        <p
-                                            onClick={() => setUnit('height', 'In')}
-                                            className={`p-2 rounded-[50%]  cursor-pointer ${formData.height.unit === 'In' ? 'bg-cosmic-primary-color text-white' : ''}`}
-                                        >
-                                            In
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
+                       
                         {/* BUTTON SECTION */}
                         <div className="flex flex-col sm:flex-row gap-4 justify-between w-full sm:justify-center mt-4 items-center">
-                            {step > 1 && (
+                            {/* {step > 1 && ( //BACK BUTTON FOR DEBUGGING PURPOSES. DISABLED UNTIL NEEDED
                                 <button
                                     onClick={handleBack}
                                     className={maxButtonWidth + " bg-gray-500 text-white px-4 py-2 w-[60%] md:w-[30%] self-center rounded"}
                                 >
                                     Back
                                 </button>
-                            )}
+                            )} */}
                             {(!measurementRecorded && !connecting && !connectionError && (step === 3 || step === 4 || step === 5)) && (
                                 <button
                                     onClick={() => handleDeviceConnect(step === 3 ? 'bodyTemperature' : step === 4 ? 'bloodPressure' : 'oxygenSaturation')}
-                                    className={maxButtonWidth + " bg-cosmic-primary-color text-white px-4 py-2 rounded "}
+                                    className={maxButtonWidth + " bg-cosmic-primary-color text-white px-4 py-2  "}
                                 >
                                     Connect to Device
                                 </button>
@@ -368,7 +393,7 @@ const ProfileSetup = () => {
                             {connectionError && (step === 3 || step === 4 || step === 5) && (
                                 <button
                                     onClick={() => handleDeviceConnect(step === 3 ? 'bodyTemperature' : step === 4 ? 'bloodPressure' : 'oxygenSaturation')}
-                                    className={maxButtonWidth + " bg-cosmic-primary-color text-white px-4 py-2 rounded "}
+                                    className={maxButtonWidth + " bg-cosmic-primary-color text-white px-4 py-2  "}
                                 >
                                     Try Again
                                 </button>
