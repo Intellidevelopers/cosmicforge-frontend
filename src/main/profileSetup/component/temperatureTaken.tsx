@@ -6,7 +6,7 @@ interface TemperatureValue{
 }
 
 
-const TemperatureTaken = () => {
+const TemperatureNotTaken = () => {
   return (
     <div className='flex flex-col justify-between items-center gap-[25vh]'>
         <h3 className='text-xs sm:text-sm '>Place your thumb on the fingerprint sensor</h3>
@@ -14,7 +14,7 @@ const TemperatureTaken = () => {
     </div>
   )
 }
-const TemperatureNotTaken = ({temperature}:TemperatureValue) => {
+const TemperatureTaken = ({temperature}:TemperatureValue) => {
   return (
     <div className='flex flex-col justify-between items-center gap-[25vh]'>
         <h3 className='font-bold text-cosmic-primary-color '>{temperature}&deg;C/{temperature}&deg;F</h3>

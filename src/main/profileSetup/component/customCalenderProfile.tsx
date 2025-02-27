@@ -79,8 +79,8 @@ const CustomCalenderProfile = (props: CalenderProps) => {
     return (
         <div className={`${closeCalender && 'hidden'} bg-transparent font-poppins absolute top-[2rem] bottom-0 left-0 right-0 w-full h-fit flex justify-center`}>
             <div className="md:w-[50%] w-[80%] min-h-[350px] bg-white shadow shadow-black p-4">
-                <p className="bg-cosmic-primary-color p-4 text-white text-center font-extrabold">{selectedDate}</p>
-                <div className="w-full flex mt-2 md:m-10">
+                <p className="bg-cosmic-primary-color p-4 text-white text-center font-extrabold text-nowrap truncate">{selectedDate}</p>
+                <div className="w-full flex mt-2 md:m-3">
                     <select
                         title='Select year'
                         ref={selectRef}
@@ -102,7 +102,7 @@ const CustomCalenderProfile = (props: CalenderProps) => {
                                 }
                             }}
                         ></i>
-                        <div className="inline-flex p-2 w-[200px] justify-center">
+                        <div className="inline-flex p-2 w-[100px] justify-center">
                             <p className="font-bold text-cosmic-primary-color">{currentMonth}</p>
                         </div>
                         <i

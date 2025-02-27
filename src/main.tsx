@@ -26,7 +26,7 @@ import { Provider } from 'react-redux'
 import { persistore, store } from './main/store/initStore'
 import { PersistGate } from 'redux-persist/integration/react'
 
-
+import ProfileComplete from './main/profileSetup/pages/profileComplete.tsx';
 import SignUp2 from './main/auth/signup/pages/Signup2';
 import RegSuccess from './main/auth/signup/pages/RegSuccess';
 import ResetLogins from './main/auth/reset/pages/ResetLogins';
@@ -123,6 +123,10 @@ const router = createBrowserRouter([
   {
     path:'/profile/setup',
    element:<ProfileSetup/>
+  },
+  {
+    path:'/profile/complete',
+   element:<ProfileComplete/>
   },
 
     {path:'/account/signup/enter-personal-info',
