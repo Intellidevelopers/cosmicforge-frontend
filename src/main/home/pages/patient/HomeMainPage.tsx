@@ -18,9 +18,7 @@ const HomeMainPage = () => {
      
       }
 
-      if(!user.keepMeSignedIn){
-        return  <Navigate to={'/account'}/>
-      }
+      
  
       if( user.data && user.data.role !== "client"){
         return  <Navigate to={'/account'}/>

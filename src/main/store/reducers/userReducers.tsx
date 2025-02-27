@@ -1,11 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
+interface PatientUserProfileProps{
+   profilePicture?:string,
+   mobileNo?:string,
+   workAddress?:string,
+   vitalSigns:{
+   bloodPressure?:string,
+   bodyTemperature?:string,
+   homeAddress?:string,
+   oxygenSaturation?:string,
+   weight?:string,
+   height?:string,
+   profileType?: 'personal' | 'family',
+   gender?:'male' | 'female',
+   dateOfBirth?:string
+  }
+   
+}
+
    interface UserPropsData {
      role?:string,
      token?:string,
      email?:string,
      fullname?:string,
-     lastName?:string
+     lastName?:string,
+     profile?:PatientUserProfileProps
    }
 
 
