@@ -77,7 +77,7 @@ const CustomCalender = (props: CalenderProps) => {
     };
 
     return (
-        <div className={`${closeCalender && 'hidden'} bg-transparent font-poppins w-full h-fit flex justify-center`}>
+        <div className={`${closeCalender && 'hidden'} bg-transparent font-poppins w-full h-fit flex justify-center z-[1000px]`}>
             <div className="md:w-[50%] w-[80%] min-h-[350px] bg-white shadow shadow-black p-4">
                 <p className="bg-cosmic-primary-color p-4 text-white text-center font-extrabold">{selectedDate}</p>
                 <div className="w-full flex mt-2 md:m-10">

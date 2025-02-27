@@ -189,7 +189,7 @@ const ProfileSetup = () => {
                                         }} />
                                     </div>
 
-                                    <div className='md:w-[800px]  mt-6'>
+                                    <div className='md:w-[800px]  mt-6 z-50'>
                                         <CustomCalenderProfile onDateSelected={(date) => {
                                             // setAge(age)
                                             setDateSelected(parseDate(date))

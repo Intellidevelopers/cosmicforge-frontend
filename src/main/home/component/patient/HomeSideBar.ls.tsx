@@ -22,7 +22,9 @@ const navigate = useNavigate()
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500">
             <img className="h-[100px] w-[100px]" alt="profile-image" src={profileIconTmp} />
           </div>
-          <p className="font-extralight text-cosmic-primary-color ">
+          <p className="font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color " onClick={()=>{
+           // navigate('/profile/setup')
+          }}>
             Edit Profile
           </p>
 
