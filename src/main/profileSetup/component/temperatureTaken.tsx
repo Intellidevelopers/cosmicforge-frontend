@@ -1,4 +1,4 @@
-import fingerprintIcon from '../../../assets/images/fingerprint.svg';
+import fingerprintIcon from '../../../assets/images/fingerPrint.svg';
 import emptyFingerprintIcon from '../../../assets/images/fingerprintEmpty.svg';
 
 interface TemperatureValue{
