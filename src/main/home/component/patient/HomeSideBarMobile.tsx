@@ -39,7 +39,7 @@ const dispatch = useDispatch()
 
   
   return (
-    <div ref={sideBarRef} className="hidden md:hidden w-[294px] h-[100%] bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-50  cursor-default overflow-y-hidden">
+    <div ref={sideBarRef} className="hidden md:hidden w-[294px] h-[100%] bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-[200]  cursor-default overflow-y-hidden">
 
       <div className="w-full ">
 
