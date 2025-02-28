@@ -30,7 +30,7 @@ import { RootReducer } from "../../../store/initStore";
   }
 
     return (
-        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0  ">
+        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0 z-50 ">
        
         <div className="md:w-[85%]  w-full flex   flex-wrap relative   ">
 

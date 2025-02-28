@@ -7,7 +7,7 @@ const FindASpecialistCard = ({title,icon}:SpecialistCardProps) => {
 
     return (
         <div className="w-full p-4" onClick={()=>{
-            navigate('/find-a-specialist/view',{state:{
+            navigate('/patient/find-a-specialist/view',{state:{
                 title
             }})
         }}>

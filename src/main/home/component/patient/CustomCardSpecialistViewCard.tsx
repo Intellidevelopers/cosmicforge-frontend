@@ -50,7 +50,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                 <div className=" relative md:absolute bottom-5 right-5 inline-flex  justify-end mt-2    flex-row gap-3">
 
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
-                        navigate('/find-a-specialist/consult', {
+                        navigate('/patient/find-a-specialist/consult', {
                             state: {
                                 doctorImage: details.doctorImage,
                                 doctorName: details.doctorName,
@@ -68,7 +68,18 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                         <img src={messageButton} alt="mesage button" />
                     </div>
 
-                    <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center">
+                    <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={()=>{
+                       navigate('/patient/appointment/bio', {
+                        state: {
+                            doctorImage: details.doctorImage,
+                            doctorName: details.doctorName,
+                            doctorSpecialization: details.doctorSpecialization,
+                            clinic:details.clinic,
+                            address: details.address,
+                            title:state.title
+                        }
+                    })  
+                    }}>
                         <img src={appointmentButton} alt="appointment button" />
                     </div>
                 </div>

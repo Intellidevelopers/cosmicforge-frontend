@@ -36,6 +36,8 @@ import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 import ComingSoonPage from './main/onboarding/pages/ComingSoonPage'
 import PatientAnalytics from './main/analytics/pages/PatientAnalytics'
 import ComingSoon from './main/analytics/pages/ComingSoon'
+import AppointmentMainPage from './main/appointment/patient/pages/AppointmentMainPage'
+import DoctorBioPage from './main/appointment/patient/pages/DoctorBioPage'
 
 
 
@@ -163,6 +165,18 @@ const router = createBrowserRouter([
     path:'/patient/analytics-coming-soon',
    element:<ComingSoon/>
   },
+
+
+  {
+    path:'/patient/appointment',
+    element:<AppointmentMainPage/>,
+    children:[
+{
+  path:'bio',
+  element:<DoctorBioPage/>
+}
+    ]
+  }
 ])
 
 
