@@ -79,6 +79,22 @@ const useGetActiveRoute = () => {
         };
       }
 
+      case ActiveRoutePath.analytics: {
+        return{
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: true,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false
+        }
+        
+      }
+
+      
       default:  return {
         isHomeActive: false,
         isRunDiagnosisActive:false,
@@ -96,7 +112,7 @@ const useGetActiveRoute = () => {
 
   
   useEffect(()=>{
-    const path = routePath.pathname.split("/")[1];
+    const path = routePath.pathname.split("/")[2];
     switch (path ) {
 
       case ActiveRoutePath.home: {
@@ -154,9 +170,28 @@ const useGetActiveRoute = () => {
         return 
       }
 
+      case ActiveRoutePath.analytics: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: true,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false
+        }})
+        return 
+      }
+
+
+
       default: setActiveRoutePath(prevState=> {
       return {   ...prevState,
-        isHomeActive: true,
+        isHomeActive: false,
         isRunDiagnosisActive:false,
         isMessageActive: false,
         isBookAppoinmentActive:false,

@@ -74,7 +74,7 @@ const RolePage:React.FC = () => {
                     </div>
                 ): (
                     //signup here
-                    <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/account'} state={{userRole:accountRole}}>
+                    <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/patient/account'} state={{userRole:accountRole}}>
                         Continue
                     </Link> 
                 )}

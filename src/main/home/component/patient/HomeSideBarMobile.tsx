@@ -11,6 +11,9 @@ import useGetActiveRoute from "../../hook/patient/useGetActiveRoute";
 import { useNavigate } from "react-router-dom";
 import { MutableRefObject, useRef } from "react";
 import useGetSideBarMobileAnimation, { closeSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
+import { useDispatch } from "react-redux";
+//import { RootReducer } from "../../../store/initStore";
+import { authenticateUser } from "../../../store/reducers/userReducers";
 
 
 
@@ -25,6 +28,10 @@ const sideBarRef:MutableRefObject<HTMLDivElement | null>= useRef(null)
 
 useGetSideBarMobileAnimation(sideBarRef)
 
+
+//const user = useSelector((state:RootReducer)=>state.user)
+
+const dispatch = useDispatch()
 
  
  
@@ -85,6 +92,7 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
+            
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Run Diagnosis</p>
@@ -104,7 +112,7 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isCalenderActive:false
               })
               closeSideBar()
-              navigate('/messages')
+              navigate('/patient/messages')
             }}>
               <img alt="home" src={messageIcon} />
               <p className="">Messages</p>
@@ -141,6 +149,7 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
+              navigate('/patient/analytics')
             }}>
               <img alt="home" src={analyticsIcon} />
               <p className="">Analytics</p>
@@ -196,7 +205,7 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isCalenderActive:false
               })
                 closeSideBar()
-              navigate('find-a-specialist')
+              navigate('/patient/find-a-specialist')
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Find A Specialist</p>
@@ -222,7 +231,11 @@ useGetSideBarMobileAnimation(sideBarRef)
 
             <div className="w-full flex justify-start ms-5 text-cosmic-color-warning-color  hover:underline ">
             <img alt="home" src={logOutIcon} />
-              <p className="">Log out</p>
+              <p className="" onClick={()=>{
+               
+                dispatch(authenticateUser({isAunthenticated:false,data:{},emailValidated:false,keepMeSignedIn:false}))
+               // navigate('/patient/account')
+              }}>Log out</p>
             </div>
           </div>
         </div>

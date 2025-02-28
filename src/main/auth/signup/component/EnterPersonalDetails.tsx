@@ -82,7 +82,9 @@ const EnterPersonalDetails: React.FC = () => {
         setErrorMesage('')
         setIsLoading(false)
       dispatch(authenticateUser({isAunthenticated:true,data:result.data}))
-      navigate('/account/signup/registration-success');
+      navigate('/patient/account/signup/registration-success',{
+        replace:true
+      });
             return
         }
         setErrorMesage('')

@@ -20,8 +20,8 @@ const LoginPage: React.FC = () => {
 
       if(user.keepMeSignedIn && user.isAunthenticated && user.data){
            switch(user.data.role){
-             case  'client':  return <Navigate to={'/patient/home'} />
-             case 'doctor':  return <Navigate to={'/doctor/home'} />
+             case  'client':  return <Navigate to={'/patient/home'} replace/>
+             case 'doctor':  return <Navigate to={'/doctor/home'}  replace/>
            }
         return
       }
@@ -55,11 +55,11 @@ const LoginPage: React.FC = () => {
        if(result.status === 200){
           setIsLoading(false)
         dispatch(authenticateUser({keepMeSignedIn:stayLoggedIn,data:result.data,isAunthenticated:true}))
-        navigate('/coming-soon')
-       /* switch(result.data.role){
+        //navigate('/coming-soon')
+        switch(result.data.role){
             case  'client':  return navigate('/patient/home')
             case 'doctor':  return  navigate('/doctor/home')
-          }*/
+          }
         return
        }
 
@@ -75,12 +75,13 @@ const LoginPage: React.FC = () => {
     }
 
     const goToFP = () => {
-        navigate('/account/password-reset');
+        navigate('/patient/account/password-reset');
     }
 
     return (
         <div className="flex flex-row bg-gray-100 py-[50px] justify-center h-screen w-screen">
-            <button onClick={()=>{navigate('/account')}} className="flex absolute md:top-[50px] top-[5%] flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit">
+
+            <button onClick={()=>{navigate('/patient/account')}} className="flex absolute md:top-[50px] top-[5%] flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit">
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="35" deskSize="30"/>
                 <span className="md:flex hidden">Go back</span>
             </button>
@@ -142,7 +143,8 @@ const LoginPage: React.FC = () => {
                                 <img src={appleIcon} alt="fb icon" className="h-[70%] w-[70%]"/>
                             </button>
                         </div>
-                        <span className="mt-[15px] text-black text-[15px]">Don&apos;t have an account? <Link className="text-[#272EA7] hover:text-[#272EA7]/50" to={'/account/signup/verify-email'}>Sign Up</Link></span>
+                        <span className="mt-[15px] text-black text-[15px]">Don&apos;t have an account? <Link className="text-[#272EA7] hover:text-[#272EA7]/50" to={'/patient/account/signup/verify-email'}>Sign Up</Link></span>
+
                         <div className="md:w-[450px] text-center mt-[10px] w-[80%]">
                             <span className="mt-[17px] text-black text-[15px]">
                                 By signing up or logging in, i accept the app&apos;s

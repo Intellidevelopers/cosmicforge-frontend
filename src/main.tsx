@@ -26,7 +26,7 @@ import { Provider } from 'react-redux'
 import { persistore, store } from './main/store/initStore'
 import { PersistGate } from 'redux-persist/integration/react'
 
-import ProfileComplete from './main/profileSetup/pages/profileComplete.tsx';
+
 import SignUp2 from './main/auth/signup/pages/Signup2';
 import RegSuccess from './main/auth/signup/pages/RegSuccess';
 import ResetLogins from './main/auth/reset/pages/ResetLogins';
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
       element:<HomePage/>
     },
     {
-      path:'/',
+      path:'/patient',
       element:<FindASpecialist/>,
       children:[
         {
@@ -80,7 +80,7 @@ const router = createBrowserRouter([
       element:<Favorites/>
     },
     {
-      path:'/',
+      path:'/patient',
       element:<MainChatPage/>,
       children:[
         {
@@ -113,39 +113,35 @@ const router = createBrowserRouter([
     element:<RolePage/>
   },
   {
-    path:'/account',
+    path:'/patient/account',
    element:<SignUpMain/>
   },
   {
-    path:'/account/signup/verify-email',
+    path:'/patient/account/signup/verify-email',
    element:<SignUp1/>
   },
   {
-    path:'/profile/setup',
+    path:'/patient/profile/setup',
    element:<ProfileSetup/>
   },
-  {
-    path:'/profile/complete',
-   element:<ProfileComplete/>
-  },
 
-    {path:'/account/signup/enter-personal-info',
+    {path:'/patient/account/signup/enter-personal-info',
    element:<SignUp2/>
   },
   {
-    path:'/account/signup/registration-success',
+    path:'/patient/account/signup/registration-success',
    element:<RegSuccess/>
   },
   {
-    path:'/account/password-reset',
+    path:'/patient/account/password-reset',
    element:<ResetLogins/>
   },
   {
-    path:'/account/password-reset/new-password',
+    path:'/patient/account/password-reset/new-password',
    element:<EnterNewPassword/>
   },
   {
-    path:'/account/password-reset/success',
+    path:'/patient/account/password-reset/success',
    element:<ResetSuccess/>
   },
   {
@@ -156,6 +152,9 @@ const router = createBrowserRouter([
     path:'/account/login',
    element:<LoginPage/>
   },
+
+
+  
   {
     path:'/patient/analytics',
    element:<PatientAnalytics/>
