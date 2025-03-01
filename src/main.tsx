@@ -38,6 +38,8 @@ import PatientAnalytics from './main/analytics/pages/PatientAnalytics'
 import ComingSoon from './main/analytics/pages/ComingSoon'
 import AppointmentMainPage from './main/appointment/patient/pages/AppointmentMainPage'
 import DoctorBioPage from './main/appointment/patient/pages/DoctorBioPage'
+import BookAppointmentPhaseOnePage from './main/appointment/patient/pages/BookAppointmentPhaseOnePage'
+import CheckoutPage from './main/appointment/patient/pages/CheckoutPage'
 
 
 
@@ -174,6 +176,19 @@ const router = createBrowserRouter([
 {
   path:'bio',
   element:<DoctorBioPage/>
+},
+{
+  path:'book',
+  element:<BookAppointmentPhaseOnePage/>
+}
+,
+{
+  path:'book',
+  element:<BookAppointmentPhaseOnePage/>
+},
+{
+  path:'checkout',
+  element:<CheckoutPage/>
 }
     ]
   }

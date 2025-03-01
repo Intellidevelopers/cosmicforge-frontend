@@ -11,8 +11,9 @@ const RegSuccess: React.FC = () => {
      const user = useSelector((state:RootReducer)=> state.user)
 
      if(!user.emailValidated && !user.isAunthenticated){
-   return <Navigate to={'patient/account'}/>
+   return <Navigate to={'patient/account'} replace/>
      }
+
 
     return (
         <div className="flex flex-row bg-gray-100 py-[50px] md:px-[25px] justify-center h-screen w-screen">
@@ -20,6 +21,7 @@ const RegSuccess: React.FC = () => {
                 <div className="w-[80%] md:flex hidden h-[50px]">
                     <img src={cosmicLogo} alt="cosmic forge logo" className="h-[100%] w-[100%]"/>
                 </div>
+
                 <div className="flex flex-col">
                     <span className="text-[23px] md:text-[17px] font-bold self-center mt-2">Welcome!</span>
                     <span className="mt-2 text-[17px] md:text-[16px] self-center">Let&apos;s get you started by setting up your profile.</span>
@@ -31,6 +33,7 @@ const RegSuccess: React.FC = () => {
                         </div>
                         <div className="md:h-[150px] h-[175px] bg-gradient-to-t from-gray-100 to-transparent self-end w-[100%] left-0 absolute"></div>
                     </div>
+
                 <div className="mt-[17px] w-[100%] flex flex-col items-center gap-2">
                     <Link to={'/profile/setup'} className="md:h-[40px] flex flex-col justify-center items-center h-[45px] md:w-[100%] mt-[20px] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Profile Set Up</Link>
                     <button className="md:h-[40px] h-[45px] md:w-[100%] md:mt-0 mt-[20px] w-[90%] rounded-[5px] bg-[#272EA7]/50 cursor-not-allowed text-white">Home</button>
