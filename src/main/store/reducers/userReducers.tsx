@@ -35,7 +35,8 @@ interface PatientUserProfileProps{
     message?:string,
     data?:UserPropsData | null,
     emailValidated?:boolean,
-    keepMeSignedIn?:boolean
+    keepMeSignedIn?:boolean,
+    userAuthToken?:string
  }
 
  const  initialState:UserProps = {
@@ -46,7 +47,8 @@ interface PatientUserProfileProps{
     data: null,
     message:'',
     emailValidated:false,
-    keepMeSignedIn:false
+    keepMeSignedIn:false,
+    userAuthToken:''
  }
 
 
@@ -62,6 +64,7 @@ interface PatientUserProfileProps{
             state.data = action.payload.data ?? state.data
             state.emailValidated = action.payload.emailValidated ?? state.emailValidated
             state.keepMeSignedIn = action.payload.keepMeSignedIn ?? state.keepMeSignedIn
+            state.userAuthToken = action.payload.userAuthToken ?? state.userAuthToken
         }
     }
 

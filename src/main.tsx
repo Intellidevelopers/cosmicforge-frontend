@@ -45,6 +45,7 @@ import PatientCalendarPage from './main/PatientCalender/pages/PatientCalendarPag
 import UpcomingAppointmentPage from './main/PatientCalender/pages/UpcomingAppointmentPage'
 import PastAppointment from './main/PatientCalender/pages/PastAppointment'
 import CancelledAppointment from './main/PatientCalender/pages/CancelledAppointment'
+import AuthValidatorPage from './main/auth/signup/pages/AuthValidatorPage'
 
 
 
@@ -155,7 +156,7 @@ const router = createBrowserRouter([
   },
   {
     path:'/auth',
-    element:<SignUpMain/>
+    element:<AuthValidatorPage/>
   },
   {
     path:'/account/login',

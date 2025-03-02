@@ -4,13 +4,13 @@ import logo from '../../../../assets/icons/cosmic forge logo 1.svg';
 import fbIcon from '../../../../assets/icons/fb.svg';
 import ggIcon from '../../../../assets/icons/google.svg';
 import appleIcon from '../../../../assets/icons/apple.svg';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { sign_up_user_wih_google } from "../service/service";
 
-import jwt from 'jsonwebtoken'
+//import jwt from 'jsonwebtoken'
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../../../store/reducers/userReducers";
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 
 
 
@@ -22,18 +22,20 @@ const SignUpMain: React.FC = () => {
 
     const [errorMessage, setErrorMessage] = useState<string>()
 
-    const query = window.location.search
+   
+   
+    // const query = window.location.search
 
-    const params = new URLSearchParams(query)
+    //const params = new URLSearchParams(query)
 
-    const token = params.get('token')
+   // const token = params.get('token')
 
-    const decodedData = JSON.parse(JSON.stringify(jwt.decode(token!!)))
-    const navigate = useNavigate()
+    //const decodedData = JSON.parse(JSON.stringify(jwt.decode(token!!)))
+   // const navigate = useNavigate()
 
     
 
-    if (decodedData && decodedData.token) {
+   /* if (decodedData && decodedData.token) {
 
         bcrypt.compare(import.meta.env.VITE_JSON_WEB_SECRET, decodedData.secretKey).then((result) => {
 
@@ -68,7 +70,7 @@ const SignUpMain: React.FC = () => {
 
 
 
-    }
+    }*/
 
 
     const userRole: string | null = state?.userRole ?? ''
@@ -104,9 +106,19 @@ const SignUpMain: React.FC = () => {
                             <img src={ggIcon} alt="gg icon" className="h-[70%] w-[70%]" onClick={async () => {
                                 setErrorMessage('')
 
-                                sign_up_user_wih_google({ userRole })
+                                  try {
+                                    console.log('firing.........')
+                              const token  =      (await sign_up_user_wih_google({ userRole })).data
+                                 dispatch(authenticateUser({userAuthToken:token}))
+                                 window.open( `${import.meta.env.VITE_BASE_REST_URL}/auth/google`,'_self')
+ 
 
-                                window.location.href = `${import.meta.env.VITE_BASE_REST_URL}/auth/google`
+                                  } catch (error) {
+                                    console.log(error)
+                                  }
+                               
+
+                              //  window.location.href = `${import.meta.env.VITE_BASE_REST_URL}/auth/google`
                             
                             }} />
                         </button>
