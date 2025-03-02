@@ -298,7 +298,7 @@ const DoctorBioPage = () => {
 
         </div>
 
-        <div className="mt-1 w-full  h-[500px] p-1  overflow-y-auto">
+        <div className="mt-1 w-full  h-[500px] p-1  overflow-y-auto overflow-x-hidden">
             {
              loadingServerData && <div className="w-full h-full flex justify-center place-items-center">
               <Loader size="80px"/>

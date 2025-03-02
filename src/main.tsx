@@ -40,6 +40,11 @@ import AppointmentMainPage from './main/appointment/patient/pages/AppointmentMai
 import DoctorBioPage from './main/appointment/patient/pages/DoctorBioPage'
 import BookAppointmentPhaseOnePage from './main/appointment/patient/pages/BookAppointmentPhaseOnePage'
 import CheckoutPage from './main/appointment/patient/pages/CheckoutPage'
+import PatientCalenderMainPage from './main/PatientCalender/pages/PatientCalenderMainPage'
+import PatientCalendarPage from './main/PatientCalender/pages/PatientCalendarPage'
+import UpcomingAppointmentPage from './main/PatientCalender/pages/UpcomingAppointmentPage'
+import PastAppointment from './main/PatientCalender/pages/PastAppointment'
+import CancelledAppointment from './main/PatientCalender/pages/CancelledAppointment'
 
 
 
@@ -189,6 +194,31 @@ const router = createBrowserRouter([
 {
   path:'checkout',
   element:<CheckoutPage/>
+}
+    ]
+  }
+,
+  
+  {
+    path:'/patient/calendar',
+    element:<PatientCalenderMainPage/>,
+    children:[
+{
+  path:'',
+  element:<PatientCalendarPage/>
+},
+{
+  path:'upcoming',
+  element:<UpcomingAppointmentPage/>
+}
+,
+{
+  path:'past',
+  element:<PastAppointment/>
+},
+{
+  path:'cancelled',
+  element:<CancelledAppointment/>
 }
     ]
   }

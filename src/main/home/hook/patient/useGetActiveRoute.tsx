@@ -94,6 +94,21 @@ const useGetActiveRoute = () => {
         
       }
 
+      case ActiveRoutePath.calendar: {
+        return{
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:true
+        }
+        
+      }
+
       
       default:  return {
         isHomeActive: false,
@@ -188,6 +203,23 @@ const useGetActiveRoute = () => {
       }
 
 
+
+      case ActiveRoutePath.calendar: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:true
+        }})
+        return 
+      }
 
       default: setActiveRoutePath(prevState=> {
       return {   ...prevState,

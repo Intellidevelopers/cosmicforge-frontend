@@ -224,6 +224,7 @@ const dispatch = useDispatch()
                 isFindASpecialistActive:false,
                 isCalenderActive:true
               })
+              navigate('/patient/calendar')
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Calendar</p>

@@ -199,9 +199,12 @@ const HomeSideBar = () => {
                 isFindASpecialistActive: false,
                 isCalenderActive: true
               })
+              navigate('/patient/calendar')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
-              <p className=" text-[15.5px]">Calendar</p>
+              <p className=" text-[15.5px]" onClick={()=>{
+                
+              }}>Calendar</p>
             </div>
 
             <div className="w-full pl-[15%] flex justify-start transition-all duration-200 ease-out text-cosmic-color-warning-color  hover:underline ">

@@ -7,28 +7,30 @@ import ratingStar from '../../../../assets/icons/star-icon.svg'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 export interface AppointmentDoctorDescriptionCardProps {
-   
-        doctorImage: string,
-        doctorName: string,
-        doctorSpecialization: string,
-        clinic: string,
-        address: string
-    
+
+    doctorImage: string,
+    doctorName: string,
+    doctorSpecialization: string,
+    clinic: string,
+    address: string
+
 }
 
 
-const AppointmentDoctorDescriptionCard = ({  doctorImage,
+const AppointmentDoctorDescriptionCard = ({ doctorImage,
     doctorName,
     doctorSpecialization,
     clinic,
-    address}: AppointmentDoctorDescriptionCardProps) => {
+    address }: AppointmentDoctorDescriptionCardProps) => {
     const navigate = useNavigate()
-    const {state} = useLocation()
+    const { state } = useLocation()
+
+    
     return (
 
         <div className="bg-white w-full h-fit flex  relative  ">
 
-            <div className=" w-[200px] h-[150px]  relative border border-cosmic-color-border-color rounded-md">
+            <div className=" w-[180px] h-[150px]  relative border border-cosmic-color-border-color rounded-md">
 
                 <p className="bg-cosmic-primary-color absolute text-white  rounded-br-md font-light p-1 ">Top</p>
                 <img className="bg-green-500 object-cover h-full w-full" src={doctorImage} />
@@ -56,12 +58,12 @@ const AppointmentDoctorDescriptionCard = ({  doctorImage,
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
                         navigate('/patient/find-a-specialist/consult', {
                             state: {
-                                doctorImage:doctorImage,
-                                doctorName:doctorName,
-                                doctorSpecialization:doctorSpecialization,
-                                clinic:clinic,
-                                address:address,
-                                title:state.title
+                                doctorImage: doctorImage,
+                                doctorName: doctorName,
+                                doctorSpecialization: doctorSpecialization,
+                                clinic: clinic,
+                                address: address,
+                                title: state.title
                             }
                         })
                     }}>
@@ -72,17 +74,17 @@ const AppointmentDoctorDescriptionCard = ({  doctorImage,
                         <img src={messageButton} alt="mesage button" />
                     </div>
 
-                    <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" aria-disabled   onClick={()=>{
-                       navigate('/patient/appointment/bio', {
-                        state: {
-                            doctorImage:doctorImage,
-                            doctorName:doctorName,
-                            doctorSpecialization:doctorSpecialization,
-                            clinic:clinic,
-                            address:address,
-                            title:state.title
-                        }
-                    })  
+                    <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" aria-disabled onClick={() => {
+                        navigate('/patient/appointment/bio', {
+                            state: {
+                                doctorImage: doctorImage,
+                                doctorName: doctorName,
+                                doctorSpecialization: doctorSpecialization,
+                                clinic: clinic,
+                                address: address,
+                                title: state.title
+                            }
+                        })
                     }}>
                         <img src={appointmentButton} alt="appointment button" />
                     </div>
