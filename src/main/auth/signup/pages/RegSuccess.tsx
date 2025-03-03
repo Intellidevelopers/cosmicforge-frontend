@@ -35,7 +35,7 @@ const RegSuccess: React.FC = () => {
                     </div>
 
                 <div className="mt-[17px] w-[100%] flex flex-col items-center gap-2">
-                    <Link to={'/profile/setup'} className="md:h-[40px] flex flex-col justify-center items-center h-[45px] md:w-[100%] mt-[20px] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Profile Set Up</Link>
+                    <Link to={'/patient/profile/setup'} className="md:h-[40px] flex flex-col justify-center items-center h-[45px] md:w-[100%] mt-[20px] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Profile Set Up</Link>
                     <button className="md:h-[40px] h-[45px] md:w-[100%] md:mt-0 mt-[20px] w-[90%] rounded-[5px] bg-[#272EA7]/50 cursor-not-allowed text-white">Home</button>
                 </div>
             </div>
