@@ -27,8 +27,24 @@ const AuthValidatorPage = ()=>{
        const res = result as ResponseBodyProps
        
        if(res.status === 200){
-         store.dispatch(authenticateUser({data:res.data,userAuthToken:''}))
-         navigate('/patient/home',{replace:true})
+         store.dispatch(authenticateUser({data:res.data.userDetails,userAuthToken:''}))
+           switch(res.data.userDetails.role){
+
+            case 'client':{
+
+                 if(res.data.newAccount){
+                    navigate('/patient/profile/setup',{replace:true})
+                    return
+                 }
+                navigate('/patient/home',{replace:true})
+                return
+            }
+
+            case 'doctor':{
+
+            }
+           }
+        
 
          return
        }
