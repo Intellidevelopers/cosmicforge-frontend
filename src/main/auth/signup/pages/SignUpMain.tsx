@@ -108,7 +108,7 @@ const SignUpMain: React.FC = () => {
 
                                   try {
                                     console.log('firing.........')
-                              const token  =      (await sign_up_user_wih_google({ userRole })).data
+                              const token  =      (await sign_up_user_wih_google({ userRole ,authType:"signUp"})).data
                                  dispatch(authenticateUser({userAuthToken:token}))
                                  window.open( `${import.meta.env.VITE_BASE_REST_URL}/auth/google`,'_self')
  
