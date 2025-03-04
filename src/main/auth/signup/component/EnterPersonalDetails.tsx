@@ -1,17 +1,17 @@
 import React, { MutableRefObject, useRef, useState } from "react";
 import cosmicLogo from '../../../../assets/icons/cosmic forge logo 1.svg';
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, /*Navigate,*/ useLocation, useNavigate } from "react-router-dom";
 import IconContainer from "../../../generalComponents/IconContainer";
 import backIcon from "../../../../assets/icons/Forward.png";
 import Loader from "../../../generalComponents/Loader";
 import { complete_registration } from "../service/service";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, /*useSelector*/ } from "react-redux";
 import { authenticateUser } from "../../../store/reducers/userReducers";
-import { RootReducer } from "../../../store/initStore";
+//import { RootReducer } from "../../../store/initStore";
 
 
 const EnterPersonalDetails: React.FC = () => {
-    const user = useSelector((state:RootReducer)=> state.user)
+  //  const user = useSelector((state:RootReducer)=> state.user)
 
     /*if(!user.isAunthenticated){
   return <Navigate to={'/account'}/>
