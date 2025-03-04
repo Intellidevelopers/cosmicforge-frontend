@@ -4,13 +4,13 @@ import logo from '../../../../assets/icons/cosmic forge logo 1.svg';
 import fbIcon from '../../../../assets/icons/fb.svg';
 import ggIcon from '../../../../assets/icons/google.svg';
 import appleIcon from '../../../../assets/icons/apple.svg';
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { sign_up_user_wih_google } from "../service/service";
 
-import jwt from 'jsonwebtoken'
+//import jwt from 'jsonwebtoken'
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../../../store/reducers/userReducers";
-import bcrypt from "bcryptjs";
+//import bcrypt from "bcryptjs";
 
 
 
@@ -22,18 +22,20 @@ const SignUpMain: React.FC = () => {
 
     const [errorMessage, setErrorMessage] = useState<string>()
 
-    const query = window.location.search
+   
+   
+    // const query = window.location.search
 
-    const params = new URLSearchParams(query)
+    //const params = new URLSearchParams(query)
 
-    const token = params.get('token')
+   // const token = params.get('token')
 
-    const decodedData = JSON.parse(JSON.stringify(jwt.decode(token!!)))
-    const navigate = useNavigate()
+    //const decodedData = JSON.parse(JSON.stringify(jwt.decode(token!!)))
+   // const navigate = useNavigate()
 
     
 
-    if (decodedData && decodedData.token) {
+   /* if (decodedData && decodedData.token) {
 
         bcrypt.compare(import.meta.env.VITE_JSON_WEB_SECRET, decodedData.secretKey).then((result) => {
 
@@ -49,13 +51,13 @@ const SignUpMain: React.FC = () => {
                 }))
 
                 if (decodedData.role === 'client') {
-                    navigate('/patient/home')
+                    navigate('/patient/home',{replace:true})
 
                     return
                 }
 
                 if (decodedData.role === 'doctor') {
-                    navigate('/doctor/home')
+                    navigate('/doctor/home',{replace:true})
                     return
                 }
             } else {
@@ -68,7 +70,7 @@ const SignUpMain: React.FC = () => {
 
 
 
-    }
+    }*/
 
 
     const userRole: string | null = state?.userRole ?? ''
@@ -81,14 +83,21 @@ const SignUpMain: React.FC = () => {
                 <img src={OnboardImage} className="h-[100%] w-[100%]" alt="welcome image" />
             </div>
             <div className="md:bg-gradient-to-b  text-center pb-[50px] pt-[20px] flex flex-col md:justify-top justify-around items-center fixed bottom-0 md:h-[58%] h-[65%] md:rounded-t-0 rounded-t-[20px] w-screen backdrop-blur-[5px] md:bg-transparent bg-white from-transparent to-[#272EA7]/60">
+
                 <div className="flex flex-col items-center gap-[15px]">
+
                     <div className="md:h-[70px] h-[45px] w-fit">
+
                         <img src={logo} alt="cosmicforge logo" className="h-[100%] w-[100%]" />
+
                     </div>
+
                     <span className="md:text-white text-[18px] font-bold text-[#272EA7]">Cosmicforge Healthnet Limited</span>
+                
                 </div>
+
                 <div className="flex flex-col gap-[20px] w-[100%] items-center mt-[20px]">
-                    <Link className="md:h-[40px] h-[45px] flex flex-col justify-center items-center font-bold rounded-[4px] md:w-[300px] w-[80%] bg-[#272EA7] text-white hover:bg-[#272EA7]/70 hover:scale-[105%]" to={'/account/signup/verify-email'} state={{ userRole }}>Sign Up with your Email address</Link>
+                    <Link className="md:h-[40px] h-[45px] flex flex-col justify-center items-center font-bold rounded-[4px] md:w-[300px] w-[80%] bg-[#272EA7] text-white hover:bg-[#272EA7]/70 hover:scale-[105%]" to={'/patient/account/signup/verify-email'} state={{ userRole }}>Sign Up with your Email address</Link>
                     <div className="flex flex-row gap-[20px] w-[100%] justify-center items-center">
                         <button className="md:h-[35px] w-[45px] h-[45px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                             <img src={fbIcon} alt="fb icon" className="h-[70%] w-[70%]" />
@@ -97,9 +106,19 @@ const SignUpMain: React.FC = () => {
                             <img src={ggIcon} alt="gg icon" className="h-[70%] w-[70%]" onClick={async () => {
                                 setErrorMessage('')
 
-                                sign_up_user_wih_google({ userRole })
+                                  try {
+                                    console.log('firing.........')
+                              const token  =      (await sign_up_user_wih_google({ userRole ,authType:"signUp"})).data
+                                 dispatch(authenticateUser({userAuthToken:token}))
+                                 window.open( `${import.meta.env.VITE_BASE_REST_URL}/auth/google`,'_self')
+ 
 
-                                window.open( `${import.meta.env.VITE_BASE_REST_URL}/auth/google`,'_blank')
+                                  } catch (error) {
+                                    console.log(error)
+                                  }
+                               
+
+                              //  window.location.href = `${import.meta.env.VITE_BASE_REST_URL}/auth/google`
                             
                             }} />
                         </button>

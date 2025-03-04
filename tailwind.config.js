@@ -78,7 +78,11 @@ transform:'rotateY(180deg)'
       'cosmic-color-green-color':'rgba(33, 132, 28, 1)',
       'cosmic-color-border-color':"rgba(39, 46, 167, 0.4)",
       'cosmic-silver-color':"rgba(232, 182, 0, 1)",
-      'cosmic-light-color-call':'rgba(39, 46, 167, 0.4)'
+      'cosmic-light-color-call':'rgba(39, 46, 167, 0.4)',
+      'cosmic-doc-gradient-1':'rgba(39, 46, 167, 0.6)',
+      'cosmic-doc-gradient-2':'rgba(0,0,0,0.2)',
+      'cosmic-doc-gradient-3':'rgba(0, 0, 0, 0.3)',
+      'cosmic-map-backgroud':'rgba(3, 3, 3, 0.4)'
     }
   },
   plugins: [],

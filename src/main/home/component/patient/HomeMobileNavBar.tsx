@@ -3,7 +3,9 @@ import tuneIcon from '../../../../assets/icons/home/cosmic-home-tune.svg'
 import searchIcon from '../../../../assets/icons/home/cosmic-home-search-dark.svg'
 import notificationIcon from '../../../../assets/icons/home/cosmic-home-notification.svg'
 import { openSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
 
  interface NavBarProps {
     title:string
@@ -12,8 +14,23 @@ import { useNavigate } from "react-router-dom";
 
  const HomeMobileNavBar  =  ({title}:NavBarProps) =>{
   const navigate =  useNavigate()
+
+  const user = useSelector((state:RootReducer)=>state.user)
+
+   
+  if(!user.isAunthenticated ){
+    return  <Navigate to={'/patient/account'} replace/>
+ 
+  }
+
+  
+
+  if( user.data && user.data.role !== "client"){
+    return  <Navigate to={'/patient/account'} replace/>
+  }
+
     return (
-        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0  ">
+        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0 z-[100] ">
        
         <div className="md:w-[85%]  w-full flex   flex-wrap relative   ">
 
@@ -30,7 +47,7 @@ import { useNavigate } from "react-router-dom";
                    
                    <div className="w-full relative">
 
-                   <p className="font-semibold">Hi Grace</p>
+                   <p className="font-semibold">Hi {user.data?.lastName}</p>
                    <p className="font-light text-[14px]">How are you feeling today?</p>
                     </div>
                     <div className="absolute right-1   rounded-lg border  p-2 ">

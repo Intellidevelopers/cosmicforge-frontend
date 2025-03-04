@@ -1,5 +1,5 @@
 import React from "react";
-import HomeNavBar from "../../home/component/patient/HomeNavBar";
+import HomeNavBar from "../../../home/component/patient/HomeNavBar";
 
 
 const FindASpecialist:React.FC = () => {

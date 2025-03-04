@@ -11,7 +11,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ completedSteps, totalSteps })
       {Array.from({ length: totalSteps }, (_, index) => (
         <div
           key={index}
-          className={`h-2.5   flex-1 rounded-full ${index < completedSteps ? 'bg-blue-600' : 'bg-gray-200'}`}
+          className={`h-2.5   flex-1 rounded-full ${index < completedSteps ? 'bg-cosmic-primary-color' : 'bg-gray-200'}`}
         ></div>
       ))}
     </div>

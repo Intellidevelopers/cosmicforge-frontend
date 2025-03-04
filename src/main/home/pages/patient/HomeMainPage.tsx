@@ -14,16 +14,14 @@ const HomeMainPage = () => {
 
    
       if(!user.isAunthenticated ){
-        return  <Navigate to={'/account'}/>
+        return  <Navigate to={'/patient/account'} replace/>
      
       }
 
-      if(!user.keepMeSignedIn){
-        return  <Navigate to={'/account'}/>
-      }
+      
  
       if( user.data && user.data.role !== "client"){
-        return  <Navigate to={'/account'}/>
+        return  <Navigate to={'/patient/account'} replace/>
       }
 
     return (

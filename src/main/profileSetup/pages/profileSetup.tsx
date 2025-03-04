@@ -3,16 +3,33 @@ import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ProgressBar from '../component/progressBar';
 import femaleImg from '../../../assets/images/femaleGender.svg';
 import maleImg from '../../../assets/images/maleGender.svg';
-import { getBirthDate, parseDate, getAge} from '../utils/datePicker.utils';
 import ConnectDevice from '../component/connectDevice';
 import TakeMeasurement from '../component/takeMeasurement';
 import { TemperatureNotTaken, TemperatureTaken } from '../component/temperatureTaken';
 import BloodPressureCard from '../component/bloodPressureCard.tsx'
 import OxySaturationCard from '../component/oxySaturationCard.tsx';
-import {useNavigate} from 'react-router-dom';
-import CustomCalenderProfile from '../component/customCalenderProfile.tsx';
+import {Navigate, useNavigate} from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootReducer } from '../../store/initStore.tsx';
+import CustomCalender from '../../generalComponents/CustomCalender.tsx';
+import Loader from '../../generalComponents/Loader.tsx';
+import { setUpPatientProfile } from '../service.ts';
+import { authenticateUser } from '../../store/reducers/userReducers.tsx';
+
+
+
 
 const ProfileSetup = () => {
+
+
+    const user = useSelector((state:RootReducer)=> state.user)
+
+     if(!user.emailValidated && !user.isAunthenticated){
+   return <Navigate to={'/patient/account'} replace/>
+     }
+
+
+     
     const [step, setStep] = useState<number>(1);
     const [direction, setDirection] = useState<string>('forward');
     const [connectionError, setConnectionError] = useState<boolean>(false);
@@ -21,6 +38,9 @@ const ProfileSetup = () => {
     const [age,setAge] = useState<number>(0)
     const [toggleCalender, setToggleCalender] = useState<boolean>(true)
     const [dateSelected, setDateSelected] = useState<string>('')
+
+    const [errorMessage,setErrorMessage] = useState<string>('')
+    const [loading,setLoading] = useState<boolean>(false)
 
     const [formData, setFormData] = useState({
         gender: '',
@@ -36,7 +56,7 @@ const ProfileSetup = () => {
             value: 0,
             unit: 'In'
         },
-        profileType: '',
+        profileType:'',
     });
 
     const steps: number = 8;
@@ -44,8 +64,9 @@ const ProfileSetup = () => {
     const maxButtonWidth = ' w-[90%] max-w-[300px] rounded ';
     const bodyLayout = ' flex flex-col justify-start items-center width-full gap-2'
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if (step < steps) {
             setDirection('forward');
             setStep(step + 1);
@@ -54,11 +75,39 @@ const ProfileSetup = () => {
         }
         else{
             //HANDLE FORM SUBMISSION HERE
+            setErrorMessage('')
+            setLoading(true)
             try {
                 console.log(formData)
-                navigate('/profile/complete')
-            } catch (error) {
-                alert(error) 
+              
+                 const response = await  setUpPatientProfile({
+                    bloodPressure:formData.bloodPressure,
+                    bodyTemperature:formData.bodyTemperature,
+                    oxygenSaturation:formData.oxygenSaturation,
+                    weight:formData.weight.value.toString().concat(formData.weight.unit),
+                    height:formData.height.value.toString().concat(formData.height.unit),
+                    profileType:formData.profileType.toString().toLocaleLowerCase() as 'personal' | 'family',
+                    gender:formData.gender as 'male' | 'female',
+                    dateOfBirth:formData.age
+                 },user.data?.token!!)
+
+                 if(response.status === 200){
+                    dispatch(authenticateUser({data:{
+                        ...user.data,
+                        profile:response.data?.profile
+                    }}))
+                    navigate('/patient/profile/complete',{
+                        replace:true
+                    })
+                    return
+                 }
+              setLoading(false)
+                 setErrorMessage(response.error ?? response.message)
+
+                
+            } catch (error:any) {
+                setErrorMessage("An error occured. Try again.")
+                setLoading(false)
             }
         }
     };
@@ -74,8 +123,8 @@ const ProfileSetup = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         if (step === 2) {
-            setAge(parseInt(value));
-            setFormData({ ...formData, [name]: getBirthDate(value) });
+           // setAge(parseInt(value));
+           // setFormData({ ...formData, [name]: getBirthDate(value) });
             return;
         }
         if (step === 6) {
@@ -184,29 +233,31 @@ const ProfileSetup = () => {
                             </div>
                         )}
                         {step === 2 && (
-                            <div className={`${minHeight}  +  bodyLayout `} >
+                            <div className={`w-full`} >
                                 <h2 className="text-xl font-bold mt-6 text-center">Step 2: Enter Age</h2>
                                 <div className={bodyLayout}>
+
                                     <p className="font-extrabold text-cosmic-primary-color text-lg">{age} years old.</p>
-                                    <div className="relative border p-2 w-full sm:w-[60%] md:w-[60%] h-[40px] rounded-md mt-8 flex">
+                                   
+                                    <div className="relative border p-2  mt-[100px] w-[50%] h-[40px] rounded-md  flex ">
                                         <p className='absolute top-[-1rem]  text-xs left-0'>Date of Birth</p>
-                                        <p className='min:w-[90%]'>{dateSelected}</p>
+                                        <p className='w-[90%]'>{dateSelected}</p>
                                         <i className='fa fa-angle-down absolute right-2 md:w-[50px]' onClick={() => {
                                             setToggleCalender(!toggleCalender)
                                         }} />
                                     </div>
 
-                                    <div className='md:w-[800px]  mt-6'>
-                                        <CustomCalenderProfile onDateSelected={(date) => {
+                                    <div className='md:w-[800px]  mt-6 z-50'>
+                                        <CustomCalender onDateSelected={(age,date) => {
                                             // setAge(age)
-                                            setDateSelected(parseDate(date))
-                                            setAge(getAge(date))
-                                            if (date) {
+                                            setDateSelected(date)
+                                            setAge(age)
+                                            
                                                 setFormData({
                                                     ...formData,
-                                                    age: `${age} ${parseDate(date)}` //date.concat(' ').concat(age.toString())
+                                                    age:date.concat(' ').concat(age.toString())
                                                 })
-                                            }
+                                            
                                         }} setCalenderState={toggleCalender} />
                                     </div>
                                 </div>
@@ -394,6 +445,16 @@ const ProfileSetup = () => {
                                 {step < steps ? 'Continue' : 'Submit'}
                             </button>
                         </div>
+                       {
+                        errorMessage &&  
+                        <p className='text-red-600'>{errorMessage}</p>
+                       }
+                       {
+                        loading && <div className='mt-8'>
+                          <Loader size='50px' />
+                            </div>
+                       }
+                       
                     </div>
                 </CSSTransition>
 

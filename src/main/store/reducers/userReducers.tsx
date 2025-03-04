@@ -1,11 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
+interface PatientUserProfileProps{
+   profilePicture?:string,
+   mobileNo?:string,
+   workAddress?:string,
+   vitalSigns:{
+   bloodPressure?:string,
+   bodyTemperature?:string,
+   homeAddress?:string,
+   oxygenSaturation?:string,
+   weight?:string,
+   height?:string,
+   profileType?: 'personal' | 'family',
+   gender?:'male' | 'female',
+   dateOfBirth?:string
+  }
+   
+}
+
    interface UserPropsData {
      role?:string,
      token?:string,
      email?:string,
      fullname?:string,
-     lastName?:string
+     lastName?:string,
+     profile?:PatientUserProfileProps
    }
 
 
@@ -16,7 +35,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     message?:string,
     data?:UserPropsData | null,
     emailValidated?:boolean,
-    keepMeSignedIn?:boolean
+    keepMeSignedIn?:boolean,
+    userAuthToken?:string
  }
 
  const  initialState:UserProps = {
@@ -27,7 +47,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     data: null,
     message:'',
     emailValidated:false,
-    keepMeSignedIn:false
+    keepMeSignedIn:false,
+    userAuthToken:''
  }
 
 
@@ -43,6 +64,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
             state.data = action.payload.data ?? state.data
             state.emailValidated = action.payload.emailValidated ?? state.emailValidated
             state.keepMeSignedIn = action.payload.keepMeSignedIn ?? state.keepMeSignedIn
+            state.userAuthToken = action.payload.userAuthToken ?? state.userAuthToken
         }
     }
 

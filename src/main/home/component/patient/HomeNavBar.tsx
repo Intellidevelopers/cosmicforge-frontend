@@ -18,7 +18,7 @@ const HomeNavBar = ({ title }: NavBarProps) => {
 
   return (
 
-    <div className="  hidden md:block md:ms-[250px] bg-white w-full min-h-[70px] h-fit  p-5  sticky top-0  shadow-md shadow-black/10 z-[200px]">
+    <div className="  hidden md:block md:ms-[250px] bg-white w-full min-h-[70px] h-fit  p-5  sticky top-0  shadow-md shadow-black/10 z-[100]">
 
       <div className="md:w-[75%]  w-full flex  relative   ">
 

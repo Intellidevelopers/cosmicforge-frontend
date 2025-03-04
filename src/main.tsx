@@ -25,7 +25,8 @@ import ProfileSetup from './main/profileSetup/pages/profileSetup'
 import { Provider } from 'react-redux'
 import { persistore, store } from './main/store/initStore'
 import { PersistGate } from 'redux-persist/integration/react'
-import ProfileComplete from './main/profileSetup/pages/profileComplete.tsx';
+
+
 import SignUp2 from './main/auth/signup/pages/Signup2';
 import RegSuccess from './main/auth/signup/pages/RegSuccess';
 import ResetLogins from './main/auth/reset/pages/ResetLogins';
@@ -35,6 +36,16 @@ import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 import ComingSoonPage from './main/onboarding/pages/ComingSoonPage'
 import PatientAnalytics from './main/analytics/pages/PatientAnalytics'
 import ComingSoon from './main/analytics/pages/ComingSoon'
+import AppointmentMainPage from './main/appointment/patient/pages/AppointmentMainPage'
+import DoctorBioPage from './main/appointment/patient/pages/DoctorBioPage'
+import BookAppointmentPhaseOnePage from './main/appointment/patient/pages/BookAppointmentPhaseOnePage'
+import CheckoutPage from './main/appointment/patient/pages/CheckoutPage'
+import PatientCalenderMainPage from './main/PatientCalender/pages/PatientCalenderMainPage'
+import PatientCalendarPage from './main/PatientCalender/pages/PatientCalendarPage'
+import UpcomingAppointmentPage from './main/PatientCalender/pages/UpcomingAppointmentPage'
+import PastAppointment from './main/PatientCalender/pages/PastAppointment'
+import CancelledAppointment from './main/PatientCalender/pages/CancelledAppointment'
+import AuthValidatorPage from './main/auth/signup/pages/AuthValidatorPage'
 import FirstAid1 from './main/firstAid/pages/firstAid1'
 import SelectCase from './main/firstAid/pages/selectCase.tsx';
 import FirstAidSteps from './main/firstAid/pages/firstAidSteps.tsx'
@@ -62,7 +73,7 @@ const router = createBrowserRouter([
       element:<HomePage/>
     },
     {
-      path:'/',
+      path:'/patient',
       element:<FindASpecialist/>,
       children:[
         {
@@ -116,7 +127,38 @@ const router = createBrowserRouter([
       element:<FirstAidSteps/>
     },
     {
-      path:'/',
+      path:'first-aid',
+      element:<FirstAid1/>,
+    },
+    {
+      path:'first-aid/find-an-ambulance',
+      element:<FindAnAmbulance/>,
+    },
+    {
+      path:'first-aid/ambulance-en-route',
+      element:<AmbulanceEnRoute/>,
+    },
+    {
+      path:'first-aid/hospital-availability',
+      element:<HospitalAvailability/>,
+    },
+    {
+      path:'first-aid/sos',
+      element:<SosPage/>
+    },
+    {
+      path:'first-aid/:case',
+      element:<SelectCase/>,
+      // children:[
+      // ]
+    },
+    {
+      path:'first-aid/:case/:person',
+      element:<FirstAidSteps/>
+    },
+    
+    {
+      path:'/patient',
       element:<MainChatPage/>,
       children:[
         {
@@ -149,49 +191,48 @@ const router = createBrowserRouter([
     element:<RolePage/>
   },
   {
-    path:'/account',
+    path:'/patient/account',
    element:<SignUpMain/>
   },
   {
-    path:'/account/signup/verify-email',
+    path:'/patient/account/signup/verify-email',
    element:<SignUp1/>
   },
   {
-    path:'/profile/setup',
+    path:'/patient/profile/setup',
    element:<ProfileSetup/>
   },
-  {
-    path:'/profile/complete',
-   element:<ProfileComplete/>
-  },
 
-    {path:'/account/signup/enter-personal-info',
+    {path:'/patient/account/signup/enter-personal-info',
    element:<SignUp2/>
   },
   {
-    path:'/account/signup/registration-success',
+    path:'/patient/account/signup/registration-success',
    element:<RegSuccess/>
   },
   {
-    path:'/account/password-reset',
+    path:'/patient/account/password-reset',
    element:<ResetLogins/>
   },
   {
-    path:'/account/password-reset/new-password',
+    path:'/patient/account/password-reset/new-password',
    element:<EnterNewPassword/>
   },
   {
-    path:'/account/password-reset/success',
+    path:'/patient/account/password-reset/success',
    element:<ResetSuccess/>
   },
   {
     path:'/auth',
-    element:<SignUpMain/>
+    element:<AuthValidatorPage/>
   },
   {
     path:'/account/login',
    element:<LoginPage/>
   },
+
+
+  
   {
     path:'/patient/analytics',
    element:<PatientAnalytics/>
@@ -200,6 +241,56 @@ const router = createBrowserRouter([
     path:'/patient/analytics-coming-soon',
    element:<ComingSoon/>
   },
+
+
+  {
+    path:'/patient/appointment',
+    element:<AppointmentMainPage/>,
+    children:[
+{
+  path:'bio',
+  element:<DoctorBioPage/>
+},
+{
+  path:'book',
+  element:<BookAppointmentPhaseOnePage/>
+}
+,
+{
+  path:'book',
+  element:<BookAppointmentPhaseOnePage/>
+},
+{
+  path:'checkout',
+  element:<CheckoutPage/>
+}
+    ]
+  }
+,
+  
+  {
+    path:'/patient/calendar',
+    element:<PatientCalenderMainPage/>,
+    children:[
+{
+  path:'',
+  element:<PatientCalendarPage/>
+},
+{
+  path:'upcoming',
+  element:<UpcomingAppointmentPage/>
+}
+,
+{
+  path:'past',
+  element:<PastAppointment/>
+},
+{
+  path:'cancelled',
+  element:<CancelledAppointment/>
+}
+    ]
+  }
 ])
 
 
