@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createRef, useState } from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ProgressBar from '../component/progressBar';
 import femaleImg from '../../../assets/images/femaleGender.svg';
@@ -20,6 +20,7 @@ import { authenticateUser } from '../../store/reducers/userReducers.tsx';
 
 
 const ProfileSetup = () => {
+    
 
 
     const user = useSelector((state:RootReducer)=> state.user)
@@ -65,6 +66,8 @@ const ProfileSetup = () => {
     const bodyLayout = ' flex flex-col justify-start items-center width-full gap-2'
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    
 
     const handleNext = async () => {
         if (step < steps) {
@@ -198,6 +201,8 @@ const ProfileSetup = () => {
         }
     };
 
+    const ref = createRef<HTMLElement>();
+
     return (
         <div className="font-poppins container mx-auto p-4 min-h-[100dvh] pt-12 space-y-[5%]">
             <ProgressBar completedSteps={step} totalSteps={steps} />
@@ -205,7 +210,7 @@ const ProfileSetup = () => {
             <TransitionGroup>
 
                 <CSSTransition
-
+                    nodeRef={ref}
                     key={step}
                     timeout={300}
                     classNames={'flex justify-center items-center ' + (direction === 'forward' ? 'slide-forward' : 'slide-backward')}
