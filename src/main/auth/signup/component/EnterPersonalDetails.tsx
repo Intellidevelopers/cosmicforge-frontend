@@ -13,9 +13,9 @@ import { RootReducer } from "../../../store/initStore";
 const EnterPersonalDetails: React.FC = () => {
     const user = useSelector((state:RootReducer)=> state.user)
 
-    if(!user.emailValidated && !user.isAunthenticated){
+    /*if(!user.isAunthenticated){
   return <Navigate to={'/account'}/>
-    }
+    }*/
 
 
     const [firstName, setFirstName] = useState('');
@@ -63,7 +63,7 @@ const EnterPersonalDetails: React.FC = () => {
             return
         }
         if(!agreedToTerms){
-            setErrorMesage('Enure you agree to terns and conditions by checking the box.')
+            setErrorMesage('Enure you agree to terms and conditions by checking the box.')
             return
         }
         //form validation here

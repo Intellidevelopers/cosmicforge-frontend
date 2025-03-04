@@ -84,7 +84,7 @@ const HomeSideBar = () => {
                 isFindASpecialistActive: false,
                 isCalenderActive: false
               })
-              navigate('patient/messages')
+              navigate('/patient/messages')
             }}>
 
               <img className={"h-[25px] w-[25px]"} alt="messages" src={messageIcon} />

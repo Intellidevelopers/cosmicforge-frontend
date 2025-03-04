@@ -1,4 +1,5 @@
 //import readMessage  from '../../../../assets/icons/cosmicforge-read-mesages.svg'
+import { useNavigate } from 'react-router-dom'
 import unReadMessage  from '../../../../assets/icons/cosmicforge-unread-messages.svg'
 //import profile from '../../../../assets/images/cosmic-doctor-profile.svg'
 
@@ -27,8 +28,12 @@ const UserMessagesCard = ({
      }:UserMessagesCardProps
    ) => {
 
+    const navigate = useNavigate()
+
     return (
-        <div className=" h-[100px] w-full pe-2">
+        <div className=" h-[100px] w-full pe-2"  onClick={()=>{
+          navigate('/patient/messages/chat')
+        }}>
 
 <div className="relative w-full flex gap-4">
 

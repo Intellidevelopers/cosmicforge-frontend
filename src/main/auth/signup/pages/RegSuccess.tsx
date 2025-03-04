@@ -10,7 +10,7 @@ const RegSuccess: React.FC = () => {
 
      const user = useSelector((state:RootReducer)=> state.user)
 
-     if(!user.emailValidated && !user.isAunthenticated){
+     if( !user.isAunthenticated){
    return <Navigate to={'patient/account'} replace/>
      }
 

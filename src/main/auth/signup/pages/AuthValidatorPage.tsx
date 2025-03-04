@@ -27,7 +27,8 @@ const AuthValidatorPage = ()=>{
        const res = result as ResponseBodyProps
        
        if(res.status === 200){
-         store.dispatch(authenticateUser({data:res.data.userDetails,userAuthToken:''}))
+         store.dispatch(authenticateUser({isAunthenticated:true,  data:res.data.userDetails,userAuthToken:''}))
+
            switch(res.data.userDetails.role){
 
             case 'client':{
@@ -48,9 +49,10 @@ const AuthValidatorPage = ()=>{
 
          return
        }
-
+     console.log(res.error ?? res.message)
        navigate('/patient/account',{replace:true})
-    }).catch(_=>{
+    }).catch((e:any)=>{
+        console.log(e.message)
         navigate('/patient/account',{replace:true})
     })
 }

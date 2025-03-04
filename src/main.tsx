@@ -46,6 +46,8 @@ import UpcomingAppointmentPage from './main/PatientCalender/pages/UpcomingAppoin
 import PastAppointment from './main/PatientCalender/pages/PastAppointment'
 import CancelledAppointment from './main/PatientCalender/pages/CancelledAppointment'
 import AuthValidatorPage from './main/auth/signup/pages/AuthValidatorPage'
+import AppointmentInfoPage from './main/PatientCalender/pages/AppointmentInfoPage'
+import ChatPage from './main/home/pages/chat/ChatPage'
 
 
 
@@ -95,7 +97,12 @@ const router = createBrowserRouter([
       children:[
         {
           path:'messages',
-          element:<UserMessagesPage/>
+          element:<UserMessagesPage/>,
+         
+        },
+        {
+          path:'messages/chat',
+          element:<ChatPage/>
         }
       ]
       
@@ -107,6 +114,7 @@ const router = createBrowserRouter([
   path:'/coming-soon',
   element:<ComingSoonPage/>
  },
+
  {
   path:'/doctor',
   element:<DoctorHomeMainPage/>,
@@ -189,16 +197,17 @@ const router = createBrowserRouter([
 }
 ,
 {
-  path:'book',
-  element:<BookAppointmentPhaseOnePage/>
-},
-{
   path:'checkout',
   element:<CheckoutPage/>
 }
     ]
   }
 ,
+
+{
+  path:'/patient/calendar/appointment-info',
+  element:<AppointmentInfoPage/>
+},
   
   {
     path:'/patient/calendar',
@@ -220,7 +229,8 @@ const router = createBrowserRouter([
 {
   path:'cancelled',
   element:<CancelledAppointment/>
-}
+},
+
     ]
   }
 ])
