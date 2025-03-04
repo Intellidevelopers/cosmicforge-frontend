@@ -25,7 +25,6 @@ import ProfileSetup from './main/profileSetup/pages/profileSetup'
 import { Provider } from 'react-redux'
 import { persistore, store } from './main/store/initStore'
 import { PersistGate } from 'redux-persist/integration/react'
-
 import ProfileComplete from './main/profileSetup/pages/profileComplete.tsx';
 import SignUp2 from './main/auth/signup/pages/Signup2';
 import RegSuccess from './main/auth/signup/pages/RegSuccess';
@@ -36,6 +35,13 @@ import ResetSuccess from './main/auth/reset/pages/ResetSuccess';
 import ComingSoonPage from './main/onboarding/pages/ComingSoonPage'
 import PatientAnalytics from './main/analytics/pages/PatientAnalytics'
 import ComingSoon from './main/analytics/pages/ComingSoon'
+import FirstAid1 from './main/firstAid/pages/firstAid1'
+import SelectCase from './main/firstAid/pages/selectCase.tsx';
+import FirstAidSteps from './main/firstAid/pages/firstAidSteps.tsx'
+import SosPage from './main/firstAid/pages/sosPage.tsx'
+import FindAnAmbulance from './main/firstAid/pages/findAnAmbulance.tsx'
+import AmbulanceEnRoute from './main/firstAid/pages/ambulanceEnRoute.tsx'
+import HospitalAvailability from './main/firstAid/pages/hospitalAvailability.tsx'
 
 
 
@@ -78,6 +84,36 @@ const router = createBrowserRouter([
     {
       path:'favorites',
       element:<Favorites/>
+    },
+    {
+      path:'first-aid',
+      element:<FirstAid1/>,
+    },
+    {
+      path:'first-aid/find-an-ambulance',
+      element:<FindAnAmbulance/>,
+    },
+    {
+      path:'first-aid/ambulance-en-route',
+      element:<AmbulanceEnRoute/>,
+    },
+    {
+      path:'first-aid/hospital-availability',
+      element:<HospitalAvailability/>,
+    },
+    {
+      path:'first-aid/sos',
+      element:<SosPage/>
+    },
+    {
+      path:'first-aid/:case',
+      element:<SelectCase/>,
+      // children:[
+      // ]
+    },
+    {
+      path:'first-aid/:case/:person',
+      element:<FirstAidSteps/>
     },
     {
       path:'/',

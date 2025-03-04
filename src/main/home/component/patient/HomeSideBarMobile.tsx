@@ -159,6 +159,7 @@ useGetSideBarMobileAnimation(sideBarRef)
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
+              navigate('first-aid')
             }}>
               <img alt="home" src={firstAidIcon} />
               <p className="">First Aid</p>

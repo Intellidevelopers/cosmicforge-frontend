@@ -135,6 +135,7 @@ const navigate = useNavigate()
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
+              navigate('first-aid')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={firstAidIcon} />
               <p className=" text-[15.5px]">First Aid</p>
