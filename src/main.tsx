@@ -55,6 +55,8 @@ import SosPage from './main/firstAid/pages/sosPage.tsx'
 import FindAnAmbulance from './main/firstAid/pages/findAnAmbulance.tsx'
 import AmbulanceEnRoute from './main/firstAid/pages/ambulanceEnRoute.tsx'
 import HospitalAvailability from './main/firstAid/pages/hospitalAvailability.tsx'
+import PatientMainPP from './main/profile/patient/pages/patientMainPP.tsx'
+import EditPatientPP from './main/profile/patient/pages/editPatientPP.tsx'
 
 
 
@@ -202,6 +204,14 @@ const router = createBrowserRouter([
 {
     path:'/selectRole',
     element:<RolePage/>
+  },
+  {
+    path:'/patient/profile',
+   element:<PatientMainPP/>
+  },
+  {
+    path:'/patient/profile/edit-profile',
+   element:<EditPatientPP/>
   },
   {
     path:'/patient/account',

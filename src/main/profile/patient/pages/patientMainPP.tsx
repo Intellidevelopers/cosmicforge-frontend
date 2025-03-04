@@ -9,8 +9,10 @@ import calenderIcon from "../../../../assets/icons/Calendar.svg";
 import healthTIcon from "../../../../assets/icons/Combo Chart.svg";
 import folderIcon from "../../../../assets/icons/History Folder.svg";
 import docIcon from "../../../../assets/icons/Medical Doctor.svg";
+import { useNavigate } from "react-router-dom";
 
 const PatientMainPP:React.FC = () => {
+    const navigate = useNavigate();
     return (
         <div className="w-full  relative  h-dvh bg-gray-100 overflow-x-hidden overflow-y-auto flex flex-col cursor-default">
             <HomeSideBar/>
@@ -22,7 +24,7 @@ const PatientMainPP:React.FC = () => {
                             <div className="flex flex-col gap-2 items-center justify-center">
                                 <span className="font-bold text-[18px]">Grace Jennifer Williams</span>
                                 <span className="text-[15px]">jgrace@gmail.com</span>
-                                <button className="h-[30px] text-[15px] w-[120px] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Edit Profile</button>
+                                <button onClick={()=>{navigate("/patient/profile/edit-profile")}} className="h-[30px] text-[15px] w-[120px] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Edit Profile</button>
                             </div>
                             
                     </div>
