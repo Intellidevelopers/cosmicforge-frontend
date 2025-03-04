@@ -53,6 +53,7 @@ import SosPage from './main/firstAid/pages/sosPage.tsx'
 import FindAnAmbulance from './main/firstAid/pages/findAnAmbulance.tsx'
 import AmbulanceEnRoute from './main/firstAid/pages/ambulanceEnRoute.tsx'
 import HospitalAvailability from './main/firstAid/pages/hospitalAvailability.tsx'
+import Chatbot from './main/chatbot/pages/chatbot.tsx'
 
 
 
@@ -91,6 +92,11 @@ const router = createBrowserRouter([
 
        
       ]
+    },
+
+    {
+      path:'chatbot',
+      element:<Chatbot/>
     },
     {
       path:'favorites',
@@ -156,7 +162,7 @@ const router = createBrowserRouter([
       path:'first-aid/:case/:person',
       element:<FirstAidSteps/>
     },
-    
+
     {
       path:'/patient',
       element:<MainChatPage/>,
