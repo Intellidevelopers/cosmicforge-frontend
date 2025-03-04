@@ -412,7 +412,7 @@ const ProfileSetup = () => {
                         )}
                        
                         {/* BUTTON SECTION */}
-                        <div className="flex flex-col sm:flex-row gap-4 justify-between w-full sm:justify-center mt-4 items-center">
+                        <div className="flex flex-col sm:flex-row gap-4 justify-between w-full sm:justify-center mt-8 items-center">
                             {/* {step > 1 && ( //BACK BUTTON FOR DEBUGGING PURPOSES. DISABLED UNTIL NEEDED
                                 <button
                                     onClick={handleBack}
