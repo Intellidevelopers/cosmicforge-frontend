@@ -5,5 +5,6 @@ export interface  ResponseBodyProps {
     message:string,
     error? :string,
     data?:any,
-    otp?:any
+    otp?:any,
+    token?:string
   }

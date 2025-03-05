@@ -61,7 +61,9 @@ transform:'rotateY(180deg)'
         'xs':{'max' :' 390px'}
       }
     },
-    
+     backgroundImage:{
+        'cosmic-bg-chat-sender':"url('/src/assets/images/cosmic-chat-sender-bg.svg')"
+     },
 
     
     colors:{

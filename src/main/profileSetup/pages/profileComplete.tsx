@@ -20,7 +20,7 @@ const ProfileComplete = () => {
         <div className="flex flex-col w-full px-4 justify-center gap-[5%] items-center">
             <img src={cosmicLogo} className="h-10 hidden lg:block" alt="Cosmicforge logo" />
             <div className="flex flex-col place-items-center gap-2" >
-                <h2 className="font-bold">Welcome {user.data?.lastName?.concat(' ').concat(user.data?.fullname!!)!}</h2>
+                <h2 className="font-bold">Welcome {user.data?.lastName?.concat(' ').concat(user.data?.fullName!!)!}</h2>
                 <p className="text-xs text-neutral-600">You've successfully completed your Profile Set Up.</p>
             </div>
             <div className="relative">

@@ -4,7 +4,7 @@ import logo from '../../../../assets/icons/cosmic forge logo 1.svg';
 import fbIcon from '../../../../assets/icons/fb.svg';
 import ggIcon from '../../../../assets/icons/google.svg';
 import appleIcon from '../../../../assets/icons/apple.svg';
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { sign_up_user_wih_google } from "../service/service";
 
 //import jwt from 'jsonwebtoken'
@@ -76,6 +76,10 @@ const SignUpMain: React.FC = () => {
     const userRole: string | null = state?.userRole ?? ''
 
 
+     if(!userRole){
+
+        return <Navigate to={'/selectRole'} replace={true}/>
+     }
 
     return (
         <div className="h-screen w-screen ">

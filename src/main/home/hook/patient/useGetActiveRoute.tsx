@@ -10,7 +10,8 @@ export enum ActiveRoutePath {
   "first-aid"="first-aid",
   "chat-bot"= "chat-bot",
   "find-a-specialist"= "find-a-specialist",
-  calendar="calendar"
+  calendar="calendar",
+ profile="profile"
 }
 
 interface ActiveRoutePathProps {
@@ -23,6 +24,7 @@ interface ActiveRoutePathProps {
   isChatBotActive: boolean;
   isFindASpecialistActive: boolean;
   isCalenderActive: boolean;
+  isProfileActive:boolean
 }
 const useGetActiveRoute = () => {
   const routePath = useLocation();
@@ -45,7 +47,8 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:false,
-          isCalenderActive:false
+          isCalenderActive:false,
+          isProfileActive:false
         };
       }
 
@@ -61,7 +64,8 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:false,
-          isCalenderActive:false
+          isCalenderActive:false,
+          isProfileActive:false
         };
       }
 
@@ -75,7 +79,8 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:true,
-          isCalenderActive:false
+          isCalenderActive:false,
+          isProfileActive:false
         };
       }
 
@@ -89,7 +94,8 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:false,
-          isCalenderActive:false
+          isCalenderActive:false,
+          isProfileActive:false
         }
         
       }
@@ -104,7 +110,42 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:false,
-          isCalenderActive:true
+          isCalenderActive:true,
+          isProfileActive:false
+        }
+        
+      }
+
+
+      case ActiveRoutePath['first-aid']: {
+        return{
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: true,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:false
+        }
+        
+      }
+
+
+      case ActiveRoutePath.profile: {
+        return{
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive:false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:true
         }
         
       }
@@ -119,7 +160,8 @@ const useGetActiveRoute = () => {
         isFirstAidActive: false,
         isChatBotActive: false,
         isFindASpecialistActive:false,
-        isCalenderActive:false
+        isCalenderActive:false,
+        isProfileActive:false
       }
     }
   });
@@ -142,7 +184,8 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:false,
-          isCalenderActive:false
+          isCalenderActive:false,
+          isProfileActive:false
         }})
         return
       }
@@ -161,7 +204,8 @@ const useGetActiveRoute = () => {
             isFirstAidActive: false,
             isChatBotActive: false,
             isFindASpecialistActive:false,
-            isCalenderActive:false
+            isCalenderActive:false,
+            isProfileActive:false
           
         }})
         return 
@@ -180,7 +224,8 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:true,
-          isCalenderActive:false
+          isCalenderActive:false,
+          isProfileActive:false
         }})
         return 
       }
@@ -197,7 +242,8 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:false,
-          isCalenderActive:false
+          isCalenderActive:false,
+          isProfileActive:false
         }})
         return 
       }
@@ -216,10 +262,50 @@ const useGetActiveRoute = () => {
           isFirstAidActive: false,
           isChatBotActive: false,
           isFindASpecialistActive:false,
-          isCalenderActive:true
+          isCalenderActive:true,
+          isProfileActive:false
         }})
         return 
       }
+
+
+      case ActiveRoutePath["first-aid"]: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: true,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:false
+        }})
+        return 
+      }
+
+      case ActiveRoutePath.profile: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:true
+        }})
+        return 
+      }
+
+
 
       default: setActiveRoutePath(prevState=> {
       return {   ...prevState,
@@ -231,7 +317,8 @@ const useGetActiveRoute = () => {
         isFirstAidActive: false,
         isChatBotActive: false,
         isFindASpecialistActive:false,
-        isCalenderActive:false
+        isCalenderActive:false,
+        isProfileActive:false
 
       }
       })  

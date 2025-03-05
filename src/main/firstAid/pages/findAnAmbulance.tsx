@@ -25,7 +25,7 @@ const FindAnAmbulance = () => {
                     }
                 </div>
                 <button type="button" 
-                    onClick={()=>{navigate('../first-aid/ambulance-en-route')}}
+                    onClick={()=>{navigate('/patient/first-aid/ambulance-en-route')}}
                     className='text-white rounded-md p-2 w-full max-w-[400px] bg-cosmic-primary-color'>Select Ambulance</button>
             </div>
 

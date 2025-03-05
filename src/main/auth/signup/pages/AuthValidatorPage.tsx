@@ -10,7 +10,7 @@ const AuthValidatorPage = ()=>{
 
 
     if(!authToken){
-        return <Navigate to={"/patient/account"} replace/>
+        return <Navigate to={"/patient/account"} replace={true}/>
     }
 
     fetch(`${import.meta.env.VITE_BASE_REST_URL}/auth/google/validate-user`,{
@@ -34,7 +34,7 @@ const AuthValidatorPage = ()=>{
             case 'client':{
 
                  if(res.data.newAccount){
-                    navigate('/patient/profile/setup',{replace:true})
+                    navigate('/patient/account/signup/registration-success',{replace:true})
                     return
                  }
                 navigate('/patient/home',{replace:true})
