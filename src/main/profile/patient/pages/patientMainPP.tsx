@@ -17,7 +17,7 @@ const PatientMainPP:React.FC = () => {
     const navigate = useNavigate();
     const user = useSelector((state:RootReducer)=> state.user)
        if(!user.isAunthenticated){
-        return <Navigate to={"/patient/account/login"}/>
+        return <Navigate to={"/patient/account"}/>
        }
 
       
@@ -43,8 +43,8 @@ const PatientMainPP:React.FC = () => {
                         </div>
                         <div className="w-[85%] h-[100%] md:pl-[20px] md:border-l-[1px] flex flex-col justify-center items-center md:border-l-gray-300">
                             <div className="flex w-[100%] md:items-start gap-1 h-[48%] items-center flex-col justify-center">
-                                <span className="font-bold text-[17px">Mrs Grace Williams</span>
-                                <span className="text-[14px]">jgrace@gmail.com</span>
+                                <span className="font-bold text-[17px">Mr {user.data?.fullName }   {user.data?.lastName}</span>
+                                <span className="text-[14px]">{user.data?.email}</span>
                                 <span className="text-[14px]">Lagos, Nigeria.</span>
                             </div>
                             <div className="flex flex-row w-[100%] md:h-[48%] h-fit justify-between flex-wrap items-center">
