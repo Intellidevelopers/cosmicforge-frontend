@@ -58,7 +58,7 @@ import HospitalAvailability from './main/firstAid/pages/hospitalAvailability.tsx
 import PatientMainPP from './main/profile/patient/pages/patientMainPP.tsx'
 import EditPatientPP from './main/profile/patient/pages/editPatientPP.tsx'
 import MainRouterPage from './main/Base/MainRouterPage.tsx'
-import ProfileComplete from './main/profileSetup/pages/profileComplete.tsx'
+import ProfileComplete from './main/profileSetup/pages/ProfileComplete.tsx'
 
 
 
