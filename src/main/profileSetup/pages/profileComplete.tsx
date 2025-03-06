@@ -5,7 +5,7 @@ import thumbUp from "../../../assets/images/profileCompleteThumbUp.png";
 import { RootReducer } from "../../store/initStore";
 
 
-const ProfileComplete = () => {
+const  ProfileComplete = () => {
 
     const user = useSelector((state:RootReducer)=> state.user)
 
