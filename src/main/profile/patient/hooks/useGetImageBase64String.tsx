@@ -12,7 +12,7 @@ const useGetImageBase64String = () => {
         }
             const fileReader =  new FileReader()
 
-            fileReader.onload = (e) =>{
+            fileReader.onload = () =>{
          resolve(fileReader.result?.toString()!!)
             }
     
