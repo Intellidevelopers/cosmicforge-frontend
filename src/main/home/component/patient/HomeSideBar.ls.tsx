@@ -68,6 +68,7 @@ const HomeSideBar = () => {
                 isCalenderActive: false,
                 isProfileActive:false
               })
+              navigate('/patient/run-diagnosis')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="diagnosis" src={calenderIcon} />
               <p className=" text-[15.5px]">Run Diagnosis</p>
@@ -170,6 +171,7 @@ const HomeSideBar = () => {
                 isCalenderActive: false,
                 isProfileActive:false
               })
+              navigate('/patient/chatbot')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
               <p className=" text-[15.5px]">Chat bot</p>

@@ -19,7 +19,8 @@ export default {
         'flip':'flipcard 1s linear ',
         'front':'frontCard',
         'backCard':'backCard',
-        rotate:'spin 0.5s linear infinite'
+        flow: 'flow .5s linear infinite',
+        rotate:'spin 0.5s linear infinite',
       },
       keyframes:{
         spin:{
@@ -55,6 +56,14 @@ export default {
 transform:'rotateY(180deg)'
           }
            
+        },
+        flow:{
+          '0%':{
+            transform:'translateX(0%)'
+          },
+          '100%':{
+            transform:'translateX(200%)'
+          }
         }
       },
       screens:{

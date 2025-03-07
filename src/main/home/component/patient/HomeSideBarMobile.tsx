@@ -110,7 +110,7 @@ const dispatch = useDispatch()
                 isCalenderActive:false,
                 isProfileActive:false
               })
-            
+              navigate('/patient/run-diagnosis')
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Run Diagnosis</p>
@@ -210,6 +210,7 @@ const dispatch = useDispatch()
                 isCalenderActive:false,
                 isProfileActive:false
               })
+              navigate('/patient/chatbot')
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Chat bot</p>

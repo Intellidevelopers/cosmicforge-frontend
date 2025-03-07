@@ -1,62 +1,84 @@
-import  { useState } from 'react';
+import  { useEffect, useRef, useState } from 'react';
 import HomeMobileNavBar from '../../home/component/patient/HomeMobileNavBar';
 import HomeNavBar from '../../home/component/patient/HomeNavBar';
+import profilePic from '../../../assets/icons/home/cosmic-home-profile-pic-temp.svg';
+import robotProfilePic from '../../../assets/images/doctor-image.jpeg';
+import send from '../../../assets/images/Email Send.svg';
+import mic from '../../../assets/images/mic.svg'
+
+
 
 const Chatbot = () => {
-  const [messages, setMessages] = useState<{ sender: string, text: string }[]>([
-    { sender: 'bot', text: 'Hello! How can I assist you today?' },
-    { sender: 'user', text: 'Hi! I need some help with my account.' },
-    { sender: 'bot', text: 'Sure, I can help with that. What seems to be the problem?' },
-    { sender: 'user', text: 'I forgot my password.' },
-    { sender: 'bot', text: 'No worries. You can reset your password by clicking on the "Forgot Password" link on the login page.' },
-    { sender: 'user', text: 'Thanks! I will try that.' },
-    { sender: 'bot', text: 'Is there anything else I can help you with?' },
-    { sender: 'user', text: 'Yes, I also need to update my email address.' },
-    { sender: 'bot', text: 'You can update your email address in the account settings.' },
-    { sender: 'user', text: 'Got it. Thank you!' },
-    { sender: 'bot', text: 'You\'re welcome! Have a great day!' },
-    { sender: 'user', text: 'You too!' },
-    { sender: 'bot', text: 'Hello again! How can I assist you today?' },
-    { sender: 'user', text: 'Hi! I need some help with my account.' },
-    { sender: 'bot', text: 'Sure, I can help with that. What seems to be the problem?' },
-    { sender: 'user', text: 'I forgot my password.' },
-    { sender: 'bot', text: 'No worries. You can reset your password by clicking on the "Forgot Password" link on the login page.' },
-    { sender: 'user', text: 'Thanks! I will try that.' },
-    { sender: 'bot', text: 'Is there anything else I can help you with?' },
-    { sender: 'user', text: 'No, that\'s all for now. Thanks!' },
+  const [messages, setMessages] = useState<{ sender: string, text: string, time:string }[]>([
+    { sender: 'bot', text: 'Hello! How can I assist you today?', time:'2:30 pm' },
+    { sender: 'user', text: 'Hi! I need some help with my account.', time:'2:30 pm' },
+    { sender: 'bot', text: 'Sure, I can help with that. What seems to be the problem?', time:'2:30 pm' },
+    { sender: 'user', text: 'I forgot my password.', time:'2:30 pm' },
+    { sender: 'bot', text: 'No worries. You can reset your password by clicking on the "Forgot Password" link on the login page.', time:'2:30 pm' },
+    { sender: 'user', text: 'Thanks! I will try that.', time:'2:30 pm' },
+    { sender: 'bot', text: 'Is there anything else I can help you with?', time:'2:30 pm' },
+    { sender: 'user', text: 'Yes, I also need to update my email address.', time:'2:30 pm' },
+    { sender: 'bot', text: 'You can update your email address in the account settings.', time:'2:30 pm' },
+    { sender: 'user', text: 'Got it. Thank you!', time:'2:30 pm' },
+    { sender: 'bot', text: 'You\'re welcome! Have a great day!', time:'2:30 pm' },
+    { sender: 'user', text: 'You too!', time:'2:30 pm' },
+    { sender: 'bot', text: 'Hello again! How can I assist you today?', time:'2:30 pm' },
+    { sender: 'user', text: 'Hi! I need some help with my account.', time:'2:30 pm' },
+    { sender: 'bot', text: 'Sure, I can help with that. What seems to be the problem?', time:'2:30 pm' },
+    { sender: 'user', text: 'I forgot my password.', time:'2:30 pm' },
+    { sender: 'bot', text: 'No worries. You can reset your password by clicking on the "Forgot Password" link on the login page.', time:'2:30 pm' },
+    { sender: 'user', text: 'Thanks! I will try that.', time:'2:30 pm' },
+    { sender: 'bot', text: 'Is there anything else I can help you with?', time:'2:30 pm' },
+    { sender: 'user', text: 'No, that\'s all for now. Thanks!', time:'2:30 pm' },
   ]);
   const [input, setInput] = useState<string>('');
 
+  const getTime = (date:Date)=>{
+    const hours = date.getHours()
+    const minutes = date.getMinutes()
+    const time = hours>12 ? 'PM' : 'AM'
+    return `${hours}:${minutes} ${time}`
+  }
   const handleSend = () => {
     if (input.trim()) {
-      setMessages([...messages, { sender: 'user', text: input }]);
+      setMessages([...messages, { sender: 'user', text: input, time:getTime(new Date) }]);
       setInput('');
       // Simulate a bot response
       setTimeout(() => {
-        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: 'This is a bot response.' }]);
+        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: 'This is a bot response.', time:getTime(new Date) }]);
       }, 1000);
     }
   };
+    const lastMessageRef = useRef<HTMLDivElement>(null);
+
+    useEffect(()=>{
+      if(lastMessageRef.current ){
+        lastMessageRef.current.scrollIntoView(true)
+      }
+    },[messages]
+    )
 
   return (
     <>
       <HomeNavBar title='Chatbot'/>
       <HomeMobileNavBar title='Chatbot'/>
-      <div className="flex flex-col h-screen md:ms-[250px] bg-gray-100">
-        <div className="flex-none bg-cosmic-primary-color text-white p-4 text-center font-bold">
-          Chatbot
-        </div>
-        <div className="flex-1 overflow-auto p-4">
+      <div className="flex flex-col h-[90%] md:ms-[250px] bg-gray-100">
+        <div className="flex-1 overflow-auto p-4" >
           {messages.map((message, index) => (
-            <div key={index} className={`mb-4 ${message.sender === 'user' ? 'text-right' : 'text-left'}`}>
-              <div className={`inline-block p-2 rounded-lg ${message.sender === 'user' ? 'bg-blue-500 text-white' : 'bg-gray-300 text-black'}`}>
-                {message.text}
+            <>
+              <div key={index} className={`mb-4 flex  ${message.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
+                {message.sender == 'bot'&& <img src={robotProfilePic} alt="Profile" className='inline self-end rounded-[50%]  mr-2 h-8 w-8' />}
+                <div className={`inline-block p-3 rounded-lg shadow-lg ${message.sender === 'user' ? 'bg-cosmic-color-lightBlue text-white' : 'bg-white text-black'}`}>
+                  {message.text}
+                <p className='text-xs mt-2'>{message.time}</p>
+                </div>
+                {message.sender == 'user'&& <img src={profilePic} alt="Profile" className='inline-flex self-end rounded-[50%]  ml-2 h-8 w-8' />}
               </div>
-            </div>
+            </>
           ))}
         </div>
         <div className="flex-none p-4  bg-white border-t border-gray-300">
-          <div className="flex">
+          <div className="flex w-full">
             <input
               title='enter text'
               placeholder=' '
@@ -67,12 +89,15 @@ const Chatbot = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyUp={(e) => e.key === 'Enter' && handleSend()}
             />
-            <button
-              className="bg-cosmic-primary-color text-white p-2 rounded-r-lg"
-              onClick={handleSend}
-            >
-              Send
-            </button>
+            <div className="flex gap-2 ml-4">
+              <img src={mic} alt="Mic" className='w-8 cursor-pointer' />
+              {/* <div
+                className="w-8 text-white p-2 rounded-r-lg"
+                
+              >
+              </div> */}
+                <img src={send} alt="Send" className='w-8 cursor-pointer' onClick={handleSend}/>
+            </div>
           </div>
         </div>
       </div>

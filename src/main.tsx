@@ -64,6 +64,8 @@ import ProfileCompletePage from './main/profileSetup/pages/ProfileCompletePage.t
 
 
 
+import Chatbot from './main/chatbot/pages/chatbot.tsx'
+import AiChatbot from './main/chatbot/pages/runDiagnosis.tsx'
 
 
 
@@ -147,45 +149,14 @@ const router = createBrowserRouter([
            path:'/patient/first-aid/:case/:person',
            element:<FirstAidSteps/>
          },
-     
-     
-     
-         /*
          {
-           path:'first-aid',
-           element:<FirstAid1/>,
-         },
-         {
-           path:'first-aid/find-an-ambulance',
-           element:<FindAnAmbulance/>,
-         },
-         {
-           path:'first-aid/ambulance-en-route',
-           element:<AmbulanceEnRoute/>,
-         },
-         {
-           path:'first-aid/hospital-availability',
-           element:<HospitalAvailability/>,
-         },
-         {
-           path:'first-aid/sos',
-           element:<SosPage/>
-         },
-         {
-           path:'first-aid/:case',
-           element:<SelectCase/>,
-           // children:[
-           // ]
-         },
-     
-     
-     
-     
-     
-         {
-           path:'first-aid/:case/:person',
-           element:<FirstAidSteps/>
-         },*/
+          path:'patient/chatbot',
+          element:<Chatbot/>
+        },
+        {
+          path:'patient/run-diagnosis',
+          element:<AiChatbot/>
+        },
          
          {
            path:'/patient',

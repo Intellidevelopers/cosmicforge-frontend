@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <image id="image_1" width="50" height="50" p3:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAC6ElEQVR4nO2ZXYhNURTHfz4yI0MefL6aJqREPpMGEdJMSuRJPFCoSUpJqBEejDRF0+QjHniSJNGkGGZ81TxNeWEK+XigiKbBKO7Vrn3q327PzD3Xueecy/nVrtvaa6291tnr7nvP2pDxf7AQOAE8Al4BL4GHVraAMmA60Abkhxi3gRpSyhrgawFJBOMLsJoUltJ3J9B2YBewHFgB7AbuOzrGZj4pYTTw1nnSdYPo11mdQP81UEkK2C9B/QAWFWCz2OoGdvtIAS8koCMh7I6LXQ8JUyPB/AamhLCdCuTEvpqET6ogkOdF2PeIfaIn2BYJpLMI+06xN74SY5sEYo7WsOhxbHwlRpaIJduRqMlKy5KVVtRkpZVkaY0HqmLckUrPen/NWqDfvgHOjiGRWfadpd++lEXGeVnwYAyJHBD5WSLkkjhujCGRRpGbtSMjSyRtO9IijptEvknkXUX47RL7jSJvErlZOzIOi+PLIl8q8k/A8BA+RwCfxX6JzF0R+aEI82CHOH4g8rFONyTMUbnS6b6MGeDNcXvUDbjAcb9NIOCmzD0GRhbgz+g8FbsbMjcO+ClzkTbwTMl8FOfmu6E9qpxz7puyGQgzd070c05je7PMfQhZrqGPYPPkFQ0sKD9fo87IOhzdVpkf5uzURUrAXOfJr5e5Ck9f14w3tjvfZj/nPf3hUeJng7NTcygR12Whd05DrsLZtaHGBWujDbv3Mn+NEjIT+OaUmAZjWGaf9C9P8EZ2D6j1/NN9Inp9wAxKjP6/yttbqUkevYlAPbDTDtOFn+DRm+wkkQe2EhOtzsLmamBdEX7qPd+dFmLEnC6nPKVz1wY32H1HpdVp99iftL5jZ4/npsqMXuAWcNren5hxxt4d9nr0jY8GEmYacCfEaeWODnuJmhrm2V/1vgKCN39zrgKrkiqlQqiyx+teoFuC77ay2lI0FUpNsyRiPpctzVkiKeOf2ZFjkshRyphq4JkdiV4/Uy78AZvvsfsgz2/tAAAAAElFTkSuQmCC" xmlns:p3="http://www.w3.org/1999/xlink" />
+    <pattern id="pattern_2" patternTransform="scale(0.6 0.6)" width="2.667" height="2.667">
+      <use p4:href="#image_1" xmlns:p4="http://www.w3.org/1999/xlink" />
+    </pattern>
+  </defs>
+  <g>
+    <rect width="50" height="50" rx="25" />
+    <rect id="Microphone" width="30" height="30" fill="url(#pattern_2)" fill-rule="evenodd" transform="translate(10 10)" />
+    <path d="M50 25C50 11.191 38.809 0 25 0C11.191 0 0 11.191 0 25C0 38.809 11.191 50 25 50C38.809 50 50 38.809 50 25ZM8.02881 8.02869Q15.0586 1 25 1Q34.9424 1 41.9712 8.02869Q49 15.0576 49 25Q49 34.9434 41.9712 41.9713Q34.9414 49 25 49Q15.0586 49 8.02881 41.9713Q1 34.9424 1 25Q1 15.0576 8.02881 8.02869Z" fill="#272EA7" fill-rule="evenodd" fill-opacity="0.4" />
+  </g>
+</svg>
