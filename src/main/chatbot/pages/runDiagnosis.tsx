@@ -2,25 +2,27 @@ import  { useEffect, useRef, useState } from 'react';
 import HomeMobileNavBar from '../../home/component/patient/HomeMobileNavBar';
 import HomeNavBar from '../../home/component/patient/HomeNavBar';
 import profilePic from '../../../assets/icons/home/cosmic-home-profile-pic-temp.svg';
-import robotProfilePic from '../../../assets/images/doctor-image.jpeg';
 import send from '../../../assets/images/Email Send.svg';
 import mic from '../../../assets/images/mic.svg'
+import botImage from '../../../assets/images/botImage.svg'
+import { useDispatch, useSelector } from 'react-redux';
+import { RootReducer } from '../../store/initStore';
+import { cacheDiagnosis } from '../../store/reducers/diagnosisReducer';
 
 
 
 const AiChatbot = () => {
-  const [messages, setMessages] = useState<{ sender: string, text: string, diagnosis?:boolean, time:string }[]>([
-    { sender: 'user', text: 'Hi!.', time:'2:30 pm' },
-    { sender: 'bot', text: 'How can I help you today?', time:'2:30 pm' },
-    { sender: 'user', text: 'I don\'t feel so well', time:'2:30 pm' },
-    { sender: 'bot', text: 'No worries. Tell me what the symptoms are so i can give you a diagnosis', time:'2:30 pm' },
-    { sender: 'user', text: 'Thanks! I have running nose, high fever, sleepy eyes, and weakness', time:'2:30 pm' },
-    { sender: 'bot', text: 'Judging from your symptoms, you most likely have Gonorrhea. I would have to refer you to a doctor. Do you accept the referral?', time:'2:30 pm', diagnosis:true },
-  ]);
+
+  const  userSocket = useSelector((state:RootReducer)=>state.socket)
+  const user = useSelector((state:RootReducer)=>state.user)
+  const dispatch = useDispatch()
+  const userDiagnosis = useSelector((state:RootReducer)=>state.diagnosis)
+  
+  const [messages, setMessages] = useState<{ sender: string, message: string, timeStamp:string }[]>(userDiagnosis.diagnosisChat?.messages as { sender: string, message: string, timeStamp:string }[] ?? []);
 
   const [input, setInput] = useState<string>('');
-  const [accepted, setaccepted]  = useState<boolean>(false)
-  const [rejected, setRejected]  = useState<boolean>(false)
+  //const [accepted, setaccepted]  = useState<boolean>(false)
+  //const [rejected, setRejected]  = useState<boolean>(false)
   const [loadingResponse, setLoadingResponse]  = useState<boolean>(false)
   const [showLoader, setShowLoader]  = useState<boolean>(false)
 
@@ -31,7 +33,7 @@ const AiChatbot = () => {
     return `${hours}:${minutes} ${time}`
   }
 
-  const referralAction = (action:string)=>{
+  /*const referralAction = (action:string)=>{
     if (action === 'accept' && accepted === false) {
       setMessages([...messages, { sender: 'user', text: 'I accept the referral', time:getTime(new Date) }]);
       setTimeout(() => {
@@ -46,22 +48,42 @@ const AiChatbot = () => {
       }, 1000);
       setRejected(true)
     }
-  }
+  }*/
 
   const handleSend = () => {
     if (input.trim()) {
-      setMessages([...messages, { sender: 'user', text: input, time:getTime(new Date) }]);
+      setMessages([...messages, { sender: 'user', message: input,timeStamp: Date() }]);
       setInput('');
+      setShowLoader(true)
       setLoadingResponse(true)
       // Simulate a bot response
-      setShowLoader(true)
-      setTimeout(() => {
-        setMessages(prevMessages => [...prevMessages, { sender: 'bot', text: 'This is a bot response.', time:getTime(new Date) }]);
-        setShowLoader(false)
-        setLoadingResponse(false)
-      }, 3000);
+
+      if(userSocket.connected && userSocket){
+        userSocket.socket?.emit('perform-diagnosis',input)
+      }
+     
     }
   };
+
+  useEffect(()=>{
+    if(userSocket.connected && userSocket.socket){
+
+      userSocket.socket.on('diagnosis',(data:any)=>{
+
+     
+      setShowLoader(false)
+      setLoadingResponse(false)
+      setMessages(data.messages)
+      dispatch(cacheDiagnosis({diagnosisChat:data}))
+      
+      })
+
+  userSocket.socket.on('diagnosis-failed',(d:any)=>{
+    setMessages([...messages, { sender: 'bot', message: d,timeStamp: Date() }]);
+  })
+
+    }
+  },[userSocket.socket])
 
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const diagnosisRef = useRef<HTMLDivElement>(null);
@@ -76,26 +98,28 @@ const AiChatbot = () => {
     },[messages]
     )
 
+
+
   return (
     <>
-      <HomeNavBar title='AI Chatbot'/>
-      <HomeMobileNavBar title='AI Chatbot'/>
+      <HomeNavBar title='AI Diagnosis'/>
+      <HomeMobileNavBar title='AI Diagnosis'/>
       <div className="flex flex-col h-[90%] md:ms-[250px] bg-gray-100">
         <div className="flex-1 overflow-auto p-4" >
           {messages.map((message, index) => (
             <>
               <div key={index} className={`mb-4 flex ${message.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
-                {message.sender == 'bot'&& <img src={robotProfilePic} alt="Profile" className='inline self-start rounded-[50%]  mr-2 h-8 w-8' />}
+                {message.sender == 'bot'&& <img src={botImage} alt="Profile" className='inline self-start rounded-[50%]  mr-2 h-8 w-8' />}
                 <div className={`inline-block p-3 rounded-lg shadow-lg ${message.sender === 'user' ? 'bg-cosmic-color-lightBlue text-white' : 'bg-white text-black'}`}>
                   
-                  {message.text}
-                <p className='text-xs mt-2'>{message.time}</p>
+                  {message.message}
+                <p className='text-xs mt-3 text-end '>{getTime(new Date(message.timeStamp))}</p>
                 </div>
-                {message.sender == 'user'&& <img src={profilePic} alt="Profile" className='inline-flex self-start rounded-[50%]  ml-2 h-8 w-8' />}
+                {message.sender == 'user'&& <img src={user.data?.profile?.profilePicture?? profilePic} alt="Profile" className='inline-flex self-start rounded-[50%]  ml-2 h-8 w-8' />}
               </div>
-              {message.diagnosis && 
+              {/*message.diagnosis && 
                     <>
-                      {/* <p>{message.diagnosis}</p> */}
+                      {/* <p>{message.diagnosis}</p> }
                       <div className='inline-block p-3 rounded-lg shadow-lg ml-10 mt-[-10px] bg-white' ref={diagnosisRef}> 
                         <div className='flex flex-col gap-2 p-2'>
                           <p className={`cursor-pointer p-2 font-bold bg-cosmic-primary-color rounded-md w-[180px] text-center ${rejected && 'hidden'} text-white`} onClick={()=>referralAction('accept')}>
@@ -108,11 +132,11 @@ const AiChatbot = () => {
                         <p className='text-xs mt-2'>{message.time}</p>
                       </div>
                     </>
-              }
+              */}
             </>
           ))}
           <div  className={`mb-4 flex ${!showLoader && 'hidden'} mt-2 `} ref={lastMessageRef}>
-                <img src={robotProfilePic} alt="Profile" className='inline self-start rounded-[50%]  mr-2 h-8 w-8' />
+                <img src={botImage} alt="Profile" className='inline self-start rounded-[50%]  mr-2 h-8 w-8' />
                 <div className={`inline-block p-3 rounded-xl w-20 shadow-lg bg-white overflow-hidden`}>
                   <div className='bg-cosmic-doc-gradient-1 rounded-[50%] animate-flow w-4 h-4 relative'></div>
                 </div>
@@ -120,6 +144,7 @@ const AiChatbot = () => {
         </div>
         <div className="flex-none p-4  bg-white border-t border-gray-300 relative">
           {/* STOP LOADING BUTTON HERE */}
+
           <div className={` ${!loadingResponse && 'hidden'} absolute top-[-5rem] left-[45%] cursor-pointer flex items-center gap-1 bg-white p-2 rounded-md shadow-md`}
                 onClick={()=>{setLoadingResponse(false)}}
           >

@@ -70,251 +70,252 @@ import AiChatbot from './main/chatbot/pages/runDiagnosis.tsx'
 
 
 const router = createBrowserRouter([
-    {
-      path:'/',
-      element:<MainRouterPage/>,
-     children:[
+  {
+    path: '/',
+    element: <MainRouterPage />,
+    children: [
 
 
-        {
-          path:'',
-         element:<LandingPage/>,
-        
-       },
-     {
-       path:'patient',
-       element:<HomeMainPage/>,
-       children:[
-         {
-           path:'home',
-           element:<HomePage/>
-         },
+      {
+        path: '',
+        element: <LandingPage />,
 
-         {
-           path:'/patient/',
-           element:<FindASpecialist/>,
-           children:[
-             {
-               path:'find-a-specialist',
-               element:<FindASpecialistCardPage/>
-             },
-             {
-               path:'find-a-specialist/view',
-               element:<FindSpecialistViewPage/>
-             },
-             {
-               path:'find-a-specialist/consult',
-               element:<VirtualConsultPage/>
-             },
-     
-            
-           ]
-         },
-         {
-           path:'favorites',
-           element:<Favorites/>
-         },
-     
-     
-     
-     
-         
-         {
-           path:'/patient/first-aid',
-           element:<FirstAid1/>,
-         },
-         {
-           path:'/patient/first-aid/find-an-ambulance',
-           element:<FindAnAmbulance/>,
-         },
-         {
-           path:'/patient/first-aid/ambulance-en-route',
-           element:<AmbulanceEnRoute/>,
-         },
-         {
-           path:'/patient/first-aid/hospital-availability',
-           element:<HospitalAvailability/>,
-         },
-         {
-           path:'/patient/first-aid/sos',
-           element:<SosPage/>
-         },
-         {
-           path:'/patient/first-aid/:case',
-           element:<SelectCase/>,
-           // children:[
-           // ]
-         },
-         {
-           path:'/patient/first-aid/:case/:person',
-           element:<FirstAidSteps/>
-         },
-         {
-          path:'patient/chatbot',
-          element:<Chatbot/>
-        },
-        {
-          path:'patient/run-diagnosis',
-          element:<AiChatbot/>
-        },
-         
-         {
-           path:'/patient',
-           element:<MainChatPage/>,
-           children:[
-             {
-               path:'messages',
-               element:<UserMessagesPage/>,
-              
-             },
-             {
-               path:'messages/chat',
-               element:<ChatPage/>
-             }
-           ]
-           
-         }
-       
-       ]
       },
       {
-       path:'/coming-soon',
-       element:<ComingSoonPage/>
-      },
-     
-      {
-       path:'/doctor',
-       element:<DoctorHomeMainPage/>,
-       children:[
-         {
-           path:'home',
-           element:<DoctorHome/>
-         },
-       ]
-      },
-      {
-        path:'/patient/profile/complete',
-        element:<ProfileCompletePage/>,
-       },
+        path: 'patient',
+        element: <HomeMainPage />,
+        children: [
+          {
+            path: 'home',
+            element: <HomePage />
+          },
 
-     
-     {
-         path:'/selectRole',
-         element:<RolePage/>
-       },
-       {
-         path:'/patient/profile',
-        element:<PatientMainPP/>
-       },
-       {
-         path:'/patient/profile/edit-profile',
-        element:<EditPatientPP/>
-       },
-       {
-         path:'/patient/account',
-        element:<SignUpMain/>
-       },
-       {
-         path:'/patient/account/signup/verify-email',
-        element:<SignUp1/>
-       },
-       {
-         path:'/patient/profile/setup',
-        element:<ProfileSetup/>
-       },
-     
-         {path:'/patient/account/signup/enter-personal-info',
-        element:<SignUp2/>
-       },
-       {
-         path:'/patient/account/signup/registration-success',
-        element:<RegSuccess/>
-       },
-       {
-         path:'/patient/account/password-reset',
-        element:<ResetLogins/>
-       },
-       {
-         path:'/patient/account/password-reset/new-password',
-        element:<EnterNewPassword/>
-       },
-       {
-         path:'/patient/account/password-reset/success',
-        element:<ResetSuccess/>
-       },
-       {
-         path:'/auth',
-         element:<AuthValidatorPage/>
-       },
-       {
-         path:'/account/login',
-        element:<LoginPage/>
-       },
-     
-     
-       
-       {
-         path:'/patient/analytics',
-        element:<PatientAnalytics/>
-       },
-       {
-         path:'/patient/analytics-coming-soon',
-        element:<ComingSoon/>
-       },
-     
-     
-       {
-         path:'/patient/appointment',
-         element:<AppointmentMainPage/>,
-         children:[
-     {
-       path:'bio',
-       element:<DoctorBioPage/>
-     },
-     {
-       path:'book',
-       element:<BookAppointmentPhaseOnePage/>
-     }
-     ,
-     {
-       path:'checkout',
-       element:<CheckoutPage/>
-     }
-         ]
-       }
-     ,
-     
-     {
-       path:'/patient/calendar/appointment-info',
-       element:<AppointmentInfoPage/>
-     },
-       
-       {
-         path:'/patient/calendar',
-         element:<PatientCalenderMainPage/>,
-         children:[
-     {
-       path:'',
-       element:<PatientCalendarPage/>
-     },
-     {
-       path:'upcoming',
-       element:<UpcomingAppointmentPage/>
-     }
-     ,
-     {
-       path:'past',
-       element:<PastAppointment/>
-     },
-     {
-       path:'cancelled',
-       element:<CancelledAppointment/>
-     },
-     
-         ]
-       }
-      ]
-    }
+          {
+            path: '/patient/',
+            element: <FindASpecialist />,
+            children: [
+              {
+                path: 'find-a-specialist',
+                element: <FindASpecialistCardPage />
+              },
+              {
+                path: 'find-a-specialist/view',
+                element: <FindSpecialistViewPage />
+              },
+              {
+                path: 'find-a-specialist/consult',
+                element: <VirtualConsultPage />
+              },
+
+
+            ]
+          },
+          {
+            path: 'favorites',
+            element: <Favorites />
+          },
+
+
+
+
+
+          {
+            path: '/patient/first-aid',
+            element: <FirstAid1 />,
+          },
+          {
+            path: '/patient/first-aid/find-an-ambulance',
+            element: <FindAnAmbulance />,
+          },
+          {
+            path: '/patient/first-aid/ambulance-en-route',
+            element: <AmbulanceEnRoute />,
+          },
+          {
+            path: '/patient/first-aid/hospital-availability',
+            element: <HospitalAvailability />,
+          },
+          {
+            path: '/patient/first-aid/sos',
+            element: <SosPage />
+          },
+          {
+            path: '/patient/first-aid/:case',
+            element: <SelectCase />,
+            // children:[
+            // ]
+          },
+          {
+            path: '/patient/first-aid/:case/:person',
+            element: <FirstAidSteps />
+          },
+          {
+            path: '/patient/chatbot',
+            element: <Chatbot />
+          },
+          {
+            path: '/patient/run-diagnosis',
+            element: <AiChatbot />
+          },
+
+          {
+            path: '/patient',
+            element: <MainChatPage />,
+            children: [
+              {
+                path: 'messages',
+                element: <UserMessagesPage />,
+
+              },
+              {
+                path: 'messages/chat',
+                element: <ChatPage />
+              }
+            ]
+
+          }
+
+        ]
+      },
+      {
+        path: '/coming-soon',
+        element: <ComingSoonPage />
+      },
+
+      {
+        path: '/doctor',
+        element: <DoctorHomeMainPage />,
+        children: [
+          {
+            path: 'home',
+            element: <DoctorHome />
+          },
+        ]
+      },
+      {
+        path: '/patient/profile/complete',
+        element: <ProfileCompletePage />,
+      },
+
+
+      {
+        path: '/selectRole',
+        element: <RolePage />
+      },
+      {
+        path: '/patient/profile',
+        element: <PatientMainPP />
+      },
+      {
+        path: '/patient/profile/edit-profile',
+        element: <EditPatientPP />
+      },
+      {
+        path: '/patient/account',
+        element: <SignUpMain />
+      },
+      {
+        path: '/patient/account/signup/verify-email',
+        element: <SignUp1 />
+      },
+      {
+        path: '/patient/profile/setup',
+        element: <ProfileSetup />
+      },
+
+      {
+        path: '/patient/account/signup/enter-personal-info',
+        element: <SignUp2 />
+      },
+      {
+        path: '/patient/account/signup/registration-success',
+        element: <RegSuccess />
+      },
+      {
+        path: '/patient/account/password-reset',
+        element: <ResetLogins />
+      },
+      {
+        path: '/patient/account/password-reset/new-password',
+        element: <EnterNewPassword />
+      },
+      {
+        path: '/patient/account/password-reset/success',
+        element: <ResetSuccess />
+      },
+      {
+        path: '/auth',
+        element: <AuthValidatorPage />
+      },
+      {
+        path: '/account/login',
+        element: <LoginPage />
+      },
+
+
+
+      {
+        path: '/patient/analytics',
+        element: <PatientAnalytics />
+      },
+      {
+        path: '/patient/analytics-coming-soon',
+        element: <ComingSoon />
+      },
+
+
+      {
+        path: '/patient/appointment',
+        element: <AppointmentMainPage />,
+        children: [
+          {
+            path: 'bio',
+            element: <DoctorBioPage />
+          },
+          {
+            path: 'book',
+            element: <BookAppointmentPhaseOnePage />
+          }
+          ,
+          {
+            path: 'checkout',
+            element: <CheckoutPage />
+          }
+        ]
+      }
+      ,
+
+      {
+        path: '/patient/calendar/appointment-info',
+        element: <AppointmentInfoPage />
+      },
+
+      {
+        path: '/patient/calendar',
+        element: <PatientCalenderMainPage />,
+        children: [
+          {
+            path: '',
+            element: <PatientCalendarPage />
+          },
+          {
+            path: 'upcoming',
+            element: <UpcomingAppointmentPage />
+          }
+          ,
+          {
+            path: 'past',
+            element: <PastAppointment />
+          },
+          {
+            path: 'cancelled',
+            element: <CancelledAppointment />
+          },
+
+        ]
+      }
+    ]
+  }
 ])
 
 
@@ -322,15 +323,15 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
 
-    <Provider store={store}>
-      <PersistGate persistor={persistore}>
+  <Provider store={store}>
+    <PersistGate persistor={persistore}>
       <RouterProvider router={router} />
-      </PersistGate>
-   
-    </Provider>
-    
+    </PersistGate>
 
- 
-   
- 
+  </Provider>
+
+
+
+
+
 )

@@ -6,10 +6,11 @@ import { RootReducer } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
 import io from 'socket.io-client'
 import { connectSocket } from "../store/reducers/userSocketReducer"
+import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 
 
 
-const MainRouterPage = () =>{
+const MainRouterPage = () => {
     const navigate = useNavigate()
     const user = useSelector((state:RootReducer)=>state.user)
     const userSocket = useSelector((state:RootReducer)=>state.socket)
@@ -70,6 +71,11 @@ const MainRouterPage = () =>{
             socket.on('connect',()=>{
                 
                 dispatch(connectSocket({connected:true,socket}))
+            })
+
+            socket.on('all-diagnosis',(data:any)=>{
+               
+           dispatch(cacheDiagnosis({diagnosisChat:data}))
             })
 
             socket.on('disconnect',()=>{
