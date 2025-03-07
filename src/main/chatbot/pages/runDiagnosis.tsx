@@ -1,4 +1,4 @@
-import  { useEffect, useRef, useState } from 'react';
+import  React, { useEffect, useRef, useState } from 'react';
 import HomeMobileNavBar from '../../home/component/patient/HomeMobileNavBar';
 import HomeNavBar from '../../home/component/patient/HomeNavBar';
 import profilePic from '../../../assets/icons/home/cosmic-home-profile-pic-temp.svg';
@@ -18,7 +18,7 @@ const AiChatbot = () => {
   const dispatch = useDispatch()
   const userDiagnosis = useSelector((state:RootReducer)=>state.diagnosis)
   
-  const [messages, setMessages] = useState<{ sender: string, message: string, timeStamp:string }[]>(userDiagnosis.diagnosisChat?.messages as { sender: string, message: string, timeStamp:string }[] ?? []);
+  const [messages, setMessages] = useState<{ sender: string, message: string, timeStamp:string, _id?:string }[]>(userDiagnosis.diagnosisChat?.messages as { sender: string, message: string, timeStamp:string }[] ?? []);
 
   const [input, setInput] = useState<string>('');
   //const [accepted, setaccepted]  = useState<boolean>(false)
@@ -76,14 +76,21 @@ const AiChatbot = () => {
       setMessages(data.messages)
       dispatch(cacheDiagnosis({diagnosisChat:data}))
       
-      })
+      },)
 
   userSocket.socket.on('diagnosis-failed',(d:any)=>{
+    setShowLoader(false)
+    setLoadingResponse(false)
     setMessages([...messages, { sender: 'bot', message: d,timeStamp: Date() }]);
   })
 
     }
   },[userSocket.socket])
+
+  useEffect(()=>{
+    if(!messages || messages.length<=0 && userDiagnosis.diagnosisChat?.messages && userDiagnosis.diagnosisChat?.messages.length>0)
+   setMessages(userDiagnosis.diagnosisChat?.messages  as { sender: string, message: string, timeStamp:string }[])
+  },[userDiagnosis.diagnosisChat?.messages])
 
     const lastMessageRef = useRef<HTMLDivElement>(null);
     const diagnosisRef = useRef<HTMLDivElement>(null);
@@ -106,9 +113,9 @@ const AiChatbot = () => {
       <HomeMobileNavBar title='AI Diagnosis'/>
       <div className="flex flex-col h-[90%] md:ms-[250px] bg-gray-100">
         <div className="flex-1 overflow-auto p-4" >
-          {messages.map((message, index) => (
-            <>
-              <div key={index} className={`mb-4 flex ${message.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
+          {messages.map((message, _) => (
+            <React.Fragment  key={message._id} >
+              <div className={`mb-4 flex ${message.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
                 {message.sender == 'bot'&& <img src={botImage} alt="Profile" className='inline self-start rounded-[50%]  mr-2 h-8 w-8' />}
                 <div className={`inline-block p-3 rounded-lg shadow-lg ${message.sender === 'user' ? 'bg-cosmic-color-lightBlue text-white' : 'bg-white text-black'}`}>
                   
@@ -133,7 +140,7 @@ const AiChatbot = () => {
                       </div>
                     </>
               */}
-            </>
+            </React.Fragment>
           ))}
           <div  className={`mb-4 flex ${!showLoader && 'hidden'} mt-2 `} ref={lastMessageRef}>
                 <img src={botImage} alt="Profile" className='inline self-start rounded-[50%]  mr-2 h-8 w-8' />
@@ -142,7 +149,7 @@ const AiChatbot = () => {
                 </div>
           </div>
         </div>
-        <div className="flex-none p-4  bg-white border-t border-gray-300 relative">
+        <div className="flex-none md:p-4  bg-white border-t border-gray-300 relative">
           {/* STOP LOADING BUTTON HERE */}
 
           <div className={` ${!loadingResponse && 'hidden'} absolute top-[-5rem] left-[45%] cursor-pointer flex items-center gap-1 bg-white p-2 rounded-md shadow-md`}
@@ -151,18 +158,19 @@ const AiChatbot = () => {
             <div className='rounded-md bg-cosmic-primary-color w-[1rem] h-[1rem]'></div>
             <p className='font-bold text-cosmic-primary-color'>Stop</p>
           </div>
-          <div className="flex w-full">
+
+          <div className="  grid grid-cols-6 w-full">
             <input
               title='enter text'
-              placeholder=' '
+              placeholder='Ask anything... '
               name='chat'
               type="text"
-              className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none"
+              className="  col-span-4 md:col-span-5 p-2 border border-gray-300 rounded-l-lg focus:outline-none"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyUp={(e) => e.key === 'Enter' && handleSend()}
             />
-            <div className="flex gap-2 ml-4">
+            <div className="w-full col-span-2 md:col-span-1 flex   justify-evenly gap-2 ">
               <img src={mic} alt="Mic" className='w-8 cursor-pointer' />
                 <img src={send} alt="Send" className='w-8 cursor-pointer' onClick={handleSend}/>
             </div>
