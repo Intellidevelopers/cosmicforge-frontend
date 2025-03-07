@@ -4,6 +4,8 @@ interface PatientUserProfileProps{
    profilePicture?:string,
    mobileNo?:string,
    workAddress?:string,
+  homeAddress?:string ,
+
    vitalSigns:{
    bloodPressure?:string,
    bodyTemperature?:string,

@@ -4,21 +4,25 @@ import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { thunk } from "redux-thunk";
 import userReducer, { UserProps } from './reducers/userReducers'
+import  userSocketReducer,{ UserSocketProps } from "./reducers/userSocketReducer";
 
 
 
 const persistConfig = {
     key:'root',
-    storage
+    storage,
+    whitelist:['user']
 }
 
  export interface RootReducer {
-    user:UserProps
+    user:UserProps,
+    socket:UserSocketProps
  }
 
 
 const rootReducer =  combineReducers({
-  user:userReducer
+  user:userReducer,
+  socket:userSocketReducer
 })
 
 

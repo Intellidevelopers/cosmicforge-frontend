@@ -4,13 +4,15 @@ import { validateUserSession } from "./service"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
-
+import io from 'socket.io-client'
+import { connectSocket } from "../store/reducers/userSocketReducer"
 
 
 
 const MainRouterPage = () =>{
     const navigate = useNavigate()
     const user = useSelector((state:RootReducer)=>state.user)
+    const userSocket = useSelector((state:RootReducer)=>state.socket)
     const dispatch = useDispatch()
  const {pathname} = useLocation()
    const path = pathname.split('/')[2]
@@ -22,9 +24,7 @@ const MainRouterPage = () =>{
     
          switch(path){
       case 'home':
-        case 'calendar':
-            case 'profile':
-                case 'first-aid':
+        
         (async()=>{
             try {
                 
@@ -60,6 +60,27 @@ const MainRouterPage = () =>{
 
          }
         
+         if(user.isAunthenticated &&  !userSocket.connected){
+            const socket = io(`${import.meta.env.VITE_BASE_Socket_URL}`,{
+                auth:{
+                    token:user.data?.token
+                }
+            })
+
+            socket.on('connect',()=>{
+                
+                dispatch(connectSocket({connected:true,socket}))
+            })
+
+            socket.on('disconnect',()=>{
+                dispatch(connectSocket({connected:false,socket:null}))
+            })
+            
+
+            socket.on('connect_error',(_:any)=>{
+                //alert(e)
+            })
+         }
           
         
  

@@ -9,14 +9,14 @@ import firstAidIcon from "../../../../assets/icons/cosmic-profile.svg";
 import logOutIcon from "../../../../assets/icons/cosmic-logout.svg";
 import useGetActiveRoute from "../../hook/patient/useGetActiveRoute";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authenticateUser } from "../../../store/reducers/userReducers";
-//import { RootReducer } from "../../../store/initStore";
+import { RootReducer } from "../../../store/initStore";
 
 const HomeSideBar = () => {
   const { activeRoutePath, setActiveRoutePath } = useGetActiveRoute()
   const navigate = useNavigate()
-  //const user = useSelector((state:RootReducer)=>state.user)
+  const user = useSelector((state:RootReducer)=>state.user)
 
   const dispatch = useDispatch()
   return (
@@ -25,7 +25,7 @@ const HomeSideBar = () => {
         <img alt="logo" className="h-[50px] w-[60%] mx-auto" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500">
-            <img className="h-[100px] w-[100px]" alt="profile-image" src={profileIconTmp} />
+            <img className="h-[100px] w-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ??profileIconTmp} />
           </div>
           <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color' }  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
              navigate('/patient/profile')

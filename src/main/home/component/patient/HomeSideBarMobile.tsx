@@ -11,8 +11,8 @@ import useGetActiveRoute from "../../hook/patient/useGetActiveRoute";
 import { useNavigate } from "react-router-dom";
 import { MutableRefObject, useRef } from "react";
 import useGetSideBarMobileAnimation, { closeSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
-import { useDispatch } from "react-redux";
-//import { RootReducer } from "../../../store/initStore";
+import { useDispatch, useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
 import { authenticateUser } from "../../../store/reducers/userReducers";
 
 
@@ -29,7 +29,7 @@ const sideBarRef:MutableRefObject<HTMLDivElement | null>= useRef(null)
 useGetSideBarMobileAnimation(sideBarRef)
 
 
-//const user = useSelector((state:RootReducer)=>state.user)
+const user = useSelector((state:RootReducer)=>state.user)
 
 const dispatch = useDispatch()
 
@@ -49,9 +49,9 @@ const dispatch = useDispatch()
 
         <img className="mt-2" alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-1  justify-center place-items-center mt-2 ">
-          <div className=" w-[100px] h-[100px] rounded-full bg-gray-500">
+          <div className=" w-[100px] h-[100px]  rounded-full bg-gray-500">
           
-            <img alt="profile-image" src={profileIconTmp} />
+            <img alt="profile-image" src={user.data?.profile?.profilePicture ??profileIconTmp} />
           </div>
           <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color' }  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
             
