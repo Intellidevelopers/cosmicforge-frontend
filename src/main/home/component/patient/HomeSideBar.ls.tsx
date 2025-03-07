@@ -27,8 +27,8 @@ const HomeSideBar = () => {
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500">
             <img className="h-[100px] w-[100px]" alt="profile-image" src={profileIconTmp} />
           </div>
-          <p className="font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color " onClick={() => {
-            // navigate('/profile/setup')
+          <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color' }  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
+             navigate('/patient/profile')
           }}>
             Edit Profile
           </p>
@@ -45,7 +45,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
               navigate('/patient/home')
             }}   >
@@ -64,7 +65,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
               navigate('/patient/run-diagnosis')
             }}>
@@ -83,7 +85,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
               navigate('/patient/messages')
             }}>
@@ -105,7 +108,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={appointmentIcon} />
@@ -123,7 +127,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
 
               navigate('/patient/analytics')
@@ -143,7 +148,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: true,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
               navigate('/patient/first-aid')
             }}>
@@ -162,7 +168,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: true,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
               navigate('/patient/chatbot')
             }}>
@@ -181,7 +188,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: true,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isProfileActive:false
               })
               navigate('/patient/find-a-specialist')
             }}>
@@ -200,7 +208,8 @@ const HomeSideBar = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: true
+                isCalenderActive: true,
+                isProfileActive:false
               })
               navigate('/patient/calendar')
             }}>

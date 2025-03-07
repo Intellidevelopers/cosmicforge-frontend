@@ -1,17 +1,17 @@
 
-import { Navigate, Outlet } from "react-router-dom"
+import { /*Navigate,*/ Outlet } from "react-router-dom"
 
 import DoctorHomeSideBar from "../../component/doctor/DoctorHomeSideBar.ls"
-import { useSelector } from "react-redux"
-import { RootReducer } from "../../../store/initStore"
+//import { useSelector } from "react-redux"
+//import { RootReducer } from "../../../store/initStore"
 
 
 const DoctorHomeMainPage = () => {
 
-    const user = useSelector((state:RootReducer)=>state.user)
+   // const user = useSelector((state:RootReducer)=>state.user)
 
    
-    if(!user.isAunthenticated ){
+    /*if(!user.isAunthenticated ){
       return  <Navigate to={'/account'}/>
    
     }
@@ -23,7 +23,7 @@ const DoctorHomeMainPage = () => {
 
     if( user.data && user.data.role !== "doctor"){
         return  <Navigate to={'/account'}/>
-      }
+      }*/
 
 
     return (

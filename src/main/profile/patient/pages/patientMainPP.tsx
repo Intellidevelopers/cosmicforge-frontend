@@ -1,4 +1,4 @@
-import React from "react";
+import React, { /*useEffect*/ } from "react";
 import HomeMobileNavBar from "../../../home/component/patient/HomeMobileNavBar";
 import HomeNavBar from "../../../home/component/patient/HomeNavBar";
 import HomeSideBar from "../../../home/component/patient/HomeSideBar.ls";
@@ -9,10 +9,18 @@ import calenderIcon from "../../../../assets/icons/Calendar.svg";
 import healthTIcon from "../../../../assets/icons/Combo Chart.svg";
 import folderIcon from "../../../../assets/icons/History Folder.svg";
 import docIcon from "../../../../assets/icons/Medical Doctor.svg";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
 
 const PatientMainPP:React.FC = () => {
     const navigate = useNavigate();
+    const user = useSelector((state:RootReducer)=> state.user)
+       if(!user.isAunthenticated){
+        return <Navigate to={"/patient/account"}/>
+       }
+
+      
     return (
         <div className="w-full  relative  h-dvh bg-gray-100 overflow-x-hidden overflow-y-auto flex flex-col cursor-default">
             <HomeSideBar/>
@@ -22,8 +30,8 @@ const PatientMainPP:React.FC = () => {
                     <div className="bg-white rounded-[5px] w-[100%] md:h-[290px] h-fit shadow-md gap-2 flex md:flex-col flex-row justify-center items-center md:py-3 md:px-3 py-4 shadow-black/10">
                             <img className="md:w-[160px] md:h-[160px] w-[140px] h-[140px] rounded-full" alt="profile-image" src={profileIconTmp} />
                             <div className="flex flex-col gap-2 items-center justify-center">
-                                <span className="font-bold text-[18px]">Grace Jennifer Williams</span>
-                                <span className="text-[15px]">jgrace@gmail.com</span>
+                                <span className="font-bold text-[18px]">{user.data?.fullName }   {user.data?.lastName} </span>
+                                <span className="text-[15px]">{user.data?.email}</span>
                                 <button onClick={()=>{navigate("/patient/profile/edit-profile")}} className="h-[30px] text-[15px] w-[120px] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Edit Profile</button>
                             </div>
                             
@@ -35,8 +43,8 @@ const PatientMainPP:React.FC = () => {
                         </div>
                         <div className="w-[85%] h-[100%] md:pl-[20px] md:border-l-[1px] flex flex-col justify-center items-center md:border-l-gray-300">
                             <div className="flex w-[100%] md:items-start gap-1 h-[48%] items-center flex-col justify-center">
-                                <span className="font-bold text-[17px">Mrs Grace Williams</span>
-                                <span className="text-[14px]">jgrace@gmail.com</span>
+                                <span className="font-bold text-[17px">Mr {user.data?.fullName }   {user.data?.lastName}</span>
+                                <span className="text-[14px]">{user.data?.email}</span>
                                 <span className="text-[14px]">Lagos, Nigeria.</span>
                             </div>
                             <div className="flex flex-row w-[100%] md:h-[48%] h-fit justify-between flex-wrap items-center">

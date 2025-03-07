@@ -22,7 +22,7 @@ interface PatientUserProfileProps{
      role?:string,
      token?:string,
      email?:string,
-     fullname?:string,
+     fullName?:string,
      lastName?:string,
      profile?:PatientUserProfileProps
    }

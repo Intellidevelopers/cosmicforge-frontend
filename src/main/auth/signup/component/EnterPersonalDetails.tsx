@@ -1,21 +1,21 @@
 import React, { MutableRefObject, useRef, useState } from "react";
 import cosmicLogo from '../../../../assets/icons/cosmic forge logo 1.svg';
-import { Link, /*Navigate,*/ useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import IconContainer from "../../../generalComponents/IconContainer";
 import backIcon from "../../../../assets/icons/Forward.png";
 import Loader from "../../../generalComponents/Loader";
 import { complete_registration } from "../service/service";
-import { useDispatch, /*useSelector*/ } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authenticateUser } from "../../../store/reducers/userReducers";
-//import { RootReducer } from "../../../store/initStore";
+import { RootReducer } from "../../../store/initStore";
 
 
 const EnterPersonalDetails: React.FC = () => {
-  //  const user = useSelector((state:RootReducer)=> state.user)
+    const user = useSelector((state: RootReducer) => state.user)
 
-    /*if(!user.isAunthenticated){
-  return <Navigate to={'/account'}/>
-    }*/
+    if (!user.isAunthenticated) {
+        return <Navigate to={'/account'} />
+    }
 
 
     const [firstName, setFirstName] = useState('');
@@ -23,8 +23,8 @@ const EnterPersonalDetails: React.FC = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [agreedToTerms, setAgreedToTerms] = useState(false);
-    const  [errorMessage,setErrorMesage] = useState<string>('')
-     const [ isLoading, setIsLoading ] = useState<boolean>(false);
+    const [errorMessage, setErrorMesage] = useState<string>('')
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const atleast8CharatersRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     const upperCaseRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
@@ -34,12 +34,12 @@ const EnterPersonalDetails: React.FC = () => {
 
     const dispatch = useDispatch()
 
-    const {state} = useLocation()
+    const { state } = useLocation()
 
     const userRole = state?.role ?? ''
 
 
-    const  otpCode = state?.otp ?? ''
+    const otpCode = state?.otp ?? ''
 
 
     const navigate = useNavigate();
@@ -49,53 +49,53 @@ const EnterPersonalDetails: React.FC = () => {
 
         setErrorMesage('')
 
-        if(!firstName || !lastName || !password || !confirmPassword){
+        if (!firstName || !lastName || !password || !confirmPassword) {
             setErrorMesage('please enter details')
             return
         }
- 
-        if(!(/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[@£$%^*&?!±|#€∞§¶]).{8,}$/.test(password))){
-         setErrorMesage('Pasworwd must be atleast 8 characters, contain uppercase, lowercase, number and symbol.')
-       return
+
+        if (!(/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[@£$%^*&?!±|#€∞§¶]).{8,}$/.test(password))) {
+            setErrorMesage('Pasworwd must be atleast 8 characters, contain uppercase, lowercase, number and symbol.')
+            return
         }
-        if(confirmPassword !== password){
+        if (confirmPassword !== password) {
             setErrorMesage('password not match.')
             return
         }
-        if(!agreedToTerms){
+        if (!agreedToTerms) {
             setErrorMesage('Enure you agree to terms and conditions by checking the box.')
             return
         }
         //form validation here
-    setIsLoading(true)
-      try {
+        setIsLoading(true)
+        try {
 
-        const result = await complete_registration({
-            lastName,
-            fullName:firstName,
-            password,
-            otp:otpCode,
-            role:userRole === 'patient' ? 'client': userRole
-        })
+            const result = await complete_registration({
+                lastName,
+                fullName: firstName,
+                password,
+                otp: otpCode,
+                role: userRole === 'patient' ? 'client' : userRole
+            })
 
-        if(result.status ===200){
-        setErrorMesage('')
-        setIsLoading(false)
-      dispatch(authenticateUser({isAunthenticated:true,data:result.data}))
-      navigate('/patient/account/signup/registration-success',{
-        replace:true
-      });
-            return
+            if (result.status === 200) {
+                setErrorMesage('')
+                setIsLoading(false)
+                dispatch(authenticateUser({ isAunthenticated: true, data: result.data }))
+                navigate('/patient/account/signup/registration-success', {
+                    replace: true
+                });
+                return
+            }
+            setErrorMesage('')
+            setIsLoading(false)
+            setErrorMesage(result.error ?? result.message)
+
+        } catch (error) {
+            setErrorMesage('')
+            setIsLoading(false)
+            setErrorMesage('failed to load.')
         }
-        setErrorMesage('')
-        setIsLoading(false)
-        setErrorMesage(result.error ?? result.message)
-        
-      } catch (error) {
-        setErrorMesage('')
-        setIsLoading(false)
-         setErrorMesage('failed to load.')
-      }
 
         //
     }
@@ -113,9 +113,9 @@ const EnterPersonalDetails: React.FC = () => {
                 </div>
 
                 <div className="w-full flex flex-col place-items-center justify-center">
-                <span className="text-[23px] md:text-[17px] font-bold  md:self-center mt-2">Welcome!</span>
-                <span className="mt-2 text-[17px] md:text-[16px]  ">Start your journey with us.</span>
-                
+                    <span className="text-[23px] md:text-[17px] font-bold  md:self-center mt-2">Welcome!</span>
+                    <span className="mt-2 text-[17px] md:text-[16px]  ">Start your journey with us.</span>
+
                 </div>
                 <form onSubmit={startReg} className="mt-[10px] w-[100%] flex flex-col gap-[10px] md:gap-4">
                     <div className="flex flex-col gap-1">
@@ -140,7 +140,7 @@ const EnterPersonalDetails: React.FC = () => {
                             value={password}
                             onChange={(e) => {
 
-                    
+
 
                                 if (e.target.value.length < 8) {
 
@@ -198,22 +198,22 @@ const EnterPersonalDetails: React.FC = () => {
 
                                 } else {
 
-                                    if(e.target.value){
+                                    if (e.target.value) {
 
                                         if (upperCaseRef.current) {
 
 
                                             upperCaseRef.current.style.backgroundColor = 'red'
                                         }
-                                    }else{
+                                    } else {
 
                                         if (upperCaseRef.current) {
 
 
                                             upperCaseRef.current.style.backgroundColor = '#d1d5db'
-                                        } 
+                                        }
                                     }
-                                    
+
                                 }
 
 
@@ -367,11 +367,11 @@ const EnterPersonalDetails: React.FC = () => {
 
                     </div>
                     <div className="w-full flex flex-col place-items-center justify-center ">
-                    <p className={`${(errorMessage) ?'block':'hidden'} text-red-600`}>{errorMessage}</p>
-                          {
-                            isLoading &&   <Loader size="30px"/>
-                          }
-                        </div>
+                        <p className={`${(errorMessage) ? 'block' : 'hidden'} text-red-600`}>{errorMessage}</p>
+                        {
+                            isLoading && <Loader size="30px" />
+                        }
+                    </div>
 
                     <div className="flex gap-2 mt-[10px] flex-row items-center">
                         <input
@@ -386,7 +386,7 @@ const EnterPersonalDetails: React.FC = () => {
                             and
                             <Link to={'/privacy-and-policy'} className="hover:text-[#272EA7]/80 text-[#272EA7]"> Terms of Service </Link>
                         </span>
-                        
+
                     </div>
                     <button type="submit" className=" mt-3  md:h-[40px] h-[45px] md:w-[100%]  md:ml-0 ml-[5%] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Sign Up</button>
                 </form>

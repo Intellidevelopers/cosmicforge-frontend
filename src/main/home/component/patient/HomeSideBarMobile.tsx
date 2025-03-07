@@ -53,7 +53,24 @@ const dispatch = useDispatch()
           
             <img alt="profile-image" src={profileIconTmp} />
           </div>
-          <p className="font-extralight text-cosmic-primary-color ">
+          <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color' }  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
+            
+            setActiveRoutePath({
+              ...activeRoutePath,
+              isHomeActive: false,
+              isRunDiagnosisActive:false,
+              isMessageActive: false,
+              isBookAppoinmentActive:false,
+              isAnalyticsActive: false,
+              isFirstAidActive: false,
+              isChatBotActive: false,
+              isFindASpecialistActive:false,
+              isCalenderActive:false,
+              isProfileActive:true
+            })
+          
+             navigate('/patient/profile')
+          }}>
             Edit Profile
           </p>
 
@@ -90,7 +107,8 @@ const dispatch = useDispatch()
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive:false,
-                isCalenderActive:false
+                isCalenderActive:false,
+                isProfileActive:false
               })
               navigate('/patient/run-diagnosis')
             }}>
@@ -109,12 +127,13 @@ const dispatch = useDispatch()
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive:false,
-                isCalenderActive:false
+                isCalenderActive:false,
+                isProfileActive:false
               })
               closeSideBar()
               navigate('/patient/messages')
             }}>
-              <img alt="home" src={messageIcon} />
+              <img alt="message icon" src={messageIcon} />
               <p className="">Messages</p>
             </div>
 
@@ -129,10 +148,11 @@ const dispatch = useDispatch()
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive:false,
-                isCalenderActive:false
+                isCalenderActive:false,
+                isProfileActive:false
               })
             }}>
-              <img alt="home" src={appointmentIcon} />
+              <img alt="appointment icon" src={appointmentIcon} />
               <p className="">Book Appointment</p>
             </div>
 
@@ -147,7 +167,8 @@ const dispatch = useDispatch()
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive:false,
-                isCalenderActive:false
+                isCalenderActive:false,
+                isProfileActive:false
               })
               navigate('/patient/analytics')
             }}>
@@ -166,11 +187,12 @@ const dispatch = useDispatch()
                 isFirstAidActive: true,
                 isChatBotActive: false,
                 isFindASpecialistActive:false,
-                isCalenderActive:false
+                isCalenderActive:false,
+                isProfileActive:false
               })
               navigate('/patient/first-aid')
             }}>
-              <img alt="home" src={firstAidIcon} />
+              <img alt="first aid icon" src={firstAidIcon} />
               <p className="">First Aid</p>
             </div>
 
@@ -185,7 +207,8 @@ const dispatch = useDispatch()
                 isFirstAidActive: false,
                 isChatBotActive: true,
                 isFindASpecialistActive:false,
-                isCalenderActive:false
+                isCalenderActive:false,
+                isProfileActive:false
               })
               navigate('/patient/chatbot')
             }}>
@@ -204,7 +227,8 @@ const dispatch = useDispatch()
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive:true,
-                isCalenderActive:false
+                isCalenderActive:false,
+                isProfileActive:false
               })
                 closeSideBar()
               navigate('/patient/find-a-specialist')
@@ -224,7 +248,8 @@ const dispatch = useDispatch()
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive:false,
-                isCalenderActive:true
+                isCalenderActive:true,
+                isProfileActive:false
               })
               navigate('/patient/calendar')
             }}>
