@@ -92,7 +92,7 @@ const dispatch = useDispatch()
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
-            
+              navigate('/patient/run-diagnosis')
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Run Diagnosis</p>
@@ -168,7 +168,7 @@ const dispatch = useDispatch()
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
-              navigate('first-aid')
+              navigate('/patient/first-aid')
             }}>
               <img alt="home" src={firstAidIcon} />
               <p className="">First Aid</p>
@@ -187,6 +187,7 @@ const dispatch = useDispatch()
                 isFindASpecialistActive:false,
                 isCalenderActive:false
               })
+              navigate('/patient/chatbot')
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Chat bot</p>

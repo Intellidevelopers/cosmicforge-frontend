@@ -66,6 +66,7 @@ const HomeSideBar = () => {
                 isFindASpecialistActive: false,
                 isCalenderActive: false
               })
+              navigate('/patient/run-diagnosis')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="diagnosis" src={calenderIcon} />
               <p className=" text-[15.5px]">Run Diagnosis</p>
@@ -144,7 +145,7 @@ const HomeSideBar = () => {
                 isFindASpecialistActive: false,
                 isCalenderActive: false
               })
-              navigate('first-aid')
+              navigate('/patient/first-aid')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={firstAidIcon} />
               <p className=" text-[15.5px]">First Aid</p>
@@ -163,6 +164,7 @@ const HomeSideBar = () => {
                 isFindASpecialistActive: false,
                 isCalenderActive: false
               })
+              navigate('/patient/chatbot')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
               <p className=" text-[15.5px]">Chat bot</p>

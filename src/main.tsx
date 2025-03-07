@@ -57,6 +57,8 @@ import AmbulanceEnRoute from './main/firstAid/pages/ambulanceEnRoute.tsx'
 import HospitalAvailability from './main/firstAid/pages/hospitalAvailability.tsx'
 import PatientMainPP from './main/profile/patient/pages/patientMainPP.tsx'
 import EditPatientPP from './main/profile/patient/pages/editPatientPP.tsx'
+import Chatbot from './main/chatbot/pages/chatbot.tsx'
+import AiChatbot from './main/chatbot/pages/runDiagnosis.tsx'
 
 
 
@@ -106,64 +108,43 @@ const router = createBrowserRouter([
 
     
     {
-      path:'first-aid',
+      path:'patient/first-aid',
       element:<FirstAid1/>,
     },
     {
-      path:'first-aid/find-an-ambulance',
+      path:'patient/first-aid/find-an-ambulance',
       element:<FindAnAmbulance/>,
     },
     {
-      path:'first-aid/ambulance-en-route',
+      path:'patient/first-aid/ambulance-en-route',
       element:<AmbulanceEnRoute/>,
     },
     {
-      path:'first-aid/hospital-availability',
+      path:'patient/first-aid/hospital-availability',
       element:<HospitalAvailability/>,
     },
     {
-      path:'first-aid/sos',
+      path:'patient/first-aid/sos',
       element:<SosPage/>
     },
     {
-      path:'first-aid/:case',
+      path:'patient/first-aid/:case',
       element:<SelectCase/>,
       // children:[
       // ]
     },
     {
-      path:'first-aid/:case/:person',
+      path:'patient/first-aid/:case/:person',
       element:<FirstAidSteps/>
     },
+    
     {
-      path:'first-aid',
-      element:<FirstAid1/>,
+      path:'patient/chatbot',
+      element:<Chatbot/>
     },
     {
-      path:'first-aid/find-an-ambulance',
-      element:<FindAnAmbulance/>,
-    },
-    {
-      path:'first-aid/ambulance-en-route',
-      element:<AmbulanceEnRoute/>,
-    },
-    {
-      path:'first-aid/hospital-availability',
-      element:<HospitalAvailability/>,
-    },
-    {
-      path:'first-aid/sos',
-      element:<SosPage/>
-    },
-    {
-      path:'first-aid/:case',
-      element:<SelectCase/>,
-      // children:[
-      // ]
-    },
-    {
-      path:'first-aid/:case/:person',
-      element:<FirstAidSteps/>
+      path:'patient/run-diagnosis',
+      element:<AiChatbot/>
     },
     
     {
