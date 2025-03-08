@@ -7,15 +7,16 @@ import messageIcon from "../../../../assets/icons/cosmic-chat.svg";
 import analyticsIcon from "../../../../assets/icons/home/cosmic-home-analytics.svg";
 
 import logOutIcon from "../../../../assets/icons/cosmic-logout.svg";
-import useGetActiveRoute from "../../hook/patient/useGetActiveRoute";
+
 import { useNavigate } from "react-router-dom";
+import useGetDoctorActiveNavbarRoute from "../../hook/doctor/useGetDoctorActiveNavbarRoute";
 
 const DoctorHomeSideBar = () => {
-  const {activeRoutePath,setActiveRoutePath} = useGetActiveRoute()
+  const {activeRoutePath,setActiveRoutePath} = useGetDoctorActiveNavbarRoute()
 const navigate = useNavigate()
   
   return (
-    <div className="  w-[294px] h-full bg-home-slidder-color shadow-md shadow-black absolute left-0   p-4 z-50 hidden md:flex cursor-default">
+    <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-50 cursor-default">
       <div className="w-full mt-8 ">
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
@@ -32,34 +33,27 @@ const navigate = useNavigate()
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: true,
-                isRunDiagnosisActive:false,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false
               })
-              navigate('/home')
+              navigate('/doctor/home')
             }}   >
               <img alt="home" src={homeIcon} />
               <p className="">Dashboard</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isRunDiagnosisActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAppoinmentsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:true,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:true,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false
               })
+              navigate('/doctor/appointments')
             }}>
               <img alt="appointment" src={calenderIcon} />
               <p>Appointments</p>
@@ -69,14 +63,10 @@ const navigate = useNavigate()
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:false,
                 isMessageActive: true,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false
               })
             }}>
               <img alt="home" src={messageIcon} />
@@ -89,35 +79,27 @@ const navigate = useNavigate()
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:false,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: true,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false
               })
             }}>
-              <img alt="home" src={analyticsIcon} />
+              <img alt="analytics" src={analyticsIcon} />
               <p>Analytics</p>
             </div>
 
           
 
   
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isCalenderActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isProfileActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:false,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:true
+                isProfileActive:true
               })
             }}>
               <img alt="home" src={calenderIcon} />

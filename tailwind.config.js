@@ -10,6 +10,7 @@ export default {
   
   theme: {
     extend: {
+      
       fontFamily:{
         'open-sans':['Open Sans','sans-serif'],
         'poppins':['Poppins','sans-serif']
@@ -95,6 +96,7 @@ transform:'rotateY(180deg)'
       'cosmic-doc-gradient-3':'rgba(0, 0, 0, 0.3)',
       'cosmic-map-backgroud':'rgba(3, 3, 3, 0.4)'
     }
+  
   },
   plugins: [],
   safelist:['trueGray','lightBlue','warmGray','coolGray','blueGray']

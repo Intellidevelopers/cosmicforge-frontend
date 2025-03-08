@@ -66,6 +66,7 @@ import ProfileCompletePage from './main/profileSetup/pages/ProfileCompletePage.t
 
 import Chatbot from './main/chatbot/pages/chatbot.tsx'
 import AiChatbot from './main/chatbot/pages/runDiagnosis.tsx'
+import DoctorAppointmentPage from './main/home/pages/doctor/DoctorAppointmentPage.tsx'
 
 
 
@@ -182,16 +183,7 @@ const router = createBrowserRouter([
         element: <ComingSoonPage />
       },
 
-      {
-        path: '/doctor',
-        element: <DoctorHomeMainPage />,
-        children: [
-          {
-            path: 'home',
-            element: <DoctorHome />
-          },
-        ]
-      },
+     
       {
         path: '/patient/profile/complete',
         element: <ProfileCompletePage />,
@@ -313,7 +305,24 @@ const router = createBrowserRouter([
           },
 
         ]
-      }
+      },
+
+      //please all doctor route should be here
+
+      {
+        path: '/doctor',
+        element: <DoctorHomeMainPage />,
+        children: [
+          {
+            path: 'home',
+            element: <DoctorHome />
+          },
+          {
+            path: 'appointments',
+            element: < DoctorAppointmentPage/>
+          },
+        ]
+      },
     ]
   }
 ])

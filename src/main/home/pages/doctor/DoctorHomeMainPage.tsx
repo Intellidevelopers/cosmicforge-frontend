@@ -27,10 +27,13 @@ const DoctorHomeMainPage = () => {
 
 
     return (
-        <div className="font-poppins relative w-full h-dvh bg-[#F5F5F5] overflow-x-hidden">
-            <DoctorHomeSideBar/>
-            <Outlet/>
-         
+        <div className="font-poppins  flex relative w-full h-dvh bg-[#F5F5F5] overflow-hidden">
+         <div className=" hidden md:flex w-[25%]">
+          <DoctorHomeSideBar/>
+         </div>
+         <div className=" w-full grid grid-cols-1  ">
+         <Outlet/>
+         </div>
         </div>
     )
 }
