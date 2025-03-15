@@ -7,12 +7,7 @@ import  twitterIcon from    '../../../assets/icons/XIcon.png'
 import  location from '../../../assets/icons/cosmic-location-icon.svg'
 import  email   from '../../../assets/icons/cosmic-email-icon.svg'
 
-import healthEdu from '../../../assets/icons/cosmic-features-health-edu.svg'
-import pharmacy from '../../../assets/icons/cosmic-features-physiotherapy.svg'
-import lab from '../../../assets/icons/cosmic-features-lab.svg'
-import ai from '../../../assets/icons/cosmic-features-virtual-reality.svg'
-import fitness from '../../../assets/icons/cosmic-features-fit-and-emergency.svg'
-import therapy from '../../../assets/icons/cosmic-features-therapy.svg'
+
 
 
 const Footer = () => {

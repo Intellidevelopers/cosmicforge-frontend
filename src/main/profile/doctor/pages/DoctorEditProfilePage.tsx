@@ -1,6 +1,5 @@
 import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar"
 import DoctorNavBarHome from "../../../home/component/doctor/DoctorNavBarMobile"
-import docImage from '../../../../assets/images/doctor-image.jpeg'
 import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { useSelector } from "react-redux"
 import { RootReducer } from "../../../store/initStore"
@@ -128,7 +127,12 @@ const DoctorEditProfilePage = () => {
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="email">Email</label>
-                        <input type="email" className="w-full bg-transparent border p-2 rounded-md" id="email" />
+                        <input type="email" className="w-full bg-transparent border p-2 rounded-md" id="email"  onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                email:e.target.value
+                            })
+                        }} />
                     </div>
 
 
@@ -141,23 +145,43 @@ const DoctorEditProfilePage = () => {
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="professionalTitle">Professional Title</label>
-                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="professionalTitle" />
+                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="professionalTitle"  onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                professionalTitle:e.target.value
+                            })
+                        }} />
                     </div>
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="specialization">Specialization</label>
-                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="specialization" />
+                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="specialization" onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                specialization:e.target.value
+                            })
+                        }}  />
                     </div>
 
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="currentClinic">Current clinic</label>
-                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="currentClinic" />
+                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="currentClinic" onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                currentClinic:e.target.value
+                            })
+                        }}  />
                     </div>
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="department">Department</label>
-                        <select className="w-full bg-transparent border p-2 rounded-md" id="department">
+                        <select className="w-full bg-transparent border p-2 rounded-md" id="department" onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                department:e.target.value
+                            })
+                        }} >
                             {
                                 doctorsDep && doctorsDep.length > 0 && doctorsDep.map((dep, i) => (
                                     <option key={i} className=""  >
@@ -172,12 +196,22 @@ const DoctorEditProfilePage = () => {
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="bio">Bio</label>
-                        <input type="text" className="w-full bg-transparent border p-2 rounded-md h-[100px]" id="bio" />
+                        <input type="text" className="w-full bg-transparent border p-2 rounded-md h-[100px]" id="bio" onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                bio:e.target.value
+                            })
+                        }}  />
                     </div>
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="pricing">Pricing</label>
-                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" />
+                        <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                pricing:e.target.value
+                            })
+                        }}  />
                     </div>
 
 
@@ -188,12 +222,19 @@ const DoctorEditProfilePage = () => {
                         <div className="w-full grid grid-cols-2 gap-2">
                             <div className="w-full flex flex-col gap-2 mt-8">
                                 <label htmlFor="hospitalName">Hospital Name</label>
-                                <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="hospitalName" />
+                                <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="hospitalName" onChange={(e)=>{
+                            setDoctorEditProfileDetails({
+                                ...doctorEditProfileDetails,
+                                experience:{
+                                    ...doctorEditProfileDetails?.experience,
+                                    hospitalName:e.target.value
+                                }
+                            })
+                        }}  />
                             </div>
 
                             <div className="w-full flex flex-col gap-2 mt-8">
                                 <label htmlFor="noOfPatientTreated">No of patient treated</label>
-                                <input type="text" className="w-full bg-transparent border p-2 rounded-md" id="noOfPatientTreated" />
                             </div>
                         </div>
 
