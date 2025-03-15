@@ -24,7 +24,7 @@ const MainRouterPage = () => {
          },5000)*/
     
          switch(path){
-      case 'home':
+      case 'homem':
         
         (async()=>{
             try {

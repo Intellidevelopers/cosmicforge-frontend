@@ -10,7 +10,7 @@ const AuthValidatorPage = ()=>{
 
 
     if(!authToken){
-        return <Navigate to={"/patient/account"} replace={true}/>
+        return <Navigate to={"/account"} replace={true}/>
     }
 
     fetch(`${import.meta.env.VITE_BASE_REST_URL}/auth/google/validate-user`,{
@@ -34,7 +34,7 @@ const AuthValidatorPage = ()=>{
             case 'client':{
 
                  if(res.data.newAccount){
-                    navigate('/patient/account/signup/registration-success',{replace:true})
+                    navigate('/account/signup/registration-success',{replace:true})
                     return
                  }
                 navigate('/patient/home',{replace:true})
@@ -42,7 +42,12 @@ const AuthValidatorPage = ()=>{
             }
 
             case 'doctor':{
-
+                if(res.data.newAccount){
+                    navigate('/account/signup/registration-success',{replace:true})
+                    return
+                 }
+                navigate('/doctor/home',{replace:true})
+                return
             }
            }
         
@@ -50,10 +55,10 @@ const AuthValidatorPage = ()=>{
          return
        }
      console.log(res.error ?? res.message)
-       navigate('/patient/account',{replace:true})
+       navigate('/account',{replace:true})
     }).catch((e:any)=>{
         console.log(e.message)
-        navigate('/patient/account',{replace:true})
+        navigate('/account',{replace:true})
     })
 }
 

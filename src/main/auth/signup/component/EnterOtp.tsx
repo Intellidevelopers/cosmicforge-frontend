@@ -149,7 +149,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email,userRole} ) => {
                 stopAndClearTimer()
                 // move to next screen
                 dispatch(authenticateUser({emailValidated:true}))
-                navigate('/patient/account/signup/enter-personal-info',{
+                navigate('/account/signup/enter-personal-info',{
                     state:{
                         otp:result.otp,
                         role:userRole

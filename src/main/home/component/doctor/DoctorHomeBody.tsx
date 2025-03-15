@@ -6,7 +6,7 @@ import totalEarningsIcon from "../../../../assets/icons/cosmic-doctor-earnings-i
 import DoctorChartGraph from "./DoctorChartGrap";
 import DoctorNavBarHome from "./DoctorNavBarMobile";
 import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
-import DoctorTable from "./DoctorTable";
+import DoctorTable from "../../pages/doctor/DoctorTable";
 
 
 const DoctorHomeBody = () => {

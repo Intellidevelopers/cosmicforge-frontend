@@ -1,6 +1,7 @@
+import { Outlet } from "react-router-dom"
 import DoctorHomeNavBar from "./DoctorHomeNavBar"
 import DoctorNavBarHome from "./DoctorNavBarMobile"
-import DoctorTable from "./DoctorTable"
+
 
 
 const  DoctorAppointmentsMainBody = () => {
@@ -19,7 +20,7 @@ const  DoctorAppointmentsMainBody = () => {
     
 
         <div className="w-full h-dvh overflow-y-auto overflow-x-hidden relative">
-        <DoctorTable />
+        <Outlet/>
             
         </div>
 

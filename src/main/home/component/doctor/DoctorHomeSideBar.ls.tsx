@@ -17,14 +17,25 @@ const navigate = useNavigate()
   
   return (
     <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-50 cursor-default">
-      <div className="w-full mt-8 ">
+      <div className="w-full mt-6 ">
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
-          <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-4">
+          <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-2">
             <img alt="profile-image" src={profileIconTmp} />
           </div>
           <p>Dr Olawale</p>
-          <p className="font-extralight text-cosmic-primary-color">
+          <p className={`font-extralight text-cosmic-primary-color ${(activeRoutePath.isEditProfileActive) && 'underline'}`} onClick={()=>{
+              setActiveRoutePath({
+                ...activeRoutePath,
+                isHomeActive: false,
+                isMessageActive: false,
+                isAppoinmentsActive:false,
+                isAnalyticsActive: false,
+                isProfileActive:false,
+                isEditProfileActive:true
+              })
+              navigate('/doctor/edit-profile')
+            }} >
             Edit Profile
           </p>
 
@@ -36,7 +47,8 @@ const navigate = useNavigate()
                 isMessageActive: false,
                 isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
               navigate('/doctor/home')
             }}   >
@@ -51,7 +63,8 @@ const navigate = useNavigate()
                 isMessageActive: false,
                 isAppoinmentsActive:true,
                 isAnalyticsActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
               navigate('/doctor/appointments')
             }}>
@@ -66,10 +79,13 @@ const navigate = useNavigate()
                 isMessageActive: true,
                 isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
+
+              navigate('/doctor/messages')
             }}>
-              <img alt="home" src={messageIcon} />
+              <img alt="message" src={messageIcon} />
               <p>Messages</p>
             </div>
 
@@ -82,7 +98,8 @@ const navigate = useNavigate()
                 isMessageActive: false,
                 isAppoinmentsActive:false,
                 isAnalyticsActive: true,
-                isProfileActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
             }}>
               <img alt="analytics" src={analyticsIcon} />
@@ -99,7 +116,8 @@ const navigate = useNavigate()
                 isMessageActive: false,
                 isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isProfileActive:true
+                isProfileActive:true,
+                isEditProfileActive:false
               })
             }}>
               <img alt="home" src={calenderIcon} />

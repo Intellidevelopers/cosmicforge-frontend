@@ -13,7 +13,7 @@ import { RootReducer } from "../../../store/initStore";
 const EnterPersonalDetails: React.FC = () => {
     const user = useSelector((state: RootReducer) => state.user)
 
-    if (!user.isAunthenticated) {
+    if (!user.emailValidated) {
         return <Navigate to={'/account'} />
     }
 
@@ -82,7 +82,7 @@ const EnterPersonalDetails: React.FC = () => {
                 setErrorMesage('')
                 setIsLoading(false)
                 dispatch(authenticateUser({ isAunthenticated: true, data: result.data }))
-                navigate('/patient/account/signup/registration-success', {
+                navigate('/account/signup/registration-success', {
                     replace: true
                 });
                 return

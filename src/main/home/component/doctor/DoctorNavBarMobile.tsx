@@ -3,7 +3,7 @@ import profileIconTmp from "../../../../assets/icons/home/cosmic-home-profile-pi
 import tuneIcon from '../../../../assets/icons/home/cosmic-home-tune.svg'
 import searchIcon from '../../../../assets/icons/home/cosmic-home-search-dark.svg'
 import notificationIcon from '../../../../assets/icons/home/cosmic-home-notification.svg'
-//import { openSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
+import { openSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
 //import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
@@ -41,7 +41,7 @@ import { RootReducer } from "../../../store/initStore";
                 <div className="w-full flex place-items-center gap-2 b">
                  <i className="fa fa-bars fa-2xl"   aria-hidden="true" onClick={()=>{
 
-                 // openSideBar()
+                  openSideBar()
                  }}></i>
                   <div className="flex gap-2 w-full  ">
                   <img src={profileIconTmp} className="h-[44px]"  />

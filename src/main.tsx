@@ -67,6 +67,10 @@ import ProfileCompletePage from './main/profileSetup/pages/ProfileCompletePage.t
 import Chatbot from './main/chatbot/pages/chatbot.tsx'
 import AiChatbot from './main/chatbot/pages/runDiagnosis.tsx'
 import DoctorAppointmentPage from './main/home/pages/doctor/DoctorAppointmentPage.tsx'
+import DoctorTable from './main/home/pages/doctor/DoctorTable.tsx'
+import DoctorCalendar from './main/home/pages/doctor/DoctorCalendar.tsx'
+import DoctorMainChatPage from './main/home/pages/chat/doctor/DoctorMainChatPage.tsx'
+import DoctorEditProfilePage from './main/profile/doctor/pages/DoctorEditProfilePage.tsx'
 
 
 
@@ -185,7 +189,7 @@ const router = createBrowserRouter([
 
      
       {
-        path: '/patient/profile/complete',
+        path: '/profile/complete',
         element: <ProfileCompletePage />,
       },
 
@@ -203,11 +207,11 @@ const router = createBrowserRouter([
         element: <EditPatientPP />
       },
       {
-        path: '/patient/account',
+        path: '/account',
         element: <SignUpMain />
       },
       {
-        path: '/patient/account/signup/verify-email',
+        path: '/account/signup/verify-email',
         element: <SignUp1 />
       },
       {
@@ -216,23 +220,23 @@ const router = createBrowserRouter([
       },
 
       {
-        path: '/patient/account/signup/enter-personal-info',
+        path: '/account/signup/enter-personal-info',
         element: <SignUp2 />
       },
       {
-        path: '/patient/account/signup/registration-success',
+        path: '/account/signup/registration-success',
         element: <RegSuccess />
       },
       {
-        path: '/patient/account/password-reset',
+        path: '/account/password-reset',
         element: <ResetLogins />
       },
       {
-        path: '/patient/account/password-reset/new-password',
+        path: '/account/password-reset/new-password',
         element: <EnterNewPassword />
       },
       {
-        path: '/patient/account/password-reset/success',
+        path: '/account/password-reset/success',
         element: <ResetSuccess />
       },
       {
@@ -318,9 +322,27 @@ const router = createBrowserRouter([
             element: <DoctorHome />
           },
           {
-            path: 'appointments',
-            element: < DoctorAppointmentPage/>
+            path: 'appointments/',
+            element: < DoctorAppointmentPage/>,
+            children:[
+              {
+                path:'',
+                element:<DoctorTable/>
+              },
+              {
+                path:'calendar',
+                element:<DoctorCalendar/>
+              }
+            ]
           },
+          {
+            path: 'messages',
+            element: <DoctorMainChatPage />
+          },
+          {
+            path: 'edit-profile',
+            element: <DoctorEditProfilePage/>
+          }
         ]
       },
     ]

@@ -11,9 +11,9 @@ const DoctorHomeNavBar = ({ title }: NavBarProps) => {
 
   return (
 
-    <div className="hidden md:block  bg-white w-full h-fit  p-5  sticky top-0  shadow-md shadow-black z-[200]">
+    <div className="hidden md:block  bg-white w-full h-fit  p-5  sticky top-0  shadow-md  z-[200]">
       <div className="  w-full   flex   relative   ">
-        <p className="font-extrabold p-1">{title ?? 'Home'}</p>
+        <p className="font-extrabold p-1 w-[200px]">{title ?? 'Home'}</p>
 
         <div className='w-full grid grid-cols-6 gap-4'>
           <div className=" col-span-4   flex ms-20 place-items-center gap-2 ">

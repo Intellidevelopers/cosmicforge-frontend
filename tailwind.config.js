@@ -12,7 +12,6 @@ export default {
     extend: {
       
       fontFamily:{
-        'open-sans':['Open Sans','sans-serif'],
         'poppins':['Poppins','sans-serif']
       },
       animation:{
@@ -72,7 +71,13 @@ transform:'rotateY(180deg)'
       }
     },
      backgroundImage:{
-        'cosmic-bg-chat-sender':"url('/src/assets/images/cosmic-chat-sender-bg.svg')"
+        'cosmic-bg-chat-sender':"url('/src/assets/images/cosmic-chat-sender-bg.svg')",
+        'cosmic-bg-chat-background':"url('/src/assets/background/cosmic-chat-background.svg')",
+        'cosmic-bg-landing-page-background':"url('/src/assets/background/cosmic-landing-page-bg-image.svg')",
+        "cosmic-landing-page-card-bg":"url('/src/assets/background/cosmic-card-bg.svg')",
+        "cosmic-testimonial":"url('/src/assets/images/testimonialViewBg.svg')",
+        "cosmic-footer-bg":"url('/src/assets/images/cosmic-footer-bg-image.svg')"
+       
      },
 
     
@@ -94,8 +99,15 @@ transform:'rotateY(180deg)'
       'cosmic-doc-gradient-1':'rgba(39, 46, 167, 0.6)',
       'cosmic-doc-gradient-2':'rgba(0,0,0,0.2)',
       'cosmic-doc-gradient-3':'rgba(0, 0, 0, 0.3)',
-      'cosmic-map-backgroud':'rgba(3, 3, 3, 0.4)'
+      'cosmic-map-backgroud':'rgba(3, 3, 3, 0.4)',
+      'cosmic-color-white-light':"rgba(254, 254, 254, 0.2)",
+      'cosmic-color-landing-1':"rgba(39, 46, 167, 0.3)",
+      'cosmic-color-landing-2':"rgba(39, 46, 167, 0.3)",
+      'cosmic-color-white-bacground':"rgba(254, 254, 254, 0.2)",
+      'cosmic-text-blue':"rgba(39, 46, 167, 1)"
+
     }
+    
   
   },
   plugins: [],

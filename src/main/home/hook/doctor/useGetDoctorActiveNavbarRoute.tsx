@@ -8,7 +8,8 @@ export enum ActiveRoutePath {
   "messages"="messages",
   "appointments"="appointments",
   analytics="analytics",
- profile="profile"
+ profile="profile",
+ editProfile ="edit-profile"
 }
 
 interface ActiveRoutePathProps {
@@ -16,7 +17,8 @@ interface ActiveRoutePathProps {
   isMessageActive: boolean;
   isAppoinmentsActive: boolean;
   isAnalyticsActive: boolean;
-  isProfileActive:boolean
+  isProfileActive:boolean,
+  isEditProfileActive:boolean
 }
 const useGetDoctorActiveNavbarRoute = () => {
   const routePath = useLocation();
@@ -36,7 +38,8 @@ const useGetDoctorActiveNavbarRoute = () => {
           isMessageActive: false,
           isAppoinmentsActive:false,
           isAnalyticsActive: false,
-          isProfileActive:false
+          isProfileActive:false,
+          isEditProfileActive:false
         };
       }
 
@@ -49,7 +52,8 @@ const useGetDoctorActiveNavbarRoute = () => {
             isMessageActive: true,
             isAppoinmentsActive:false,
             isAnalyticsActive: false,
-            isProfileActive:false
+            isProfileActive:false,
+            isEditProfileActive:false
         };
       }
 
@@ -62,7 +66,8 @@ const useGetDoctorActiveNavbarRoute = () => {
             isMessageActive: false,
             isAppoinmentsActive:false,
             isAnalyticsActive: true,
-            isProfileActive:false
+            isProfileActive:false,
+            isEditProfileActive:false
         }
         
       }
@@ -77,7 +82,8 @@ const useGetDoctorActiveNavbarRoute = () => {
             isMessageActive: false,
             isAppoinmentsActive:true,
             isAnalyticsActive: false,
-            isProfileActive:false
+            isProfileActive:false,
+            isEditProfileActive:false
         }
         
       }
@@ -90,11 +96,24 @@ const useGetDoctorActiveNavbarRoute = () => {
             isMessageActive: false,
             isAppoinmentsActive:false,
             isAnalyticsActive: false,
-            isProfileActive:true
+            isProfileActive:true,
+            isEditProfileActive:false
         }
         
       }
 
+      case ActiveRoutePath.editProfile: {
+        return{
+            isHomeActive: false,
+            isRunDiagnosisActive:false,
+            isMessageActive: false,
+            isAppoinmentsActive:false,
+            isAnalyticsActive: false,
+            isProfileActive:false,
+            isEditProfileActive:true
+        }
+        
+      }
       
       default:  return {
         isHomeActive: false,
@@ -102,7 +121,8 @@ const useGetDoctorActiveNavbarRoute = () => {
             isMessageActive: false,
             isAppoinmentsActive:false,
             isAnalyticsActive: false,
-            isProfileActive:false
+            isProfileActive:false,
+            isEditProfileActive:false
       }
     }
   });
@@ -122,7 +142,8 @@ const useGetDoctorActiveNavbarRoute = () => {
           isMessageActive: false,
           isAppoinmentsActive:false,
           isAnalyticsActive: false,
-          isProfileActive:false
+          isProfileActive:false,
+          isEditProfileActive:false
         }})
         return
       }
@@ -138,7 +159,8 @@ const useGetDoctorActiveNavbarRoute = () => {
           isMessageActive: true,
           isAppoinmentsActive:false,
           isAnalyticsActive: false,
-          isProfileActive:false
+          isProfileActive:false,
+          isEditProfileActive:false
           
         }})
         return 
@@ -156,7 +178,8 @@ const useGetDoctorActiveNavbarRoute = () => {
             isMessageActive: false,
             isAppoinmentsActive:false,
             isAnalyticsActive: true,
-            isProfileActive:false
+            isProfileActive:false,
+            isEditProfileActive:false
         }})
         return 
       }
@@ -172,7 +195,8 @@ const useGetDoctorActiveNavbarRoute = () => {
             isMessageActive: false,
             isAppoinmentsActive:true,
             isAnalyticsActive: false,
-            isProfileActive:false
+            isProfileActive:false,
+            isEditProfileActive:false
         }})
         return 
       }
@@ -189,11 +213,26 @@ const useGetDoctorActiveNavbarRoute = () => {
           isMessageActive: false,
           isAppoinmentsActive:false,
           isAnalyticsActive: false,
-          isProfileActive:true
+          isProfileActive:true,
+          isEditProfileActive:false
         }})
         return 
       }
 
+      case ActiveRoutePath.editProfile: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isAppoinmentsActive:false,
+          isAnalyticsActive: false,
+          isProfileActive:false,
+          isEditProfileActive:true
+        }})
+        return 
+      }
 
 
       default: setActiveRoutePath(prevState=> {
@@ -203,7 +242,8 @@ const useGetDoctorActiveNavbarRoute = () => {
         isMessageActive: false,
         isAppoinmentsActive:false,
         isAnalyticsActive: false,
-        isProfileActive:false
+        isProfileActive:false,
+        isEditProfileActive:false
 
       }
       })  
