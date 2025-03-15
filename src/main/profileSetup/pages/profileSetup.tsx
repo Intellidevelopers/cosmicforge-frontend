@@ -25,9 +25,9 @@ const ProfileSetup = () => {
 
     const user = useSelector((state:RootReducer)=> state.user)
 
-//      if(!user.emailValidated && !user.isAunthenticated){
-//    return <Navigate to={'/patient/account'} replace/>
-//      }
+     if(!user.emailValidated && !user.isAunthenticated){
+   return <Navigate to={'/patient/account'} replace/>
+     }
 
 
      
