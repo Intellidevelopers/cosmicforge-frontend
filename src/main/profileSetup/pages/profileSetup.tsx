@@ -25,9 +25,9 @@ const ProfileSetup = () => {
 
     const user = useSelector((state:RootReducer)=> state.user)
 
-     if(!user.emailValidated && !user.isAunthenticated){
-   return <Navigate to={'/patient/account'} replace/>
-     }
+//      if(!user.emailValidated && !user.isAunthenticated){
+//    return <Navigate to={'/patient/account'} replace/>
+//      }
 
 
      
@@ -49,6 +49,8 @@ const ProfileSetup = () => {
         bodyTemperature: '',
         bloodPressure: '',
         oxygenSaturation: '',
+        genotype:'',
+        bloodGroup:'',
         weight: {
             value:0,
             unit:'Kg'
@@ -60,7 +62,7 @@ const ProfileSetup = () => {
         profileType:'',
     });
 
-    const steps: number = 8;
+    const steps: number = 10;
     const minHeight = "min-h-[50dvh]"; // Define the minHeight variable
     const maxButtonWidth = ' w-[90%] max-w-[300px] rounded ';
     const bodyLayout = ' flex flex-col justify-start items-center width-full gap-2'
@@ -123,7 +125,7 @@ const ProfileSetup = () => {
     //     }
     // };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
         if (step === 2) {
            // setAge(parseInt(value));
@@ -195,6 +197,10 @@ const ProfileSetup = () => {
             case 7:
                 return formData.height.value !== 0;
             case 8:
+                return formData.genotype !== '';
+            case 9:
+                return formData.bloodGroup !== '';
+            case 10:
                 return formData.profileType !== '';
             default:
                 return false;
@@ -374,7 +380,46 @@ const ProfileSetup = () => {
                                 </div>
                             </div>
                         )}
-                        {step === 8 && (
+                        {
+                            step === 8 && (
+                                <div className={minHeight + bodyLayout  }>
+                                    <h2 className='font-bold text-lg sm:text-2xl '>What's your genotype?</h2>
+                                    <p className='text-cosmic-primary-color font-bold text-xl'>{formData.genotype ? formData.genotype : 'Genotype'}</p>
+                                    <div className="border-2 border-cosmic-primary-color rounded-[50%] m-4 p-4 flex flex-col justify-center items-center w-[150PX] h-[150PX]">
+                                        <select title='Genotype' name='genotype' onChange={handleChange} value={formData.genotype}
+                                            className='w-[100px] border border-cosmic-primary-color p-2 hover:border-cosmic-primary-color focus:border-cosmic-primary-color'
+                                        >
+                                            <option selected={formData.genotype === 'AA'} value='AA'>AA</option>
+                                            <option selected={formData.genotype === 'AS'} value='AS'>AS</option>
+                                            <option selected={formData.genotype === 'SS'} value='SS'>SS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            ) 
+                        }
+                        {
+                            step === 9 && (
+                                <div className={minHeight + bodyLayout  }>
+                                    <h2 className='font-bold text-lg sm:text-2xl '>What's your Blood Group?</h2>
+                                    <p className='text-cosmic-primary-color font-bold text-xl'>{formData.bloodGroup ? formData.bloodGroup : 'BloodGroup'}</p>
+                                    <div className="border-2 border-cosmic-primary-color rounded-[50%] m-4 p-4 flex flex-col justify-center items-center w-[150PX] h-[150PX]">
+                                        <select title='Blood group' name='bloodGroup' onChange={handleChange} value={formData.bloodGroup}
+                                            className='w-[100px] border border-cosmic-primary-color p-2 hover:border-cosmic-primary-color focus:border-cosmic-primary-color'
+                                        >
+                                            <option selected={formData.bloodGroup === 'O-'} value='O-'>O-</option>
+                                            <option selected={formData.bloodGroup === 'O+'} value='O+'>O+</option>
+                                            <option selected={formData.bloodGroup === 'A-'} value='A-'>A-</option>
+                                            <option selected={formData.bloodGroup === 'A+'} value='A+'>A+</option>
+                                            <option selected={formData.bloodGroup === 'B-'} value='B-'>B-</option>
+                                            <option selected={formData.bloodGroup === 'B+'} value='B+'>B+</option>
+                                            <option selected={formData.bloodGroup === 'AB-'} value='AB-'>AB-</option>
+                                            <option selected={formData.bloodGroup === 'AB+'} value='AB+'>AB+</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            ) 
+                        }
+                        {step === 10 && (
                             <div className={minHeight + bodyLayout}>
                                 <h2 className="text-xl font-bold mb-4 text-center">Select Profile Type</h2>
                                 <div id='radio-section' className='flex flex-col w-[90vw] justify-center items-center'>
