@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import IconContainer from "../../generalComponents/IconContainer";
-import backIcon from "../../../assets/icons/Forward.png";
+import logo from "../../../assets/logo/logo_comsic_splash.svg";
+import backIcon from "../../../assets/images/introframe.jpeg";
 import doctorImage from "../../../assets/images/doctor-role.png";
 import patientImage from "../../../assets/images/patient-role.png"
 import { useState } from "react";
@@ -43,22 +43,31 @@ const RolePage:React.FC = () => {
     }
 
     return (
-        <div className="font-poppins bg-gray-100 w-screen h-screen flex flex-col justify-center items-center">
-            <Link className="md:flex hidden absolute top-[7%] flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit" to={'/'}>
-                <IconContainer image={backIcon} classes='rotate-180' mobileSize="20" deskSize="30"/>
-                <span>Go back</span>
-            </Link>
-            <div className="md:w-[80%] md:h-fit h-screen md:text-center text-left flex flex-col md:pb-0 pb-[10%] justify-between md:justify-around md:pt-0 pt-[30px]  gap-[5px] md:px-[15%] px-[3%] w-[100%]">
-                <div className="flex flex-col">
-                    <span className="text-[23px] font-extrabold">Select Account Type</span>
-                    <span className="font-light mt-6">By selecting your account type, you have automatically set your user role</span>
-                    <div className="h-[350px] w-[100%] flex flex-row justify-between items-center">
+        <div className="font-poppins bg-gray-100 w-screen h-screen  grid grid-cols-2 gap-8">
+            
+            <div className="w-full col-span-1">
+             
+            <img src={backIcon} className="w-[100%] h-[100%] object-contain"/>
+            </div>
+
+
+            <div className="w-full col-span-1">
+                <div className="flex flex-col justify-center place-items-center ">
+                    <img src={logo}  className="w-[150px] h-[150px] mt-1"/>
+                    <span className="text-[20px] font-extrabold">Welcome!</span>
+                    <span className="font-light mt-2">How do you want to continue?</span>
+
+                    <div className="h-[350px] w-[60%] flex flex-row justify-between items-center gap-8  ">
+
+
                         <button onClick={handleDoctorButton} className={`${isDoctorSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[45%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
                             <div className="md:h-[220px] h-[180px] w-[60%]">
                                 <img src={doctorImage} className="h-[100%] w-[100%]" alt='doctor role'/>
                             </div>
                             <span className="font-bold text-[16px] mb-[10px]">Doctor/ Specialist</span>
                         </button>
+
+
                         <button onClick={handlePatientButton} className={`${isPatientSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[45%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
                             <div className="md:h-[220px] h-[180px] md:w-[70%] w-[80%]">
                                 <img src={patientImage} className="h-[100%] w-[100%]" alt='doctor role'/>
@@ -68,16 +77,18 @@ const RolePage:React.FC = () => {
                         
                     </div>
                 </div>
+                <div className="w-full flex justify-center place-items-center">
                 { !(isDoctorSelected || isPatientSelected) ? (
-                    <div className={`h-[48px] w-[100%] bg-[#272EA7]/70 text-white font-bold flex flex-row justify-center items-center rounded-[5px] mt-10`} >
+                    <div className={`h-[48px] w-[50%] m-3 bg-[#272EA7]/70 text-white font-bold flex flex-row justify-center items-center rounded-[5px] mt-10`} >
                         continue
                     </div>
                 ): (
                     //signup here
-                    <Link className="h-[48px] w-[100%] bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/account'} state={{userRole:accountRole}}>
+                    <Link className="h-[48px] w-[50%] m-3 bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/account'} state={{userRole:accountRole}}>
                         Continue
                     </Link> 
                 )}
+                </div>
               
               
             </div>

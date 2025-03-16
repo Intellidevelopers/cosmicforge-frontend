@@ -104,7 +104,8 @@ transform:'rotateY(180deg)'
       'cosmic-color-landing-1':"rgba(39, 46, 167, 0.3)",
       'cosmic-color-landing-2':"rgba(39, 46, 167, 0.3)",
       'cosmic-color-white-bacground':"rgba(254, 254, 254, 0.2)",
-      'cosmic-text-blue':"rgba(39, 46, 167, 1)"
+      'cosmic-text-blue':"rgba(39, 46, 167, 1)",
+      'cosmic-white-light-0.2':"rgba(254, 254, 254, 0.2)"
 
     }
     

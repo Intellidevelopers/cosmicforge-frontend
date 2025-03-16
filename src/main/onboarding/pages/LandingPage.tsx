@@ -50,6 +50,7 @@ import therapy from '../../../assets/icons/cosmic-features-therapy.svg'
 
 
 import Footer from '../component/Footer';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -133,7 +134,9 @@ const LandingPage: React.FC = () => {
 
     const autoScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
-    const [departments, setDepartments] = useState<{ name: string, image: string }[]>()
+    const [departments, setDepartments] = useState<{ name: string, image: string,backgroundImage?:string,bodyText?:string }[]>()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
 
@@ -153,7 +156,7 @@ const LandingPage: React.FC = () => {
             })
         }
 
-
+      if(!departments || departments.length===0)
         (async () => {
             try {
                 const result = await getDoctorDeparmentsForLandingPage()
@@ -186,16 +189,20 @@ const LandingPage: React.FC = () => {
 
                 <div className='  w-full h-[50px] col-span-2 flex place-items-center md:justify-evenly justify-end'>
 
-                    <div className='w-full  hidden  md:flex md:place-items-center md:justify-evenly justify-end'>
-                        <p>Home</p>
-                        <p>About Us</p>
-                        <p>Features</p>
-                        <p>Pricing</p>
-                        <p>Login</p>
+                    <div className='w-full cursor-default hidden  md:flex md:place-items-center md:justify-evenly justify-end'>
+                        <p className='hover:font-bold hover:text-[24px]'>Home</p>
+                        <p className='hover:font-bold hover:text-[24px]'>About Us</p>
+                        <p className='hover:font-bold hover:text-[24px]'>Features</p>
+                        <p className='hover:font-bold hover:text-[24px]'>Pricing</p>
+                        <p className='hover:font-bold hover:text-[24px]' onClick={()=>{
+                            navigate('/account/login')
+                        }}>Login</p>
 
                     </div>
 
-                    <p className='bg-cosmic-primary-color text-white p-2 rounded-md '>Register</p>
+                    <p className='bg-cosmic-primary-color text-white p-2 rounded-md ' onClick={()=>{
+                          navigate('/selectRole')
+                    }}>Register</p>
 
 
                 </div>
@@ -303,7 +310,9 @@ const LandingPage: React.FC = () => {
 
 
 
-
+{/**
+ * what we offer container
+ */}
             <div className='w-full  col-span-7 h-full mt-[200px] '>
                 <div className='w-full flex flex-col place-items-center justify-center gap-4 '>
                     <p className='text-cosmic-primary-color font-bold text-[24px] mt-4'>Our Features</p>
@@ -312,8 +321,10 @@ const LandingPage: React.FC = () => {
                     <div className='w-[100vw] md:w-[800px] inline-flex gap-3 overflow-x-auto'>
 
                         <div className='w-[300px] h-fit m-5 relative'>
-                            <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
-                                <div className='w-full flex flex-col justify-center p-5'>
+                       
+                            <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat relative '>
+                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
+                                <div className='w-full flex flex-col justify-center p-5 '>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
                                     <div className='w-full mt-2'>
@@ -325,31 +336,16 @@ const LandingPage: React.FC = () => {
 
                             </div>
                             <div className='w-[80px] h-[50px] absolute bottom-3 right-3  bg-white rounded-md flex justify-center place-items-center'>
-                                dd
+                            <img src={rightButton} />
                             </div>
+
+                         
                         </div>
 
 
                         <div className='w-[300px] h-fit m-5 relative'>
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
-                                <div className='w-full flex flex-col justify-center p-5'>
-                                    <img src={image} className='h-[200px] w-[300px] border' />
-
-                                    <div className='w-full mt-2'>
-                                        <p>Unified Healthcare Hub</p>
-                                        <p className='font-light'>A unified platform connecting doctors, patients, labs, and pharmacies seamlessly.</p>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                            <div className='w-[80px] h-[50px] absolute bottom-3 right-3  bg-white rounded-md flex justify-center place-items-center'>
-                                <img src={rightButton} />
-                            </div>
-                        </div>
-
-                        <div className='w-[300px] h-fit m-5 relative'>
-                            <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
+                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5'>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -366,9 +362,9 @@ const LandingPage: React.FC = () => {
                             </div>
                         </div>
 
-
                         <div className='w-[300px] h-fit m-5 relative'>
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
+                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5'>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -381,12 +377,33 @@ const LandingPage: React.FC = () => {
 
                             </div>
                             <div className='w-[80px] h-[50px] absolute bottom-3 right-3  bg-white rounded-md flex justify-center place-items-center'>
-                                dd
+                                <img src={rightButton} />
+                            </div>
+                        </div>
+
+
+                        <div className='w-[300px] h-fit m-5 relative'>
+                            <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
+                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
+                                <div className='w-full flex flex-col justify-center p-5'>
+                                    <img src={image} className='h-[200px] w-[300px] border' />
+
+                                    <div className='w-full mt-2'>
+                                        <p>Unified Healthcare Hub</p>
+                                        <p className='font-light'>A unified platform connecting doctors, patients, labs, and pharmacies seamlessly.</p>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div className='w-[80px] h-[50px] absolute bottom-3 right-3  bg-white rounded-md flex justify-center place-items-center'>
+                            <img src={rightButton} />
                             </div>
                         </div>
 
                         <div className='w-[300px] h-fit m-5 relative'>
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
+                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5'>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -422,8 +439,7 @@ const LandingPage: React.FC = () => {
 
 
                         <div className='  flex gap-8 ms-4 p-3 '>
-                            <p className=' w-[40px]
-                h-[40px] rounded-full bg-cosmic-primary-color text-white flex justify-center place-items-center' >1</p>
+                            <p className='w-[30px] h-[30px] rounded-full p-2 bg-cosmic-primary-color text-white flex justify-center place-items-center' >1</p>
                             <div className='md:w-[350px] '>
                                 <p> Qualified Medical Professionals</p>
                                 <p className='font-light text-justify '>Our physicians are certified and licensed professionals, who provide patients with standard medical care</p>
@@ -432,8 +448,8 @@ const LandingPage: React.FC = () => {
 
 
                         <div className=' flex gap-8 ms-4 p-3 '>
-                            <p className='w-[40px]
-                h-[40px] rounded-full bg-cosmic-primary-color text-white flex justify-center place-items-center' >2</p>
+                            <p className='w-[30px]
+                h-[30px] rounded-full p-2 bg-cosmic-primary-color text-white flex justify-center place-items-center' >2</p>
                             <div className='md:w-[350px]'>
                                 <p>   AI and Modern Technologies</p>
                                 <p className='font-light'>Our physicians are certified and licensed professionals, who provide patients with standard medical care</p>
@@ -446,8 +462,7 @@ const LandingPage: React.FC = () => {
 
 
                         <div className=' flex gap-8 ms-4 p-3 '>
-                            <p className='w-[40px]
-                                                    h-[40px] rounded-full bg-cosmic-primary-color text-white flex justify-center place-items-center' >3</p>
+                            <p className='w-[30px] h-[30px] rounded-full p-2 bg-cosmic-primary-color text-white flex justify-center place-items-center' >3</p>
                             <div className='md:w-[350px]'>
                                 <p>   Patient-Doctor Confidentiality</p>
                                 <p className='font-light'>Our physicians are certified and licensed professionals, who provide patients with standard medical care</p>
@@ -478,21 +493,27 @@ const LandingPage: React.FC = () => {
 
             </div>
 
-            <div className='w-full  col-span-7 h-full mt-[10px] '>
+            <div className='w-full  col-span-7 h-full mt-[10px] cursor-default'>
 
                 <div className='w-full relative'>
                     <p className='text-cosmic-primary-color font-bold text-[24px] mt-4 ms-[50px]'>Browse by Departments</p>
-                    <p className='text-cosmic-primary-color  text-[14px] mt-4 ms-[40px] absolute top-0 right-8'>See more</p>
+                    <p className='text-cosmic-primary-color  text-[14px] mt-4 ms-[40px] absolute top-0 right-8 font-light' onClick={()=>{
+                      navigate('/departments',{
+                        state:{
+                            departments
+                        }
+                      })
+                    }}>See more</p>
                 </div>
 
                 <div className='w-full flex flex-col place-items-center justify-center gap-4 '>
 
 
-                    <div className='w-[100vw] md:w-[800px] inline-flex gap-3 overflow-x-auto'>
+                    <div className='w-[100vw]  inline-flex  overflow-x-auto'>
 
                         {
                             departments && departments.length > 0 && departments.map((department, index) => (
-                                <DepartmentCardS key={index} name={department.name} image={department.image} />
+                                <DepartmentCardS key={index} name={department.name} image={department.image} backgroundImage={department.backgroundImage} bodyText={department.bodyText} />
                             ))
                         }
                     </div>
@@ -540,7 +561,7 @@ const LandingPage: React.FC = () => {
                                         <p>Pharmacy</p>
                                         <p className='font-light'>Easily manage prescriptions, track medications, and connect with pharmacies for fast, reliable service.</p>
                                         <div>
-                                            <p className='mt-4'>Learn More</p>
+                                            <p className='mt-4 font-light'>Learn More</p>
                                         </div>
                                     </div>
 
@@ -561,7 +582,7 @@ const LandingPage: React.FC = () => {
                                         <p>Laboratory</p>
                                         <p className='font-light'>Schedule sample collections, access test results, and simplify lab management for doctors, patients, and laboratories.</p>
                                         <div>
-                                            <p className='mt-4'>Learn More</p>
+                                            <p className='mt-4 font-light'>Learn More</p>
                                         </div>
                                     </div>
 
@@ -583,7 +604,7 @@ const LandingPage: React.FC = () => {
                                         <p>First Aid & Emergency</p>
                                         <p className='font-light'>Access step-by-step first-aid instructions and quickly contact emergency services like ambulance, fire, and police.</p>
                                         <div>
-                                            <p className='mt-4'>Learn More</p>
+                                            <p className='mt-4 font-light'>Learn More</p>
                                         </div>
                                     </div>
 
@@ -605,7 +626,7 @@ const LandingPage: React.FC = () => {
                                         <p>Health Education</p>
                                         <p className='font-light'>Stay informed with personalized health resources, from condition management to wellness tips, empowering better decisions.</p>
                                         <div>
-                                            <p className='mt-4'>Learn More</p>
+                                            <p className='mt-4 font-light'>Learn More</p>
                                         </div>
                                     </div>
 
@@ -627,7 +648,7 @@ const LandingPage: React.FC = () => {
                                         <p>Virtual Reality Assistance</p>
                                         <p className='font-light'>Enhance diagnosis, treatment, and patient engagement with immersive VR technology for both therapy and education.</p>
                                         <div>
-                                            <p className='mt-4'>Learn More</p>
+                                            <p className='mt-4 font-light'>Learn More</p>
                                         </div>
                                     </div>
 
@@ -649,7 +670,7 @@ const LandingPage: React.FC = () => {
                                         <p>Therapy</p>
                                         <p className='font-light'>Access mental and physical therapy services with personalized care plans, virtual sessions, and progress tracking.</p>
                                         <div>
-                                            <p className='mt-4'>Learn More</p>
+                                            <p className='mt-4 font-light'>Learn More</p>
                                         </div>
                                     </div>
 
@@ -812,9 +833,9 @@ const LandingPage: React.FC = () => {
             </div>
 
 
-            <div className='w-full  bg-white col-span-7 h-fit flex justify-center place-items-center md:p-8 '>
+            <div className='w-full  bg-white col-span-7 h-fit flex justify-center place-items-center md:p-8  '>
 
-                <div className='w-[400px] relative'>
+                <div className='w-[400px] relative mt-16'>
                     <img src={linePath1} className='w-[100%] h-[100%] ' alt='path' />
                     <img src={linePath2} className='absolute  w-[80%] h-[80%]  top-[10%] right-[8%]' alt='path' />
                     <img src={linePath3} className='absolute w-[60%] h-[60%] top-[20%] right-[20%]' alt='path' />
@@ -834,15 +855,15 @@ const LandingPage: React.FC = () => {
 
             <div className='w-full   bg-white col-span-7 h-fit md:p-8 '>
 
-                <div className='w-full flex flex-col justify-center place-items-center '>
+                <div className='w-full flex flex-col justify-center place-items-center mt-12 '>
                     <div className='w-full flex flex-col md:gap-4 justify-center place-items-center'>
                         <p>Blog & News</p>
-                        <p className='text-cosmic-primary-color'>Our latest Blog & News</p>
+                        <p className='text-cosmic-primary-color mt-6 mb-8'>Our latest Blog & News</p>
                     </div>
 
                     <div className='w-full grid grid-cols-2 gap-12 mt-2 '>
 
-                        <div className='w-full  col-span-2 md:col-span-1 flex flex-col justify-center place-items-end gap-3'>
+                        <div className='w-full  col-span-2 md:col-span-1 flex flex-col md:justify-center place-items-center md:place-items-end gap-3'>
 
                             <img src={mainNewsIcon} alt='image' className='w-[400px] h-fit' />
                             <div className='w-[400px]'>

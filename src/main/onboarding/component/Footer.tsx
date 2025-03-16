@@ -11,7 +11,7 @@ import  email   from '../../../assets/icons/cosmic-email-icon.svg'
 
 
 const Footer = () => {
-    return <div className="bg-cosmic-footer-bg h-fit grid grid-cols-1 w-full bg-no-repeat bg-cover bg-center ">
+    return <div className=" font-poppins bg-cosmic-footer-bg h-fit grid grid-cols-1 w-full bg-no-repeat bg-cover bg-center text-white ">
 
 
 
@@ -28,9 +28,9 @@ const Footer = () => {
            </div>
         </div>
 
-        <div className="w-full h-full  col-span-1 p-10">
-           <p>Quick links</p>
-           <div className='flex flex-col gap-8 font-light mt-8'>
+        <div className="w-full h-full pt-10 col-span-1 flex flex-col justify-center place-items-center ">
+           <p className='w-fit font-extrabold'>Quick links</p>
+           <div className='flex flex-col gap-8 font-light mt-8 w-fit'>
             <p>Home</p>
             <p>About us</p>
             <p>Features</p>
@@ -40,9 +40,9 @@ const Footer = () => {
            </div>
         </div>
 
-        <div className="w-full h-full p-10 col-span-1">
-        <p>Legal</p>
-           <div className='flex flex-col gap-8 font-light mt-8'>
+        <div className="w-full h-full pt-10 col-span-1 flex flex-col justify-center place-items-center">
+        <p className='md:w-full font-extrabold'>Legal</p>
+           <div className='flex flex-col gap-8 font-light mt-8 md:w-full '>
             <p>Privacy Policy</p>
             <p>Terms & Conditions</p>
             <p>Services</p>
@@ -53,17 +53,17 @@ const Footer = () => {
         </div>
 
         
-        <div className="w-full h-full p-6 col-span-1">
-        <p>Contact</p>
-           <div className='flex flex-col gap-8 font-light mt-8'>
+        <div className="w-full h-full pt-10 col-span-1 flex flex-col md:justify-center md:place-items-center ">
+        <p className='md:w-full font-extrabold'>Contact</p>
+           <div className='flex flex-col gap-8 font-light mt-8 md:w-full '>
             <div className='flex gap-2'>
             <img src={location} className='w-[20px] h-[20px]' />
             <p>2118, Thornbridge, Syracruse Connecticut 35624</p>
             </div>
 
-            <div className='flex gap-2'>
+            <div className='flex flex-wrap gap-2'>
             <img src={email} className='w-[20px] h-[20px]' />
-            <p>cosmicforge@gmail.com</p>
+            <p className='text-sm' >cosmicforge@gmail.com </p>
             </div>
             
         

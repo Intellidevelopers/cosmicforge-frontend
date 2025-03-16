@@ -7,9 +7,9 @@ const FrequentlyAskedQuestionsCard = ({title,body}:{title:string,body:string}) =
 
     return   <div className='w-full relative p-6 ' >
 
-    <div className='w-full text-white flex'>
-      <p>{title}</p>
-      <i className={` ${toggleOpenBody && 'bg-white text-cosmic-primary-color rounded-md p-2'} absolute right-10 fa fa-plus` } onClick={()=>{
+    <div className='w-full text-white grid grid-cols-3 '>
+      <p className="text-[18px] col-span-2 w-full">{title}</p>
+      <i className={` ${toggleOpenBody && 'bg-white text-cosmic-primary-color rounded-md p-2'} col-span-1 absolute right-10 fa fa-plus` } onClick={()=>{
         setToggleOPenBody(!toggleOpenBody)
       }}></i>
     </div>

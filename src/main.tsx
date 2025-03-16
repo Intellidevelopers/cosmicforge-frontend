@@ -71,6 +71,9 @@ import DoctorTable from './main/home/pages/doctor/DoctorTable.tsx'
 import DoctorCalendar from './main/home/pages/doctor/DoctorCalendar.tsx'
 import DoctorMainChatPage from './main/home/pages/chat/doctor/DoctorMainChatPage.tsx'
 import DoctorEditProfilePage from './main/profile/doctor/pages/DoctorEditProfilePage.tsx'
+import DepartmentsPage from './main/onboarding/pages/DepartmentsPage.tsx'
+import DepartmentOverview from './main/onboarding/pages/DepartmentOverview.tsx'
+
 
 
 
@@ -84,6 +87,16 @@ const router = createBrowserRouter([
       {
         path: '',
         element: <LandingPage />,
+
+      },
+      {
+        path: 'departments',
+        element: <DepartmentsPage />,
+
+      },
+      {
+        path: 'department/overview',
+        element: <DepartmentOverview/>,
 
       },
       {
