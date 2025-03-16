@@ -45,13 +45,13 @@ const RolePage:React.FC = () => {
     return (
         <div className="font-poppins bg-gray-100 w-screen h-screen  grid grid-cols-2 gap-8">
             
-            <div className="w-full col-span-1">
+            <div className="w-full col-span-1 hidden md:block">
              
             <img src={backIcon} className="w-[100%] h-[100%] object-contain"/>
             </div>
 
 
-            <div className="w-full col-span-1">
+            <div className="w-full md:col-span-1 col-span-2">
                 <div className="flex flex-col justify-center place-items-center ">
                     <img src={logo}  className="w-[150px] h-[150px] mt-1"/>
                     <span className="text-[20px] font-extrabold">Welcome!</span>
