@@ -6,7 +6,7 @@ import totalEarningsIcon from "../../../../assets/icons/cosmic-doctor-earnings-i
 import DoctorChartGraph from "./DoctorChartGrap";
 import DoctorNavBarHome from "./DoctorNavBarMobile";
 import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
-import DoctorTable from "../../pages/doctor/DoctorTable";
+//import DoctorTable from "../../pages/doctor/DoctorTable";
 
 
 const DoctorHomeBody = () => {
@@ -22,7 +22,7 @@ const DoctorHomeBody = () => {
 
         <div className="w-full grid   grid-cols-6 md:p-4 md:gap-8">
 
-          <div className=" bg-cosmic-primary-color col-span-2 min-h-fit md:h-[120px] w-full rounded-sm">
+          <div className=" bg-cosmic-primary-color col-span-2 min-h-fit md:h-[120px] w-full rounded-md">
 
             <div className="w-full flex justify-end p-2">
               <img src={menuIcon} />
@@ -39,7 +39,7 @@ const DoctorHomeBody = () => {
             </div>
           </div>
 
-          <div className=" bg-cosmic-color-yellow-color  col-span-2 min-h-fit md:h-[120px]  w-full  rounded-sm">
+          <div className=" bg-cosmic-color-yellow-color  col-span-2 min-h-fit md:h-[120px]  w-full  rounded-md">
             <div className="w-full flex justify-end p-2">
               <img src={menuIcon} />
             </div>
@@ -62,7 +62,7 @@ const DoctorHomeBody = () => {
 
           </div>
 
-          <div className=" bg-cosmic-color-green-color min-h-fit md:h-[120px] w-full rounded-sm col-span-2 ">
+          <div className=" bg-cosmic-color-green-color min-h-fit md:h-[120px] w-full rounded-md col-span-2 ">
 
             <div className="w-full flex justify-end p-2">
 
@@ -102,8 +102,13 @@ const DoctorHomeBody = () => {
         </div>
 
 
-       <div className="p-2 h-[400px]  overflow-x-hidden overflow-y-auto ">
-       <DoctorTable/>
+       <div className="p-2 h-[400px]  overflow-x-hidden overflow-y-auto  ">
+        <div className="w-full h-full flex justify-center place-items-center">
+          <p>No appointment yet</p>
+        </div>
+      {
+        /** <DoctorTable/> */
+      }
        </div>
 
       </div>

@@ -6,6 +6,7 @@ import { thunk } from "redux-thunk";
 import userReducer, { UserProps } from './reducers/userReducers'
 import  userSocketReducer,{ UserSocketProps } from "./reducers/userSocketReducer";
 import userDiagnosisReducer,{ UserDiagnosisProps } from "./reducers/diagnosisReducer";
+import  specialistDetailsReducer,{ SpecialistDetailsProps } from "./reducers/specialistDetailsReducer";
 
 
 
@@ -18,14 +19,16 @@ const persistConfig = {
  export interface RootReducer {
     user:UserProps,
     socket:UserSocketProps,
-    diagnosis:UserDiagnosisProps
+    diagnosis:UserDiagnosisProps,
+    specialistDetails:SpecialistDetailsProps
  }
 
 
 const rootReducer =  combineReducers({
   user:userReducer,
   socket:userSocketReducer,
-  diagnosis:userDiagnosisReducer
+  diagnosis:userDiagnosisReducer,
+  specialistDetails:specialistDetailsReducer
 })
 
 

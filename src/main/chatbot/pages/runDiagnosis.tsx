@@ -88,6 +88,10 @@ const AiChatbot = () => {
   },[userSocket.socket])
 
   useEffect(()=>{
+    setMessages([...messages, { sender: 'bot', message:`Hello ${user.data?.fullName} i am your AI assistant how may i help you.`,timeStamp: Date() }]);
+  },[])
+
+  useEffect(()=>{
     if(!messages || messages.length<=0 && userDiagnosis.diagnosisChat?.messages && userDiagnosis.diagnosisChat?.messages.length>0)
    setMessages(userDiagnosis.diagnosisChat?.messages  as { sender: string, message: string, timeStamp:string }[])
   },[userDiagnosis.diagnosisChat?.messages])

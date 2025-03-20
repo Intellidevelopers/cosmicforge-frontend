@@ -18,15 +18,26 @@ const DoctorTable = () => {
 
   useEffect(()=>{
      
+
+    window.addEventListener('resize',()=>{
+      setScrollWidth(scrollRef.current?.scrollWidth!!)
+    
+    })
      if(scrollRef){
         scrollRef.current?.addEventListener('scroll',()=>{
             
           // setScrollWidth(scrollRef.current?.scrollWidth!!)
         })
         setScrollWidth(scrollRef.current?.scrollWidth!!)
+       // alert(window.innerWidth)
+     }
+
+     return () =>{
+      window.removeEventListener('resize',()=>{})
      }
   },[window])
     return <div className="w-full  overflow-y-auto bg-white rounded-md relative">
+
         <div className="grid grid-cols-6 p-4 sticky top-0 bg-white z-[100]">
 
             <div className="w-full col-span-4 md:col-span-5">
@@ -52,17 +63,20 @@ const DoctorTable = () => {
       <div ref={scrollRef} className=' w-full overflow-x-auto '>
 
 
-            <div className='w-full inline-flex   
-            mb-4 '>
-            <div className=" min-w-[200px]  m-2 ">
-            <p className='text-[14px]' >Name</p>
+      <div className='w-full inline-flex   
+     mb-3 cursor-default  rounded-full justify-evenly ms-4'>
+          
+            <div className=" min-w-[200px]  flex gap-2  m-2 ">
+                  <p className='text-[14px]' >Name</p>
             </div>
-            <p  className="min-w-[120px]   m-2 ">Female</p>
-            <p  className="min-w-[120px] md:text-center  m-2  ">Date</p>
-            <p  className="min-w-[100px]  md:text-center  m-2  ">Time</p>
-            <p  className="min-w-[150px]  md:text-center  m-2  ">Mobile</p>
-            <p  className="min-w-[150px] m-2 ps-12  md:text-center   ">Email</p>
-            </div>
+            <p className="min-w-[120px]  m-2 ">Gender</p>
+            <p className="min-w-[120px]   m-2  ">Date</p>
+            <p className="min-w-[100px]   m-2  ">Time</p>
+          
+           
+
+
+        </div>
 
         
         {

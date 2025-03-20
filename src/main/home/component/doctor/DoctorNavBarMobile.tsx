@@ -1,5 +1,4 @@
 
-import profileIconTmp from "../../../../assets/icons/home/cosmic-home-profile-pic-temp.svg";
 import tuneIcon from '../../../../assets/icons/home/cosmic-home-tune.svg'
 import searchIcon from '../../../../assets/icons/home/cosmic-home-search-dark.svg'
 import notificationIcon from '../../../../assets/icons/home/cosmic-home-notification.svg'
@@ -7,6 +6,7 @@ import { openSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
 //import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
+import { useNavigate } from 'react-router-dom';
 
  interface NavBarProps {
     title:string
@@ -14,7 +14,7 @@ import { RootReducer } from "../../../store/initStore";
   }
 
  const DoctorNavBarHome  =  ({title}:NavBarProps) =>{
-  //const navigate =  useNavigate()
+  const navigate =  useNavigate()
 
   const user = useSelector((state:RootReducer)=>state.user)
 
@@ -44,21 +44,21 @@ import { RootReducer } from "../../../store/initStore";
                   openSideBar()
                  }}></i>
                   <div className="flex gap-2 w-full  ">
-                  <img src={profileIconTmp} className="h-[44px]"  />
+                  <img src={user.data?.profile?.profilePicture??'/'} className="h-[40px] w-[40px] rounded-full"  />
                    
                    <div className="w-full relative">
 
                    <p className="font-semibold">Hi {user.data?.lastName}</p>
                    <p className="font-light text-[14px]">How are you feeling today?</p>
                     </div>
-                    <div className="absolute right-1   rounded-lg border  p-2 ">
+                    <div className="absolute right-3 bottom-5   rounded-lg border  p-2 ">
                     <img src={notificationIcon}  />
                     </div>
                     </div>
 
                     </div>:    <div className="w-full flex justify-center">
                     <i className="fa fa-arrow-left fa-xl absolute left-0 top-3" aria-hidden="true" onClick={()=>{
-                     //navigate(-1)
+                     navigate('/doctor/home')
                   }}></i>
                     <p className="font-extrabold p-1">{title ?? 'Home'}</p>
                       </div>

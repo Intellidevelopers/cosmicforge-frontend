@@ -1,5 +1,4 @@
 import logo from "../../../../assets/logo/logo_comsic_splash.svg";
-import profileIconTmp from "../../../../assets/images/cosmic-doctor-profile.svg";
 import homeIcon from "../../../../assets/icons/home/cosmic-home-active.svg";
 import calenderIcon from "../../../../assets/icons/home/cosmic-home-calander.svg";
 
@@ -12,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import useGetDoctorActiveNavbarRoute from "../../hook/doctor/useGetDoctorActiveNavbarRoute";
 import { MutableRefObject, useRef } from "react";
 import useGetSideBarMobileAnimation, { closeSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
 
 const DoctorHomeSideBarMobile = () => {
 
@@ -19,6 +20,9 @@ const DoctorHomeSideBarMobile = () => {
     const navigate = useNavigate()
     const sideBarRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     useGetSideBarMobileAnimation(sideBarRef)
+
+    const user = useSelector((state: RootReducer) => state.user)
+
     return (
         <div ref={sideBarRef} className=" hidden  w-[60%] absolute h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-[300] cursor-default">
             <div className="w-full mt-4 ">
@@ -29,13 +33,27 @@ const DoctorHomeSideBarMobile = () => {
                         closeSideBar()
                     }}></i>
                 </div>
+
                 <img alt="logo" src={logo} />
                 <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
                     <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-4">
-                        <img alt="profile-image" src={profileIconTmp} />
+                        <img alt="profile-image" className="h-[100%] w-[100%] rounded-full" src={user.data?.profile?.profilePicture ?? '/'} />
                     </div>
-                    <p>Dr Olawale</p>
-                    <p className="font-extralight text-cosmic-primary-color">
+                    <p>Dr {user.data?.fullName}</p>
+
+                    <p className={`font-extralight text-cosmic-primary-color ${(activeRoutePath.isEditProfileActive) && 'underline'}`} onClick={() => {
+                        setActiveRoutePath({
+                            ...activeRoutePath,
+                            isHomeActive: false,
+                            isMessageActive: false,
+                            isAppoinmentsActive: false,
+                            isAnalyticsActive: false,
+                            isProfileActive: false,
+                            isEditProfileActive: true
+                        })
+                        navigate('/doctor/edit-profile')
+                        closeSideBar()
+                    }} >
                         Edit Profile
                     </p>
 
@@ -48,7 +66,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isAppoinmentsActive: false,
                                 isAnalyticsActive: false,
                                 isProfileActive: false,
-                                isEditProfileActive:false
+                                isEditProfileActive: false
                             })
                             closeSideBar()
                             navigate('/doctor/home')
@@ -65,7 +83,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isAppoinmentsActive: true,
                                 isAnalyticsActive: false,
                                 isProfileActive: false,
-                                isEditProfileActive:false
+                                isEditProfileActive: false
                             })
                             closeSideBar()
                             navigate('/doctor/appointments')
@@ -82,7 +100,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isAppoinmentsActive: false,
                                 isAnalyticsActive: false,
                                 isProfileActive: false,
-                                isEditProfileActive:false
+                                isEditProfileActive: false
                             })
                             closeSideBar()
 
@@ -102,7 +120,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isAppoinmentsActive: false,
                                 isAnalyticsActive: true,
                                 isProfileActive: false,
-                                isEditProfileActive:false
+                                isEditProfileActive: false
                             })
                         }}>
                             <img alt="analytics" src={analyticsIcon} />
@@ -120,7 +138,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isAppoinmentsActive: false,
                                 isAnalyticsActive: false,
                                 isProfileActive: true,
-                                isEditProfileActive:false
+                                isEditProfileActive: false
                             })
                         }}>
                             <img alt="home" src={calenderIcon} />

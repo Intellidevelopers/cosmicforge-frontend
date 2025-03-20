@@ -1,14 +1,14 @@
  
  export interface SpecialistCardProps {
-   icon:string,
-   title:string
+  name?: string, image?: string, backgroundImage?:string ,
+    bodyText?:string 
  }
-const SpecialistCard = ({icon,title}:SpecialistCardProps) => {
+const SpecialistCard = ({image,name}:SpecialistCardProps) => {
       return (
 
         <div className="m-3 min-w-[160px] flex flex-col justify-center  hover:scale-95 place-items-center gap-2 ">
-            <img src={icon} className="object-center object-cover hover:cursor-pointer hover:opacity-70  w-[70px] h-[70px] rounded-full" />
-            <p className='w-fit hover:cursor-pointer font-light text-[14px]'>{title} </p>
+            <img src={image} className="object-center object-cover hover:cursor-pointer hover:opacity-70  w-[70px] h-[70px] rounded-full" />
+            <p className='w-fit hover:cursor-pointer font-light text-[14px]'>{name} </p>
         </div>
       )
 }

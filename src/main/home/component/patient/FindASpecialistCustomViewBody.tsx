@@ -1,10 +1,12 @@
-import CustomCardSpecialistViewCard, { CustomCardSpecialistViewCardProps } from "./CustomCardSpecialistViewCard"
+import CustomCardSpecialistViewCard from "./CustomCardSpecialistViewCard"
 import HomeMobileNavBar from "./HomeMobileNavBar"
 import HomeNavBar from "./HomeNavBar"
-import doctorImage from '../../../../assets/images/doctor-image.jpeg'
 import { useLocation, useNavigate } from "react-router-dom"
 import Loader from "../../../../assets/Loader"
 import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { RootReducer } from "../../../store/initStore"
+import { getDoctorsBySpecificDeparment } from "../../service"
 
 
 
@@ -12,61 +14,58 @@ const FindASpecalistCustomViewBody = () => {
 
     const { state } = useLocation()
 
-    const details: CustomCardSpecialistViewCardProps[] = [{
-        details: {
-            address: "Lekki, Lagos Nigeria.",
-            clinic: "Chastain Park Hospital",
-            doctorSpecialization: 'General Medicine',
-            doctorImage: doctorImage,
-            doctorName: 'Dr Josh Olawale '
-        }
-    }, {
-        details: {
-            address: "Lekki, Lagos Nigeria.",
-            clinic: "Chastain Park Hospital",
-            doctorSpecialization: 'General Medicine',
-            doctorImage: doctorImage,
-            doctorName: 'Dr Josh Olawale '
-        }
-    }, {
-        details: {
-            address: "Lekki, Lagos Nigeria.",
-            clinic: "Chastain Park Hospital",
-            doctorSpecialization: 'General Medicine',
-            doctorImage: doctorImage,
-            doctorName: 'Dr Josh Olawale '
-        }
-    }, {
-        details: {
-            address: "Lekki, Lagos Nigeria.",
-            clinic: "Chastain Park Hospital",
-            doctorSpecialization: 'General Medicine',
-            doctorImage: doctorImage,
-            doctorName: 'Dr Josh Olawale '
-        }
-    }, {
-        details: {
-            address: "Lekki, Lagos Nigeria.",
-            clinic: "Chastain Park Hospital",
-            doctorSpecialization: 'General Medicine',
-            doctorImage: doctorImage,
-            doctorName: 'Dr Josh Olawale '
-        }
-    }]
+    const user = useSelector((state:RootReducer)=>state.user)
+
+     
+
+    
 
     const navigate = useNavigate()
     const [loading, setLoading] = useState<boolean>(false)
 
-    useEffect(() => {
-        setLoading(true)
-        const interval = setTimeout(() => {
-            setLoading(false)
-        }, 2 * 1000)
+    const [doctorDetails,setDoctorDetails] = useState<{ 
+        userId:{
+            fullName?: string,
+            lastName?:string,
+        },
+        professionalTitle?: string,
+        specialization?: string,
+        currentClinic?: string,
+        department?: string,
+        bio?: string,
+        pricing?: string,
+        experience?: {
+            hospitalName?: string,
+            NoOfPatientTreated?: string,
+            specializationAndDepartment?: string,
+            date?: string
+        },
+        workTime?: {
+            day?: string,
+            time?: string
+        }}[]>([])
 
-        return () => {
-            clearTimeout(interval)
+    useEffect(() => {
+     
+
+       (async()=>{
+        setLoading(true)
+      
+        try {
+            
+          const result = await getDoctorsBySpecificDeparment(user.data?.token!!,state?.title)
+          setLoading(false)
+            if(result.status === 200){
+                setDoctorDetails(result.data)
+            }
+          
+
+        } catch (error) {
+            
         }
-    }, [setLoading])
+       })()
+       
+    }, [])
 
     const [activState, setActiveState] = useState(() => {
 
@@ -95,8 +94,8 @@ const FindASpecalistCustomViewBody = () => {
 
 
 
-                <div className="w-full flex justify-center gap-3  text-cosmic-primary-color mt-5">
-                    <p className={`${(activState.all) && 'bg-cosmic-primary-color text-white '}  md:w-[16%] w-[30%] flex justify-center place-items-center  text-center  rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
+                <div className="w-full flex justify-evenly gap-3  text-cosmic-primary-color mt-5">
+                    <p className={`${(activState.all) && 'bg-cosmic-primary-color text-white '}  md:w-[16%] w-[30%] p-2 flex justify-center place-items-center  text-center  rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
                         setActiveState({
                             ...activState,
                             all: true,
@@ -111,7 +110,7 @@ const FindASpecalistCustomViewBody = () => {
 
 
                     }}>All</p>
-                    <p className={`${(activState.topRatings) && 'bg-cosmic-primary-color text-white '}   md:w-[16%] w-[30%] flex flex:1 justify-center place-items-center   rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
+                    <p className={`${(activState.topRatings) && 'bg-cosmic-primary-color text-white '}  p-2  md:w-[16%] w-[30%] flex flex:1 justify-center place-items-center   rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
 
                         setActiveState({
                             ...activState,
@@ -126,7 +125,10 @@ const FindASpecalistCustomViewBody = () => {
                             setLoading(false)
                         }, 2 * 1000)
                     }}>Top Ratings</p>
-                    <p className={`${(activState.nearBy) && 'bg-cosmic-primary-color text-white '}   md:w-[16%] w-[30%] flex justify-center place-items-center   text-center p-2 rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
+                   
+                   {
+                    /**
+                     *  <p className={`${(activState.nearBy) && 'bg-cosmic-primary-color text-white '}   md:w-[16%] w-[30%] flex justify-center place-items-center   text-center p-2 rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
                         setActiveState({
                             ...activState,
                             all: false,
@@ -139,16 +141,23 @@ const FindASpecalistCustomViewBody = () => {
                             setLoading(false)
                         }, 2 * 1000)
                     }}>Nearby</p>
+                     */
+                   }
                 </div>
 
                 <div className={`${(loading) ? 'flex' : 'hidden'}  w-full h-dvh  justify-center mt-[20%]`}>
                     <Loader />
                 </div>
+
+                <div className={`${(!loading && doctorDetails.length===0) ? 'flex' : 'hidden'}  w-full h-dvh  justify-center mt-[20%]`}>
+                    <p>No specialist available now</p>
+                </div>
                 <div className={`${(!loading) ? 'flex' : 'hidden'} w-full h-[45%] md:h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
 
                     {
-                        details.map((items, index) => (
-                            <CustomCardSpecialistViewCard key={index} details={items.details} />
+                     doctorDetails.length>0 &&   doctorDetails.map((item, index) => (
+                            <CustomCardSpecialistViewCard key={index} details={item
+                            } />
                         ))
                     }
 

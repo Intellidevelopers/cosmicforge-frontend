@@ -1,5 +1,4 @@
 import logo from "../../../../assets/logo/logo_comsic_splash.svg";
-import profileIconTmp from "../../../../assets/images/cosmic-doctor-profile.svg";
 import homeIcon from "../../../../assets/icons/home/cosmic-home-active.svg";
 import calenderIcon from "../../../../assets/icons/home/cosmic-home-calander.svg";
 
@@ -10,10 +9,14 @@ import logOutIcon from "../../../../assets/icons/cosmic-logout.svg";
 
 import { useNavigate } from "react-router-dom";
 import useGetDoctorActiveNavbarRoute from "../../hook/doctor/useGetDoctorActiveNavbarRoute";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
 
 const DoctorHomeSideBar = () => {
   const {activeRoutePath,setActiveRoutePath} = useGetDoctorActiveNavbarRoute()
 const navigate = useNavigate()
+
+const user = useSelector((state:RootReducer)=>state.user)
   
   return (
     <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-50 cursor-default">
@@ -21,9 +24,9 @@ const navigate = useNavigate()
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-2">
-            <img alt="profile-image" src={profileIconTmp} />
+            <img alt="profile-image " className="w-[100%] h-[100%] rounded-full" src={user.data?.profile?.profilePicture ??'/'} />
           </div>
-          <p>Dr Olawale</p>
+          <p>Dr {user.data?.fullName}</p>
           <p className={`font-extralight text-cosmic-primary-color ${(activeRoutePath.isEditProfileActive) && 'underline'}`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,

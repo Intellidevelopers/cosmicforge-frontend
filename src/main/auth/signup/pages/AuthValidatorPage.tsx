@@ -43,7 +43,11 @@ const AuthValidatorPage = ()=>{
 
             case 'doctor':{
                 if(res.data.newAccount){
-                    navigate('/account/signup/registration-success',{replace:true})
+                    navigate('/account/signup/registration-success',{replace:true,
+                        state:{
+                            newAccount:true
+                        }
+                    })
                     return
                  }
                 navigate('/doctor/home',{replace:true})

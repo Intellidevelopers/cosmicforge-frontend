@@ -1,6 +1,7 @@
 
 
 import { ResponseBodyProps } from "../util/ApiResponseBodyProps"
+import { DoctorEditProfileProps } from "./doctor/pages/DoctorEditProfilePage"
 
 interface PatientProfileUpdateProps {
  email:string | undefined,
@@ -27,6 +28,24 @@ interface PatientProfileUpdateProps {
    const result  = await response.json()  as ResponseBodyProps
 
    return result
+}
+
+
+export  const updateDoctorProfile  = async (data:DoctorEditProfileProps,token:string) => { 
+
+
+   const response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/user/medics/update-profile`,{
+       method:'put',
+      headers:{
+       "Authorization":`Bearer ${token}`,
+       "Content-Type":'application/json'
+      },
+      body:JSON.stringify(data)
+   })
+
+  const result  = await response.json()  as ResponseBodyProps
+
+  return result
 }
 
 
@@ -65,3 +84,5 @@ export  const getDoctorDeparmentsForLandingPage = async () => {
 
   return result
 }
+
+

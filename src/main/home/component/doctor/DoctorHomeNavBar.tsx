@@ -3,11 +3,14 @@ import searchIcon from '../../../../assets/icons/home/cosmic-home-search-dark.sv
 import botChatIcon from '../../../../assets/icons/home/cosmic-home-bot-chat.svg'
 import notificationIcon from '../../../../assets/icons/home/cosmic-home-notification.svg'
 
+
 interface NavBarProps {
   title: string
 }
 
 const DoctorHomeNavBar = ({ title }: NavBarProps) => {
+
+ 
 
   return (
 

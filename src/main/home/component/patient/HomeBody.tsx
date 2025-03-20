@@ -2,37 +2,18 @@ import HomeNavBar from "./HomeNavBar";
 import aiImage from "../../../../assets/background/home-card-ai-diagnosis-image.svg";
 import auRealityImage from "../../../../assets/background/home-card-augmented-reality.svg";
 import SpecialistCard, { SpecialistCardProps } from "./SpecialistCard";
-import genMedIcon from "../../../../assets/background/specialist-general-med-image.svg";
-import emgMedIcon from "../../../../assets/images/find-speccialist-emergency-med-image.svg";
-import cardioIcon from "../../../../assets/images/cosmic-specialist-cardiology-image.svg";
-import pediatricsIcon from "../../../../assets/images/comsic-speciallist-pediatrics-image.svg";
-import neuorologyIcon from "../../../../assets/images/cosmic-specialist-nuerology-image.svg";
-import OBGIcon from "../../../../assets/images/cosmic-specialist-og.svg";
-import dentIcon from "../../../../assets/images/cosmic-specialist-dentistry-image.svg";
-import otolynIcon from "../../../../assets/images/comsic-specialist-otolyryngology.svg";
-import psyIcon from "../../../../assets/images/cosmic-specialist-psychiatry.svg";
-import radiologyIcon from "../../../../assets/images/cosmic-specialist-radiology.svg";
-import dermaIcon from "../../../../assets/images/cosmic-specialist-dermatology.svg";
-import pathIcon from "../../../../assets/images/cosmic-specialist-pathology.svg";
-import oncologyIcon from "../../../../assets/images/cosmic-specialist-oncology.svg";
-import opthaIcon from "../../../../assets/images/cosmic-specialist-opthamology.svg";
-import urologyIcon from "../../../../assets/images/cosmic-specialist-urology.svg";
-import phyTherapyIcon from "../../../../assets/images/cosmic-specialist-physicaltheraphy.svg";
-import rheumatoidIcon from "../../../../assets/images/cosmic-specialist-rheumatology.svg";
-import gastroEnIcon from "../../../../assets/images/cosmic-specialist-gastro-enterology.svg";
-import orthopedIcon from "../../../../assets/images/cosmic-specialist-orthopedics.svg";
-import neonateIcon from "../../../../assets/images/cosmic-specialist-neonatology.svg";
-import nephroIcon from "../../../../assets/images/cosmic-specialist-nephrology.svg";
-import pulmoIcon from "../../../../assets/images/cosmic-specialist-pulmonology.svg";
-import genoIcon from "../../../../assets/images/cosmic-specialist-geonomics.svg";
-import hematologyIcon from "../../../../assets/images/cosmic-specialist-hematology.svg";
 import arrowIcon from "../../../../assets/icons/cosmic-arrow.svg";
-import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProductCard";
+//import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProductCard";
 
-import tempProductImage from '../../../../assets/images/cosmic-wellness-product-temp.svg'
-import { useRef } from "react";
+//import tempProductImage from '../../../../assets/images/cosmic-wellness-product-temp.svg'
+import { useEffect, useRef } from "react";
 import useSetScrollbar from "../../hook/patient/useSetUpScrollbar";
 import HomeMobileNavBar from "./HomeMobileNavBar";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
+import { getDoctorDeparments } from "../../service";
+import { cacheSpecialistDetails } from "../../../store/reducers/specialistDetailsReducer";
 
 
 
@@ -40,106 +21,8 @@ import HomeMobileNavBar from "./HomeMobileNavBar";
 
 
 const HomeBody = () => {
-  const specialCards: SpecialistCardProps[] = [
-    {
-      title: "General Medicine",
-      icon: genMedIcon
-    },
-    {
-      title: "Emergency Medicine",
-      icon: emgMedIcon
-    },
-    {
-      title: "Cardiology",
-      icon: cardioIcon
-    },
-    {
-      title: "Pediatrics",
-      icon: pediatricsIcon
-    },
-    {
-      title: "Nuerology",
-      icon: neuorologyIcon
-    },
-    {
-      title: "OB-GYN",
-      icon: OBGIcon
-    },
-    {
-      title: "Dentistry",
-      icon: dentIcon
-    },
-    {
-      title: "Otolarygngology",
-      icon: otolynIcon
-    },
-    {
-      title: "Pschiatry",
-      icon: psyIcon
-    },
-    {
-      title: "Radiology",
-      icon: radiologyIcon
-    },
-    {
-      title: "Dermatology",
-      icon: dermaIcon
-    },
-    {
-      title: "Pathology",
-      icon: pathIcon
-    },
 
-    {
-      title: "Oncology",
-      icon: oncologyIcon
-    },
-    {
-      title: "Ophthalmology",
-      icon: opthaIcon
-    },
-    {
-      title: "Urology",
-      icon: urologyIcon
-    },
-    {
-      title: "Physical Therapy",
-      icon: phyTherapyIcon
-    },
-    {
-      title: "Rheumatology",
-      icon: rheumatoidIcon
-    },
-    {
-      title: "Grastro Enterology",
-      icon: gastroEnIcon
-    },
-    {
-      title: "Orthopedics",
-      icon: orthopedIcon
-    },
-    {
-      title: "Neonatology",
-      icon: neonateIcon
-    },
-    {
-      title: "Nephrology",
-      icon: nephroIcon
-    },
-    {
-      title: "Pulmonology",
-      icon: pulmoIcon
-    },
-    {
-      title: "Geonomics",
-      icon: genoIcon
-    },
-    {
-      title: "Hematology",
-      icon: hematologyIcon
-    }
-  ];
-  const wellnessProducts: WellnessProductCardProps[] = [
+  /*const wellnessProducts: WellnessProductCardProps[] = [
     {
       productTitle: ' Ibuprofen 400mg',
       productDescription: ' 100 tablets',
@@ -189,7 +72,7 @@ const HomeBody = () => {
       productPrice: " N 3,500"
 
     }
-  ]
+  ]*/
 
 
   const wellnessScrollContainerRef = useRef(null)
@@ -197,7 +80,30 @@ const HomeBody = () => {
 
 
   const { scrollWellnessProductCardRight, scrollWellnessProductCardLeft } = useSetScrollbar()
-  
+   const navigate = useNavigate()  
+
+    const user = useSelector((state:RootReducer)=>state.user)
+      const specialistDetailsCache = useSelector((state:RootReducer)=>state.specialistDetails)
+      const dispatch = useDispatch()
+
+
+      useEffect(()=>{
+       (async()=>{
+          if(specialistDetailsCache.specialists === null){
+
+          const result = await  getDoctorDeparments(user.data?.token!!)
+       
+          if(result.status === 200){
+              dispatch(cacheSpecialistDetails({specialists:result.data}))
+             
+              return
+          }
+          }
+       })()
+      },[])
+
+
+
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col">
 
@@ -205,7 +111,10 @@ const HomeBody = () => {
       <HomeMobileNavBar title="Home" />
 
       <div className=" md:ps-[250px] ">
-        <div className="w-full  p-2  md:justify-center   inline-flex overflow-x-auto">
+        <div className="w-full  md:ps-10  md:justify-start md:pt-8  md:gap-12  inline-flex overflow-x-auto" style={{
+          scrollbarWidth:'none',
+        
+        }}>
           <img
             src={aiImage}
             alt="Ai diagnosis image"
@@ -218,29 +127,34 @@ const HomeBody = () => {
           />
         </div>
 
-        <div className="w-full md:ps-10  ">
+
+
+
+        <div className="w-full md:ps-10 md:mt-6 ">
 
           <div className="w-full flex">
             <p className="font-extrabold w-fit md:w-[30%] mt-2 ms-2">
               Find a specialist
             </p>
-            <p className=" absolute right-0 hover:cursor-pointer hover:opacity-70 md:right-10 md:ms-0 mt-2 me-2  md:w-[66%] text-end md:pe-12 text-cosmic-primary-color">
+            <p className=" absolute right-0 hover:cursor-pointer hover:opacity-70 md:right-10 md:ms-0 mt-2 me-2  md:w-[66%] text-end md:pe-12 text-cosmic-primary-color" onClick={()=>{
+              navigate('/patient/find-a-specialist')
+            }}>
               see more
             </p>
           </div>
           <div
-            className=" cursor-default font-medium  space-x-3  md:w-[92%] w-[100%]  inline-flex  overflow-x-auto"
+            className=" cursor-default font-medium  space-x-3  md:w-[92%] w-[100%]   inline-flex  overflow-x-auto"
             style={{ scrollbarWidth: "none" }}
           >
-            {specialCards.map((item: SpecialistCardProps, index: number) =>
-              <SpecialistCard key={index} icon={item.icon} title={item.title} />
+            {specialistDetailsCache?.specialists?.map((item: SpecialistCardProps, index: number) =>
+              <SpecialistCard key={index} image={item.image} name={item.name} />
             )}
           </div>
         </div>
 
-        <div className="relative w-[95%] pl-[4%] pb-[20px]" >
+        <div className="relative w-[95%] pl-[4%] pb-[20px] md:mt-6" >
           <div className="relative flex gap-4 place-items-center md:w-[100%] ">
-            <p className="font-bold min-w-fit ms-2">Wellness Product</p>
+            <p className="font-bold min-w-fit md:ms-2">Wellness Product</p>
 
             <p className="absolute right-0 md:ml-2 hover:opacity-70 cursor-pointer  md:relative  font-extralight min-w-fit text-cosmic-color-lightBlue me-2">see more</p>
             <div className="hidden w-[74%] m-2 relative md:flex justify-end place-content-center gap-5">
@@ -255,11 +169,15 @@ const HomeBody = () => {
           </div>
           <div ref={wellnessScrollContainerRef} className="cursor-default font-medium  space-x-2  md:w-[100%] w-[98%] inline-flex  overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
 
-            {
 
-              wellnessProducts.map((item: WellnessProductCardProps, index) => (
+           <div className="w-full h-[400px] flex justify-center place-items-center">
+            <p>No product yet</p>
+           </div>
+            {
+/**   wellnessProducts.map((item: WellnessProductCardProps, index) => (
                 <WellnessProductCard key={index} productTitle={item.productTitle} productDescription={item.productDescription} productImage={item.productImage} productPrice={item.productPrice} />
-              ))
+              )) */
+             
 
 
             }

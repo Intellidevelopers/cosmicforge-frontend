@@ -2,12 +2,12 @@
 import {  useEffect,  useState } from "react";
 import dayjs from 'dayjs';
 
-/*interface CalenderProps {
-    onDateSelected: (age: number, dateSelected: string) => void;
-    setCalenderState: boolean;
-}*/
+interface AppointmentCalenderProps {
+    onDateSelected: (dateSelected: string) => void;
+   
+}
 
-const AppointmentCalender = () => {
+const AppointmentCalender = ({onDateSelected}:AppointmentCalenderProps) => {
     const [firstDay, setFirstDay] = useState<number>();
     const [days, setDays] = useState<string[]>([]);
     const [, setYears] = useState<number[]>([]);
@@ -52,14 +52,18 @@ const AppointmentCalender = () => {
     }, []);
 
     useEffect(() => {
+     
         const numOfDays = dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`, 'YYYY-MM').daysInMonth();
         const date = dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`, 'YYYY-MM').date(1);
         setDaysInMonth(numOfDays);
         setFirstDay(date.day() + 1);
-
+    
         setSelectedDate(
-            selectedDay.toString().concat(getDaySuffice(selectedDay)).concat(' ').concat(dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`, 'YYYY-MM').format('MMMM')).concat('  ').concat(dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`).format('YYYY'))
+            selectedDay.toString().concat(getDaySuffice(selectedDay)).concat(' ').concat(dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`, 'YYYY-MM').format('MMMM')).concat('  ').concat(dayjs().year().toString())
         );
+
+        onDateSelected(dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}-${selectedDay}`, 'YYYY-MM-DD').format('dddd').concat(' ').concat(selectedDay.toString()).concat(getDaySuffice(selectedDay)).concat(' ').concat(dayjs(`${currentYear}-${months.findIndex((value) => value === currentMonth) + 1}`, 'YYYY-MM').format('MMMM')).concat('  ').concat(dayjs().year().toString())
+    )
     }, [currentMonth, currentYear, selectedDay]);
 
     const getDaySuffice = (day: number) => {
@@ -86,20 +90,6 @@ const AppointmentCalender = () => {
 
 
                 <div className="w-full flex mt-2 md:m-10">
-                    {
-                        /*<select
-                        title='Select year'
-                        ref={selectRef}
-                        defaultValue={currentYear}
-                        className="p-2 rounded-md outline-none bg-transparent"
-                        onChange={(e) => setCurrentYear(Number(e.currentTarget.value))}
-                        onClick={(e) => setCurrentYear(Number(e.currentTarget.value))}
-                    >
-                        {years.length > 0 && years.map((year, index) => (
-                            <option key={index}>{year}</option>
-                        ))}
-                    </select> */
-                    }
 
 
                     <div className="w-full flex  justify-center place-items-center relative ">

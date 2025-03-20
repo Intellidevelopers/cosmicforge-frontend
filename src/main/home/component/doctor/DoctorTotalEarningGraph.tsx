@@ -1,7 +1,7 @@
 import Chart from 'react-apexcharts'
 const DoctorTotalEarningGraph = () => {
 
-    return <div className=" w-full  h-[400px] p-6   bg-white rounded-md">
+    return <div className=" w-full  md:h-[400px] p-6   bg-white rounded-md">
 
         <div className="p-4 ">
             <p className="text-center font-bold">Total Earnings</p>
