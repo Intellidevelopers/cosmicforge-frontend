@@ -16,6 +16,7 @@ import { RootReducer } from "../../../store/initStore";
 const PatientMainPP:React.FC = () => {
     const navigate = useNavigate();
     const user = useSelector((state:RootReducer)=> state.user)
+
        if(!user.isAunthenticated){
         return <Navigate to={"/patient/account"}/>
        }
@@ -43,18 +44,18 @@ const PatientMainPP:React.FC = () => {
                         </div>
                         <div className="w-[85%] h-[100%] md:pl-[20px] md:border-l-[1px] flex flex-col justify-center items-center md:border-l-gray-300">
                             <div className="flex w-[100%] md:items-start gap-1 h-[48%] items-center flex-col justify-center">
-                                <span className="font-bold text-[17px">{user.data?.profile?.vitalSigns.gender  && user.data?.profile?.vitalSigns.gender === 'male' ? 'Mr':'Mrs'} {user.data?.fullName }   {user.data?.lastName}</span>
+                                <span className="font-bold text-[17px">{user.data?.profile?.vitalSigns?.gender  && user.data?.profile?.vitalSigns.gender === 'male' ? 'Mr':'Mrs'} {user.data?.fullName }   {user.data?.lastName}</span>
                                 <span className="text-[14px]">{user.data?.email}</span>
                                 <span className="text-[14px]">{user.data?.profile?.homeAddress?? 'nil'}</span>
                             </div>
                             <div className="flex flex-row w-[100%] md:h-[48%] h-fit justify-between flex-wrap items-center">
                                 <div className="w-fit flex flex-col gap-3 p-3 md:text-left text-center">
                                     <span className="text-[14px] font-bold text-gray-500">Sex</span>
-                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns.gender}</span>
+                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns?.gender}</span>
                                 </div>
                                 <div className="w-fit flex flex-col gap-3 p-3 md:text-left text-center">
                                     <span className="text-[14px] font-bold text-gray-500">Age</span>
-                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns.dateOfBirth?user.data?.profile?.vitalSigns.dateOfBirth.toString().split(" ")[4] :'nill'}</span>
+                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns?.dateOfBirth?user.data?.profile?.vitalSigns.dateOfBirth.toString().split(" ")[4] :'nill'}</span>
                                 </div>
                                 <div className="w-fit flex flex-col gap-3 p-3 md:text-left text-center">
                                     <span className="text-[14px] font-bold text-gray-500">Blood Group</span>
@@ -66,11 +67,11 @@ const PatientMainPP:React.FC = () => {
                                 </div>
                                 <div className="w-fit flex flex-col gap-3 p-3 md:text-left text-center">
                                     <span className="text-[14px] font-bold text-gray-500">Height</span>
-                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns.height?? 'nil'}</span>
+                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns?.height?? 'nil'}</span>
                                 </div>
                                 <div className="w-fit flex flex-col gap-3 p-3 md:text-left text-center">
                                     <span className="text-[14px] font-bold text-gray-500">Weight</span>
-                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns.weight?? 'nil'}</span>
+                                    <span className="text-[14px] font-bold">{user.data?.profile?.vitalSigns?.weight?? 'nil'}</span>
                                 </div>
                                 <div className="w-fit flex flex-col gap-3 p-3 md:text-left text-center">
                                     <span className="text-[14px] font-bold text-gray-500">Allergies</span>
