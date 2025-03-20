@@ -27,7 +27,7 @@ import Loader from "../../../generalComponents/Loader";
    (async()=>{
     
       if(specialistDetailsCache.specialists === null){
-
+        setLoading(true)
         try {
 
           const result = await  getDoctorDeparments(user.data?.token!!)

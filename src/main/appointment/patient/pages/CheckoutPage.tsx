@@ -21,7 +21,7 @@ const CheckoutPage = () => {
             clinic="Chastain Park Hospital"
             doctorSpecialization={`${state?.department} `}
             doctorImage = {state?.doctorImage??"/"}
-            doctorName={`Dr ${state?.doctorName} `}/>
+            doctorName={`Dr ${state?.doctorName} `} department=""/>
             </div>
 
             <div className="w-full mt-6">

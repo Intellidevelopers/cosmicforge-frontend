@@ -60,6 +60,8 @@ const MainRouterPage = () => {
 
 
          }
+
+        
         
          if(user.isAunthenticated &&  !userSocket.connected){
             const socket = io(`${import.meta.env.VITE_BASE_Socket_URL}`,{

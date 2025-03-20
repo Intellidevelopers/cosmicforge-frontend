@@ -76,7 +76,8 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                                 doctorSpecialization: details.specialization,
                                 clinic:details.currentClinic,
                                 address: details.workAddress,
-                                title:state.title
+                                title:state.title,
+                                department:details.department
                             }
                         })
                     }}>
