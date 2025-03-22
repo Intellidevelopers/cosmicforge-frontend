@@ -8,11 +8,30 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 export interface CustomCardSpecialistViewCardProps {
     details: {
-        doctorImage: string,
-        doctorName: string,
-        doctorSpecialization: string,
-        clinic: string,
-        address: string
+        profilePicture?:string,
+       userId:{
+        fullName?: string,
+        lastName?:string,
+       },
+        professionalTitle?: string,
+        specialization?: string,
+        currentClinic?: string,
+        department?: string,
+        bio?: string,
+        pricing?: string,
+
+        workAddress?:string,
+        experience?: {
+
+            hospitalName?: string,
+            NoOfPatientTreated?: string,
+            specializationAndDepartment?: string,
+            date?: string
+        },
+        workTime?: {
+            day?: string,
+            time?: string
+        }
     }
 }
 
@@ -27,12 +46,12 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
             <div className=" w-[200px] h-[150px]  relative border border-cosmic-color-border-color rounded-md">
 
                 <p className="bg-cosmic-primary-color absolute text-white  rounded-br-md font-light p-1 ">Top</p>
-                <img className="bg-green-500 object-cover h-full w-full" src={details.doctorImage} />
+                <img className="bg-green-500 object-cover h-full w-full" src={details.profilePicture} />
             </div>
 
             <div className="w-full flex flex-col gap-4 md:ms-4 relative">
                 <div className='flex  place-items-center mt-2'>
-                    <p className="font-bold text-[14px]  "> {details.doctorName}</p>
+                    <p className="font-bold text-[14px]  ">Dr {details.userId.fullName}</p>
                     <img className=' h-[24px] ' src={verifiedThick} />
 
                 </div>
@@ -40,9 +59,9 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                     <img className="w-[24px] h-[24px]" src={ratingStar} alt='ratings' />
                     <p className='text-cosmic-silver-color '>4.5</p>
                 </div>
-                <p className="font-extralight"> {details.doctorSpecialization}</p>
-                <p className="font-extralight"> {details.clinic}</p>
-                <p className="font-extralight">  {details.address}</p>
+                <p className="font-extralight"> {details.specialization}</p>
+                <p className="font-extralight"> {details.currentClinic}</p>
+                <p className="font-extralight">  {''}</p>
 
 
 
@@ -52,12 +71,13 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
                         navigate('/patient/find-a-specialist/consult', {
                             state: {
-                                doctorImage: details.doctorImage,
-                                doctorName: details.doctorName,
-                                doctorSpecialization: details.doctorSpecialization,
-                                clinic:details.clinic,
-                                address: details.address,
-                                title:state.title
+                                doctorImage: details.profilePicture,
+                                doctorName: details.userId.fullName,
+                                doctorSpecialization: details.specialization,
+                                clinic:details.currentClinic,
+                                address: details.workAddress,
+                                title:state.title,
+                                department:details.department
                             }
                         })
                     }}>
@@ -71,12 +91,17 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={()=>{
                        navigate('/patient/appointment/bio', {
                         state: {
-                            doctorImage: details.doctorImage,
-                            doctorName: details.doctorName,
-                            doctorSpecialization: details.doctorSpecialization,
-                            clinic:details.clinic,
-                            address: details.address,
-                            title:state.title
+                            doctorImage: details.profilePicture,
+                            doctorName: details.userId.fullName,
+                            doctorSpecialization: details.specialization,
+                            department:details.department,
+                            clinic:details.currentClinic,
+                            address: details.workAddress,
+                            pricing:details.pricing,
+                            bio:details.bio,
+                            title:state.title,
+                            workingHour:details.workTime,
+                            details:details
                         }
                     })  
                     }}>

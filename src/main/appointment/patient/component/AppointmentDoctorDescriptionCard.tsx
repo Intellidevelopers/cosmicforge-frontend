@@ -12,7 +12,8 @@ export interface AppointmentDoctorDescriptionCardProps {
     doctorName: string,
     doctorSpecialization: string,
     clinic: string,
-    address: string
+    address: string,
+    department:string
 
 }
 
@@ -21,7 +22,7 @@ const AppointmentDoctorDescriptionCard = ({ doctorImage,
     doctorName,
     doctorSpecialization,
     clinic,
-    address }: AppointmentDoctorDescriptionCardProps) => {
+    address ,department}: AppointmentDoctorDescriptionCardProps) => {
     const navigate = useNavigate()
     const { state } = useLocation()
 
@@ -63,7 +64,8 @@ const AppointmentDoctorDescriptionCard = ({ doctorImage,
                                 doctorSpecialization: doctorSpecialization,
                                 clinic: clinic,
                                 address: address,
-                                title: state.title
+                                title: state.title,
+                                department
                             }
                         })
                     }}>

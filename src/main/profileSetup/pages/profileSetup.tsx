@@ -101,7 +101,7 @@ const ProfileSetup = () => {
                         ...user.data,
                         profile:response.data?.profile
                     }}))
-                    navigate('/patient/profile/complete',{
+                    navigate('/profile/complete',{
                         replace:true
                     })
                     return

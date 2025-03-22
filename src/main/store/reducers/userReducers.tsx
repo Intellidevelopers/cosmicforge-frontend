@@ -4,7 +4,9 @@ interface PatientUserProfileProps{
    profilePicture?:string,
    mobileNo?:string,
    workAddress?:string,
-   vitalSigns:{
+  homeAddress?:string ,
+
+   vitalSigns?:{
    bloodPressure?:string,
    bodyTemperature?:string,
    homeAddress?:string,
@@ -14,6 +16,27 @@ interface PatientUserProfileProps{
    profileType?: 'personal' | 'family',
    gender?:'male' | 'female',
    dateOfBirth?:string
+  }
+
+  //doctor ptofile
+
+  fullName?: string,
+  lastName?:string,
+  professionalTitle?: string,
+  specialization?: string,
+  currentClinic?: string,
+  department?: string,
+  bio?: string,
+  pricing?: string,
+  experience?: {
+      hospitalName?: string,
+      NoOfPatientTreated?: string,
+      specializationAndDepartment?: string,
+      date?: string
+  },
+  workTime?: {
+      day?: string,
+      time?: string
   }
    
 }

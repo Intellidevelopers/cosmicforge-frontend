@@ -76,7 +76,7 @@ const LoginPage: React.FC = () => {
     }
 
     const goToFP = () => {
-        navigate('/patient/account/password-reset');
+        navigate('/account/password-reset');
     }
 
     return (

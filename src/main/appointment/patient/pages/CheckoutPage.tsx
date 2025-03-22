@@ -1,10 +1,11 @@
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import AppointmentDoctorDescriptionCard from "../component/AppointmentDoctorDescriptionCard"
-import doctorImage from '../../../../assets/images/doctor-image.jpeg'
+import editIcon from '../../../../assets/icons/cosmic-edit-button.svg'
 import cal from '../../../../assets/icons/home/cosmic-home-calander.svg'
 
 const CheckoutPage = () => {
     const navigate = useNavigate()
+    const {state} = useLocation()
     return <div className="relative  bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full md:p-5 overflow-x-hidden"
     >
         <div className=" place-items-center gap-3 hidden md:flex " onClick={() => {
@@ -18,16 +19,19 @@ const CheckoutPage = () => {
         <div className="relative w-full  flex flex-col place-items-center    mt-6 ">
            <AppointmentDoctorDescriptionCard address="Lekki, Lagos Nigeria."
             clinic="Chastain Park Hospital"
-            doctorSpecialization='General Medicine'
-            doctorImage = {doctorImage}
-            doctorName='Dr Josh Olawale '/>
+            doctorSpecialization={`${state?.department} `}
+            doctorImage = {state?.doctorImage??"/"}
+            doctorName={`Dr ${state?.doctorName} `} department=""/>
             </div>
 
             <div className="w-full mt-6">
                 <div className="w-full relative flex">
                      <p className="font-bold">Schedule Details</p>
-                    <div className="absolute right-3">
-                        <p>Edit</p>
+                    <div className="absolute right-3 flex gap-2" onClick={()=>{
+                        navigate(-1)
+                    }}>
+                        <img src={editIcon} alt="edit-icon" className="w-[20px]"/>
+                        <p className="text-cosmic-primary-color">Edit</p>
                     </div>
                 </div>
 
@@ -38,8 +42,8 @@ const CheckoutPage = () => {
       </div>
 
       <div className="text-[12px] md:text-[14px]">
-        <p className="font-light">Earliest Availability</p>
-        <p className="font-bold">Thursday 9th December 2024, 12:00pm</p>
+        <p className="font-bold">{state?.appointmentmentDetails.appointmentType} Appointment</p>
+        <p className="font-light mt-2">{state?.appointmentmentDetails.date}, {state?.appointmentmentDetails.time}</p>
       </div>
 
  
@@ -55,7 +59,7 @@ const CheckoutPage = () => {
               <div className="w-full mt-2 border shadow shadow-black bg-white">
                 <div className="w-full relative p-2 flex ">
                     <p className="font-light">Consultation Fee</p>
-                   <p  className="absolute top-2 right-8 decoration-cosmic-primary-color font-bold">N20,000.00</p>
+                   <p  className="absolute top-2 right-8 decoration-cosmic-primary-color font-bold">N{`${state?.pricing} `}</p>
                 </div>
 
                 <div className="w-full relative p-2 flex  ">

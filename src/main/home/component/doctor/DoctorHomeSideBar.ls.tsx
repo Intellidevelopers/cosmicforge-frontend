@@ -1,5 +1,4 @@
 import logo from "../../../../assets/logo/logo_comsic_splash.svg";
-import profileIconTmp from "../../../../assets/images/cosmic-doctor-profile.svg";
 import homeIcon from "../../../../assets/icons/home/cosmic-home-active.svg";
 import calenderIcon from "../../../../assets/icons/home/cosmic-home-calander.svg";
 
@@ -7,23 +6,39 @@ import messageIcon from "../../../../assets/icons/cosmic-chat.svg";
 import analyticsIcon from "../../../../assets/icons/home/cosmic-home-analytics.svg";
 
 import logOutIcon from "../../../../assets/icons/cosmic-logout.svg";
-import useGetActiveRoute from "../../hook/patient/useGetActiveRoute";
+
 import { useNavigate } from "react-router-dom";
+import useGetDoctorActiveNavbarRoute from "../../hook/doctor/useGetDoctorActiveNavbarRoute";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
 
 const DoctorHomeSideBar = () => {
-  const {activeRoutePath,setActiveRoutePath} = useGetActiveRoute()
+  const {activeRoutePath,setActiveRoutePath} = useGetDoctorActiveNavbarRoute()
 const navigate = useNavigate()
+
+const user = useSelector((state:RootReducer)=>state.user)
   
   return (
-    <div className="  w-[294px] h-full bg-home-slidder-color shadow-md shadow-black absolute left-0   p-4 z-50 hidden md:flex cursor-default">
-      <div className="w-full mt-8 ">
+    <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-50 cursor-default">
+      <div className="w-full mt-6 ">
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
-          <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-4">
-            <img alt="profile-image" src={profileIconTmp} />
+          <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-2">
+            <img alt="profile-image " className="w-[100%] h-[100%] rounded-full" src={user.data?.profile?.profilePicture ??'/'} />
           </div>
-          <p>Dr Olawale</p>
-          <p className="font-extralight text-cosmic-primary-color">
+          <p>Dr {user.data?.fullName}</p>
+          <p className={`font-extralight text-cosmic-primary-color ${(activeRoutePath.isEditProfileActive) && 'underline'}`} onClick={()=>{
+              setActiveRoutePath({
+                ...activeRoutePath,
+                isHomeActive: false,
+                isMessageActive: false,
+                isAppoinmentsActive:false,
+                isAnalyticsActive: false,
+                isProfileActive:false,
+                isEditProfileActive:true
+              })
+              navigate('/doctor/edit-profile')
+            }} >
             Edit Profile
           </p>
 
@@ -32,34 +47,29 @@ const navigate = useNavigate()
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: true,
-                isRunDiagnosisActive:false,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
-              navigate('/home')
+              navigate('/doctor/home')
             }}   >
               <img alt="home" src={homeIcon} />
               <p className="">Dashboard</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isRunDiagnosisActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAppoinmentsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:true,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:true,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
+              navigate('/doctor/appointments')
             }}>
               <img alt="appointment" src={calenderIcon} />
               <p>Appointments</p>
@@ -69,17 +79,16 @@ const navigate = useNavigate()
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:false,
                 isMessageActive: true,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
+
+              navigate('/doctor/messages')
             }}>
-              <img alt="home" src={messageIcon} />
+              <img alt="message" src={messageIcon} />
               <p>Messages</p>
             </div>
 
@@ -89,35 +98,29 @@ const navigate = useNavigate()
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:false,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: true,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:false
+                isProfileActive:false,
+                isEditProfileActive:false
               })
             }}>
-              <img alt="home" src={analyticsIcon} />
+              <img alt="analytics" src={analyticsIcon} />
               <p>Analytics</p>
             </div>
 
           
 
   
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isCalenderActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isProfileActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
-                isRunDiagnosisActive:false,
                 isMessageActive: false,
-                isBookAppoinmentActive:false,
+                isAppoinmentsActive:false,
                 isAnalyticsActive: false,
-                isFirstAidActive: false,
-                isChatBotActive: false,
-                isFindASpecialistActive:false,
-                isCalenderActive:true
+                isProfileActive:true,
+                isEditProfileActive:false
               })
             }}>
               <img alt="home" src={calenderIcon} />

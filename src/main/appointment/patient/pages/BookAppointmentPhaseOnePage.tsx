@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom"
-import docImage from '../../../../assets/images/doctor-image.jpeg'
+import { useLocation, useNavigate } from "react-router-dom"
 import AppointmentCalender from "./AppointmentCalender"
 import Loader from "../../../generalComponents/Loader"
 import { useState } from "react"
@@ -8,7 +7,22 @@ const BookAppointmentPhaseOnePage = () => {
 
     const navigate = useNavigate()
     const [loading,] = useState<boolean>(false)
-    const [errorMesage,] = useState<string>('')
+    const [errorMesage,setErrorMesage] = useState<string>('')
+
+  
+
+
+    const { state } = useLocation()
+
+    const [appointmentmentDetails, setAppointmentmentDetails] = useState<{ date: string, time: string, appointmentType: 'None' | 'Virtual' | 'In-Person' }>({
+        date: '',
+        time: state?.workingHour.time,
+        appointmentType: 'None'
+    })
+
+    
+
+
 
     return <div className="relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full p-5 overflow-x-hidden"
     >
@@ -23,13 +37,13 @@ const BookAppointmentPhaseOnePage = () => {
 
             <div className=" relative m-4 h-[200px] w-[200px]    ">
                 <img className="w-full h-full     bg-orange-400 rounded-full
-  " src={docImage} style={{ objectPosition: 'top', objectFit: 'cover' }} />
+  " src={state?.doctorImage} style={{ objectPosition: 'top', objectFit: 'cover' }} />
 
             </div>
 
             <div className="mt-2">
-                <p>Dr Josh Olawale</p>
-                <p className="font-extralight">General Medicine</p>
+                <p>Dr {state?.dooctorName}{state?.doctorName}</p>
+                <p className="font-extralight">{state?.department}</p>
 
 
             </div>
@@ -42,29 +56,17 @@ const BookAppointmentPhaseOnePage = () => {
         <p className="text-center mt-2 text-cosmic-primary-color">Date</p>
 
         <div className="w-full">
-            <AppointmentCalender />
+            <AppointmentCalender onDateSelected={(d) => {
+                 
+                setAppointmentmentDetails({
+                    ...appointmentmentDetails,
+                    date: d,
+                    appointmentType: appointmentmentDetails.appointmentType,
+                    time: appointmentmentDetails.time
+                })
+            }} />
         </div>
 
-        <div className="w-full">
-            <p className="text-center  text-cosmic-primary-color mt-8">Time</p>
-
-            <div className="w-full flex justify-center flex-wrap gap-10 mt-8 ">
-
-                <p className="basis-[10%] text-cosmic-primary-color">07:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">08:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">09:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">07:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">10:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">1:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">07:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">07:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">07:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">07:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">07:00am</p>
-                <p className="basis-[10%] text-cosmic-primary-color">1:00am</p>
-
-            </div>
-        </div>
 
         <div className="w-full mt-8">
             <p className="font-bold ">Appointment Type</p>
@@ -72,61 +74,78 @@ const BookAppointmentPhaseOnePage = () => {
             <div className="w-full mt-2">
                 <div className="w-full relative p-2 flex border shadow">
                     <p className="">Virtual</p>
-                    <input type="checkbox" className="absolute top-4 right-8 decoration-cosmic-primary-color" />
+                    <input type="checkbox" checked={appointmentmentDetails?.appointmentType === 'Virtual'} className={`absolute top-4 right-8 decoration-cosmic-primary-color`} onChange={() => {
+                        setAppointmentmentDetails({
+                            ...appointmentmentDetails,
+                            date: appointmentmentDetails.date,
+                            appointmentType: appointmentmentDetails.appointmentType === 'Virtual' ? 'None' : 'Virtual',
+                            time: appointmentmentDetails.time
+                        })
+                    }} />
                 </div>
 
                 <div className="w-full relative p-2 flex  border shadow">
-                    <p className="">Virtual</p>
-                    <input type="checkbox" className="absolute top-4 right-8 decoration-cosmic-primary-color" />
+                    <p className="">In-Personal</p>
+                    <input type="checkbox" checked={appointmentmentDetails?.appointmentType === 'In-Person'} className={`absolute top-4 right-8 decoration-cosmic-primary-color`}  onChange={() => {
+                        setAppointmentmentDetails({
+                            ...appointmentmentDetails,
+                            date: appointmentmentDetails.date,
+                            appointmentType: appointmentmentDetails.appointmentType === 'In-Person' ? 'None' : 'In-Person',
+                            time: appointmentmentDetails.time
+                        })
+                    }} />
                 </div>
             </div>
         </div>
 
 
-        <div className="w-full mt-8">
-            <p className="font-bold ">Select Patient</p>
 
-            <div className="w-full mt-2">
-                <div className="w-full relative p-2 flex border shadow">
-                    <p className="">Grace</p>
-                    <input type="checkbox" className="absolute top-4 right-8 decoration-cosmic-primary-color" />
-                </div>
-
-                <div className="w-full relative p-2 flex  border shadow">
-                    <p className="">Emmanuel</p>
-                    <input type="checkbox" className="absolute top-4 right-8 decoration-cosmic-primary-color" />
-                </div>
-
-                <div className="w-full relative p-2 flex  border shadow">
-                    <p className="">Kelvin</p>
-                    <input type="checkbox" className="absolute top-4 right-8 decoration-cosmic-primary-color" />
-                </div>
-
-                <div className="w-full relative p-2 flex  border shadow">
-                    <p className="">Devjoe</p>
-                    <input type="checkbox" className="absolute top-4 right-8 decoration-cosmic-primary-color" />
-                </div>
-            </div>
-        </div>
 
         <div className="w-full p-8 flex justify-center">
-            <p className="bg-cosmic-primary-color p-2 text-center text-white rounded-md w-[300px]" onClick={()=>{
-                navigate("/patient/appointment/checkout")
+            <p className="bg-cosmic-primary-color p-2 text-center text-white rounded-md w-[300px]" onClick={() => {
+            setErrorMesage('')
+              const dataComplete =  Object.entries(appointmentmentDetails).every(([,value],)=>{
+              
+                     return !( value ===  '' || value === 'None')
+                })
+
+              alert(JSON.stringify(appointmentmentDetails))
+   
+                if(!dataComplete){
+                    setErrorMesage('please provide all details needed.')
+                    return
+                }
+                navigate("/patient/appointment/checkout",{
+                    state:{
+                        appointmentmentDetails,
+                        doctorImage:state?.doctorImage, 
+                        doctorName: state?.doctorName,
+                        doctorSpecialization:state?.doctorSpecialization,
+                        department: state?.department,
+                        clinic: state?.clinic,
+                        address: state?.address,
+                        pricing: state?.pricing,
+                        bio: state?.bio,
+                        title: state?.title,
+                        workingHour: state?.workingHour,
+                    }
+                })
+            
             }}>Continue</p>
         </div>
 
 
-       {
-         loading &&  <div className="w-full m-3 flex justify-center">
-         <Loader size="50px"/>
-     </div>
-       }
-
-       {
-        errorMesage && <div className="w-full m-3 flex justify-center">
-        <p className="text-red-600">error</p>
-    </div>
-       }
+        {
+            loading && <div className="w-full m-3 flex justify-center">
+                <Loader size="50px" />
+            </div>
+        }
+   
+        {
+            errorMesage && <div className="w-full m-3 flex justify-center">
+                <p className="text-red-600">{errorMesage}</p>
+            </div>
+        }
 
     </div>
 }

@@ -11,7 +11,7 @@ const RegSuccess: React.FC = () => {
      const user = useSelector((state:RootReducer)=> state.user)
 
      if( !user.isAunthenticated){
-   return <Navigate to={'/patient/account'} replace/>
+   return <Navigate to={'/account'} replace/>
      }
 
 
@@ -23,7 +23,7 @@ const RegSuccess: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col">
-                    <span className="text-[23px] md:text-[17px] font-bold self-center mt-2">Welcome!</span>
+                    <span className="text-[23px] md:text-[17px] font-bold self-center mt-2">Welcome {user.data?.fullName}!</span>
                     <span className="mt-2 text-[17px] md:text-[16px] self-center">Let&apos;s get you started by setting up your profile.</span>
                 </div>
 
@@ -35,7 +35,7 @@ const RegSuccess: React.FC = () => {
                     </div>
 
                 <div className="mt-[17px] w-[100%] flex flex-col items-center gap-2">
-                    <Link to={'/patient/profile/setup'} className="md:h-[40px] flex flex-col justify-center items-center h-[45px] md:w-[100%] mt-[20px] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Profile Set Up</Link>
+                    <Link to={ (user.data?.role === 'client' ?  '/patient/profile/setup':'/doctor/edit-profile')  } className="md:h-[40px] flex flex-col justify-center items-center h-[45px] md:w-[100%] mt-[20px] w-[90%] rounded-[5px] hover:bg-[#272EA7]/70 bg-[#272EA7] cursor-pointer text-white">Profile Set Up</Link>
                     <button className="md:h-[40px] h-[45px] md:w-[100%] md:mt-0 mt-[20px] w-[90%] rounded-[5px] bg-[#272EA7]/50 cursor-not-allowed text-white">Home</button>
                 </div>
             </div>

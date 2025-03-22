@@ -4,27 +4,31 @@ import appointmentIcon from "../../../../assets/icons/cosmic-doctor-appointment-
 import totalPatientsIcon from "../../../../assets/icons/cosmic-doctor-total-patients-icon.svg";
 import totalEarningsIcon from "../../../../assets/icons/cosmic-doctor-earnings-icon.svg";
 import DoctorChartGraph from "./DoctorChartGrap";
+import DoctorNavBarHome from "./DoctorNavBarMobile";
+import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
+//import DoctorTable from "../../pages/doctor/DoctorTable";
 
 
 const DoctorHomeBody = () => {
 
   return (
 
-    <div className="w-full">
+    <div className="w-full  overflow-y-auto  ">
 
       <DoctorHomeNavBar title="Dashboard" />
+      <DoctorNavBarHome title="Dashboard" />
 
-      <div className=" md:ps-[294px]   ">
+      <div className="  w-full h-dvh  ">
 
-        <div className="w-full flex flex-wrap p-10 justify-center gap-8">
+        <div className="w-full grid   grid-cols-6 md:p-4 md:gap-8">
 
-          <div className=" bg-cosmic-primary-color  h-[120px] w-[280px] rounded-sm">
+          <div className=" bg-cosmic-primary-color col-span-2 min-h-fit md:h-[120px] w-full rounded-md">
 
             <div className="w-full flex justify-end p-2">
               <img src={menuIcon} />
             </div>
 
-            <div className="w-full flex flex-wrap text-white gap-4">
+            <div className="w-full flex flex-wrap justify-center text-white gap-4">
               <div className="w-fit bg-white rounded-full p-1 ms-8">
                 <img alt="appointment" src={appointmentIcon} />
               </div>
@@ -35,12 +39,12 @@ const DoctorHomeBody = () => {
             </div>
           </div>
 
-          <div className=" bg-cosmic-color-yellow-color  h-[120px] w-[280px] rounded-sm">
+          <div className=" bg-cosmic-color-yellow-color  col-span-2 min-h-fit md:h-[120px]  w-full  rounded-md">
             <div className="w-full flex justify-end p-2">
               <img src={menuIcon} />
             </div>
 
-            <div className="w-full flex flex-wrap text-white gap-4">
+            <div className="w-full flex flex-wrap justify-center text-white gap-4">
 
               <div className="w-fit bg-white rounded-full p-1 ms-8">
 
@@ -58,7 +62,7 @@ const DoctorHomeBody = () => {
 
           </div>
 
-          <div className=" bg-cosmic-color-green-color h-[120px] w-[280px] rounded-sm">
+          <div className=" bg-cosmic-color-green-color min-h-fit md:h-[120px] w-full rounded-md col-span-2 ">
 
             <div className="w-full flex justify-end p-2">
 
@@ -66,7 +70,7 @@ const DoctorHomeBody = () => {
 
             </div>
 
-            <div className="w-full flex flex-wrap text-white gap-4">
+            <div className="w-full flex flex-wrap place-items-center justify-center text-white gap-4">
 
               <div className="w-fit bg-white rounded-full p-1 ms-8">
 
@@ -87,9 +91,25 @@ const DoctorHomeBody = () => {
 
         </div>
 
-        <div className="w-full  p-10">
-            <DoctorChartGraph/>
+        <div className="w-full grid grid-cols-5 gap-2 p-2">
+          <div className="col-span-5 md:col-span-3">
+            <DoctorChartGraph />
+
+          </div>
+          <div className="col-span-5 md:col-span-2">
+            <DoctorTotalEarningGraph />
+          </div>
         </div>
+
+
+       <div className="p-2 h-[400px]  overflow-x-hidden overflow-y-auto  ">
+        <div className="w-full h-full flex justify-center place-items-center">
+          <p>No appointment yet</p>
+        </div>
+      {
+        /** <DoctorTable/> */
+      }
+       </div>
 
       </div>
 

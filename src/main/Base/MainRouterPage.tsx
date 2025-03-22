@@ -4,13 +4,16 @@ import { validateUserSession } from "./service"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
+import io from 'socket.io-client'
+import { connectSocket } from "../store/reducers/userSocketReducer"
+import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 
 
 
-
-const MainRouterPage = () =>{
+const MainRouterPage = () => {
     const navigate = useNavigate()
     const user = useSelector((state:RootReducer)=>state.user)
+    const userSocket = useSelector((state:RootReducer)=>state.socket)
     const dispatch = useDispatch()
  const {pathname} = useLocation()
    const path = pathname.split('/')[2]
@@ -21,10 +24,8 @@ const MainRouterPage = () =>{
          },5000)*/
     
          switch(path){
-      case 'home':
-        case 'calendar':
-            case 'profile':
-                case 'first-aid':
+      case 'homem':
+        
         (async()=>{
             try {
                 
@@ -48,7 +49,7 @@ const MainRouterPage = () =>{
               
             } catch (error) {
               
-                dispatch(authenticateUser({isAunthenticated:false,data:{},keepMeSignedIn:false,message:"sessionExpired"}))
+                //dispatch(authenticateUser({isAunthenticated:false,data:{},keepMeSignedIn:false,message:"sessionExpired"}))
                
                 navigate("/patient/account",{
                     replace:true,
@@ -59,7 +60,35 @@ const MainRouterPage = () =>{
 
 
          }
+
         
+        
+         if(user.isAunthenticated &&  !userSocket.connected){
+            const socket = io(`${import.meta.env.VITE_BASE_Socket_URL}`,{
+                auth:{
+                    token:user.data?.token
+                }
+            })
+
+            socket.on('connect',()=>{
+                
+                dispatch(connectSocket({connected:true,socket}))
+            })
+
+            socket.on('all-diagnosis',(data:any)=>{
+               
+           dispatch(cacheDiagnosis({diagnosisChat:data}))
+            })
+
+            socket.on('disconnect',()=>{
+                dispatch(connectSocket({connected:false,socket:null}))
+            })
+            
+
+            socket.on('connect_error',(_:any)=>{
+                //alert(e)
+            })
+         }
           
         
  

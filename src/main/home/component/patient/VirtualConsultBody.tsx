@@ -7,7 +7,7 @@ import videoButton from '../../../../assets/icons/cosmic-video-call-button.svg'
 import muteMic from '../../../../assets/icons/cosmic-mute-mic.svg'
 import messageIcon from '../../../../assets/icons/cosmic-video-chat-icon.svg'
 
-import { MutableRefObject,  useRef } from "react"
+import { MutableRefObject,  useEffect,  useRef } from "react"
 
 
 const VirtualConsultBody = ()=>{
@@ -18,7 +18,8 @@ const VirtualConsultBody = ()=>{
             doctorName:string,
             doctorSpecialization:string,
             clinic:string,
-            address:string
+            address:string,
+            department:string
            
     }
 
@@ -34,7 +35,15 @@ const VirtualConsultBody = ()=>{
     const navigate = useNavigate()
 
    
-
+   useEffect(()=>{
+   /* const audio =  new Audio('/src/assets/call/ringtone4.mp3')
+    audio.loop = true
+    //audio.play()
+  */
+    return () =>{
+        //audio.pause()
+    }
+   },[])
   
 
    
@@ -56,10 +65,11 @@ const VirtualConsultBody = ()=>{
 
                 <div className="w-full relative ">
 
-                 <div className="w-full md:right-[22%]  flex justify-center place-items-center absolute  mt-6 z-50  font-light">
-                    <div className={`w-[600px] ${(mode.video) && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
-                    <p>{data.doctorName}</p>
-                    <p>{data.doctorSpecialization}</p>
+                 <div className="w-full   flex justify-center place-items-center absolute  mt-6 z-50  font-light ">
+                    <div className={`w-full ${(mode.video) && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
+                    <p>Dr   {data.doctorName}</p>
+                    <p>{data.department}</p>
+                    <p className="font-light italic text-sm">calling...</p>
                     </div>
                  </div>
 
