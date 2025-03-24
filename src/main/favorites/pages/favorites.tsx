@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { FavoriteItem } from "../components/favorite-card";
-import FavoriteCard from "../components/favorite-card";
+import { FavoriteItem } from "../components/product-card";
+import ProductCard from "../components/product-card";
 import image from '../../../assets/images/image.png';
 import HomeMobileNavBar from "../../home/component/patient/HomeMobileNavBar";
 import HomeNavBar from "../../home/component/patient/HomeNavBar";
@@ -11,7 +11,8 @@ const dummyCard: FavoriteItem = {
     title: 'Ibuprofen 400mg',
     quantity: '100 Tablets',
     location: 'Lagos, Zenith Pharmacy',
-    price: '3,500'
+    price: '3,500',
+    favorite:true
 };
 
 
@@ -39,7 +40,7 @@ const Favorites = () => {
             <div className="flex w-[80%] xs:w-[90%] justify-center md:w-full md:pl-4 md:justify-start">
                 <div className="grid  grid-cols-2 sm:grid-cols-3 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 3xl:grid-cols-6 lg:grid-cols-3 w-full gap-4 pb-6 md:p-4" >
                     {FavoriteList.map((item, index) => (
-                        <FavoriteCard key={index} {...item} />
+                        <ProductCard key={index} {...item} />
                     ))}
                 </div>
             </div>

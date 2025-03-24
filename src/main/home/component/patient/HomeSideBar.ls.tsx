@@ -171,7 +171,7 @@ const HomeSideBar = () => {
                 isCalenderActive: false,
                 isProfileActive:false
               })
-              navigate('/patient/chatbot')
+              navigate('/patient/shop')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
               <p className=" text-[15.5px]">Chat bot</p>
