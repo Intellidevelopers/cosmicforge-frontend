@@ -6,8 +6,12 @@ import docImage from '../../../../../assets/images/doctor-image.jpeg'
 import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
 import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
+import { useNavigate } from "react-router-dom"
 
 const DoctorMainChatPage = () => {
+
+    
+    const navigate = useNavigate()
 
     return <div className="w-full font-poppins">
         <DoctorHomeNavBar title="Messages" />
@@ -38,8 +42,10 @@ const DoctorMainChatPage = () => {
                             <img src={docImage} alt="profile-icon" className="w-[40px] h-[40px] rounded-full" />
                             <p>Jenifer Williams</p>
                         </div>
-                        <div className="w-full flex justify-end pe-6 gap-3">
-                            <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} />
+                        <div className="w-full flex justify-end  gap-3">
+                            <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={()=>{
+                                navigate("/doctor/appointment/voice-call")
+                            }} />
                             <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} />
                             <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />
                         </div>

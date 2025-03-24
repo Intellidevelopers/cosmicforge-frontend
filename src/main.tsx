@@ -73,6 +73,8 @@ import DoctorMainChatPage from './main/home/pages/chat/doctor/DoctorMainChatPage
 import DoctorEditProfilePage from './main/profile/doctor/pages/DoctorEditProfilePage.tsx'
 import DepartmentsPage from './main/onboarding/pages/DepartmentsPage.tsx'
 import DepartmentOverview from './main/onboarding/pages/DepartmentOverview.tsx'
+import VoiceAndVideoContainerPage from './main/home/pages/chat/doctor/VoiceAndVideoContainerPage.tsx'
+import VoiceCallPage from './main/home/pages/chat/doctor/VoiceCallPage.tsx'
 
 
 
@@ -334,31 +336,44 @@ const router = createBrowserRouter([
             path: 'home',
             element: <DoctorHome />
           },
+        
+         
+        ]
+      },
+      {
+        path: '/doctor/appointment',
+        element: <VoiceAndVideoContainerPage />,
+        children:[
           {
-            path: 'appointments/',
-            element: < DoctorAppointmentPage/>,
-            children:[
-              {
-                path:'',
-                element:<DoctorTable/>
-              },
-              {
-                path:'calendar',
-                element:<DoctorCalendar/>
-              }
-            ]
+            path: 'voice-call',
+            element: <VoiceCallPage />
           },
-          {
-            path: 'messages',
-            element: <DoctorMainChatPage />
-          },
-          {
-            path: 'edit-profile',
-            element: <DoctorEditProfilePage/>
-          }
         ]
       },
     ]
+  },
+  {
+    path: '/doctor/appointments/',
+    element: < DoctorAppointmentPage/>,
+    children:[
+      {
+        path:'',
+        element:<DoctorTable/>
+      },
+      {
+        path:'calendar',
+        element:<DoctorCalendar/>
+      }
+    ]
+  },
+  {
+    path: '/doctor/messages',
+    element: <DoctorMainChatPage />
+  },
+ 
+  {
+    path: '/doctor/edit-profile',
+    element: <DoctorEditProfilePage/>
   }
 ])
 

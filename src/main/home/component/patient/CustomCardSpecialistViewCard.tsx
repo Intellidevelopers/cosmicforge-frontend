@@ -12,6 +12,7 @@ export interface CustomCardSpecialistViewCardProps {
        userId:{
         fullName?: string,
         lastName?:string,
+        _id?:string
        },
         professionalTitle?: string,
         specialization?: string,
@@ -77,7 +78,8 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                                 clinic:details.currentClinic,
                                 address: details.workAddress,
                                 title:state.title,
-                                department:details.department
+                                department:details.department,
+                                docId:details.userId._id
                             }
                         })
                     }}>

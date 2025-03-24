@@ -9,12 +9,19 @@ import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
 //import DoctorTable from "../../pages/doctor/DoctorTable";
 
 
+
+
 const DoctorHomeBody = () => {
 
+
+
+
+ 
+  
   return (
 
-    <div className="w-full  overflow-y-auto  ">
-
+    <div className="w-full h-full  overflow-y-auto  ">
+      
       <DoctorHomeNavBar title="Dashboard" />
       <DoctorNavBarHome title="Dashboard" />
 
