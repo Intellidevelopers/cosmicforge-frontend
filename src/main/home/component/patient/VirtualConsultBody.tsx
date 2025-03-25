@@ -7,9 +7,9 @@ import videoButton from '../../../../assets/icons/cosmic-video-call-button.svg'
 import muteMic from '../../../../assets/icons/cosmic-mute-mic.svg'
 import messageIcon from '../../../../assets/icons/cosmic-video-chat-icon.svg'
 
-import { MutableRefObject,  useEffect,  useRef } from "react"
+import { MutableRefObject,  useEffect,  useMemo,  useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { RootReducer } from "../../../store/initStore"
+import { RootReducer, store } from "../../../store/initStore"
 import UserRTC from "../../hook/UserRTC"
 import { tearDownConnection, updateUserCallingData } from "../../../store/reducers/userSocketReducer"
 
@@ -37,7 +37,7 @@ const VirtualConsultBody = ()=>{
 
      const user = useSelector((state:RootReducer)=>state.user)
 
-   const {cancelMediaStream,toggleVideo,toggleMic,switchToAudio,mode} = useGetMediaStream()
+   const {cancelMediaStream,toggleMic,switchToAudio,mode} = useGetMediaStream()
 
     const navigate = useNavigate()
 
@@ -47,21 +47,49 @@ const VirtualConsultBody = ()=>{
 
     const dispatch = useDispatch()
 
+
+    const [counter,setCounter] = useState<string>('00:00:00')
+  const [counterId,setCounterId] = useState<NodeJS.Timeout>()
+
+       const startTimer = () => {
+        let countUp = 0
+        const timerId = setInterval(()=>{
+          const hours = Math.floor(countUp/3600) 
+           const mins = Math.floor(countUp/60)
+           const sec = countUp % 60
+           setCounter(`${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`)  
+               
+            countUp += 1
+
+           
+        },1000)
+        setCounterId(timerId)
+
+    }
+
+    
+        const stopAndClearTimer = () =>{
+    
+            if(counterId){
+                setCounter('00:00:00')
+                clearInterval(counterId)
+            }
+        }
+  
+
+
+
    useEffect(()=>{
    
     if(socketCon.connected && socketCon.socket){
-            
+          
          if(socketCon.localStream && !socketCon.offerCreated){
              
             createOffer({userToCall:data.docId,userCalling:user.data?._id!!})
             dispatch(updateUserCallingData({remoteUserId:data.docId,socket:null}))
-            socketCon.socket.emit('calling',{userToCall:data.docId,
-                userCallingDetails:{
-                    name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
-                    profilePicture:user.data?.profile?.profilePicture!!
-                }
-            })
+           
           }else{
+            stopAndClearTimer()
             console.log('false alrdeay created')
           }
 
@@ -71,8 +99,8 @@ const VirtualConsultBody = ()=>{
 
 
             
-        socketCon.socket.on('call-failed',(data:any)=>{
-            alert(JSON.stringify(data))
+        socketCon.socket.on('call-failed',()=>{
+          //  alert(JSON.stringify(data))
         })
 
 
@@ -112,6 +140,13 @@ const VirtualConsultBody = ()=>{
            }
          
        },[socketCon.remoteStream])
+
+      useMemo(()=>{
+          if(socketCon.remoteConnected){
+            startTimer()   
+          }
+      },[socketCon.remoteConnected])
+
   
   
        
@@ -142,7 +177,7 @@ const VirtualConsultBody = ()=>{
                     <div className={`w-full ${(mode.video) && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
                     <p>Dr   {data.doctorName}</p>
                     <p>{data.department}</p>
-                    <p className="font-light italic text-sm">calling...</p>
+                    <p className="font-light italic text-sm">{socketCon.remoteConnected?<span className="text-green-600">answered</span>:'calling'}</p>
                     </div>
                  </div>
 
@@ -183,25 +218,68 @@ const VirtualConsultBody = ()=>{
                 </div>
 
                 <div className="w-full flex flex-col place-items-center justify-center p-1 gap-2 mt-2">
-                    <p className="bg-cosmic-light-color-call w-fit text-white font-light p-1 rounded-md">2:34:34</p>
+                    <p className="bg-cosmic-light-color-call w-[100px] text-center text-white font-light p-1 rounded-md">{counter}</p>
 
                     <div className="bg-cosmic-light-color-call  flex p-2 gap-2">
 
                         <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={()=>{
                             switchToAudio()
                         }}>
-                        <img className="w-full h-full" src={callButton} />
+                        <img className="w-full h-full" src={callButton} onClick={()=>{
+                          if(socketCon.socket && !socketCon.remoteConnected){
+
+                            socketCon.socket.emit('calling',{userToCall:data.docId,
+                              userCallingDetails:{
+                                  name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
+                                  profilePicture:user.data?.profile?.profilePicture!!
+                              },
+                              callMode:'audio'
+                             
+                          })
+                           }else{
+                            if(socketCon.connected && socketCon.socket){
+                              socketCon.socket.emit('request_to_switch_call_mode',{
+                                callMode:'audio'
+                              })
+                            }
+                           }
+                          
+                           // toggleVideo()
+                          }}
+                      />
                         </div>
 
                         <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={()=>{
-                          toggleVideo()
+                         if(socketCon.socket && !socketCon.remoteConnected){
+
+                          socketCon.socket.emit('calling',{userToCall:data.docId,
+                            userCallingDetails:{
+                                name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
+                                profilePicture:user.data?.profile?.profilePicture!!
+                            },
+                            callMode:'video'
+                           
+                        })
+                         }else{
+                          if(socketCon.connected && socketCon.socket){
+                            socketCon.socket.emit('request_to_switch_call_mode',{
+                              callMode:'video'
+                            })
+                          }
+                         }
+                        
+                         // toggleVideo()
                         }}>
                         <img src={videoButton} />
                         </div>
                         
                         <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async()=>{
+                          socketCon.socket?.emit('on_call_ended',{
+                            remoteId:store.getState().socket.remoteUserId
+                          })
                                dispatch(tearDownConnection())
                             cancelMediaStream()
+                            navigate(-1)
                         
                         }}>
                         <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>

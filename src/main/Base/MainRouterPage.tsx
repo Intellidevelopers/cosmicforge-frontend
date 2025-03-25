@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
 import io from 'socket.io-client'
-import { connectSocket, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteStream } from "../store/reducers/userSocketReducer"
+import { connectSocket, tearDownConnection, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream } from "../store/reducers/userSocketReducer"
 import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 import UserRTC from "../home/hook/UserRTC"
 
@@ -15,7 +15,7 @@ import UserRTC from "../home/hook/UserRTC"
 const MainRouterPage = () => {
     const navigate = useNavigate()
     const user = useSelector((state: RootReducer) => state.user)
-    const userSocket = useSelector((state: RootReducer) => state.socket)
+    let userSocket = useSelector((state: RootReducer) => state.socket)
     const dispatch = useDispatch()
     const { pathname } = useLocation()
     const path = pathname.split('/')[2]
@@ -28,27 +28,27 @@ const MainRouterPage = () => {
             },*/
             {
                 urls: "stun:stun.relay.metered.ca:80",
-              },
-              {
+            },
+            {
                 urls: "turn:global.relay.metered.ca:80",
                 username: "053ea0981f6caa6c8eba5e29",
                 credential: "5ksdYtPQ2aO2jjDk",
-              },
-              {
+            },
+            {
                 urls: "turn:global.relay.metered.ca:80?transport=tcp",
                 username: "053ea0981f6caa6c8eba5e29",
                 credential: "5ksdYtPQ2aO2jjDk",
-              },
-              {
+            },
+            {
                 urls: "turn:global.relay.metered.ca:443",
                 username: "053ea0981f6caa6c8eba5e29",
                 credential: "5ksdYtPQ2aO2jjDk",
-              },
-              {
+            },
+            {
                 urls: "turns:global.relay.metered.ca:443?transport=tcp",
                 username: "053ea0981f6caa6c8eba5e29",
                 credential: "5ksdYtPQ2aO2jjDk",
-              }
+            }
 
         ]
     }
@@ -153,9 +153,9 @@ const MainRouterPage = () => {
 
 
     useEffect(() => {
-
-        let localPeerConnection = userSocket?.localPeerConnectionInstance!!
-        let remotePeerConnection = userSocket?.remotePeerConnectionInstance!!
+        let userSocket =  store.getState().socket
+        let localPeerConnection = userSocket.localPeerConnectionInstance!!
+        let remotePeerConnection = userSocket.remotePeerConnectionInstance!!
 
         if (localPeerConnection && remotePeerConnection) {
             console.log('active')
@@ -238,7 +238,7 @@ const MainRouterPage = () => {
 
                 })
 
-                
+
 
                 localPeerConnection.onconnectionstatechange = (async () => {
                     console.log('change...')
@@ -247,8 +247,12 @@ const MainRouterPage = () => {
 
                     if (localPeerConnection.connectionState === 'connected') {
 
-                    } else {
-                      store.getState().socket.socket?.emit('failed_to_connect',{userId:store.getState().socket.remoteUserId})
+                        store.getState().socket.socket?.emit('connected',{
+                            remoteId:store.getState().socket.remoteUserId
+                        })
+
+                    } else if(localPeerConnection.connectionState === 'failed') {
+                        store.getState().socket.socket?.emit('failed_to_connect', { userId: store.getState().socket.remoteUserId })
 
                     }
 
@@ -263,7 +267,7 @@ const MainRouterPage = () => {
                 })
 
 
-               
+
 
 
 
@@ -325,12 +329,11 @@ const MainRouterPage = () => {
                         // alert(JSON.stringify(data))
                         try {
                             console.log('anser received')
-                            if (!localPeerConnection.localDescription) {
-                                //await localPeerConnection.setLocalDescription(userSocket.localDescription!!)
-                            }
+                            const localPeerConnectionInstance = store.getState().socket.localPeerConnectionInstance
+                            const remotePeerConnectionInstance = store.getState().socket.remotePeerConnectionInstance
 
-                            await localPeerConnection.setRemoteDescription(data.user_receiving_call_answer)
-                            dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnection, remotePeerConnectionInstance: remotePeerConnection, socket: null }))
+                            await localPeerConnectionInstance?.setRemoteDescription(data.user_receiving_call_answer)
+                            dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnectionInstance, remotePeerConnectionInstance: remotePeerConnectionInstance, socket: null }))
 
                         } catch (error: any) {
                             console.log(error.message)
@@ -356,9 +359,25 @@ const MainRouterPage = () => {
 
 
                     userSocket.socket.on('failed_to_connect', () => {
-                    console.log('called failed')
+                        console.log('called failed')
 
                     })
+                }
+
+
+
+                if(userSocket.connected && userSocket.socket){
+                    userSocket.socket.on('on_call_end',()=>{
+                        console.log('tearing downn')
+                        store.dispatch(tearDownConnection())
+                    })
+                }
+
+
+                if(userSocket.connected && userSocket.socket){
+                    userSocket.socket.on('on_connected',()=>{
+                       store.dispatch(updateRemoteConnection({remoteConnected:true,socket:null}))
+                    }) 
                 }
 
 
@@ -367,7 +386,7 @@ const MainRouterPage = () => {
 
             } catch (error: any) {
 
-                alert(error.message)
+                // alert(error.message)
 
 
             }

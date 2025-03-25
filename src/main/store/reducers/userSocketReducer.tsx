@@ -21,7 +21,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
       profilePicture:string
     
     } | null,
-    startPlayingRingTone?:boolean
+    startPlayingRingTone?:boolean,
+    remoteConnected?:boolean
    
  }
 
@@ -40,7 +41,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
   localPeerConnectionInstance:null,
   remotePeerConnectionInstance:null,
   remoteCallerDetails: null,
-   startPlayingRingTone:false
+   startPlayingRingTone:false,
+   remoteConnected:false
  }
 
 
@@ -90,11 +92,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
         tearDownConnection  (state){
 
-          if(state.localPeerConnectionInstance && state.remotePeerConnectionInstance){
-            state.localPeerConnectionInstance.close()
-            state.remotePeerConnectionInstance.close()
-          }
-
           const rtcConfig = {
             iceServers: [
                /* {
@@ -139,10 +136,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
           state.offerCreated = false
           state.answerCreated = false
           state.offerReceived = false
+          state.remoteConnected = false
         },
 
         updateRingTone (state,action:PayloadAction<UserSocketProps>){
           state.startPlayingRingTone = action.payload.startPlayingRingTone?? state.startPlayingRingTone
+        },
+
+        updateRemoteConnection(state,action:PayloadAction<UserSocketProps>){
+          state.remoteConnected = action.payload.remoteConnected?? state.remoteConnected
         },
 
 
@@ -151,7 +153,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
  })
 
- export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone} =userSocketSlice.actions
+ export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection} =userSocketSlice.actions
 
 
  export default userSocketSlice.reducer

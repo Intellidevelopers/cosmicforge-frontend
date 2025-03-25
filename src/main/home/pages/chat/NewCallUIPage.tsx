@@ -6,6 +6,7 @@ import useGetMediaStream from '../../hook/useGetMediaStream'
 import UserRTC from '../../hook/UserRTC'
 import { useNavigate } from 'react-router-dom'
 import { tearDownConnection, updateRingTone } from '../../../store/reducers/userSocketReducer'
+import ringtone  from '../../../../assets/call/ringtone4.mp3'
 
 
 
@@ -85,7 +86,7 @@ const NewCallUIPage = ({newCall,onDecline,onAnswer,userCallingDetails}:NewCallUI
     
 
     return <div ref={bodyRef} className={`  cursor-default  w-full h-fit flex  absolute bg-transparent z-[300] p-8   justify-center`}>
-       <audio src='./src/assets/call/ringtone4.mp3' ref={audioRef} />
+       <audio src={ringtone} ref={audioRef} />
        <div className={` ${newCall? 'flex':'hidden'}  bg-white rounded-md p-3 h-[10
        50px] w-[400px] shadow-lg flex `}>
        <img src={callIcon} className='w-[100px] ' />

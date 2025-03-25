@@ -47,10 +47,11 @@ const UserRTC = () => {
    const createOffer = async ({userToCall,userCalling}:UserRTCProps) =>{
       
       try {
-        
+           
          socketCon.localStream?.getTracks().forEach(tracks=>{
             localPeerConnection.addTrack(tracks, socketCon.localStream!!)
             })
+            
    
        const offer = await  localPeerConnection.createOffer({
            iceRestart:true,
@@ -81,13 +82,15 @@ const UserRTC = () => {
     let createAnswer = async ({userToCall,userCalling}:UserRTCProps) =>{
 
       try {
-        socketCon = socketCon.localStream ? socketCon : store.getState().socket
+        socketCon = store.getState().socket
 
-        const localStream = socketCon.localStream ??  store.getState().socket.localStream
+        const localStream =   store.getState().socket.localStream
 
-        const remotePeerConnection = socketCon.remotePeerConnectionInstance ??  store.getState().socket.remotePeerConnectionInstance
+        const remotePeerConnection = store.getState().socket.remotePeerConnectionInstance
       
         
+        
+           
          if(localStream){
          
                const answer = await  remotePeerConnection?.createAnswer()

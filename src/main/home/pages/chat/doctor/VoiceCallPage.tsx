@@ -7,10 +7,12 @@ import messageIcon from '../../../../../assets/icons/cosmic-video-chat-icon.svg'
 import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
 //import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
-import  { MutableRefObject, useEffect, useRef } from "react"
-import { useSelector} from 'react-redux'
+import  { MutableRefObject, useEffect, useMemo, useRef, useState } from "react"
+import { useDispatch, useSelector} from 'react-redux'
 import { RootReducer } from '../../../../store/initStore'
 import useGetMediaStream from '../../../hook/useGetMediaStream'
+import { useNavigate } from 'react-router-dom'
+import { tearDownConnection } from '../../../../store/reducers/userSocketReducer'
 
 
 const VoiceCallPage = () => {
@@ -23,6 +25,39 @@ const VoiceCallPage = () => {
       const userSocketCon =  useSelector((state:RootReducer)=>state.socket)
 
       const {cancelMediaStream,toggleVideo,toggleMic,switchToAudio} = useGetMediaStream()
+
+
+      const navigate = useNavigate()
+      const dispatch = useDispatch()
+
+         const [counter,setCounter] = useState<string>('00:00:00')
+        const [counterId,setCounterId] = useState<NodeJS.Timeout>()
+      
+             const startTimer = () => {
+              let countUp = 0
+              const timerId = setInterval(()=>{
+                const hours = Math.floor(countUp/3600) 
+                 const mins = Math.floor(countUp/60)
+                 const sec = countUp % 60
+                 setCounter(`${hours.toString().padStart(2,'0')}:${mins.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`)  
+                     
+                  countUp += 1
+      
+                 
+              },1000)
+              setCounterId(timerId)
+      
+          }
+      
+          
+              const stopAndClearTimer = () =>{
+          
+                  if(counterId){
+                      setCounter('00:00:00')
+                      clearInterval(counterId)
+                  }
+              }
+        
       
     useEffect(()=>{
         console.log(userSocketCon?.remoteStream?.getTracks().length)
@@ -42,6 +77,12 @@ const VoiceCallPage = () => {
       }
 
     },[userSocketCon.localStream])
+
+    useMemo(()=>{
+       if(userSocketCon.remoteConnected){
+        startTimer()
+       }
+    },[userSocketCon.remoteConnected])
     
    
    
@@ -72,7 +113,7 @@ const VoiceCallPage = () => {
                      <div className="row-span-2 flex justify-center place-items-center h-full">
      
                          <div className="w-full flex flex-col place-items-center justify-center p-1 gap-2 mt-2">
-                             <p className="bg-cosmic-light-color-call w-fit text-white font-light p-1 rounded-md">2:34:34</p>
+                             <p className="bg-cosmic-light-color-call w-fit text-white font-light p-1 rounded-md">{counter}</p>
      
                              <div className="bg-cosmic-light-color-call  flex p-2 gap-2">
      
@@ -89,7 +130,12 @@ const VoiceCallPage = () => {
                                  </div>
      
                                  <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
-                                     cancelMediaStream()
+                                     cancelMediaStream().then(()=>{
+                                        dispatch(tearDownConnection())
+                                        stopAndClearTimer()
+                                        navigate(-1)
+                                     })
+                                     
      
                                  }}>
                                      <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>
