@@ -12,7 +12,11 @@ const useGetMediaStream = () => {
      //const navigate = useNavigate()
     // const {state} = useLocation()
    
-    const [mediaStream, setMediaStream] = useState<MediaStream | null>()
+    const [mediaStream, setMediaStream] = useState<MediaStream | null>( 
+        ()=>{
+            return  store.getState().socket.localStream!!
+        }
+    )
 
     const [mode,setMode] = useState<ModeProps>(()=>{
         return {

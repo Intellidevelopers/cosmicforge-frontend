@@ -350,31 +350,33 @@ const router = createBrowserRouter([
           },
         ]
       },
-    ]
-  },
-  {
-    path: '/doctor/appointments/',
-    element: < DoctorAppointmentPage/>,
-    children:[
+
       {
-        path:'',
-        element:<DoctorTable/>
+        path: '/doctor/appointments/',
+        element: < DoctorAppointmentPage/>,
+        children:[
+          {
+            path:'',
+            element:<DoctorTable/>
+          },
+          {
+            path:'calendar',
+            element:<DoctorCalendar/>
+          }
+        ]
       },
       {
-        path:'calendar',
-        element:<DoctorCalendar/>
+        path: '/doctor/messages',
+        element: <DoctorMainChatPage />
+      },
+     
+      {
+        path: '/doctor/edit-profile',
+        element: <DoctorEditProfilePage/>
       }
     ]
-  },
-  {
-    path: '/doctor/messages',
-    element: <DoctorMainChatPage />
-  },
- 
-  {
-    path: '/doctor/edit-profile',
-    element: <DoctorEditProfilePage/>
   }
+ 
 ])
 
 

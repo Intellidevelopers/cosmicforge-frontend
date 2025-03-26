@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
 import io from 'socket.io-client'
-import { connectSocket, tearDownConnection, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream } from "../store/reducers/userSocketReducer"
+import { connectSocket, tearDownConnection, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream, updateRingTone, updateUserCallingData } from "../store/reducers/userSocketReducer"
 import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 import UserRTC from "../home/hook/UserRTC"
+import NewCallUIPage from "../home/pages/chat/NewCallUIPage"
 
 
 
@@ -19,6 +20,41 @@ const MainRouterPage = () => {
     const dispatch = useDispatch()
     const { pathname } = useLocation()
     const path = pathname.split('/')[2]
+
+
+
+      
+    
+    
+
+    
+
+    const [isNewCall,setNewCall] = useState<boolean>(false)
+
+    const [userCallingDetails,setUserCallingDetails] = useState<{
+     name:string,
+     profilePicture:string
+   }>()
+
+      useEffect(()=>{
+       
+         if(userSocket.connected && userSocket.socket){
+         
+           userSocket.socket.on('incoming-call',(data:{caller:{_id:string}, userCallingDetails:{
+             name:string,
+             profilePicture:string
+           },callMode:'audio'|'video'})=>{
+              
+            
+                dispatch(updateCallMode({callMode:data.callMode,socket:null}))
+                 dispatch(updateRingTone({startPlayingRingTone:true,socket:null}))
+               dispatch(updateUserCallingData({remoteUserId:data.caller._id,socket:null,remoteCallerDetails:data.userCallingDetails}))
+               setUserCallingDetails(data.userCallingDetails)
+               setNewCall(true)
+             //  navigate('/doctor/appointment/voice-call')
+           })
+         }
+      },[userSocket])
 
 
     const rtcConfig = {
@@ -398,8 +434,34 @@ const MainRouterPage = () => {
 
 
 
-    return <div className="w-full h-full relative">
+    useEffect(()=>{
 
+        if(userSocket.tearDown){
+           
+            
+
+            console.log('tearin downn')
+            dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnection, remotePeerConnectionInstance: remotePeerConnection, socket: null }))
+    
+        }
+
+    },[userSocket.tearDown])
+
+
+
+    return <div className="w-full h-full relative">
+        {
+      isNewCall &&  <NewCallUIPage  userCallingDetails={userCallingDetails!!} newCall={isNewCall} onDecline={()=>{
+        
+        setNewCall(false)
+     }} onAnswer={async()=>{
+       console.log('answered.')
+        
+       setNewCall(false)
+       
+     }}/>
+     }
+    
         <Outlet />
     </div>
 

@@ -7,7 +7,7 @@ import videoButton from '../../../../assets/icons/cosmic-video-call-button.svg'
 import muteMic from '../../../../assets/icons/cosmic-mute-mic.svg'
 import messageIcon from '../../../../assets/icons/cosmic-video-chat-icon.svg'
 
-import { MutableRefObject,  useEffect,  useMemo,  useRef, useState } from "react"
+import { MutableRefObject,  useEffect,   useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../../../store/initStore"
 import UserRTC from "../../hook/UserRTC"
@@ -134,18 +134,14 @@ const VirtualConsultBody = ()=>{
        
            console.log(socketCon?.remoteStream?.getTracks().length)
            if(remoteVideoSteam.current && socketCon.remoteStream){
-           
+            startTimer() 
                
                remoteVideoSteam.current.srcObject = socketCon.remoteStream!!
            }
          
        },[socketCon.remoteStream])
 
-      useMemo(()=>{
-          if(socketCon.remoteConnected){
-            startTimer()   
-          }
-      },[socketCon.remoteConnected])
+     
 
   
   
@@ -177,7 +173,7 @@ const VirtualConsultBody = ()=>{
                     <div className={`w-full ${(mode.video) && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
                     <p>Dr   {data.doctorName}</p>
                     <p>{data.department}</p>
-                    <p className="font-light italic text-sm">{socketCon.remoteConnected?<span className="text-green-600">answered</span>:'calling'}</p>
+                    <p className="font-light italic text-sm">{socketCon.remoteStream?<span className="text-green-600">answered</span>:'calling'}</p>
                     </div>
                  </div>
 

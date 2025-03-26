@@ -7,7 +7,7 @@ import messageIcon from '../../../../../assets/icons/cosmic-video-chat-icon.svg'
 import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
 //import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
-import  { MutableRefObject, useEffect, useMemo, useRef, useState } from "react"
+import  { MutableRefObject, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector} from 'react-redux'
 import { RootReducer } from '../../../../store/initStore'
 import useGetMediaStream from '../../../hook/useGetMediaStream'
@@ -25,6 +25,8 @@ const VoiceCallPage = () => {
       const userSocketCon =  useSelector((state:RootReducer)=>state.socket)
 
       const {cancelMediaStream,toggleVideo,toggleMic,switchToAudio} = useGetMediaStream()
+
+      const [modeOfCall,] = useState<'video'| 'audio'>(userSocketCon.callMode!!)
 
 
       const navigate = useNavigate()
@@ -64,6 +66,7 @@ const VoiceCallPage = () => {
         if(remoteVideoSteam.current && userSocketCon.remoteStream){
             
             remoteVideoSteam.current.srcObject = userSocketCon.remoteStream!!
+            startTimer()
         }
       
     },[userSocketCon.remoteStream])
@@ -78,11 +81,7 @@ const VoiceCallPage = () => {
 
     },[userSocketCon.localStream])
 
-    useMemo(()=>{
-       if(userSocketCon.remoteConnected){
-        startTimer()
-       }
-    },[userSocketCon.remoteConnected])
+   
     
    
    
@@ -90,7 +89,84 @@ const VoiceCallPage = () => {
     return  <div className={`w-full grid grid-cols-5 h-full  bg-cosmic-bg-chat-background`}>
 
 
-             <div className=" h-full w-full md:col-span-3  col-span-5 " >
+<div className={`${modeOfCall === 'video' ?'block':'hidden'} h-full w-full md:col-span-3  col-span-5  relative`} >
+     
+     <div className="w-full h-full  grid grid-rows-5 relative">
+
+        <div className='w-full h-[100vh] bg-black relative'>
+        <div className=" h-[100px] w-full  flex justify-center place-items-center text-white font-bold absolute">
+             {userSocketCon.remoteCallerDetails?.name?? 'User'}
+         </div>
+            <video  ref={remoteVideoSteam} autoPlay muted  className='  h-[100vh] w-full object-cover'/>
+
+            <div className='w-[150px] md:w-[200px] h-[200px]  md:h-[250px] absolute bg-black top-[40%]  md:top-[35%] right-6 rounded-lg'>
+            <video ref={localVideoStream}  autoPlay muted  className='  h-full w-full object-cover rounded-lg'/>
+
+            </div>
+
+            <div className="row-span-2 flex justify-center place-items-center h-full">
+
+<div className="w-full absolute top-[70%] flex flex-col place-items-center justify-center p-1 gap-6 mt-2">
+
+    <p className="bg-cosmic-light-color-call w-fit text-white font-light p-1 rounded-md">{counter}</p>
+
+    <div className="bg-cosmic-light-color-call  flex p-2 gap-5">
+
+        <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
+            switchToAudio()
+        }}>
+            <img className="w-full h-full" src={callButton} />
+        </div>
+
+        <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
+            toggleVideo()
+        }}>
+            <img src={videoButton} />
+        </div>
+
+        <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
+            cancelMediaStream().then(()=>{
+               dispatch(tearDownConnection())
+               stopAndClearTimer()
+               navigate(-1)
+            })
+            
+
+        }}>
+            <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>
+        </div>
+
+
+
+        <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
+            await toggleMic()
+        }}>
+
+            <img className="w-full h-full" src={muteMic} />
+        </div>
+
+
+        <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center">
+
+            <img className="w-full h-full" src={messageIcon} />
+        </div>
+
+    </div>
+</div>
+</div>
+
+        
+
+        </div>
+
+     
+     </div>
+
+ </div>
+
+
+
+             <div className={`${modeOfCall === 'audio' ?'block':'hidden'} h-full w-full md:col-span-3  col-span-5 `} >
      
                  <div className="w-full h-full  grid grid-rows-5">
      
@@ -98,7 +174,7 @@ const VoiceCallPage = () => {
                          {userSocketCon.remoteCallerDetails?.name?? 'User'}
                      </div>
                      <div className="row-span-2 h-full flex justify-center place-items-center">
-                         <img src={userSocketCon.remoteCallerDetails?.profilePicture?? '/'} className='h-[200px] w-[200px] rounded-full' />
+                         <img src={userSocketCon.remoteCallerDetails?.profilePicture?? '/'} className={'h-[200px] w-[200px] rounded-full bg-black'} />
                         <div>
 
                        {
@@ -168,21 +244,22 @@ const VoiceCallPage = () => {
      
      
              <div className="h-full w-full hidden md:block col-span-2  bg-cosmic-bg-chat-background border-l border-l-white" >
-                 <div className='grid grid-cols-2 bg-white p-1 gap-2 '>
-                     <div>
+                 <div className='grid grid-cols-2 bg-white p-1 gap-2  '>
+                     <div className='p-3'>
                          <p className='col-span-1 text-center w-full text-cosmic-primary-color'>Chat</p>
-                         <p className='w-full h-[2px] bg-cosmic-primary-color'></p>
+                         <p className='w-full h-[2px] bg-cosmic-primary-color mt-2 rounded-md'></p>
                      </div>
      
-                     <div>
+                     <div className='p-3'>
                          <p className='col-span-1 text-center w-full text-cosmic-primary-color'>Report</p>
-                         <p className='w-full h-[2px] bg-cosmic-primary-color'></p>
+                         <p className='w-full h-[2px] bg-cosmic-primary-color mt-2 rounded-md'></p>
                      </div>
+                    
      
                  </div>
      
      
-                 <div className='h-[50px] bg-white'>
+                 <div className=' bg-white'>
                      <div className=" h-full flex justify-evenly place-items-center">
                          <img src={docImage} className='h-[40px] w-[40px] rounded-full' />
                          <p>Jennifer Williams</p>
@@ -200,7 +277,7 @@ const VoiceCallPage = () => {
      
      
      
-                     <div className=" absolute bg-white w-full h-[30%] bottom-0 ">
+                     <div className=" absolute bg-white w-full h-[33%] bottom-0 ">
      
                          <div className="grid grid-cols-3  ">
                              <div className="flex place-items-center  gap-3 col-span-2

@@ -22,7 +22,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     
     } | null,
     startPlayingRingTone?:boolean,
-    remoteConnected?:boolean
+    remoteConnected?:boolean,
+    callMode?: 'audio' | 'video' | null,
+    tearDown?:boolean
    
  }
 
@@ -42,7 +44,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
   remotePeerConnectionInstance:null,
   remoteCallerDetails: null,
    startPlayingRingTone:false,
-   remoteConnected:false
+   remoteConnected:false,
+   callMode:null,
+   tearDown:false
  }
 
 
@@ -91,44 +95,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
         },
 
         tearDownConnection  (state){
-
-          const rtcConfig = {
-            iceServers: [
-               /* {
-                    urls: ['stun:stun1.l.google.com:19302', 'stun:stun3.l.google.com:19302']
-                },*/
-                {
-                  urls: "stun:stun.relay.metered.ca:80",
-                },
-                {
-                  urls: "turn:global.relay.metered.ca:80",
-                  username: "053ea0981f6caa6c8eba5e29",
-                  credential: "5ksdYtPQ2aO2jjDk",
-                },
-                {
-                  urls: "turn:global.relay.metered.ca:80?transport=tcp",
-                  username: "053ea0981f6caa6c8eba5e29",
-                  credential: "5ksdYtPQ2aO2jjDk",
-                },
-                {
-                  urls: "turn:global.relay.metered.ca:443",
-                  username: "053ea0981f6caa6c8eba5e29",
-                  credential: "5ksdYtPQ2aO2jjDk",
-                },
-                {
-                  urls: "turns:global.relay.metered.ca:443?transport=tcp",
-                  username: "053ea0981f6caa6c8eba5e29",
-                  credential: "5ksdYtPQ2aO2jjDk",
-                }
-    
-            ]
-        }
-          state.localPeerConnectionInstance =  new RTCPeerConnection({
-            iceServers: rtcConfig.iceServers
-        })
-          state.remotePeerConnectionInstance = new RTCPeerConnection({
-            iceServers: rtcConfig.iceServers
-        })
+          state.tearDown = true
           state.remoteUserId = ''
           state.remoteCallerDetails = null
           state.localStream = null
@@ -137,6 +104,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
           state.answerCreated = false
           state.offerReceived = false
           state.remoteConnected = false
+          state.callMode =  null
         },
 
         updateRingTone (state,action:PayloadAction<UserSocketProps>){
@@ -147,13 +115,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
           state.remoteConnected = action.payload.remoteConnected?? state.remoteConnected
         },
 
+        updateCallMode(state,action:PayloadAction<UserSocketProps>){
+          state.callMode = action.payload.callMode?? state.callMode
+        },
+
 
 
     }
 
  })
 
- export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection} =userSocketSlice.actions
+ export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode} =userSocketSlice.actions
 
 
  export default userSocketSlice.reducer
