@@ -59,10 +59,10 @@ const MainRouterPage = () => {
 
     const rtcConfig = {
         iceServers: [
-            /*{
-                //urls: ['stun:stun1.l.google.com:19302', 'stun:stun3.l.google.com:19302']
-            },*/
             {
+                urls: ['stun:stun1.l.google.com:19302', 'stun:stun3.l.google.com:19302']
+            },
+           /* {
                 urls: "stun:stun.relay.metered.ca:80",
             },
             {
@@ -84,7 +84,7 @@ const MainRouterPage = () => {
                 urls: "turns:global.relay.metered.ca:443?transport=tcp",
                 username: "053ea0981f6caa6c8eba5e29",
                 credential: "5ksdYtPQ2aO2jjDk",
-            }
+            }*/
 
         ]
     }
@@ -415,6 +415,9 @@ const MainRouterPage = () => {
                        store.dispatch(updateRemoteConnection({remoteConnected:true,socket:null}))
                     }) 
                 }
+
+
+               
 
 
 

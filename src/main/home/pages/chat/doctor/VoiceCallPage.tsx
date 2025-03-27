@@ -79,7 +79,15 @@ const VoiceCallPage = () => {
       
       }
 
+      if(userSocketCon.connected && userSocketCon.socket){
+        userSocketCon.socket.on('request_to_switch_call_mode',()=>{
+           
+        }) 
+    }
+
     },[userSocketCon.localStream])
+
+    
 
    
     
@@ -173,10 +181,20 @@ const VoiceCallPage = () => {
                      <div className="row-span-1 h-full flex justify-center place-items-center text-white font-bold">
                          {userSocketCon.remoteCallerDetails?.name?? 'User'}
                      </div>
-                     <div className="row-span-2 h-full flex justify-center place-items-center">
-                         <img src={userSocketCon.remoteCallerDetails?.profilePicture?? '/'} className={'h-[200px] w-[200px] rounded-full bg-black'} />
-                        <div>
+                     <div className="row-span-2 h-full flex flex-col gap-8 justify-center place-items-center">
+                         <img src={userSocketCon.remoteCallerDetails?.profilePicture?? '/'} className={'h-[150px] w-[150px] rounded-full bg-black'} />
 
+                         <div className='w-full flex justify-center gap-2 flex-col place-items-center'>
+   <p className='text-white'>John is requesting to switch to video </p>
+   <div className=' flex gap-6'>
+   <span className='bg-green-600 p-2 rounded-md'>accept</span> 
+   <span className='bg-red-600 p-2 rounded-md'>reject</span>
+   </div>
+   </div>
+                    
+                        
+                        <div>
+                      
                        {
                         /**
                          * <video  ref={localVideoStream} autoPlay  muted className='bg-black' />
@@ -186,10 +204,11 @@ const VoiceCallPage = () => {
 
                             </div>
                      </div>
-                     <div className="row-span-2 flex justify-center place-items-center h-full">
-     
+                     <div className="row-span-2 flex flex-col justify-center place-items-center h-full">
+                    
                          <div className="w-full flex flex-col place-items-center justify-center p-1 gap-2 mt-2">
-                             <p className="bg-cosmic-light-color-call w-fit text-white font-light p-1 rounded-md">{counter}</p>
+
+                                 <p className="bg-cosmic-light-color-call w-fit text-white font-light p-1 rounded-md">{counter}</p>
      
                              <div className="bg-cosmic-light-color-call  flex p-2 gap-2">
      
