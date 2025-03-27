@@ -78,6 +78,9 @@ import DepartmentsPage from './main/onboarding/pages/DepartmentsPage.tsx'
 import DepartmentOverview from './main/onboarding/pages/DepartmentOverview.tsx'
 import CartPage from './main/shopScreens/pages/cartPage.tsx'
 import CheckOutPage from './main/shopScreens/pages/checkOutPage.tsx'
+import CardPayment from './main/shopScreens/pages/cardPayment.tsx'
+import AddCard from './main/shopScreens/pages/addCard.tsx'
+import VerifyPayment from './main/shopScreens/pages/verifyPayment.tsx'
 
 
 
@@ -91,6 +94,10 @@ const router = createBrowserRouter([
           path:'',
          element:<LandingPage/>,
        },
+       {
+        path:'/verify-payment',
+        element:<VerifyPayment/>
+        },
      {
        path:'patient',
        element:<HomeMainPage/>,
@@ -184,9 +191,18 @@ const router = createBrowserRouter([
            element:<CartPage/>
            },
           {
+           path:'/patient/shop/card-payment',
+           element:<CardPayment/>
+           },
+          {
+           path:'/patient/shop/add-card',
+           element:<AddCard/>
+           },
+          {
            path:'/patient/shop/checkout',
            element:<CheckOutPage/>
            },
+          
          {
            path:'/patient',
            element:<MainChatPage/>,
