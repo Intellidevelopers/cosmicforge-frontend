@@ -97,7 +97,7 @@ const VoiceCallPage = () => {
         <div className=" h-[100px] w-full  flex justify-center place-items-center text-white font-bold absolute">
              {userSocketCon.remoteCallerDetails?.name?? 'User'}
          </div>
-            <video  ref={remoteVideoSteam} autoPlay muted  className='  h-[100vh] w-full object-cover'/>
+            <video  ref={remoteVideoSteam} autoPlay   className='  h-[100vh] w-full object-cover'/>
 
             <div className='w-[150px] md:w-[200px] h-[200px]  md:h-[250px] absolute bg-black top-[40%]  md:top-[35%] right-6 rounded-lg'>
             <video ref={localVideoStream}  autoPlay muted  className='  h-full w-full object-cover rounded-lg'/>
