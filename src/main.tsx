@@ -75,6 +75,7 @@ import DepartmentsPage from './main/onboarding/pages/DepartmentsPage.tsx'
 import DepartmentOverview from './main/onboarding/pages/DepartmentOverview.tsx'
 import VoiceAndVideoContainerPage from './main/home/pages/chat/doctor/VoiceAndVideoContainerPage.tsx'
 import VoiceCallPage from './main/home/pages/chat/doctor/VoiceCallPage.tsx'
+/*
 import CardPayment from './main/shopScreens/pages/cardPayment.tsx'
 import AddCard from './main/shopScreens/pages/addCard.tsx'
 import VerifyPayment from './main/shopScreens/pages/verifyPayment.tsx'
@@ -83,144 +84,10 @@ import CheckOutPage from './main/shopScreens/pages/checkOutPage.tsx'
 import Shop from './main/shopScreens/pages/shop.tsx'
 import CategoryPage from './main/shopScreens/pages/categoryPage.tsx'
 import DetailsPage from './main/shopScreens/pages/detailsPage.tsx'
-
+*/
 
 const router = createBrowserRouter([
-    {
-      path:'/',
-      element:<MainRouterPage/>,
-     children:[
-        {
-          path:'',
-         element:<LandingPage/>,
-       },
-       {
-        path:'/verify-payment',
-        element:<VerifyPayment/>
-        },
-     {
-       path:'patient',
-       element:<HomeMainPage/>,
-       children:[
-         {
-           path:'home',
-           element:<HomePage/>
-         },
-
-         {
-           path:'/patient/',
-           element:<FindASpecialist/>,
-           children:[
-             {
-               path:'find-a-specialist',
-               element:<FindASpecialistCardPage/>
-             },
-             {
-               path:'find-a-specialist/view',
-               element:<FindSpecialistViewPage/>
-             },
-             {
-               path:'find-a-specialist/consult',
-               element:<VirtualConsultPage/>
-             },
-     
-            
-           ]
-         },
-         {
-           path:'favorites',
-           element:<Favorites/>
-         },
-     
-     
-     
-     
-         
-         {
-           path:'/patient/first-aid',
-           element:<FirstAid1/>,
-         },
-         {
-           path:'/patient/first-aid/find-an-ambulance',
-           element:<FindAnAmbulance/>,
-         },
-         {
-           path:'/patient/first-aid/ambulance-en-route',
-           element:<AmbulanceEnRoute/>,
-         },
-         {
-           path:'/patient/first-aid/hospital-availability',
-           element:<HospitalAvailability/>,
-         },
-         {
-           path:'/patient/first-aid/sos',
-           element:<SosPage/>
-         },
-         {
-           path:'/patient/first-aid/:case',
-           element:<SelectCase/>,
-           // children:[
-           // ]
-         },
-         {
-           path:'/patient/first-aid/:case/:person',
-           element:<FirstAidSteps/>
-         },
-         {
-          path:'/patient/chatbot',
-          element:<Chatbot/>
-          },
-          {
-            path:'/patient/run-diagnosis',
-            element:<AiChatbot/>
-          },
-          {
-           path:'/patient/shop',
-           element:<Shop/>
-           },
-          {
-           path:'/patient/shop/:category',
-           element:<CategoryPage/>
-           },
-          {
-           path:'/patient/shop/products/:product',
-           element:<DetailsPage/>
-           },
-          {
-           path:'/patient/shop/cart',
-           element:<CartPage/>
-           },
-          {
-           path:'/patient/shop/card-payment',
-           element:<CardPayment/>
-           },
-          {
-           path:'/patient/shop/add-card',
-           element:<AddCard/>
-           },
-          {
-           path:'/patient/shop/checkout',
-           element:<CheckOutPage/>
-           },
-          
-         {
-           path:'/patient',
-           element:<MainChatPage/>,
-           children:[
-             {
-               path:'messages',
-               element:<UserMessagesPage/>,
-              
-             },
-             {
-               path:'messages/chat',
-               element:<ChatPage/>
-             }
-           ]
-           
-         }
-       
-       ]},
+   
   {
     path: '/',
     element: <MainRouterPage />,
