@@ -6,10 +6,21 @@ import docImage from '../../../../../assets/images/doctor-image.jpeg'
 import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
 import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
+import { useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { RootReducer } from "../../../../store/initStore"
+import { updateCallMode } from "../../../../store/reducers/userSocketReducer"
 
 const DoctorMainChatPage = () => {
 
-    return <div className="w-full font-poppins">
+
+    const navigate = useNavigate()
+
+    const userSocket = useSelector((state:RootReducer)=>state.socket)
+
+    const dispatch = useDispatch()
+
+    return <div className="w-full h-[100vh] overflow-hidden font-poppins">
         <DoctorHomeNavBar title="Messages" />
         <DoctorNavBarHome title="Messages" />
 
@@ -38,9 +49,21 @@ const DoctorMainChatPage = () => {
                             <img src={docImage} alt="profile-icon" className="w-[40px] h-[40px] rounded-full" />
                             <p>Jenifer Williams</p>
                         </div>
-                        <div className="w-full flex justify-end pe-6 gap-3">
-                            <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} />
-                            <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} />
+                        <div className="w-full flex justify-end  gap-3">
+                            <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
+                                
+                                if(userSocket.connected){
+                                   dispatch(updateCallMode({callMode:'audio',socket:null}))
+                                   navigate("/doctor/appointment/voice-call")
+                                }
+                                
+                            }} />
+                            <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} onClick={()=>{
+                                  if(userSocket.connected){
+                                    dispatch(updateCallMode({callMode:'video',socket:null}))
+                                    navigate("/doctor/appointment/voice-call")
+                                 }
+                            }} />
                             <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />
                         </div>
 
@@ -50,7 +73,7 @@ const DoctorMainChatPage = () => {
                     kkdk
                 </div>
 
-                <div className="bg-white w-full h-[60px]">
+                <div className="bg-white w-full h-[90px]">
 
                     <div className="grid grid-cols-3 ">
                         <div className="flex place-items-center j gap-3 col-span-2

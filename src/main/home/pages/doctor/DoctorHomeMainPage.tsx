@@ -1,8 +1,9 @@
 
-import { /*Navigate,*/ Outlet } from "react-router-dom"
+import { /*Navigate,*/ Outlet,} from "react-router-dom"
 
 import DoctorHomeSideBar from "../../component/doctor/DoctorHomeSideBar.ls"
 import DoctorHomeSideBarMobile from "../../component/doctor/DoctorHomeSideBarMobile"
+
 //import { useSelector } from "react-redux"
 //import { RootReducer } from "../../../store/initStore"
 
@@ -26,9 +27,18 @@ const DoctorHomeMainPage = () => {
       return  <Navigate to={'/account'}/>
     }*/
 
+     
+ 
+      
+      
+    
+
 
   return (
     <div className="font-poppins  flex relative w-full h-dvh bg-[#F5F5F5] overflow-hidden">
+    
+
+
       <div className=" hidden md:flex w-[25%]">
         <DoctorHomeSideBar />
 

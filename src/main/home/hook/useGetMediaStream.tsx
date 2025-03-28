@@ -1,16 +1,22 @@
-import { MutableRefObject, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
+import { store } from "../../store/initStore"
+import { updateUserLocalStream } from "../../store/reducers/userSocketReducer"
 
 interface ModeProps {
     video:boolean,
     audio:boolean
 }
 
-const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElement | null>, localAudioStreamRef: MutableRefObject<HTMLAudioElement | null>) => {
+const useGetMediaStream = () => {
 
      //const navigate = useNavigate()
     // const {state} = useLocation()
    
-    const [mediaStream, setMediaStream] = useState<MediaStream | null>()
+    const [mediaStream, setMediaStream] = useState<MediaStream | null>( 
+        ()=>{
+            return  store.getState().socket.localStream!!
+        }
+    )
 
     const [mode,setMode] = useState<ModeProps>(()=>{
         return {
@@ -30,13 +36,8 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
             }) 
 
             setMediaStream(null)
-            if (localVideoStreamRef.current) {
-                localVideoStreamRef.current.srcObject = null
-            }
-            if(localAudioStreamRef.current){
-                localAudioStreamRef.current.srcObject = null
-            }
-
+           
+            store.dispatch(updateUserLocalStream({localStream:null,socket:null}))
    
 
             
@@ -52,8 +53,10 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
 
     const startStream = () => {
 
-        if (localVideoStreamRef.current && mediaStream) {
-            localVideoStreamRef.current.srcObject = mediaStream
+        if ( mediaStream) {
+            
+            store.dispatch(updateUserLocalStream({localStream:mediaStream,socket:null}))
+            
         }
     }
 
@@ -61,6 +64,7 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
     useEffect(() => {
         (async () => {
             try {
+               if(!mediaStream){
 
                 const localVideoStream = await navigator.mediaDevices.getUserMedia({
                     audio: true,
@@ -68,11 +72,13 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
 
 
                 })
+                
                 setMediaStream(localVideoStream)
+                store.dispatch(updateUserLocalStream({localStream:localVideoStream,socket:null}))
+              
 
-                if (localVideoStreamRef.current) {
-                    localVideoStreamRef.current.srcObject = localVideoStream
-                }
+               }
+                
 
 
 
@@ -85,6 +91,7 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
 
     }, [])
 
+    
     const toggleMic = async () => {
         if (mediaStream) {
 
@@ -94,18 +101,17 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
 
                 audioTrack.enabled = !audioTrack.enabled
                 if (audioTrack.enabled) {
-                    if (localAudioStreamRef.current) {
 
-                        localAudioStreamRef.current.srcObject = mediaStream
-                       
 
-                    }
+                store.dispatch(updateUserLocalStream({localStream:mediaStream,socket:null}))
+                   
                 } else {
-                    if (localAudioStreamRef.current) {
+                    
                         const cloneStream = mediaStream.clone()
                         cloneStream.getAudioTracks()[0].enabled = false
-                        localAudioStreamRef.current.srcObject = cloneStream
-                    }
+                        
+                        store.dispatch(updateUserLocalStream({localStream:cloneStream,socket:null}))
+                    
                 }
               }
 
@@ -118,22 +124,16 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
                         audioTrack.enabled = !audioTrack.enabled
                         if (audioTrack.enabled) {
                            
-
-
-
-                            if (localVideoStreamRef.current) {
-        
-                                localVideoStreamRef.current.srcObject = mediaStream
-        
-                            }
+                            store.dispatch(updateUserLocalStream({localStream:mediaStream,socket:null}))
 
                         } else {
                          
-                            if (localVideoStreamRef.current) {
+                      
                                 const cloneStream = mediaStream.clone()
                                 cloneStream.getAudioTracks()[0].enabled = false
-                                localVideoStreamRef.current.srcObject = cloneStream
-                            }
+
+                                store.dispatch(updateUserLocalStream({localStream:cloneStream,socket:null}))
+                            
                         }
 
                     }
@@ -157,66 +157,73 @@ const useGetMediaStream = (localVideoStreamRef: MutableRefObject<HTMLVideoElemen
             videoTrack.enabled = !videoTrack.enabled
 
             if (videoTrack.enabled) {
-                if (localVideoStreamRef.current) {
+                
+                store.dispatch(updateUserLocalStream({localStream:mediaStream,socket:null}))
+                     
 
-                    localVideoStreamRef.current.srcObject = mediaStream
+                   
                     setMode({
                         video:false,
                         audio:true
                     })
-                }
+              
             } else {
-                if (localAudioStreamRef.current) {
+               
                     const cloneStream = mediaStream.clone()
                     cloneStream.getVideoTracks()[0].enabled = false
                     setMode({
                         video:false,
                         audio:true
                     })
-                    localAudioStreamRef.current.srcObject = cloneStream
+                    store.dispatch(updateUserLocalStream({localStream:cloneStream,socket:null}))
+                     
 
                 }
             }
         }
 
-    }
-
-    const toggleVideo = async () => {
-        if (mediaStream) {
-            const videoTrack = mediaStream?.getVideoTracks()[0]
-            
-            videoTrack.enabled = true
-            if (localVideoStreamRef.current) {
-                    
-                setMode({
-                    video:true,
-                    audio:false
-                })
-                localVideoStreamRef.current.srcObject = mediaStream
+    
+        const toggleVideo = async () => {
+            if (mediaStream) {
+                const videoTrack = mediaStream?.getVideoTracks()[0]
+                
+                videoTrack.enabled = true
+               
+                        
+                    setMode({
+                        video:true,
+                        audio:false
+                    })
+                    store.dispatch(updateUserLocalStream({localStream:mediaStream,socket:null}))
+                         
+                }
+             /*   if (videoTrack.enabled) {
+                    if (localVideoStreamRef.current) {
+                        
+                        setMode({
+                            video:true,
+                            audio:false
+                        })
+                        localVideoStreamRef.current.srcObject = mediaStream
+                    }
+                } else {
+                    if (localVideoStreamRef.current) {
+                        const cloneStream = mediaStream.clone()
+                        cloneStream.getVideoTracks()[0].enabled = false
+                        setMode({
+                            video:true,
+                            audio:false
+                        })
+                        localVideoStreamRef.current.srcObject = cloneStream
+                    }
+                }*/
             }
-         /*   if (videoTrack.enabled) {
-                if (localVideoStreamRef.current) {
-                    
-                    setMode({
-                        video:true,
-                        audio:false
-                    })
-                    localVideoStreamRef.current.srcObject = mediaStream
-                }
-            } else {
-                if (localVideoStreamRef.current) {
-                    const cloneStream = mediaStream.clone()
-                    cloneStream.getVideoTracks()[0].enabled = false
-                    setMode({
-                        video:true,
-                        audio:false
-                    })
-                    localVideoStreamRef.current.srcObject = cloneStream
-                }
-            }*/
-        }
 
-    }
+    
+
+
+
+    
 
 
     return { mediaStream, cancelMediaStream, toggleMic, toggleVideo, startStream, switchToAudio,mode }

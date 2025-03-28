@@ -12,6 +12,7 @@ export interface CustomCardSpecialistViewCardProps {
        userId:{
         fullName?: string,
         lastName?:string,
+        _id?:string
        },
         professionalTitle?: string,
         specialization?: string,
@@ -41,12 +42,12 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
     const {state} = useLocation()
     return (
 
-        <div className="bg-white w-full h-fit flex  relative  ">
+        <div className="bg-white w-full  h-[150px] flex  relative  ">
 
             <div className=" w-[200px] h-[150px]  relative border border-cosmic-color-border-color rounded-md">
 
                 <p className="bg-cosmic-primary-color absolute text-white  rounded-br-md font-light p-1 ">Top</p>
-                <img className="bg-green-500 object-cover h-full w-full" src={details.profilePicture} />
+                <img className="bg-green-500 object-cover h-full w-full " src={details.profilePicture} />
             </div>
 
             <div className="w-full flex flex-col gap-4 md:ms-4 relative">
@@ -66,7 +67,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
 
 
 
-                <div className=" relative md:absolute bottom-5 right-5 inline-flex  justify-end mt-2    flex-row gap-3">
+                <div className=" relative md:absolute bottom-5 right-5 inline-flex  justify-end md:mt-2    flex-row gap-3">
 
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
                         navigate('/patient/find-a-specialist/consult', {
@@ -77,7 +78,8 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                                 clinic:details.currentClinic,
                                 address: details.workAddress,
                                 title:state.title,
-                                department:details.department
+                                department:details.department,
+                                docId:details.userId._id
                             }
                         })
                     }}>

@@ -31,7 +31,7 @@ import { useNavigate } from 'react-router-dom';
   }*///
 
     return (
-        <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0 z-[100] ">
+        <div className="  md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0 z-[100] ">
        
         <div className="md:w-[85%]  w-full flex   flex-wrap relative   ">
 

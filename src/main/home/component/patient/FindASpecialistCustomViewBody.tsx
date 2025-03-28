@@ -94,8 +94,8 @@ const FindASpecalistCustomViewBody = () => {
 
 
 
-                <div className="w-full flex justify-evenly gap-3  text-cosmic-primary-color mt-5">
-                    <p className={`${(activState.all) && 'bg-cosmic-primary-color text-white '}  md:w-[16%] w-[30%] p-2 flex justify-center place-items-center  text-center  rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
+                <div className="w-full flex justify-evenly gap-3  text-cosmic-primary-color mt-5 p-2">
+                    <p className={`${(activState.all) && 'bg-cosmic-primary-color text-white '}  md:w-[40%] w-[50%] p-2 flex justify-center place-items-center  text-center  rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
                         setActiveState({
                             ...activState,
                             all: true,
@@ -110,7 +110,7 @@ const FindASpecalistCustomViewBody = () => {
 
 
                     }}>All</p>
-                    <p className={`${(activState.topRatings) && 'bg-cosmic-primary-color text-white '}  p-2  md:w-[16%] w-[30%] flex flex:1 justify-center place-items-center   rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
+                    <p className={`${(activState.topRatings) && 'bg-cosmic-primary-color text-white '}  p-2  md:w-[40%] w-[50%] flex flex:1 justify-center place-items-center   rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
 
                         setActiveState({
                             ...activState,
@@ -152,7 +152,7 @@ const FindASpecalistCustomViewBody = () => {
                 <div className={`${(!loading && doctorDetails.length===0) ? 'flex' : 'hidden'}  w-full h-dvh  justify-center mt-[20%]`}>
                     <p>No specialist available now</p>
                 </div>
-                <div className={`${(!loading) ? 'flex' : 'hidden'} w-full h-[45%] md:h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
+                <div className={`${(!loading) ? 'flex' : 'hidden'} w-full h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
 
                     {
                      doctorDetails.length>0 &&   doctorDetails.map((item, index) => (

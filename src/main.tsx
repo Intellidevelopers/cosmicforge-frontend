@@ -66,9 +66,6 @@ import ProfileCompletePage from './main/profileSetup/pages/ProfileCompletePage.t
 
 import Chatbot from './main/chatbot/pages/chatbot.tsx'
 import AiChatbot from './main/chatbot/pages/runDiagnosis.tsx'
-import Shop from './main/shopScreens/pages/shop.tsx'
-import CategoryPage from './main/shopScreens/pages/categoryPage.tsx'
-import DetailsPage from './main/shopScreens/pages/detailsPage.tsx'
 import DoctorAppointmentPage from './main/home/pages/doctor/DoctorAppointmentPage.tsx'
 import DoctorTable from './main/home/pages/doctor/DoctorTable.tsx'
 import DoctorCalendar from './main/home/pages/doctor/DoctorCalendar.tsx'
@@ -76,13 +73,16 @@ import DoctorMainChatPage from './main/home/pages/chat/doctor/DoctorMainChatPage
 import DoctorEditProfilePage from './main/profile/doctor/pages/DoctorEditProfilePage.tsx'
 import DepartmentsPage from './main/onboarding/pages/DepartmentsPage.tsx'
 import DepartmentOverview from './main/onboarding/pages/DepartmentOverview.tsx'
-import CartPage from './main/shopScreens/pages/cartPage.tsx'
-import CheckOutPage from './main/shopScreens/pages/checkOutPage.tsx'
+import VoiceAndVideoContainerPage from './main/home/pages/chat/doctor/VoiceAndVideoContainerPage.tsx'
+import VoiceCallPage from './main/home/pages/chat/doctor/VoiceCallPage.tsx'
 import CardPayment from './main/shopScreens/pages/cardPayment.tsx'
 import AddCard from './main/shopScreens/pages/addCard.tsx'
 import VerifyPayment from './main/shopScreens/pages/verifyPayment.tsx'
-
-
+import CartPage from './main/shopScreens/pages/cartPage.tsx'
+import CheckOutPage from './main/shopScreens/pages/checkOutPage.tsx'
+import Shop from './main/shopScreens/pages/shop.tsx'
+import CategoryPage from './main/shopScreens/pages/categoryPage.tsx'
+import DetailsPage from './main/shopScreens/pages/detailsPage.tsx'
 
 
 const router = createBrowserRouter([
@@ -225,6 +225,8 @@ const router = createBrowserRouter([
     path: '/',
     element: <MainRouterPage />,
     children: [
+
+
       {
         path: '',
         element: <LandingPage />,
@@ -264,13 +266,20 @@ const router = createBrowserRouter([
               {
                 path: 'find-a-specialist/consult',
                 element: <VirtualConsultPage />
-              }
+              },
+
+
             ]
           },
           {
             path: 'favorites',
             element: <Favorites />
           },
+
+
+
+
+
           {
             path: '/patient/first-aid',
             element: <FirstAid1 />,
@@ -317,23 +326,30 @@ const router = createBrowserRouter([
               {
                 path: 'messages',
                 element: <UserMessagesPage />,
+
               },
               {
                 path: 'messages/chat',
                 element: <ChatPage />
               }
             ]
+
           }
-       ]
+
+        ]
       },
       {
         path: '/coming-soon',
         element: <ComingSoonPage />
       },
+
+     
       {
         path: '/profile/complete',
         element: <ProfileCompletePage />,
       },
+
+
       {
         path: '/selectRole',
         element: <RolePage />
@@ -358,6 +374,7 @@ const router = createBrowserRouter([
         path: '/patient/profile/setup',
         element: <ProfileSetup />
       },
+
       {
         path: '/account/signup/enter-personal-info',
         element: <SignUp2 />
@@ -386,6 +403,9 @@ const router = createBrowserRouter([
         path: '/account/login',
         element: <LoginPage />
       },
+
+
+
       {
         path: '/patient/analytics',
         element: <PatientAnalytics />
@@ -394,6 +414,8 @@ const router = createBrowserRouter([
         path: '/patient/analytics-coming-soon',
         element: <ComingSoon />
       },
+
+
       {
         path: '/patient/appointment',
         element: <AppointmentMainPage />,
@@ -412,7 +434,8 @@ const router = createBrowserRouter([
             element: <CheckoutPage />
           }
         ]
-      },
+      }
+      ,
 
       {
         path: '/patient/calendar/appointment-info',
@@ -440,6 +463,7 @@ const router = createBrowserRouter([
             path: 'cancelled',
             element: <CancelledAppointment />
           },
+
         ]
       },
 
@@ -453,33 +477,48 @@ const router = createBrowserRouter([
             path: 'home',
             element: <DoctorHome />
           },
+        
+         
+        ]
+      },
+      {
+        path: '/doctor/appointment',
+        element: <VoiceAndVideoContainerPage />,
+        children:[
           {
-            path: 'appointments/',
-            element: < DoctorAppointmentPage/>,
-            children:[
-              {
-                path:'',
-                element:<DoctorTable/>
-              },
-              {
-                path:'calendar',
-                element:<DoctorCalendar/>
-              }
-            ]
+            path: 'voice-call',
+            element: <VoiceCallPage />
+          },
+        ]
+      },
+
+      {
+        path: '/doctor/appointments/',
+        element: < DoctorAppointmentPage/>,
+        children:[
+          {
+            path:'',
+            element:<DoctorTable/>
           },
           {
-            path: 'messages',
-            element: <DoctorMainChatPage />
-          },
-          {
-            path: 'edit-profile',
-            element: <DoctorEditProfilePage/>
+            path:'calendar',
+            element:<DoctorCalendar/>
           }
         ]
+      },
+      {
+        path: '/doctor/messages',
+        element: <DoctorMainChatPage />
+      },
+     
+      {
+        path: '/doctor/edit-profile',
+        element: <DoctorEditProfilePage/>
       }
     ]
   }
-]}])
+ 
+])
 
 
 

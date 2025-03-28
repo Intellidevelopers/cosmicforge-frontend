@@ -8,6 +8,7 @@ import ChatMessagesBody from '../../component/chat/ChatMessagesBody'
 
 
 
+
 const ChatPage = () => {
 
     return <div className="w-full md:ps-[250px] h-[600px] overflow-y-auto ">
@@ -36,7 +37,10 @@ const ChatPage = () => {
 
             <div className='flex gap-3 w-fit absolute right-2 md:me-3'>
 
-                <img src={callIcon} className='w-[24px] h-[40px]' alt='call' />
+                <img src={callIcon} className='w-[24px] h-[40px] ' alt='call' onClick={()=>{
+                    alert('dhh')
+                   
+                }} />
                 <img className='w-[24px] h-[40px]' src={videoIcon} alt='video' />
 
             </div>
