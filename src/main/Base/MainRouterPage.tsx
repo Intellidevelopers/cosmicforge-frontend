@@ -23,68 +23,76 @@ const MainRouterPage = () => {
 
 
 
-      
-    
-    
 
-    
 
-    const [isNewCall,setNewCall] = useState<boolean>(false)
 
-    const [userCallingDetails,setUserCallingDetails] = useState<{
-     name:string,
-     profilePicture:string
-   }>()
 
-      useEffect(()=>{
-       
-         if(userSocket.connected && userSocket.socket){
-         
-           userSocket.socket.on('incoming-call',(data:{caller:{_id:string}, userCallingDetails:{
-             name:string,
-             profilePicture:string
-           },callMode:'audio'|'video'})=>{
-              
-            
-                dispatch(updateCallMode({callMode:data.callMode,socket:null}))
-                 dispatch(updateRingTone({startPlayingRingTone:true,socket:null}))
-               dispatch(updateUserCallingData({remoteUserId:data.caller._id,socket:null,remoteCallerDetails:data.userCallingDetails}))
-               setUserCallingDetails(data.userCallingDetails)
-               setNewCall(true)
-             //  navigate('/doctor/appointment/voice-call')
-           })
-         }
-      },[userSocket])
+
+
+    const [isNewCall, setNewCall] = useState<boolean>(false)
+
+    const [userCallingDetails, setUserCallingDetails] = useState<{
+        name: string,
+        profilePicture: string
+    }>()
+
+    useEffect(() => {
+
+        if (userSocket.connected && userSocket.socket) {
+
+            userSocket.socket.on('incoming-call', (data: {
+                caller: { _id: string }, userCallingDetails: {
+                    name: string,
+                    profilePicture: string
+                }, callMode: 'audio' | 'video'
+            }) => {
+
+
+                dispatch(updateCallMode({ callMode: data.callMode, socket: null }))
+                dispatch(updateRingTone({ startPlayingRingTone: true, socket: null }))
+                dispatch(updateUserCallingData({ remoteUserId: data.caller._id, socket: null, remoteCallerDetails: data.userCallingDetails }))
+                setUserCallingDetails(data.userCallingDetails)
+                setNewCall(true)
+                //  navigate('/doctor/appointment/voice-call')
+            })
+        }
+    }, [userSocket])
 
 
     const rtcConfig = {
         iceServers: [
-           /* {
-                urls: ['stun:stun1.l.google.com:19302', 'stun:stun3.l.google.com:19302']
-            },*/
-            {
-                urls: "stun:stun.relay.metered.ca:80",
-            },
-            {
-                urls: "turn:global.relay.metered.ca:80",
-                username: "053ea0981f6caa6c8eba5e29",
-                credential: "5ksdYtPQ2aO2jjDk",
-            },
-            {
-                urls: "turn:global.relay.metered.ca:80?transport=tcp",
-                username: "053ea0981f6caa6c8eba5e29",
-                credential: "5ksdYtPQ2aO2jjDk",
-            },
-            {
-                urls: "turn:global.relay.metered.ca:443",
-                username: "053ea0981f6caa6c8eba5e29",
-                credential: "5ksdYtPQ2aO2jjDk",
-            },
-            {
-                urls: "turns:global.relay.metered.ca:443?transport=tcp",
-                username: "053ea0981f6caa6c8eba5e29",
-                credential: "5ksdYtPQ2aO2jjDk",
-            }
+            /* {
+                 urls: ['stun:stun1.l.google.com:19302', 'stun:stun3.l.google.com:19302']
+             },*/
+            /*   {
+                   urls: "stun:stun.relay.metered.ca:80",
+               },
+               {
+                   urls: "turn:global.relay.metered.ca:80",
+                   username: "053ea0981f6caa6c8eba5e29",
+                   credential: "5ksdYtPQ2aO2jjDk",
+               },
+               {
+                   urls: "turn:global.relay.metered.ca:80?transport=tcp",
+                   username: "053ea0981f6caa6c8eba5e29",
+                   credential: "5ksdYtPQ2aO2jjDk",
+               },
+               {
+                   urls: "turn:global.relay.metered.ca:443",
+                   username: "053ea0981f6caa6c8eba5e29",
+                   credential: "5ksdYtPQ2aO2jjDk",
+               },
+               {
+                   urls: "turns:global.relay.metered.ca:443?transport=tcp",
+                   username: "053ea0981f6caa6c8eba5e29",
+                   credential: "5ksdYtPQ2aO2jjDk",
+               }*/
+
+
+            { "url": "stun:global.stun.twilio.com:3478", "urls": "stun:global.stun.twilio.com:3478" },
+                 { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:3478?transport=udp", "urls": "turn:global.turn.twilio.com:3478?transport=udp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" }, 
+                 { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:3478?transport=tcp", "urls": "turn:global.turn.twilio.com:3478?transport=tcp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" }, 
+                { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:443?transport=tcp", "urls": "turn:global.turn.twilio.com:443?transport=tcp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" }
 
         ]
     }
@@ -189,7 +197,7 @@ const MainRouterPage = () => {
 
 
     useEffect(() => {
-        let userSocket =  store.getState().socket
+        let userSocket = store.getState().socket
         let localPeerConnection = userSocket.localPeerConnectionInstance!!
         let remotePeerConnection = userSocket.remotePeerConnectionInstance!!
 
@@ -283,11 +291,11 @@ const MainRouterPage = () => {
 
                     if (localPeerConnection.connectionState === 'connected') {
 
-                        store.getState().socket.socket?.emit('connected',{
-                            remoteId:store.getState().socket.remoteUserId
+                        store.getState().socket.socket?.emit('connected', {
+                            remoteId: store.getState().socket.remoteUserId
                         })
 
-                    } else if(localPeerConnection.connectionState === 'failed') {
+                    } else if (localPeerConnection.connectionState === 'failed') {
                         store.getState().socket.socket?.emit('failed_to_connect', { userId: store.getState().socket.remoteUserId })
 
                     }
@@ -402,22 +410,22 @@ const MainRouterPage = () => {
 
 
 
-                if(userSocket.connected && userSocket.socket){
-                    userSocket.socket.on('on_call_end',()=>{
+                if (userSocket.connected && userSocket.socket) {
+                    userSocket.socket.on('on_call_end', () => {
                         console.log('tearing downn')
                         store.dispatch(tearDownConnection())
                     })
                 }
 
 
-                if(userSocket.connected && userSocket.socket){
-                    userSocket.socket.on('on_connected',()=>{
-                       store.dispatch(updateRemoteConnection({remoteConnected:true,socket:null}))
-                    }) 
+                if (userSocket.connected && userSocket.socket) {
+                    userSocket.socket.on('on_connected', () => {
+                        store.dispatch(updateRemoteConnection({ remoteConnected: true, socket: null }))
+                    })
                 }
 
 
-               
+
 
 
 
@@ -437,34 +445,34 @@ const MainRouterPage = () => {
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
-        if(userSocket.tearDown){
-           
-            
+        if (userSocket.tearDown) {
+
+
 
             console.log('tearin downn')
             dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnection, remotePeerConnectionInstance: remotePeerConnection, socket: null }))
-    
+
         }
 
-    },[userSocket.tearDown])
+    }, [userSocket.tearDown])
 
 
 
     return <div className="w-full h-full relative">
         {
-      isNewCall &&  <NewCallUIPage  userCallingDetails={userCallingDetails!!} newCall={isNewCall} onDecline={()=>{
-        
-        setNewCall(false)
-     }} onAnswer={async()=>{
-       console.log('answered.')
-        
-       setNewCall(false)
-       
-     }}/>
-     }
-    
+            isNewCall && <NewCallUIPage userCallingDetails={userCallingDetails!!} newCall={isNewCall} onDecline={() => {
+
+                setNewCall(false)
+            }} onAnswer={async () => {
+                console.log('answered.')
+
+                setNewCall(false)
+
+            }} />
+        }
+
         <Outlet />
     </div>
 
