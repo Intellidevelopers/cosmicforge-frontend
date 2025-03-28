@@ -235,7 +235,8 @@ const VirtualConsultBody = ()=>{
                            }else{
                             if(socketCon.connected && socketCon.socket){
                               socketCon.socket.emit('request_to_switch_call_mode',{
-                                callMode:'audio'
+                                callMode:'audio',
+                                remoteId:data.docId
                               })
                             }
                            }
@@ -259,7 +260,8 @@ const VirtualConsultBody = ()=>{
                          }else{
                           if(socketCon.connected && socketCon.socket){
                             socketCon.socket.emit('request_to_switch_call_mode',{
-                              callMode:'video'
+                              callMode:'video',
+                              remoteId:data.docId
                             })
                           }
                          }
