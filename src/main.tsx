@@ -83,6 +83,15 @@ import CheckOutPage from './main/shopScreens/pages/checkOutPage.tsx'
 import Shop from './main/shopScreens/pages/shop.tsx'
 import CategoryPage from './main/shopScreens/pages/categoryPage.tsx'
 import DetailsPage from './main/shopScreens/pages/detailsPage.tsx'
+import UploadSuccessful from './main/alerts/pages/uploadSuccessful.tsx'
+import NoLiscenceAlert from './main/alerts/pages/noLiscenceAlert.tsx'
+import NoCertificates from './main/alerts/pages/noCertificates.tsx'
+import WithdrawalSuccessful from './main/alerts/pages/withdrawalSuccessful.tsx'
+import MissedAppointment from './main/alerts/pages/missedAppointment.tsx'
+import RescheduleAppointment from './main/alerts/pages/rescheduleAppointment.tsx'
+import RescheduleDecline from './main/alerts/pages/rescheduleDecline.tsx'
+import AppointmentReminder from './main/alerts/pages/appointmentReminder.tsx'
+import CancelAppointment from './main/alerts/pages/cancelAppointment.tsx'
 
 
 const router = createBrowserRouter([
@@ -97,6 +106,43 @@ const router = createBrowserRouter([
        {
         path:'/verify-payment',
         element:<VerifyPayment/>
+        },
+         //Alerts screens here
+        {
+         path:'/alerts/upload-successful',
+         element:<UploadSuccessful/>
+        },
+        {
+         path:'/alerts/no-liscence',
+         element:<NoLiscenceAlert/>
+        },
+        {
+         path:'/alerts/no-certificate',
+         element:<NoCertificates/>
+        },
+        {
+         path:'/alerts/withdrawal-success',
+         element:<WithdrawalSuccessful/>
+        },
+        {
+         path:'/alerts/missed-appointment',
+         element:<MissedAppointment/>
+        },
+        {
+         path:'/alerts/reschedule-appointment',
+         element:<RescheduleAppointment/>
+        },
+        {
+         path:'/alerts/declined-reschedule',
+         element:<RescheduleDecline/>
+        },
+        {
+         path:'/alerts/appointment-time',
+         element:<AppointmentReminder/>
+        },
+        {
+         path:'/alerts/cancel-appointment',
+         element:<CancelAppointment/>
         },
      {
        path:'patient',
@@ -122,20 +168,13 @@ const router = createBrowserRouter([
              {
                path:'find-a-specialist/consult',
                element:<VirtualConsultPage/>
-             },
-     
-            
+             },           
            ]
          },
          {
            path:'favorites',
            element:<Favorites/>
-         },
-     
-     
-     
-     
-         
+         },        
          {
            path:'/patient/first-aid',
            element:<FirstAid1/>,
@@ -221,6 +260,7 @@ const router = createBrowserRouter([
          }
        
        ]},
+      
   {
     path: '/',
     element: <MainRouterPage />,
@@ -517,7 +557,7 @@ const router = createBrowserRouter([
       }
     ]
   }
- 
+]}
 ])
 
 
