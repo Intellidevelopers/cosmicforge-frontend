@@ -1,4 +1,4 @@
-import profileIconTmp from "../../../../assets/icons/home/cosmic-home-profile-pic-temp.svg";
+
 import tuneIcon from '../../../../assets/icons/home/cosmic-home-tune.svg'
 import searchIcon from '../../../../assets/icons/home/cosmic-home-search-dark.svg'
 import notificationIcon from '../../../../assets/icons/home/cosmic-home-notification.svg'
@@ -29,6 +29,8 @@ import { RootReducer } from "../../../store/initStore";
     return  <Navigate to={'/'} replace/>
   }
 
+
+
     return (
         <div className=" md:hidden md:ms-[294px] w-full h-fit  bg-[#F5F5F5]  ps-3 pt-[25px] pb-4 sticky top-0 z-[100] ">
        
@@ -43,7 +45,7 @@ import { RootReducer } from "../../../store/initStore";
                   openSideBar()
                  }}></i>
                   <div className="flex gap-2 w-full  ">
-                  <img src={profileIconTmp} className="h-[44px]"  />
+                  <img src={user.data?.profile?.profilePicture} className="h-[44px] rounded-full"  />
                    
                    <div className="w-full relative">
 
