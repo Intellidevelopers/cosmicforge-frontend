@@ -9,12 +9,15 @@ import logOutIcon from "../../../../assets/icons/cosmic-logout.svg";
 
 import { useNavigate } from "react-router-dom";
 import useGetDoctorActiveNavbarRoute from "../../hook/doctor/useGetDoctorActiveNavbarRoute";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
+import { authenticateUser } from "../../../store/reducers/userReducers";
 
 const DoctorHomeSideBar = () => {
   const {activeRoutePath,setActiveRoutePath} = useGetDoctorActiveNavbarRoute()
 const navigate = useNavigate()
+
+const dispatch = useDispatch()
 
 const user = useSelector((state:RootReducer)=>state.user)
   
@@ -129,7 +132,11 @@ const user = useSelector((state:RootReducer)=>state.user)
 
             <div className="w-full flex justify-start ms-5 text-cosmic-color-warning-color  hover:underline ">
             <img alt="home" src={logOutIcon} />
-              <p>Log out</p>
+
+              <p onClick={()=>{
+                 dispatch(authenticateUser({ isAunthenticated: false, data: {}, emailValidated: false, keepMeSignedIn: false }))
+                                navigate('/')
+              }}>Log out</p>
             </div>
           </div>
         </div>

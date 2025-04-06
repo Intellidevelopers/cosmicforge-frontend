@@ -26,11 +26,13 @@ const VoiceCallPage = () => {
 
     const { cancelMediaStream, toggleVideo, toggleMic, switchToAudio } = useGetMediaStream()
 
-    const [modeOfCall,setModeOfCall] = useState<'video' | 'audio'>(userSocketCon.callMode!!)
+    const [modeOfCall, setModeOfCall] = useState<'video' | 'audio'>(userSocketCon.callMode!!)
 
-    const [requestingForModeChange, setRequestingForModeChange] = useState<boolean>(true)
+    const [requestingForModeChange, setRequestingForModeChange] = useState<boolean>(false)
 
-    const [tempModeOfCall,setTempModeOfCall] = useState<'video' | 'audio' | null>(null)
+    const [tempModeOfCall, setTempModeOfCall] = useState<'video' | 'audio' | null>(null)
+
+    const [callState, setCallState] = useState<'connecting' | 'connected' | 'failed to connect' | 'call ended' | null>('connecting')
 
 
     const navigate = useNavigate()
@@ -70,7 +72,7 @@ const VoiceCallPage = () => {
         if (remoteVideoSteam.current && userSocketCon.remoteStream) {
 
             remoteVideoSteam.current.srcObject = userSocketCon.remoteStream!!
-            startTimer()
+
         }
 
     }, [userSocketCon.remoteStream])
@@ -88,13 +90,36 @@ const VoiceCallPage = () => {
 
 
         if (userSocketCon.connected && userSocketCon.socket) {
-            userSocketCon.socket.on('request_to_switch_call_mode', (data:{callMode:string}) => {
-              setRequestingForModeChange(true)
-              setTempModeOfCall(data.callMode as 'video' | 'audio' )
+            userSocketCon.socket.on('request_to_switch_call_mode', (data: { callMode: string }) => {
+                setRequestingForModeChange(true)
+                setTempModeOfCall(data.callMode as 'video' | 'audio')
             })
         }
 
+        if (userSocketCon.connected && userSocketCon.socket) {
+            userSocketCon.socket.on('failed_to_connect', () => {
+                setCallState('failed to connect')
+            })
+
+            if (userSocketCon.connected && userSocketCon.socket) {
+                userSocketCon.socket.on('on_call_ended', () => {
+                    setCallState('call ended')
+                    stopAndClearTimer()
+                })
+            }
+        }
+
+
+
     }, [userSocketCon.localStream])
+
+
+    useEffect(() => {
+        if (userSocketCon.remoteConnected) {
+            setCallState('connected')
+            startTimer()
+        }
+    }, [userSocketCon.remoteConnected])
 
 
 
@@ -111,29 +136,53 @@ const VoiceCallPage = () => {
             <div className="w-full h-full  grid grid-rows-5 relative">
 
                 <div className='w-full h-[100vh] bg-black relative'>
-                    <div className=" h-[100px] w-full  flex justify-center place-items-center text-white font-bold absolute">
-                        {userSocketCon.remoteCallerDetails?.name ?? 'User'}
+
+                    <div className=" h-[100px] m-6 w-full  flex flex-col justify-center place-items-center text-white font-bold absolute z-[200]">
+
+
+                        <div className={`${requestingForModeChange ? 'flex' : 'hidden'}  w-full cursor-default  justify-center gap-2 flex-col place-items-center`}>
+
+                            <p className='text-white text-[12px]' onClick={() => {
+
+                            }}>{`${userSocketCon.remoteCallerDetails?.name} is requesting to switch to ${tempModeOfCall}`}  </p>
+
+                            <div className=' flex  gap-6'>
+                                <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={() => {
+
+                                    setRequestingForModeChange(false)
+                                    setTempModeOfCall(null)
+                                    dispatch(updateCallMode({ callMode: tempModeOfCall, socket: null }))
+                                    setModeOfCall(tempModeOfCall!!)
+
+
+
+                                }}>accept</span>
+
+
+                                <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={() => {
+
+                                }}>reject</span>
+                            </div>
+                            <div>
+                                <p className='mt-6'>{userSocketCon.remoteCallerDetails?.name ?? 'User'}</p>
+
+
+
+                                {
+                                    callState === 'failed to connect' ? <span className='italic text-red-600'>{callState}</span> : <span className={`${callState === 'connecting' ? 'text-yellow-500' : 'text-green-600'}`}>{callState}</span>}
+
+
+                            </div>
+                        </div>
                     </div>
+
                     <video ref={remoteVideoSteam} autoPlay className='  h-[100vh] w-full object-cover' />
 
                     <div className='w-[150px] md:w-[200px] h-[200px]  md:h-[250px] absolute bg-black top-[40%]  md:top-[35%] right-6 rounded-lg'>
                         <video ref={localVideoStream} autoPlay muted className='  h-full w-full object-cover rounded-lg' />
 
                     </div>
-                    <div className={`${requestingForModeChange ? 'flex' : 'hidden'}  w-full cursor-default  justify-center gap-2 flex-col place-items-center`}>
-                        <p className='text-white text-[14px]'>{`${userSocketCon.remoteCallerDetails?.name} is requesting to switch to ${tempModeOfCall}`} </p>
-                        <div className=' flex gap-6'>
-                            <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={()=>{
 
-                               dispatch(updateCallMode({callMode:tempModeOfCall,socket:null}))
-                               setModeOfCall(tempModeOfCall!!)
-
-                            }}>accept</span>
-                            <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={()=>{
-
-                            }}>reject</span>
-                        </div>
-                    </div>
 
                     <div className="row-span-2 flex justify-center place-items-center h-full">
 
@@ -157,7 +206,10 @@ const VoiceCallPage = () => {
 
                                 <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
                                     cancelMediaStream().then(() => {
-                                        dispatch(tearDownConnection())
+                                        userSocketCon.socket?.emit('call_ended',{
+                                          remoteId:userSocketCon.remoteUserId  
+                                        })
+                                        dispatch(tearDownConnection({ tearDown: true, socket: null }))
                                         stopAndClearTimer()
                                         navigate(-1)
                                     })
@@ -201,22 +253,27 @@ const VoiceCallPage = () => {
 
             <div className="w-full h-full  grid grid-rows-5">
 
-                <div className="row-span-1 h-full flex justify-center place-items-center text-white font-bold">
+                <div className="row-span-1 h-full flex flex-col  justify-center place-items-center text-white font-bold">
                     {userSocketCon.remoteCallerDetails?.name ?? 'User'}
+                    {
+                        callState === 'failed to connect' ? <span className='italic text-red-600 text-[12px]'>{callState}</span> : <span className={`${callState === 'connecting' ? 'text-yellow-500' : 'text-green-600'} ext-[12px] italic`}>{callState}</span>}
+
                 </div>
                 <div className="row-span-2 h-full flex flex-col gap-8 justify-center place-items-center">
                     <img src={userSocketCon.remoteCallerDetails?.profilePicture ?? '/'} className={'h-[150px] w-[150px] rounded-full bg-black'} />
 
                     <div className={`${requestingForModeChange ? 'flex' : 'hidden'}  w-full cursor-default  justify-center gap-2 flex-col place-items-center`}>
-                        <p className='text-white text-[14px]'>{`${userSocketCon.remoteCallerDetails?.name} is requesting to switch to ${tempModeOfCall}`} </p>
+                        <p className='text-white text-[12px]'>{`${userSocketCon.remoteCallerDetails?.name} is requesting to switch to ${tempModeOfCall}`} </p>
                         <div className=' flex gap-6'>
-                            <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={()=>{
+                            <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={() => {
 
-                               dispatch(updateCallMode({callMode:tempModeOfCall,socket:null}))
-                               setModeOfCall(tempModeOfCall!!)
+                                setRequestingForModeChange(false)
+                                setTempModeOfCall(null)
+                                dispatch(updateCallMode({ callMode: tempModeOfCall, socket: null }))
+                                setModeOfCall(tempModeOfCall!!)
 
                             }}>accept</span>
-                            <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={()=>{
+                            <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={() => {
 
                             }}>reject</span>
                         </div>
@@ -255,8 +312,12 @@ const VoiceCallPage = () => {
                             </div>
 
                             <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
+
                                 cancelMediaStream().then(() => {
-                                    dispatch(tearDownConnection())
+                                    userSocketCon.socket?.emit('call_ended',{
+                                        remoteId:userSocketCon.remoteUserId  
+                                      })
+                                    dispatch(tearDownConnection({ tearDown: true, socket: null }))
                                     stopAndClearTimer()
                                     navigate(-1)
                                 })

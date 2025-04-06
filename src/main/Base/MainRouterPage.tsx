@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { validateUserSession } from "./service"
+import { getUserChats, validateUserSession } from "./service"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
 import io from 'socket.io-client'
-import { connectSocket, tearDownConnection, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream, updateRingTone, updateUserCallingData } from "../store/reducers/userSocketReducer"
+import { connectSocket, tearDownConnection, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream, updateRingTone, updateUserCallingData, updateUserChat } from "../store/reducers/userSocketReducer"
 import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 import UserRTC from "../home/hook/UserRTC"
 import NewCallUIPage from "../home/pages/chat/NewCallUIPage"
@@ -90,26 +90,15 @@ const MainRouterPage = () => {
 
 
             { "url": "stun:global.stun.twilio.com:3478", "urls": "stun:global.stun.twilio.com:3478" },
-                 { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:3478?transport=udp", "urls": "turn:global.turn.twilio.com:3478?transport=udp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" }, 
-                 { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:3478?transport=tcp", "urls": "turn:global.turn.twilio.com:3478?transport=tcp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" }, 
-                { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:443?transport=tcp", "urls": "turn:global.turn.twilio.com:443?transport=tcp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" }
+            { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:3478?transport=udp", "urls": "turn:global.turn.twilio.com:3478?transport=udp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" },
+            { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:3478?transport=tcp", "urls": "turn:global.turn.twilio.com:3478?transport=tcp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" },
+            { "credential": "nKkNB9mCKhGQGCWd8uUJ1kL1Z+ECTzjNxAN7gFQp8Og=", "url": "turn:global.turn.twilio.com:443?transport=tcp", "urls": "turn:global.turn.twilio.com:443?transport=tcp", "username": "53a50d8a428c241a9eb0e79b5461a90e8ed802825e30f84c9b5a86c1a7318ad9" }
 
         ]
     }
 
 
-    const [localPeerConnection,] = useState<RTCPeerConnection>(() => {
-        return new RTCPeerConnection({
-            iceServers: rtcConfig.iceServers
-        })
-    })
 
-
-    const [remotePeerConnection,] = useState<RTCPeerConnection>(() => {
-        return new RTCPeerConnection({
-            iceServers: rtcConfig.iceServers
-        })
-    })
 
     const { createAnswer } = UserRTC()
 
@@ -167,10 +156,37 @@ const MainRouterPage = () => {
                 }
             })
 
-            socket.on('connect', () => {
+            socket.on('connect', async () => {
                 dispatch(connectSocket({ connected: true, socket }))
-                dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnection, remotePeerConnectionInstance: remotePeerConnection, socket: null }))
+                dispatch(updatePeerConnectionInstance({
+                    localPeerConnectionInstance: new RTCPeerConnection({
+                        iceServers: rtcConfig.iceServers
+                    }), remotePeerConnectionInstance: new RTCPeerConnection({
+                        iceServers: rtcConfig.iceServers
+                    }), socket: null
+                }))
+              
+             try {
+
+                const result = await getUserChats(user.data?.token!!)
+    console.log(result)
+                if(result.status === 200){
+                    dispatch(updateUserChat({userChats:result.data,socket:null}))
+                }
+                
+             } catch (error) {
+                
+             }
+
+                
+                
+
+
+
+
             })
+
+
 
             socket.on('all-diagnosis', (data: any) => {
 
@@ -197,12 +213,15 @@ const MainRouterPage = () => {
 
 
     useEffect(() => {
-        let userSocket = store.getState().socket
-        let localPeerConnection = userSocket.localPeerConnectionInstance!!
-        let remotePeerConnection = userSocket.remotePeerConnectionInstance!!
+        console.log('fired')
 
-        if (localPeerConnection && remotePeerConnection) {
+
+        let localPeerConnection = store.getState().socket.localPeerConnectionInstance
+        let remotePeerConnection = store.getState().socket.remotePeerConnectionInstance
+
+        if (localPeerConnection && localPeerConnection?.signalingState !== 'closed' && localPeerConnection.iceConnectionState !== 'closed' && remotePeerConnection && remotePeerConnection?.signalingState !== 'closed' && remotePeerConnection.iceConnectionState !== 'closed') {
             console.log('active')
+
             try {
 
                 localPeerConnection.addEventListener('icecandidate', async (e: RTCPeerConnectionIceEvent) => {
@@ -242,7 +261,11 @@ const MainRouterPage = () => {
 
                         if (remotePeerConnection.localDescription && remotePeerConnection.remoteDescription) {
                             console.log('called')
-                            remotePeerConnection.addIceCandidate(data.user_calling_ice_candidate)
+                            try {
+                                remotePeerConnection.addIceCandidate(data.user_calling_ice_candidate)
+                            } catch (error) {
+
+                            }
                         }
 
 
@@ -261,8 +284,12 @@ const MainRouterPage = () => {
                         user_recieving_call_ice_candidate: RTCIceCandidate
                     }) => {
 
-                        if (localPeerConnection.remoteDescription && localPeerConnection.localDescription) {
-                            localPeerConnection.addIceCandidate(data.user_recieving_call_ice_candidate)
+                        if (localPeerConnection.remoteDescription && localPeerConnection.localDescription && localPeerConnection.signalingState !== 'closed') {
+                            try {
+                                localPeerConnection.addIceCandidate(data.user_recieving_call_ice_candidate)
+                            } catch (error) {
+
+                            }
                         }
 
                     })
@@ -413,7 +440,8 @@ const MainRouterPage = () => {
                 if (userSocket.connected && userSocket.socket) {
                     userSocket.socket.on('on_call_end', () => {
                         console.log('tearing downn')
-                        store.dispatch(tearDownConnection())
+                        dispatch(tearDownConnection({ tearDown: true, socket: null }))
+
                     })
                 }
 
@@ -439,6 +467,12 @@ const MainRouterPage = () => {
             }
         }
 
+        return () => {
+
+
+
+            console.log('dddjjj')
+        }
 
 
     }, [userSocket.localPeerConnectionInstance])
@@ -450,9 +484,26 @@ const MainRouterPage = () => {
         if (userSocket.tearDown) {
 
 
+            store.getState().socket.localPeerConnectionInstance?.close()
+            store.getState().socket.remotePeerConnectionInstance?.close()
+
+
+
+
+
+            dispatch(updatePeerConnectionInstance({
+                localPeerConnectionInstance: new RTCPeerConnection({
+                    iceServers: rtcConfig.iceServers
+                })
+                , remotePeerConnectionInstance: new RTCPeerConnection({
+                    iceServers: rtcConfig.iceServers
+                }), socket: null
+            }))
+
 
             console.log('tearin downn')
-            dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnection, remotePeerConnectionInstance: remotePeerConnection, socket: null }))
+
+            dispatch(tearDownConnection({ tearDown: false, socket: null }))
 
         }
 

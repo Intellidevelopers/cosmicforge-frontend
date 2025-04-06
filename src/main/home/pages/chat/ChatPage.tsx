@@ -1,45 +1,129 @@
-import docImage from '../../../../assets/images/doctor-image.jpeg'
+
 import videoIcon from '../../../../assets/icons/cosmic-chat-video-icon.svg'
 import callIcon from '../../../../assets/icons/cosmic-chat-call-icon.svg'
 import attachButton from '../../../../assets/icons/cosmic-attach-icon.svg'
 import micIcon from '../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import ChatMessagesBody from '../../component/chat/ChatMessagesBody'
+import {  useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { RootReducer } from '../../../store/initStore'
 
 
 
 
 const ChatPage = () => {
 
-    return <div className="w-full md:ps-[250px] h-[600px] overflow-y-auto ">
+    const navigate = useNavigate()
 
 
 
-        <div className=" place-items-center md:gap-3  flex  bg-white h-[80px] md:m-2 md:ps-4 " onClick={() => {
-            // navigate(-1)
-        }}>
-            <div className='w-fit  justify-center place-items-center gap-2 hidden md:flex'>
+
+    const { state } = useLocation()
+
+    const doctorDetails = state!! as {
+        doctorImage: string,
+        doctorName: string,
+        doctorSpecialization: string,
+        clinic: string,
+        address: string,
+        title: string,
+        department: string,
+        docId: string
+    }
+
+ 
+
+    const user = useSelector((state: RootReducer) => state.user)
+
+    const userSocket = useSelector((state: RootReducer) => state.socket)
+
+    const [typedMessage, setTypeMessage] = useState<string>('')
+
+
+
+    const [messages, setMessages] = useState<{
+        senderId: string,
+        receiverId: string,
+        messageType: string,
+        message: string,
+        timeStamp: string
+    }[] | null>(() => {
+
+
+        return null
+    })
+
+
+
+
+    useEffect(() => {
+
+        if (userSocket.userChats && userSocket.userChats.length > 0) {
+            const specificChat = userSocket.userChats.find((data) => {
+                return data.chatID === user.data?._id?.concat(doctorDetails.docId) || data.chatID === doctorDetails.docId?.concat(user.data?._id!!)
+            })
+
+            if (specificChat) {
+                const messagesFromServer = specificChat.messages?.map((data) => {
+                    return {
+                        senderId: data.sender,
+                        receiverId: data.reciever,
+                        messageType: data.message,
+                        message: data.message,
+                        timeStamp: data.timestamp
+
+                    }
+                })
+                setMessages(messagesFromServer as {
+                    senderId: string,
+                    receiverId: string,
+                    messageType: string,
+                    message: string,
+                    timeStamp: string
+                }[] | null)
+            }
+
+
+        }
+
+    }, [userSocket.userChats])
+
+
+    return <div className="w-full md:ps-[250px] h-[600px] overflow-y-hidden cursor-default ">
+
+
+
+        <div className=" place-items-center md:gap-3  flex  bg-white h-[80px] md:m-2 md:ps-4 " >
+            <div className='w-fit  justify-center place-items-center gap-2 hidden md:flex  hover:text-cosmic-primary-color' onClick={() => {
+                navigate(-1)
+            }}>
                 <i className="fa fa-angle-left fa-xl " />
                 <p>back</p>
             </div>
 
 
             <div className="w-fit ps-2 md:ms-7  md:p-3 flex justify-center place-items-center gap-2 relative ">
-                <img className='w-[40px] h-[40px] rounded-full' alt='card-profile' src={docImage} />
+                <img className='w-[40px] h-[40px] rounded-full' alt='card-profile' src={doctorDetails?.doctorImage} />
                 <div className='w-full   flex flex-col justify-center  gap-1 relative'>
-                    <p className="w-[180px] md:w-full overflow-hidden text-nowrap text-ellipsis text-[14px] md:text-[16px] font-bold ">{"Grace has an Appointment djdjdj"}</p>
-                    <p className="w-[180px] md:w-full overflow-hidden text-nowrap text-ellipsis  text-[14px] md:text-[16px] font-light">{"Grace has an Appointment"}</p>
+                    <p className="w-[180px] md:w-full overflow-hidden text-nowrap text-ellipsis text-[14px] md:text-[16px] font-bold ">{doctorDetails?.doctorName}</p>
+                    <p className="w-[180px] md:w-full overflow-hidden text-nowrap text-ellipsis  text-[14px] md:text-[16px] font-light">{doctorDetails?.department}</p>
 
 
                 </div>
             </div>
 
 
+
+
+
+
             <div className='flex gap-3 w-fit absolute right-2 md:me-3'>
 
-                <img src={callIcon} className='w-[24px] h-[40px] ' alt='call' onClick={()=>{
+                <img src={callIcon} className='w-[24px] h-[40px] ' alt='call' onClick={() => {
                     alert('dhh')
-                   
+
                 }} />
                 <img className='w-[24px] h-[40px]' src={videoIcon} alt='video' />
 
@@ -48,20 +132,114 @@ const ChatPage = () => {
         </div>
 
 
-        <div className='w-full absolute bottom-0 bg-white gap-3 h-[80px] flex place-items-center p-3  '>
-            <div className='bg-cosmic-primary-color rounded-full flex justify-center place-items-center p-1 w-[40px] h-[40px]'>
-                <img src={attachButton} alt='attach' />
-            </div>
-            <div className='bg-white w-full grid grid-cols-6'>
-                <textarea name='message-box' placeholder='Type a message...' className='w-full outline-none p-3  h-full col-span-5  md:col-span-3 overflow-auto resize-none ' />
 
-                <div className='flex justify-center place-items-center gap-2 md:gap-6'>
+        <div className=' h-[68vh] p-3 overflow-y-auto'>
 
-                    <div className='w-[80px] md:w-[50px] md:h-[50px] h-[30px] flex justify-center place-items-center border rounded-full '>
+            {
+                messages?.length && messages?.length > 0 && messages.map((data, i) => (
+
+                    <ChatMessagesBody key={i} message={data.message} messageType='' senderId='' receiverId=' ' timeStamp={''} />
+                ))
+            }
+
+
+
+
+            <div className='md:w-[80vw]  absolute bottom-0 bg-white gap-3 h-fit grid grid-cols-2 '>
+
+                <div className='w-full col-span-1 flex gap-4 p-4 '>
+
+                    <div className='bg-cosmic-primary-color rounded-full flex justify-center place-items-center p-1 w-[40px] h-[40px]'>
+                        <img src={attachButton} alt='attach' />
+                    </div>
+
+
+                    <div className='bg-white w-full'>
+                        <textarea name='message-box' placeholder='Type a message...' className='w-full outline-none   h-full resize-none ' onChange={(e) => {
+
+                            setTypeMessage(e.target.value)
+
+                        }} />
+
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div className='w-full flex justify-end place-items-center gap-8 col-span-1 '>
+
+                    <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full '>
                         <img alt='mic' className=' ' src={micIcon} />
                     </div>
 
-                    <div className='w-[80px] h-[30px] md:w-[50px] md:h-[50px] flex justify-center place-items-center border rounded-full '>
+
+
+                    <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full ' onClick={() => {
+
+
+                        if (userSocket) {
+
+                            userSocket.socket?.emit('send_message', {
+
+                                senderId: user.data?._id!!,
+                                receiverId: doctorDetails.docId,
+                                messageType: 'text',
+                                message: typedMessage,
+                                timeStamp: new Date().toLocaleString('UTC', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: true
+                                })
+
+                            })
+                        }
+
+                        if (!messages) {
+
+                            setMessages([
+                                {
+                                    senderId: user.data?._id!!,
+                                    receiverId: doctorDetails.docId,
+                                    messageType: 'text',
+                                    message: typedMessage,
+                                    timeStamp: new Date().toLocaleString('UTC', {
+                                        hour: '2-digit',
+                                        minute: '2-digit',
+                                        hour12: true
+                                    })
+
+                                }
+                            ])
+
+                            return
+                        }
+
+
+                        setMessages((prevMessage) => {
+
+
+                            prevMessage?.push({
+                                senderId: user.data?._id!!,
+                                receiverId: doctorDetails.docId,
+                                messageType: 'text',
+                                message: typedMessage,
+                                timeStamp: new Date().toLocaleString('UTC', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: true
+                                })
+                            })
+                            return [
+                                ...messages,
+
+                            ]
+                        })
+
+
+                    }}>
                         <img alt='mic' className='' src={sendMessageIcon} />
                     </div>
 
@@ -71,18 +249,17 @@ const ChatPage = () => {
                 </div>
 
 
+
+
+
             </div>
 
 
 
-
-
         </div>
-        <div className=' h-[500px] p-3'>
 
-       <ChatMessagesBody/>
-         
-        </div>
+
+
 
     </div>
 }

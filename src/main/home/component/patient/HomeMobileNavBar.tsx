@@ -19,14 +19,14 @@ import { RootReducer } from "../../../store/initStore";
 
    
   if(!user.isAunthenticated ){
-    return  <Navigate to={'/patient/account'} replace/>
+    return  <Navigate to={'/'} replace/>
  
   }
 
   
 
   if( user.data && user.data.role !== "client"){
-    return  <Navigate to={'/patient/account'} replace/>
+    return  <Navigate to={'/'} replace/>
   }
 
     return (

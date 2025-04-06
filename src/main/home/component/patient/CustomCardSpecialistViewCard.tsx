@@ -5,6 +5,9 @@ import appointmentButton from '../../../../assets/icons/appointment-icon.svg'
 import verifiedThick from '../../../../assets/icons/home/verifiedThick.svg'
 import ratingStar from '../../../../assets/icons/star-icon.svg'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { updateCallMode } from '../../../store/reducers/userSocketReducer'
+import { useDispatch } from 'react-redux'
+
 
 export interface CustomCardSpecialistViewCardProps {
     details: {
@@ -40,6 +43,11 @@ export interface CustomCardSpecialistViewCardProps {
 const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardProps) => {
     const navigate = useNavigate()
     const {state} = useLocation()
+
+    const  dispatch = useDispatch()
+
+   
+
     return (
 
         <div className="bg-white w-full  h-[150px] flex  relative  ">
@@ -70,7 +78,11 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                 <div className=" relative md:absolute bottom-5 right-5 inline-flex  justify-end md:mt-2    flex-row gap-3">
 
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
-                        navigate('/patient/find-a-specialist/consult', {
+                       
+                       dispatch(updateCallMode({callMode:'audio',socket:null}))
+                       
+                       
+                       navigate('/patient/find-a-specialist/consult', {
                             state: {
                                 doctorImage: details.profilePicture,
                                 doctorName: details.userId.fullName,
@@ -86,7 +98,20 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                         <img src={callIcon} alt="call button" />
                     </div>
 
-                    <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center">
+                    <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={()=>{
+                           navigate('/patient/messages/chat', {
+                            state: {
+                                doctorImage: details.profilePicture,
+                                doctorName: details.userId.fullName,
+                                doctorSpecialization: details.specialization,
+                                clinic:details.currentClinic,
+                                address: details.workAddress,
+                                title:state.title,
+                                department:details.department,
+                                docId:details.userId._id
+                            }
+                        })
+                    }}>
                         <img src={messageButton} alt="mesage button" />
                     </div>
 

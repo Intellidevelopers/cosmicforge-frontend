@@ -223,7 +223,7 @@ const HomeSideBar = () => {
               <img className={"h-[25px] w-[25px]"} alt="home" src={logOutIcon} />
               <p className=" text-[15.5px]" onClick={() => {
                 dispatch(authenticateUser({ isAunthenticated: false, data: {}, emailValidated: false, keepMeSignedIn: false }))
-              //  navigate('/patient/account')
+                navigate('/')
               }} >Log out</p>
             </div>
           </div>

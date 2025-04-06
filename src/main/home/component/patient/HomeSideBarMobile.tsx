@@ -51,7 +51,7 @@ const dispatch = useDispatch()
         <div className="user-profile-container w-full flex flex-col gap-1  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px]  rounded-full bg-gray-500">
           
-            <img alt="profile-image" src={user.data?.profile?.profilePicture ??profileIconTmp} />
+            <img className="w-[100px] h-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ??profileIconTmp} />
           </div>
           <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color' }  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
             
@@ -261,8 +261,8 @@ const dispatch = useDispatch()
             <img alt="home" src={logOutIcon} />
               <p className="" onClick={()=>{
                
-                dispatch(authenticateUser({isAunthenticated:false,data:{},emailValidated:false,keepMeSignedIn:false}))
-               // navigate('/patient/account')
+               dispatch(authenticateUser({ isAunthenticated: false, data: {}, emailValidated: false, keepMeSignedIn: false }))
+               navigate('/')
               }}>Log out</p>
             </div>
           </div>

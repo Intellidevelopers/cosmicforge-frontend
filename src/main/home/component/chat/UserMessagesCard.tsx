@@ -10,8 +10,30 @@ export interface UserMessagesCardProps {
   numberOfUnreadMessages: number,
   messageType: 'receiving' | 'sending'
   messageRead: boolean,
-  message: string
+  message: string | null
+  details:{
+    docId:string
+    profilePicture?:string,
+    professionalTitle?: string,
+    specialization?: string,
+    currentClinic?: string,
+    department?: string,
+    bio?: string,
+    pricing?: string,
 
+    workAddress?:string,
+    experience?: {
+
+        hospitalName?: string,
+        NoOfPatientTreated?: string,
+        specializationAndDepartment?: string,
+        date?: string
+    },
+    workTime?: {
+        day?: string,
+        time?: string
+    }
+  }
 }
 
 
@@ -23,7 +45,8 @@ const UserMessagesCard = ({
   numberOfUnreadMessages,
   // messageType,
   //messageRead,
-  message
+  message,
+  details
 
 }: UserMessagesCardProps
 ) => {
@@ -32,7 +55,23 @@ const UserMessagesCard = ({
 
   return (
     <div className=" h-[100px] w-full pe-2" onClick={() => {
-      navigate('/patient/messages/chat')
+      navigate('/patient/messages/chat',{
+        state:{
+          doctorImage: details.profilePicture,
+          doctorName: doctorName,
+          doctorSpecialization: details.specialization,
+          department:details.department,
+          clinic:details.currentClinic,
+          address: details.workAddress,
+          pricing:details.pricing,
+          bio:details.bio,
+          docId:details.docId,
+          //title:state.title,
+          workingHour:details.workTime,
+          details:details
+
+        }
+      })
     }}>
 
       <div className="relative w-full flex gap-4">

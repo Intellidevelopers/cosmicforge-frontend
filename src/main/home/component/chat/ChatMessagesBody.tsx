@@ -1,33 +1,29 @@
 //import docImage from '../../../../assets/images/doctor-image.jpeg'
 //import senderBg from '../../../../assets/images/cosmic-chat-sender-bg.svg'
 
-import { useSelector } from "react-redux"
-import { RootReducer } from "../../../store/initStore"
 
-const ChatMessagesBody = () =>{
-  const  userSocket = useSelector((state:RootReducer)=>state.socket)
+ interface MessageProps {
+  message:string,
+  messageType:string,
+  senderId:string,
+  receiverId:string,
+  timeStamp:string
+ }
+const ChatMessagesBody = ({message}:MessageProps) =>{
+ 
 
-    return <div className="w-full ">
+    return <div className="w-full  flex justify-end">
       
-      <div className=' relative   bg-cosmic-bg-chat-sender w-[350px] bg-no-repeat bg-contain h-fit' >
+      <div className=' relative    max-w-[350px]  rounded-lg  h-fit bg-cosmic-light-color-call m-2 ' >
                  
-                  <div className='w-full h-[900px]  p-5' onClick={()=>{
-                    alert(JSON.stringify(userSocket.connected))
-                    if(userSocket.connected){
-                      alert('called')
-                      userSocket.socket?.emit("hello","i am fully active boss!")
-                    }else{
-                      alert('mmm')
-                    }
-                  }}>
-                    <p>kjjkj
-                    djdjjhfhfhfh</p>
-                    <p>kjjkj
-                    djdjjhfhfhfh</p>
-                    <p>kjjkj
-                    djdjjhfhfhfh</p>
-                    <p>kjjkj
-                    djdjjhfhfhfh</p>
+                  <div className='w-full    p-2' >
+                    <p>{message}</p>
+                    <p className="text-[12px] text-end">{new Date().toLocaleString('UTC',{
+                      hour:'2-digit',
+                      minute:'2-digit',
+                      hour12:true
+                    })}</p>
+                   
                   </div>
 
                 </div>

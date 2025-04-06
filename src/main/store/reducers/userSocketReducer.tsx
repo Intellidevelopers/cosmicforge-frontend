@@ -24,9 +24,82 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     startPlayingRingTone?:boolean,
     remoteConnected?:boolean,
     callMode?: 'audio' | 'video' | null,
-    tearDown?:boolean
+    tearDown?:boolean,
+    newPeerConnectionInstance?:boolean,
+
+    userChats?:[{  
+     
+      chatID:string,
+    userOneID:{
+      userId:string,
+     userName:string,
+     userProfile:{
+  
+      profilePicture:string,
+      professionalTitle?: string,
+      specialization?: string,
+      currentClinic?: string,
+      department?: string,
+      bio?: string,
+      pricing?: string,
+
+      workAddress?:string,
+      experience?: {
+
+          hospitalName?: string,
+          NoOfPatientTreated?: string,
+          specializationAndDepartment?: string,
+          date?: string
+      },
+      workTime?: {
+          day?: string,
+          time?: string
+      }
+     }
+    },
+    userTwoID:{
+      userId:string,
+     userName:string,
+     userProfile:{
+
+profilePicture:string,
+professionalTitle?: string,
+specialization?: string,
+currentClinic?: string,
+department?: string,
+bio?: string,
+pricing?: string,
+
+workAddress?:string,
+experience?: {
+
+    hospitalName?: string,
+    NoOfPatientTreated?: string,
+    specializationAndDepartment?: string,
+    date?: string
+},
+workTime?: {
+    day?: string,
+    time?: string
+}
+     }
+    }
+
+    messages:[{
+      messageType?:string,
+      message?:string,
+      timestamp?:string,
+      sender?:string,
+      reciever?:string
+ 
+    }] | null
    
- }
+ }]| null
+
+  }
+
+
+
 
  const  initialState:UserSocketProps = {
    socket:null,
@@ -46,8 +119,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
    startPlayingRingTone:false,
    remoteConnected:false,
    callMode:null,
-   tearDown:false
+   tearDown:false,
+   newPeerConnectionInstance:false,
+
+
+   //user chat state
+   userChats: null
  }
+
+ 
 
 
  const userSocketSlice = createSlice({
@@ -90,12 +170,16 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
         },
 
         updatePeerConnectionInstance  (state,action:PayloadAction<UserSocketProps>){
-          state.localPeerConnectionInstance = action.payload.localPeerConnectionInstance?? state.localPeerConnectionInstance
-          state.remotePeerConnectionInstance = action.payload.remotePeerConnectionInstance?? state.remotePeerConnectionInstance
+              
+        
+
+
+          state.localPeerConnectionInstance = action.payload.localPeerConnectionInstance ?? null
+          state.remotePeerConnectionInstance = action.payload.remotePeerConnectionInstance ?? null
         },
 
-        tearDownConnection  (state){
-          state.tearDown = true
+        tearDownConnection  (state,action:PayloadAction<UserSocketProps>){
+          state.tearDown = action.payload.tearDown ?? state.tearDown
           state.remoteUserId = ''
           state.remoteCallerDetails = null
           state.localStream = null
@@ -119,13 +203,27 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
           state.callMode = action.payload.callMode?? state.callMode
         },
 
+        updatePeerNewConnectionInstance(state,action:PayloadAction<UserSocketProps>){
+          state.newPeerConnectionInstance = action.payload.newPeerConnectionInstance?? state.newPeerConnectionInstance
+        },
+
+
+
+ 
+        updateUserChat(state,action:PayloadAction<UserSocketProps>){
+          state.userChats = action.payload.userChats?? state.userChats
+        }
+
+
 
 
     }
 
  })
 
- export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode} =userSocketSlice.actions
+ export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode,updatePeerNewConnectionInstance,
+  updateUserChat
+ } =userSocketSlice.actions
 
 
  export default userSocketSlice.reducer

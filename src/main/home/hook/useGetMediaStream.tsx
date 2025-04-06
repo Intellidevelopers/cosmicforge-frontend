@@ -30,14 +30,22 @@ const useGetMediaStream = () => {
 
     const cancelMediaStream = async () => {
 
+       return new Promise((resolve,_)=>{
+
         if(mediaStream){
             mediaStream.getTracks().forEach(track => {
                track.stop()
+               mediaStream.removeTrack(track)
             }) 
+
+        }
 
             setMediaStream(null)
            
             store.dispatch(updateUserLocalStream({localStream:null,socket:null}))
+
+            resolve(null)
+       })
    
 
             
@@ -49,7 +57,7 @@ const useGetMediaStream = () => {
        
 
 
-    }
+    
 
     const startStream = () => {
 

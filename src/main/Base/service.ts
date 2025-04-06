@@ -16,3 +16,21 @@ export const  validateUserSession = async (data:{isKeepMeSignedIn:boolean,token:
    
       return result
 }
+
+
+export const  getUserChats = async (token:string) => {
+
+    const response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/user/chat/all`,{
+           method:'get',
+          headers:{
+            
+           "Content-Type":'application/json',
+           "Authorization":`Bearer ${token}`
+          },
+        
+       })
+
+      const result  = await response.json()  as ResponseBodyProps
+   
+      return result
+}

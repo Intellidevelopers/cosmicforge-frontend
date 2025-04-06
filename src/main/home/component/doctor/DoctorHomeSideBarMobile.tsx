@@ -11,8 +11,9 @@ import { useNavigate } from "react-router-dom";
 import useGetDoctorActiveNavbarRoute from "../../hook/doctor/useGetDoctorActiveNavbarRoute";
 import { MutableRefObject, useRef } from "react";
 import useGetSideBarMobileAnimation, { closeSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
+import { authenticateUser } from "../../../store/reducers/userReducers";
 
 const DoctorHomeSideBarMobile = () => {
 
@@ -20,6 +21,8 @@ const DoctorHomeSideBarMobile = () => {
     const navigate = useNavigate()
     const sideBarRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
     useGetSideBarMobileAnimation(sideBarRef)
+
+    const dispatch = useDispatch()
 
     const user = useSelector((state: RootReducer) => state.user)
 
@@ -147,7 +150,10 @@ const DoctorHomeSideBarMobile = () => {
 
                         <div className="w-full flex justify-start ms-5 text-cosmic-color-warning-color  hover:underline ">
                             <img alt="home" src={logOutIcon} />
-                            <p>Log out</p>
+                            <p onClick={() => {
+                                dispatch(authenticateUser({ isAunthenticated: false, data: {}, emailValidated: false, keepMeSignedIn: false }))
+                                navigate('/')
+                            }}>Log out</p>
                         </div>
                     </div>
                 </div>

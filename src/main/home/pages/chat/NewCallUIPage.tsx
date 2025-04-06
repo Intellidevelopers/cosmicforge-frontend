@@ -120,7 +120,7 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
                    
                   }}>answer</p>
                   <p className='bg-red-600 p-2 rounded-lg text-white' onClick={() => {
-                     store.dispatch(tearDownConnection())
+                     store.dispatch(tearDownConnection({tearDown:true,socket:null}))
                      store.dispatch(updateRingTone({ startPlayingRingTone: false, socket: null }))
                      onDecline()
                   }}>decline</p>
