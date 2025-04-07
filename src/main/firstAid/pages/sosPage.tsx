@@ -37,7 +37,7 @@ interface personCard {
     <>
       <HomeNavBar title='SOS'/>
       <HomeMobileNavBar title='SOS'/>
-      <div className=" md:ms-[250px] flex flex-col items-start gap-4 p-4 bg-white  ">
+      <div className="  flex flex-col items-start gap-4 p-4 bg-white  ">
         {
             sos.map((item,index)=>{
                 return <SosComponent key={index} image={item.image} title={item.title}/>

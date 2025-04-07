@@ -19,7 +19,7 @@ const FirstAidSteps = () => {
         <>
             <HomeNavBar title={params.person ? params.person : ''}/>
             <HomeMobileNavBar title={params.person ? params.person : ''}/>
-            <div className='md:ms-[250px] p-4 bg-white gap-4 flex flex-col '>
+            <div className=' p-4 bg-white gap-4 flex flex-col '>
                 <h2 className='font-bold '>Steps for {person} </h2>
                 <div className="flex flex-col gap-2">
                     {

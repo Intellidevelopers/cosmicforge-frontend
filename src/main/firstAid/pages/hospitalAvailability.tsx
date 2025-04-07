@@ -8,7 +8,7 @@ const HospitalAvailability = () => {
     <>
       <HomeNavBar title={'Hospital Availability'} />
       <HomeMobileNavBar title={'Hospital Availability'} />
-      <div id='map' className='md:ms-[250px] relative w-full h-full flex items-center md:justify-start justify-center rounded-md'>
+      <div id='map' className=' relative w-full h-full flex items-center md:justify-start justify-center rounded-md'>
         <div className='absolute bottom-4 w-full max-w-[90%] md:max-w-[80%] bg-white flex flex-col items-center justify-center p-4 rounded-md shadow-lg mb-[30%] sm:mb-[10%] md:ml-6'>
           <div className='flex w-full gap-4 overflow-auto p-2'>
             <HospitalRating />

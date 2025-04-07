@@ -110,7 +110,7 @@ const HomeBody = () => {
       <HomeNavBar title="Home" />
       <HomeMobileNavBar title="Home" />
 
-      <div className=" md:ps-[250px] ">
+      <div className="  ">
         <div className="w-full  md:ps-10  md:justify-start md:pt-8  md:gap-12  inline-flex overflow-x-auto" style={{
           scrollbarWidth:'none',
         

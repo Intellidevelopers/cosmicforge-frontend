@@ -5,7 +5,7 @@ import attachButton from '../../../../assets/icons/cosmic-attach-icon.svg'
 import micIcon from '../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import ChatMessagesBody from '../../component/chat/ChatMessagesBody'
-import {  useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
@@ -30,10 +30,11 @@ const ChatPage = () => {
         address: string,
         title: string,
         department: string,
-        docId: string
+        docId: string,
+
     }
 
- 
+
 
     const user = useSelector((state: RootReducer) => state.user)
 
@@ -72,10 +73,11 @@ const ChatPage = () => {
                         receiverId: data.reciever,
                         messageType: data.message,
                         message: data.message,
-                        timeStamp: data.timestamp
+                        timeStamp: data.timeStamp
 
                     }
                 })
+
                 setMessages(messagesFromServer as {
                     senderId: string,
                     receiverId: string,
@@ -91,7 +93,7 @@ const ChatPage = () => {
     }, [userSocket.userChats])
 
 
-    return <div className="w-full md:ps-[250px] h-[600px] overflow-y-hidden cursor-default ">
+    return <div className="w-full overflow-y-hidden cursor-default  ">
 
 
 
@@ -133,121 +135,52 @@ const ChatPage = () => {
 
 
 
-        <div className=' h-[68vh] p-3 overflow-y-auto'>
+        <div className=' w-full h-[69vh] p-3 overflow-y-auto '>
 
             {
                 messages?.length && messages?.length > 0 && messages.map((data, i) => (
 
-                    <ChatMessagesBody key={i} message={data.message} messageType='' senderId='' receiverId=' ' timeStamp={''} />
+                    <ChatMessagesBody key={i} message={data.message} messageType='' profilePicture={doctorDetails.doctorImage} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
                 ))
             }
 
 
 
 
-            <div className='md:w-[80vw]  absolute bottom-0 bg-white gap-3 h-fit grid grid-cols-2 '>
-
-                <div className='w-full col-span-1 flex gap-4 p-4 '>
-
-                    <div className='bg-cosmic-primary-color rounded-full flex justify-center place-items-center p-1 w-[40px] h-[40px]'>
-                        <img src={attachButton} alt='attach' />
-                    </div>
-
-
-                    <div className='bg-white w-full'>
-                        <textarea name='message-box' placeholder='Type a message...' className='w-full outline-none   h-full resize-none ' onChange={(e) => {
-
-                            setTypeMessage(e.target.value)
-
-                        }} />
 
 
 
-                    </div>
 
+
+
+
+
+
+        </div>
+
+
+
+        <div className=' md:w-[80vw]   w-[100vw] absolute bottom-0  bg-white  h-[8%]  flex '>
+
+
+
+
+            <div className='md:w-[63vw] w-[86vw] h-full   flex place-items-center ps-2 gap-3 '>
+
+                <div className='bg-cosmic-primary-color rounded-full flex justify-center place-items-center p-1 w-[30px] h-[30px]'>
+                    <img src={attachButton} alt='attach' />
                 </div>
 
+                <div className='w-full pt-6'>
+                    <textarea name='message-box' placeholder='Type a message...' className='w-full outline-none   h-full resize-none ' onChange={(e) => {
 
+                        setTypeMessage(e.target.value)
 
-                <div className='w-full flex justify-end place-items-center gap-8 col-span-1 '>
-
-                    <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full '>
-                        <img alt='mic' className=' ' src={micIcon} />
-                    </div>
-
-
-
-                    <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full ' onClick={() => {
-
-
-                        if (userSocket) {
-
-                            userSocket.socket?.emit('send_message', {
-
-                                senderId: user.data?._id!!,
-                                receiverId: doctorDetails.docId,
-                                messageType: 'text',
-                                message: typedMessage,
-                                timeStamp: new Date().toLocaleString('UTC', {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: true
-                                })
-
-                            })
-                        }
-
-                        if (!messages) {
-
-                            setMessages([
-                                {
-                                    senderId: user.data?._id!!,
-                                    receiverId: doctorDetails.docId,
-                                    messageType: 'text',
-                                    message: typedMessage,
-                                    timeStamp: new Date().toLocaleString('UTC', {
-                                        hour: '2-digit',
-                                        minute: '2-digit',
-                                        hour12: true
-                                    })
-
-                                }
-                            ])
-
-                            return
-                        }
-
-
-                        setMessages((prevMessage) => {
-
-
-                            prevMessage?.push({
-                                senderId: user.data?._id!!,
-                                receiverId: doctorDetails.docId,
-                                messageType: 'text',
-                                message: typedMessage,
-                                timeStamp: new Date().toLocaleString('UTC', {
-                                    hour: '2-digit',
-                                    minute: '2-digit',
-                                    hour12: true
-                                })
-                            })
-                            return [
-                                ...messages,
-
-                            ]
-                        })
-
-
-                    }}>
-                        <img alt='mic' className='' src={sendMessageIcon} />
-                    </div>
-
+                    }} />
 
 
 
                 </div>
-
 
 
 
@@ -255,9 +188,173 @@ const ChatPage = () => {
             </div>
 
 
+            <div className='md:w-[10vw] w-[20vw]   pe-1 flex place-items-center justify-evenly md:justify-normal  ps-1 gap-3 '>
+
+                <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full  '>
+                    <img alt='mic' className=' ' src={micIcon} />
+                </div>
+
+
+                <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full ' onClick={() => {
+
+
+                    if (userSocket) {
+
+                        userSocket.socket?.emit('send_message', {
+
+                            senderId: user.data?._id!!,
+                            receiverId: doctorDetails.docId,
+                            messageType: 'text',
+                            message: typedMessage,
+                            timeStamp: new Date().toLocaleString('UTC', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                hour12: true
+                            })
+
+                        })
+                    }
+
+                    if (!messages) {
+
+                        setMessages([
+                            {
+                                senderId: user.data?._id!!,
+                                receiverId: doctorDetails.docId,
+                                messageType: 'text',
+                                message: typedMessage,
+                                timeStamp: new Date().toLocaleString('UTC', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: true
+                                })
+
+                            }
+                        ])
+
+                        return
+                    }
+
+
+                    setMessages((prevMessage) => {
+
+
+                        prevMessage?.push({
+                            senderId: user.data?._id!!,
+                            receiverId: doctorDetails.docId,
+                            messageType: 'text',
+                            message: typedMessage,
+                            timeStamp: new Date().toLocaleString('UTC', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                hour12: true
+                            })
+                        })
+                        return [
+                            ...messages,
+
+                        ]
+                    })
+
+
+                }}>
+                    <img alt='mic' className='' src={sendMessageIcon} />
+                </div>
+
+            </div>
+
+
+
+
+            {
+                /*
+            
+            <div className='w-full flex justify-end place-items-center gap-8 col-span-1 '>
+            
+                <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full '>
+                    <img alt='mic' className=' ' src={micIcon} />
+                </div>
+            
+            
+            
+                <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full ' onClick={() => {
+            
+            
+                    if (userSocket) {
+            
+                        userSocket.socket?.emit('send_message', {
+            
+                            senderId: user.data?._id!!,
+                            receiverId: doctorDetails.docId,
+                            messageType: 'text',
+                            message: typedMessage,
+                            timeStamp: new Date().toLocaleString('UTC', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                hour12: true
+                            })
+            
+                        })
+                    }
+            
+                    if (!messages) {
+            
+                        setMessages([
+                            {
+                                senderId: user.data?._id!!,
+                                receiverId: doctorDetails.docId,
+                                messageType: 'text',
+                                message: typedMessage,
+                                timeStamp: new Date().toLocaleString('UTC', {
+                                    hour: '2-digit',
+                                    minute: '2-digit',
+                                    hour12: true
+                                })
+            
+                            }
+                        ])
+            
+                        return
+                    }
+            
+            
+                    setMessages((prevMessage) => {
+            
+            
+                        prevMessage?.push({
+                            senderId: user.data?._id!!,
+                            receiverId: doctorDetails.docId,
+                            messageType: 'text',
+                            message: typedMessage,
+                            timeStamp: new Date().toLocaleString('UTC', {
+                                hour: '2-digit',
+                                minute: '2-digit',
+                                hour12: true
+                            })
+                        })
+                        return [
+                            ...messages,
+            
+                        ]
+                    })
+            
+            
+                }}>
+                    <img alt='mic' className='' src={sendMessageIcon} />
+                </div>
+            
+            
+            
+            
+            </div>
+            */
+            }
+
+
+
+
 
         </div>
-
 
 
 

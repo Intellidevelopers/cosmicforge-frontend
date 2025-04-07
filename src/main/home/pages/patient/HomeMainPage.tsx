@@ -25,10 +25,14 @@ const HomeMainPage = () => {
       }
 
     return (
-        <div className="font-poppins relative w-full h-dvh bg-[#F5F5F5] overflow-x-hidden">
+        <div className="font-poppins relative w-full h-dvh bg-[#F5F5F5] flex flex-row  overflow-hidden">
+            <div className="w-[25vw] hidden md:block">
             <HomeSideBar />
             <HomeSideBarMobile   />
+            </div>
+            <div className="md:w-[75vw] w-full  grid grid-cols-1 overflow-y-auto">
             <Outlet/>
+            </div>
         </div>
     )
 }

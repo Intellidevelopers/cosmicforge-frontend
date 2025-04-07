@@ -112,10 +112,13 @@ const AiChatbot = () => {
 
 
   return (
-    <>
+    <div className='overflow-hidden'>
       <HomeNavBar title='AI Diagnosis'/>
       <HomeMobileNavBar title='AI Diagnosis'/>
-      <div className="flex flex-col h-[90%] md:ms-[250px] bg-gray-100">
+
+      <div className="flex flex-col h-[90%]  bg-gray-100">
+
+
         <div className="flex-1 overflow-auto p-4" >
           {messages.map((message, _) => (
             <React.Fragment  key={message._id} >
@@ -181,7 +184,7 @@ const AiChatbot = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

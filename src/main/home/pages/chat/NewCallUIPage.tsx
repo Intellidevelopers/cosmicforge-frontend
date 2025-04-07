@@ -83,7 +83,7 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
    }, [socketCon.startPlayingRingTone])
 
 
-   return <div ref={bodyRef} className={`  cursor-default  w-full h-fit flex  absolute bg-transparent   top-0  z-[800] p-8   justify-center`}>
+   return <div ref={bodyRef} className={`  cursor-default  w-full h-fit flex  absolute bg-transparent   top-0  z-[800] p-8    justify-center`}>
       <audio src={ringtone} ref={audioRef} />
       <div className={` ${newCall ? 'flex' : 'hidden'}  bg-white rounded-md p-3 h-[10
        50px] w-[400px] shadow-lg flex `}>
@@ -92,6 +92,7 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
             <div className='flex flex-col gap-6'>
                <p>Incoming call {userCallingDetails?.name}</p>
                <div className='flex gap-4 justify-evenly'>
+
                   <p className='bg-green-600 p-2 rounded-lg text-white' onClick={async () => {
 
                      if (socketCon.localStream) {
@@ -100,6 +101,7 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
                            userCalling: socketCon.remoteUserId,
                            remoteId: user.data?._id,
                         })
+                        
                         store.dispatch(updateRingTone({ startPlayingRingTone: false, socket: null }))
 
                         switch(user.data?.role){

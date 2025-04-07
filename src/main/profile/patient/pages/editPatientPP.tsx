@@ -73,11 +73,19 @@ const EditPatientPP:React.FC = () => {
     const {getImageBase64String} = useGetImageBase64String()
 
     return (
-        <div className="w-full  relative  h-dvh bg-gray-100 overflow-x-hidden overflow-y-auto flex flex-col cursor-default">
-            <HomeSideBar/>
-            <HomeMobileNavBar title="Edit Profile"/>
-            <HomeNavBar title="Edit Profile"/>
-            <div className="flex flex-col items-center justify-center pt-[10px] pb-[70px] gap-[10px] p-3  md:ps-[265px]">
+        <div className="w-full  relative  h-dvh bg-gray-100 overflow-hidden flex  cursor-default">
+          
+
+          <div className="w-[25vw] md:block hidden">
+          <HomeSideBar/>
+            
+
+          </div>
+
+ <div className="md:w-[75vw] w-full overflow-y-auto">
+ <HomeMobileNavBar title="Edit Profile"/>
+ <HomeNavBar title="Edit Profile"/>
+            <div className=" flex flex-col items-center justify-center pt-[10px] pb-[70px] gap-[10px] p-3  ">
                 <input
                 className="hidden"
                 id="photoFile" 
@@ -157,6 +165,8 @@ const EditPatientPP:React.FC = () => {
                 errorMessage && <p className="text-red-600">{errorMessage}</p>
                }
                </div>
+            </div>
+
             </div>
 
         </div>

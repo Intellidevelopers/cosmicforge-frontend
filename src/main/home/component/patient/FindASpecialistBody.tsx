@@ -89,7 +89,7 @@ import Loader from "../../../generalComponents/Loader";
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col cursor-default">
       <HomeNavBar title="Find A Specialist" />
       <HomeMobileNavBar title="Find A Specialist" />
-      <div className=" ps-0  md:ps-[290px]  pe-10   ">
+      <div className=" ps-0   pe-10   ">
         <div className="w-full m-5 flex place-items-center gap-3" onClick={() => {
           navigate(-1);
         }}>

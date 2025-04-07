@@ -23,13 +23,14 @@ const UserMessagesPage = () => {
         if (userSocket.userChats && userSocket.userChats.length > 0) {
 
 
-            const senderProfile = userSocket.userChats[0].userOneID.userId === user.data?._id ? userSocket.userChats[0].userTwoID : userSocket.userChats[0].userOneID
-
+          
 
 
             const messagesFromServer: UserMessagesCardProps[] | null = []
 
             userSocket.userChats?.map((data) => {
+                const senderProfile = data.userOneID.userId === user.data?._id ? data.userTwoID : data.userOneID
+
                 if (data.messages)
                     messagesFromServer.push({
 
@@ -58,7 +59,7 @@ const UserMessagesPage = () => {
     }, [userSocket.userChats])
 
     return (
-        <div className="w-full md:ps-[294px] h-[600px] overflow-y-auto ">
+        <div className="w-full cursor-default h-[600px] overflow-y-auto ">
 
             <div className="w-full mt-6 p-5 overflow-y-auto ">
                 {

@@ -12,7 +12,7 @@ const FindAnAmbulance = () => {
     <>
         <HomeNavBar title={'Find an Ambulance'}/>
         <HomeMobileNavBar title={'Find an Ambulance'}/>
-        <div className="md:ms-[250px] p-4 flex flex-col lg:flex-row gap-8">
+        <div className=" p-4 flex flex-col lg:flex-row gap-8">
             <div className="w-full lg:w-[60%] max-h-[40dvh] lg:max-h-[800dvh] md:h-[80dvh] shadow-2xl border rounded-md overflow-hidden">
                 <img src={mapImg} alt="Map Image" className="min-w-fit" />
             </div>

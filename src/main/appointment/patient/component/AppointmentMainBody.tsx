@@ -6,15 +6,18 @@ import HomeSideBarMobile from "../../../home/component/patient/HomeSideBarMobile
 
 const AppointmentMainBody = () => {
 
-    return <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col">
+    return <div className=" w-full  relative  h-dvh    overflow-hidden  flex ">
+        <div className="w-[25vw]">
         <HomeSideBar />
         <HomeSideBarMobile />
 
+       
+        </div>
+
+
+        <div className=" w-[80vw] overflow-y-auto">
         <HomeNavBar title="Book Appointment" />
         <HomeMobileNavBar title="Book Appointment" />
-
-
-        <div className=" md:ps-[250px] ">
 
             <Outlet />
         </div>

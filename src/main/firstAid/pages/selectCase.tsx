@@ -42,7 +42,7 @@ const SelectCase = () => {
     <>
       <HomeNavBar title={params.case ? params.case : ''}/>
       <HomeMobileNavBar title={params.case ? params.case : ''}/>
-      <div className=" md:ms-[250px] flex flex-col items-start gap-4 p-4 bg-white  ">
+      <div className="  flex flex-col items-start gap-4 p-4 bg-white  ">
         {
           persons.map((item,index)=>{
             return <SelectPersonCard key={index} image={item.image} title={item.title}/>

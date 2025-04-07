@@ -12,16 +12,19 @@ const PatientCalendarMainBody = () => {
 
     const { activeState, setActiveState } = useGetCalendarActiveState()
 
-    return <div className="w-full font-poppins">
+    return <div className="w-full font-poppins flex h-dvh overflow-hidden">
+        
+        <div className="w-[25vw] hidden md:block">
         <HomeSideBar />
         <HomeSideBarMobile />
+        </div>
+
+
+
+        <div className=" w-full md:w-[75vw] overflow-y-auto">
 
         <HomeNavBar title="Calendar" />
         <HomeMobileNavBar title="Calendar" />
-
-
-        <div className=" md:ps-[250px] ">
-
             <div className="m-6 flex justify-end  ">
 
 

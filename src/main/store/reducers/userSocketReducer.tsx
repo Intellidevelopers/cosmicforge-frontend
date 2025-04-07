@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
   export interface UserSocketProps {
+
     socket:SocketIOClient.Socket | null,
     isOnline?:boolean,
     connected?:boolean,
@@ -16,6 +17,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     localDescription?:RTCSessionDescription | null,
     localPeerConnectionInstance?:RTCPeerConnection | null,
     remotePeerConnectionInstance?:RTCPeerConnection | null,
+
     remoteCallerDetails?:{
       name:string,
       profilePicture:string
@@ -26,7 +28,17 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     callMode?: 'audio' | 'video' | null,
     tearDown?:boolean,
     newPeerConnectionInstance?:boolean,
+    newInComingCall?:boolean
 
+
+    
+    
+    
+    
+    
+    
+    
+    
     userChats?:[{  
      
       chatID:string,
@@ -88,7 +100,7 @@ workTime?: {
     messages:[{
       messageType?:string,
       message?:string,
-      timestamp?:string,
+      timeStamp?:string,
       sender?:string,
       reciever?:string
  
@@ -121,6 +133,7 @@ workTime?: {
    callMode:null,
    tearDown:false,
    newPeerConnectionInstance:false,
+   newInComingCall:false,
 
 
    //user chat state
@@ -189,6 +202,7 @@ workTime?: {
           state.offerReceived = false
           state.remoteConnected = false
           state.callMode =  null
+          state.newInComingCall = false
         },
 
         updateRingTone (state,action:PayloadAction<UserSocketProps>){
@@ -207,7 +221,9 @@ workTime?: {
           state.newPeerConnectionInstance = action.payload.newPeerConnectionInstance?? state.newPeerConnectionInstance
         },
 
-
+        updateIncomingCall(state,action:PayloadAction<UserSocketProps>){
+          state.newInComingCall = action.payload.newInComingCall?? state.newInComingCall
+        },
 
  
         updateUserChat(state,action:PayloadAction<UserSocketProps>){
@@ -222,7 +238,7 @@ workTime?: {
  })
 
  export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode,updatePeerNewConnectionInstance,
-  updateUserChat
+  updateUserChat,updateIncomingCall
  } =userSocketSlice.actions
 
 

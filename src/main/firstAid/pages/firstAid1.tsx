@@ -97,7 +97,7 @@ const FirstAid1 = () => {
     <>
         <HomeNavBar title={'First Aid'}/>
         <HomeMobileNavBar title={'First Aid'}/>
-        <div className='md:ms-[250px] p-4 flex flex-col gap-4'>
+        <div className=' p-4 flex flex-col gap-4'>
             <div id="ambulance&sos" className='flex bg-white w-full space-x-4'>
                 <div className='w-1/2 flex justify-center items-center rounded border shadow-md cursor-pointer' onClick={()=>{navigate('find-an-ambulance')}}>
                     <img src={ambulance} alt="Ambulance image" className=''/>

@@ -82,7 +82,7 @@ const FindASpecalistCustomViewBody = () => {
             <HomeNavBar title={state.title} />
             <HomeMobileNavBar title={state.title} />
 
-            <div className="w-full md:ps-[294px]  ">
+            <div className="w-full  ">
 
 
                 <div className="hidden m-8 md:flex place-items-center gap-1">

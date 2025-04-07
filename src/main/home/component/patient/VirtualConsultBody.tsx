@@ -189,7 +189,7 @@ const VirtualConsultBody = () => {
       <HomeNavBar title="Virtual Consult" />
       <HomeMobileNavBar title="Virtual Consult" />
 
-      <div className="w-full ps-0 md:ps-[294px] mt-4">
+      <div className="w-full ps-0  mt-4">
         <div className="hidden m-8 md:flex place-items-center gap-1">
 
 

@@ -10,8 +10,19 @@ export interface UserMessagesCardProps {
   numberOfUnreadMessages: number,
   messageType: 'receiving' | 'sending'
   messageRead: boolean,
-  message: string | null
+  message: string | null,
+  messages?:{
+    
+    senderId: string,
+    receiverId: string,
+    messageType: string,
+    message: string,
+    timeStamp: string
+    
+}[] | null,
+
   details:{
+    patientId?:string
     docId:string
     profilePicture?:string,
     professionalTitle?: string,

@@ -13,11 +13,20 @@ import MobileSummary from "../Components/MobileSummary";
 const PatientAnalytics:React.FC = () => {
 
     return (
-        <div className="w-full  relative  h-dvh bg-gray-100 overflow-x-hidden overflow-y-auto flex flex-col cursor-default">
-            <HomeNavBar title="Analytics"/>
-            <HomeMobileNavBar title="Analytics"/>
+        <div className="w-full  relative h-dvh  bg-gray-100 overflow-x-hidden overflow-y-hidden  flex cursor-default">
+           <div className="md:w-[25vw]">
+          
             <HomeSideBar/>
-            <div className="flex flex-col items-center justify-center pt-[10px] pb-[70px] gap-[20px] p-3  md:ps-[265px]">
+
+           </div>
+
+
+       <div className="w-full md:w-[75vw] overflow-y-auto">
+
+       <HomeNavBar title="Analytics"/>
+           <HomeMobileNavBar title="Analytics"/>
+
+            <div className="flex flex-col items-center justify-center pt-[10px] pb-[70px] gap-[20px] p-3  ">
                 <MobileSummary/>
                 <Summary/>
                 <BptCard/>
@@ -25,6 +34,7 @@ const PatientAnalytics:React.FC = () => {
                 <OverallHealth/>
                 <HPandPHCard/>
             </div>
+       </div>
         </div>
     )
 }

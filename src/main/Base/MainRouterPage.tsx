@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
 import io from 'socket.io-client'
-import { connectSocket, tearDownConnection, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream, updateRingTone, updateUserCallingData, updateUserChat } from "../store/reducers/userSocketReducer"
+import { connectSocket, tearDownConnection, updateCallMode, updateIncomingCall, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream, updateRingTone, updateUserCallingData, updateUserChat } from "../store/reducers/userSocketReducer"
 import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 import UserRTC from "../home/hook/UserRTC"
 import NewCallUIPage from "../home/pages/chat/NewCallUIPage"
@@ -36,6 +36,14 @@ const MainRouterPage = () => {
         profilePicture: string
     }>()
 
+
+    useEffect(()=>{
+
+        setNewCall(store.getState().socket.newInComingCall!!)
+
+    },[store.getState().socket.newInComingCall])
+
+
     useEffect(() => {
 
         if (userSocket.connected && userSocket.socket) {
@@ -52,7 +60,7 @@ const MainRouterPage = () => {
                 dispatch(updateRingTone({ startPlayingRingTone: true, socket: null }))
                 dispatch(updateUserCallingData({ remoteUserId: data.caller._id, socket: null, remoteCallerDetails: data.userCallingDetails }))
                 setUserCallingDetails(data.userCallingDetails)
-                setNewCall(true)
+                dispatch(updateIncomingCall({newInComingCall:true,socket:null}))
                 //  navigate('/doctor/appointment/voice-call')
             })
         }
@@ -157,8 +165,8 @@ const MainRouterPage = () => {
             })
 
             socket.on('connect', async () => {
-                dispatch(connectSocket({ connected: true, socket }))
-                dispatch(updatePeerConnectionInstance({
+                store.dispatch(connectSocket({ connected: true, socket }))
+               store.dispatch(updatePeerConnectionInstance({
                     localPeerConnectionInstance: new RTCPeerConnection({
                         iceServers: rtcConfig.iceServers
                     }), remotePeerConnectionInstance: new RTCPeerConnection({
@@ -169,13 +177,17 @@ const MainRouterPage = () => {
              try {
 
                 const result = await getUserChats(user.data?.token!!)
-    console.log(result)
+                 console.log(result)
                 if(result.status === 200){
-                    dispatch(updateUserChat({userChats:result.data,socket:null}))
+                 store.dispatch(updateUserChat({userChats:result.data,socket:null}))
                 }
                 
              } catch (error) {
-                
+                const result = await getUserChats(user.data?.token!!)
+                 console.log(result)
+                if(result.status === 200){
+                 store.dispatch(updateUserChat({userChats:result.data,socket:null}))
+                }
              }
 
                 
@@ -514,12 +526,10 @@ const MainRouterPage = () => {
     return <div className="w-full h-full relative">
         {
             isNewCall && <NewCallUIPage userCallingDetails={userCallingDetails!!} newCall={isNewCall} onDecline={() => {
-
-                setNewCall(false)
-            }} onAnswer={async () => {
+                store.dispatch(updateIncomingCall({newInComingCall:false,socket:null}))
+            }} onAnswer={ () => {
                 console.log('answered.')
-
-                setNewCall(false)
+                store.dispatch(updateIncomingCall({newInComingCall:false,socket:null}))
 
             }} />
         }
