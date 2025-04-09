@@ -6,7 +6,7 @@ import micIcon from '../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import ChatMessagesBody from '../../component/chat/ChatMessagesBody'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
 
@@ -18,7 +18,7 @@ const ChatPage = () => {
     const navigate = useNavigate()
 
 
-
+    const messageScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
     const { state } = useLocation()
 
@@ -85,6 +85,40 @@ const ChatPage = () => {
                     message: string,
                     timeStamp: string
                 }[] | null)
+
+                setTimeout(() => {
+                    if (messageScrollRef.current) {
+
+                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                    }
+                }, 1000)
+            }
+
+
+            if (specificChat && specificChat.messages && messages && specificChat.messages.length > messages.length) {
+
+
+                const mapChat = specificChat.messages.map(data => {
+                    return {
+                        senderId: data.sender!!,
+                        receiverId: data.reciever!!,
+                        messageType: data.message!!,
+                        message: data.message!!,
+                        timeStamp: data.timeStamp!!
+
+                    }
+                })
+
+                setMessages(mapChat)
+
+                setTimeout(() => {
+                    if (messageScrollRef.current) {
+
+                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                    }
+                }, 1000)
+
+
             }
 
 
@@ -135,7 +169,7 @@ const ChatPage = () => {
 
 
 
-        <div className=' w-full h-[69vh] p-3 overflow-y-auto '>
+        <div ref={messageScrollRef} className=' w-full h-[69vh] p-3 overflow-y-auto '>
 
             {
                 messages?.length && messages?.length > 0 && messages.map((data, i) => (
@@ -172,7 +206,7 @@ const ChatPage = () => {
                 </div>
 
                 <div className='w-full pt-6'>
-                    <textarea name='message-box' placeholder='Type a message...' className='w-full outline-none   h-full resize-none ' onChange={(e) => {
+                    <textarea name='message-box' value={typedMessage} placeholder='Type a message...' className='w-full outline-none   h-full resize-none ' onChange={(e) => {
 
                         setTypeMessage(e.target.value)
 
@@ -232,6 +266,14 @@ const ChatPage = () => {
                             }
                         ])
 
+                        setTimeout(() => {
+                            if (messageScrollRef.current) {
+
+                                messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                            }
+                        }, 1000)
+                        setTypeMessage('')
+
                         return
                     }
 
@@ -255,6 +297,14 @@ const ChatPage = () => {
 
                         ]
                     })
+
+                    setTypeMessage('')
+                    setTimeout(() => {
+                        if (messageScrollRef.current) {
+
+                            messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                        }
+                    }, 1000)
 
 
                 }}>

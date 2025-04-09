@@ -6,7 +6,7 @@ import { openSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
 //import { Navigate, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
  interface NavBarProps {
     title:string
@@ -17,6 +17,8 @@ import { useNavigate } from 'react-router-dom';
   const navigate =  useNavigate()
 
   const user = useSelector((state:RootReducer)=>state.user)
+
+  const {pathname} =  useLocation()
 
   /* 
   if(!user.isAunthenticated ){
@@ -56,8 +58,15 @@ import { useNavigate } from 'react-router-dom';
                     </div>
                     </div>
 
-                    </div>:    <div className="w-full flex justify-center">
+                    </div>:    
+                    
+                    <div className="w-full flex justify-center">
                     <i className="fa fa-arrow-left fa-xl absolute left-0 top-3" aria-hidden="true" onClick={()=>{
+                      
+                      if(pathname.includes("messages/chat")){
+                        navigate(-1)
+                        return
+                      }
                      navigate('/doctor/home')
                   }}></i>
                     <p className="font-extrabold p-1">{title ?? 'Home'}</p>

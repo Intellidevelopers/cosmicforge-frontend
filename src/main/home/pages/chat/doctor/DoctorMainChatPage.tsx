@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer } from "../../../../store/initStore"
 import { updateCallMode } from "../../../../store/reducers/userSocketReducer"
-import { useState, useEffect } from "react"
+import { useState, useEffect, MutableRefObject, useRef } from "react"
 
 import DoctorMessagesCard from "../../../component/chat/doctor/DoctorMessagesCard"
 import DoctorChatMessage from "../../../component/chat/doctor/DoctorChatMessage"
@@ -132,9 +132,13 @@ const DoctorMainChatPage = () => {
 
     const [typedMessage, setTypeMessage] = useState<string>('')
 
+    const messageScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
+    const chatPageForWebRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
     useEffect(() => {
+
+
 
         if (userSocket.userChats && userSocket.userChats.length > 0) {
 
@@ -191,6 +195,7 @@ const DoctorMainChatPage = () => {
             userSocket.userChats?.map((data) => {
 
                 if (data.messages) {
+
                     const senderProfile = data.userOneID.userId === user.data?._id ? data.userTwoID : data.userOneID
 
                     const mapChat = data.messages.map(data => {
@@ -233,9 +238,36 @@ const DoctorMainChatPage = () => {
 
 
 
+            if (chatSelected && messagesUpdate) {
+
+                const chat = messagesFromServer.find(data => {
+                    return chatSelected?.details.patientId === data.details.patientId
+                })
+
+
+
+                if (chat && messages && messages.length < chat.messages.length!!) {
+
+
+
+                    setMessages(chat.messages)
+
+                    setTimeout(() => {
+                        if (messageScrollRef.current) {
+
+                            messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                        }
+                    }, 1000)
+                }
+
+
+            }
+
+
         }
 
     }, [userSocket.userChats])
+
 
 
 
@@ -249,11 +281,7 @@ const DoctorMainChatPage = () => {
                 <div className="grid grid-cols-3">
                     <p className="text-white col-span-2">Messages</p>
 
-                    <div className="w-full flex justify-end gap-3">
-                        <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} />
-                        <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} />
-
-                    </div>
+                   
                 </div>
 
                 <div className="mt-6 p-2 flex place-items-center ps-6 bg-cosmic-color-white-light rounded-md  cursor-default">
@@ -262,7 +290,7 @@ const DoctorMainChatPage = () => {
                 </div>
 
 
-                <div className="w-full mt-6 p-5 overflow-y-auto ">
+                <div className={`  w-full  ${chatPageForWebRef.current?.checkVisibility() && ' p-5 '} mt-6  overflow-y-auto ` }>
                     {
                         messagesUpdate?.map((it, index) => (
                             <DoctorMessagesCard
@@ -279,8 +307,29 @@ const DoctorMainChatPage = () => {
                                 messages={it.messages!!}
                                 onChatSelected={(chatDetails, mesages) => {
 
-                                    setChatSelected(chatDetails)
-                                    setMessages(mesages)
+                          if(chatPageForWebRef.current?.checkVisibility()){
+                            setChatSelected(chatDetails)
+                            setMessages(mesages)
+
+                            setTimeout(() => {
+                                if (messageScrollRef.current) {
+                 
+                                    messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                                }
+                            }, 1000)
+
+                            return
+                          }
+
+                          navigate('/doctor/messages/chat',{
+                            state:{
+                                chatSelected:chatDetails,
+                                mesages:mesages
+                            }
+                          })
+
+
+                                  
 
 
                                 }} />
@@ -294,7 +343,7 @@ const DoctorMainChatPage = () => {
 
 
 
-            <div className="bg-cosmic-bg-chat-background hidden  md:flex flex-col col-span-2">
+            <div ref={chatPageForWebRef} className="bg-cosmic-bg-chat-background hidden  md:flex flex-col col-span-2">
 
 
 
@@ -343,13 +392,13 @@ const DoctorMainChatPage = () => {
 
 
 
-                    <div className="bg-transparent h-[73vh] overflow-y-auto">
+                    <div ref={messageScrollRef} className="bg-transparent h-[73vh] overflow-y-auto">
 
 
                         {
                             messages?.length && messages?.length > 0 && messages.map((data, i) => (
 
-                                <DoctorChatMessage key={i} message={data.message} messageType=''   profilePicture={chatSelected?.doctorImage!!} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
+                                <DoctorChatMessage key={i} message={data.message} messageType='' profilePicture={chatSelected?.doctorImage!!} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
                             ))
                         }
 
@@ -367,7 +416,7 @@ const DoctorMainChatPage = () => {
                                     <img src={attachButton} alt='attach' />
                                 </div>
 
-                                <textarea placeholder="enter text" className=" w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  " onChange={(e) => {
+                                <textarea placeholder="enter text" value={typedMessage} className=" w-full outline-none resize-none h-[60px] p-2 overflow-y-auto mt-3  " onChange={(e) => {
                                     setTypeMessage(e.target.value)
                                 }}></textarea>
                             </div>
@@ -412,6 +461,15 @@ const DoctorMainChatPage = () => {
                                             }
                                         ])
 
+                                        setTypeMessage('')
+
+                                        setTimeout(() => {
+                                            if (messageScrollRef.current) {
+
+                                                messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                                            }
+                                        }, 1000)
+
                                         return
                                     }
 
@@ -435,6 +493,15 @@ const DoctorMainChatPage = () => {
 
                                         ]
                                     })
+
+                                    setTypeMessage('')
+
+                                    setTimeout(() => {
+                                        if (messageScrollRef.current) {
+
+                                            messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                                        }
+                                    }, 1000)
 
 
 

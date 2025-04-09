@@ -11,9 +11,9 @@ interface MessageProps {
   senderId: string,
   receiverId: string,
   timeStamp: string,
-  profilePicture:string
+  profilePicture: string
 }
-const ChatMessagesBody = ({ message, timeStamp, senderId,profilePicture }: MessageProps) => {
+const ChatMessagesBody = ({ message, timeStamp, senderId, profilePicture }: MessageProps) => {
 
   const user = useSelector((state: RootReducer) => state.user.data)
 
@@ -38,10 +38,10 @@ const ChatMessagesBody = ({ message, timeStamp, senderId,profilePicture }: Messa
 
       </div> : <div className="w-full  flex justify-start p-3">
 
-      <img src={profilePicture} alt="profile" className="bg-transparent rounded-full w-[30px] h-[30px]" />
+        <img src={profilePicture} alt="profile" className="bg-transparent rounded-full w-[30px] h-[30px]" />
 
 
-        <div className=' relative    max-w-[350px]  rounded-lg  h-fit bg-white text-black m-2 ' >
+        <div className=' relative    max-w-[350px]  rounded-lg  h-fit bg-white shadow-black shadow-sm text-black m-2 ' >
 
           <div className='w-full    p-2' >
             <p>{message}</p>

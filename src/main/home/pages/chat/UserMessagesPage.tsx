@@ -36,7 +36,7 @@ const UserMessagesPage = () => {
 
                         doctorImage: senderProfile.userProfile.profilePicture,
                         doctorName: senderProfile.userName,
-                        lastMessageTime: '',
+                        lastMessageTime:data.messages[data.messages.length-1].timeStamp!! ,
                         numberOfUnreadMessages: 8,
                         messageType: 'sending',
                         messageRead: false,

@@ -20,13 +20,14 @@ const HomeNavBar = ({ title }: NavBarProps) => {
 
     <div className="  hidden md:block  bg-white w-full min-h-[70px] h-fit  p-5  sticky top-0  shadow-md shadow-black/10 z-[100]">
 
-      <div className="md:w-[75%]  w-full flex  relative   ">
+      <div className=" w-full flex  relative   ">
 
-        <p className="font-extrabold pt-2 min-w-fit pe-2 text-wrap  ">{title ?? 'Home'}</p>
+        <p className="font-extrabold pt-3 min-w-fit pe-2 text-wrap  ">{title ?? 'Home'}</p>
 
-        <div className=' p-1 w-dvw  relative '>
 
-          <div className=" w-[50%] md:w-[80%] font-light  absolute left-[8%]  flex flex-wrap   place-items-center gap-2  ">
+        <div className=' p-1 w-full  relative grid grid-cols-5 mt-1 '>
+
+          <div className=" w-[50%] md:w-full col-span-3 font-light    flex flex-wrap  justify-center  place-items-center gap-2  ">
             <div className='w-[50%] md:w-[60%] font-extralight min-w-[40px] rounded-md border p-1  flex gap-1'>
               <img alt='tune' src={searchIcon} />
               <input className='w-full outline-none' type='search' placeholder='search here' />
@@ -42,7 +43,7 @@ const HomeNavBar = ({ title }: NavBarProps) => {
 
 
 
-          <div className="hidden    absolute  right-[0%] md:flex flex-wrap md:justify-center  gap-1 md:w-fit    ">
+          <div className="hidden  col-span-2    md:flex flex-wrap md:justify-end  gap-1 md:w-full   ">
             <div className="font-extralight min-w-[40px] flex  justify-center rounded-md border p-1 ">
               <img alt='tune' src={shopIcon} />
             </div>

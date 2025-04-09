@@ -199,6 +199,147 @@ const MainRouterPage = () => {
             })
 
 
+            socket.on('update_chat',async(d:{
+                chatID: string;
+                userOneID: {
+                    userId: string;
+                    userName: string;
+                    userProfile: {
+                        profilePicture: string;
+                        professionalTitle?: string;
+                        specialization?: string;
+                        currentClinic?: string;
+                        department?: string;
+                        bio?: string;
+                        pricing?: string;
+                        workAddress?: string;
+                        experience?: {
+                            hospitalName?: string;
+                            NoOfPatientTreated?: string;
+                            specializationAndDepartment?: string;
+                            date?: string;
+                        };
+                        workTime?: {
+                            day?: string;
+                            time?: string;
+                        };
+                    };
+                };
+                userTwoID: {
+                    userId: string;
+                    userName: string;
+                    userProfile: {
+                        profilePicture: string;
+                        professionalTitle?: string;
+                        specialization?: string;
+                        currentClinic?: string;
+                        department?: string;
+                        bio?: string;
+                        pricing?: string;
+                        workAddress?: string;
+                        experience?: {
+                            hospitalName?: string;
+                            NoOfPatientTreated?: string;
+                            specializationAndDepartment?: string;
+                            date?: string;
+                        };
+                        workTime?: {
+                            day?: string;
+                            time?: string;
+                        };
+                    };
+                };
+                messages: [{
+                    messageType?: string;
+                    message?: string;
+                    timeStamp?: string;
+                    sender?: string;
+                    reciever?: string;
+                }] | null;
+            })=>{
+              
+
+                let chats = store.getState().socket.userChats?.filter(data=>{
+                    return data.chatID !== d.chatID
+                })  as [{  
+     
+                    chatID:string,
+                  userOneID:{
+                    userId:string,
+                   userName:string,
+                   userProfile:{
+                
+                    profilePicture:string,
+                    professionalTitle?: string,
+                    specialization?: string,
+                    currentClinic?: string,
+                    department?: string,
+                    bio?: string,
+                    pricing?: string,
+              
+                    workAddress?:string,
+                    experience?: {
+              
+                        hospitalName?: string,
+                        NoOfPatientTreated?: string,
+                        specializationAndDepartment?: string,
+                        date?: string
+                    },
+                    workTime?: {
+                        day?: string,
+                        time?: string
+                    }
+                   }
+                  },
+                  userTwoID:{
+                    userId:string,
+                   userName:string,
+                   userProfile:{
+              
+              profilePicture:string,
+              professionalTitle?: string,
+              specialization?: string,
+              currentClinic?: string,
+              department?: string,
+              bio?: string,
+              pricing?: string,
+              
+              workAddress?:string,
+              experience?: {
+              
+                  hospitalName?: string,
+                  NoOfPatientTreated?: string,
+                  specializationAndDepartment?: string,
+                  date?: string
+              },
+              workTime?: {
+                  day?: string,
+                  time?: string
+              }
+                   }
+                  }
+              
+                  messages:[{
+                    messageType?:string,
+                    message?:string,
+                    timeStamp?:string,
+                    sender?:string,
+                    reciever?:string
+               
+                  }] | null
+                 
+               }]| null
+
+
+                chats?.unshift(d)
+                store.dispatch(updateUserChat({userChats:chats,socket:null}))
+            })
+
+
+           
+
+
+
 
             socket.on('all-diagnosis', (data: any) => {
 

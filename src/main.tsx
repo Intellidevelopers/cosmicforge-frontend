@@ -92,6 +92,7 @@ import RescheduleAppointment from './main/alerts/pages/rescheduleAppointment.tsx
 import RescheduleDecline from './main/alerts/pages/rescheduleDecline.tsx'
 import AppointmentReminder from './main/alerts/pages/appointmentReminder.tsx'
 import CancelAppointment from './main/alerts/pages/cancelAppointment.tsx'
+import DoctorMobileChatPage from './main/home/pages/chat/doctor/DoctorMobileChatPage.tsx'
 
 
 const router = createBrowserRouter([
@@ -550,6 +551,11 @@ const router = createBrowserRouter([
         path: '/doctor/messages',
         element: <DoctorMainChatPage />
       },
+      {
+        path: '/doctor/messages/chat',
+        element: <DoctorMobileChatPage />
+      },
+     
      
       {
         path: '/doctor/edit-profile',

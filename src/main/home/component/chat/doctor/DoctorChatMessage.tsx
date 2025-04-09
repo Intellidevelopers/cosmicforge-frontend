@@ -7,7 +7,8 @@ interface MessageProps {
     senderId: string,
     receiverId: string,
     timeStamp: string,
-    profilePicture: string
+    profilePicture: string,
+   
 }
 
 
@@ -23,7 +24,7 @@ const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture }: Mes
         {user?._id === senderId ?
             <div className="w-full  flex justify-end p-3">
 
-                <div className=' relative    max-w-[350px]  rounded-lg  h-fit bg-cosmic-light-color-call m-2 text-white' >
+                <div className={`   relative    max-w-[350px]  rounded-lg  h-fit bg-cosmic-light-color-call m-2 text-white`  } >
 
                     <div className='w-full    p-2' >
                         <p>{message}</p>
@@ -42,7 +43,7 @@ const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture }: Mes
 
                 <img src={profilePicture} alt="profile" className="bg-transparent rounded-full w-[30px] h-[30px]" />
 
-                <div className=' relative    max-w-[350px]  rounded-lg  h-fit bg-white m-2 text-black' >
+                <div className=' relative shadow-black shadow-sm    max-w-[350px]  rounded-lg  h-fit bg-white m-2 text-black' >
 
                     <div className='w-full    p-2' >
                         <p>{message}</p>
