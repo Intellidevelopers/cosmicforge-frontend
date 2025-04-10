@@ -8,7 +8,7 @@ import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-messag
 import { useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer } from "../../../../store/initStore"
-import { updateCallMode } from "../../../../store/reducers/userSocketReducer"
+import { updateCallInitialization, updateCallMode } from "../../../../store/reducers/userSocketReducer"
 import { useState, useEffect, MutableRefObject, useRef } from "react"
 
 import DoctorMessagesCard from "../../../component/chat/doctor/DoctorMessagesCard"
@@ -137,6 +137,7 @@ const DoctorMainChatPage = () => {
     const chatPageForWebRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
     useEffect(() => {
+        
 
 
 
@@ -281,7 +282,7 @@ const DoctorMainChatPage = () => {
                 <div className="grid grid-cols-3">
                     <p className="text-white col-span-2">Messages</p>
 
-                   
+
                 </div>
 
                 <div className="mt-6 p-2 flex place-items-center ps-6 bg-cosmic-color-white-light rounded-md  cursor-default">
@@ -290,7 +291,7 @@ const DoctorMainChatPage = () => {
                 </div>
 
 
-                <div className={`  w-full  ${chatPageForWebRef.current?.checkVisibility() && ' p-5 '} mt-6  overflow-y-auto ` }>
+                <div className={`  w-full  ${chatPageForWebRef.current?.checkVisibility() && ' p-5 '} mt-6  overflow-y-auto `}>
                     {
                         messagesUpdate?.map((it, index) => (
                             <DoctorMessagesCard
@@ -307,29 +308,29 @@ const DoctorMainChatPage = () => {
                                 messages={it.messages!!}
                                 onChatSelected={(chatDetails, mesages) => {
 
-                          if(chatPageForWebRef.current?.checkVisibility()){
-                            setChatSelected(chatDetails)
-                            setMessages(mesages)
+                                    if (chatPageForWebRef.current?.checkVisibility()) {
+                                        setChatSelected(chatDetails)
+                                        setMessages(mesages)
 
-                            setTimeout(() => {
-                                if (messageScrollRef.current) {
-                 
-                                    messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
-                                }
-                            }, 1000)
+                                        setTimeout(() => {
+                                            if (messageScrollRef.current) {
 
-                            return
-                          }
+                                                messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                                            }
+                                        }, 1000)
 
-                          navigate('/doctor/messages/chat',{
-                            state:{
-                                chatSelected:chatDetails,
-                                mesages:mesages
-                            }
-                          })
+                                        return
+                                    }
+
+                                    navigate('/doctor/messages/chat', {
+                                        state: {
+                                            chatSelected: chatDetails,
+                                            mesages: mesages
+                                        }
+                                    })
 
 
-                                  
+
 
 
                                 }} />
@@ -371,14 +372,24 @@ const DoctorMainChatPage = () => {
 
                                     if (userSocket.connected) {
                                         dispatch(updateCallMode({ callMode: 'audio', socket: null }))
-                                        navigate("/doctor/appointment/voice-call")
+                                        dispatch(updateCallInitialization({isCallInitiated:true,socket:null}))
+                                        navigate("/doctor/appointment/voice-call",{
+                                          state:{
+                                            patientToCallDetails:chatSelected
+                                          }  
+                                        })
                                     }
 
                                 }} />
                                 <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} onClick={() => {
                                     if (userSocket.connected) {
                                         dispatch(updateCallMode({ callMode: 'video', socket: null }))
-                                        navigate("/doctor/appointment/voice-call")
+                                        dispatch(updateCallInitialization({isCallInitiated:true,socket:null}))
+                                        navigate("/doctor/appointment/voice-call",{
+                                            state:{
+                                              patientToCallDetails:chatSelected
+                                            }  
+                                          })
                                     }
                                 }} />
                                 <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />
@@ -426,6 +437,11 @@ const DoctorMainChatPage = () => {
                                 </div>
 
                                 <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full ' onClick={() => {
+
+                                    if (!typedMessage) {
+                                        return
+                                    }
+
 
                                     if (userSocket) {
 

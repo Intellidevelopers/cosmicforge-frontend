@@ -1,5 +1,4 @@
 
-import docImage from '../../../../../assets/images/doctor-image.jpeg'
 import callButton from '../../../../../assets/icons/call-button.svg'
 import videoButton from '../../../../../assets/icons/cosmic-video-call-button.svg'
 import muteMic from '../../../../../assets/icons/cosmic-mute-mic.svg'
@@ -11,8 +10,10 @@ import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../../../store/initStore'
 import useGetMediaStream from '../../../hook/useGetMediaStream'
-import { useNavigate } from 'react-router-dom'
-import { tearDownConnection, updateCallMode } from '../../../../store/reducers/userSocketReducer'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { tearDownConnection, updateCallMode, updateUserCallingData } from '../../../../store/reducers/userSocketReducer'
+import UserRTC from '../../../hook/UserRTC'
+import DoctorChatMessage from '../../../component/chat/doctor/DoctorChatMessage'
 
 
 const VoiceCallPage = () => {
@@ -24,6 +25,8 @@ const VoiceCallPage = () => {
 
     const userSocketCon = useSelector((state: RootReducer) => state.socket)
 
+    const user = useSelector((state: RootReducer) => state.user)
+
     const { cancelMediaStream, toggleVideo, toggleMic, switchToAudio } = useGetMediaStream()
 
     const [modeOfCall, setModeOfCall] = useState<'video' | 'audio'>(userSocketCon.callMode!!)
@@ -32,14 +35,73 @@ const VoiceCallPage = () => {
 
     const [tempModeOfCall, setTempModeOfCall] = useState<'video' | 'audio' | null>(null)
 
+    const [typedMessage, setTypeMessage] = useState<string>('')
+
+    const messageScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+
+
     const [callState, setCallState] = useState<'connecting' | 'connected' | 'failed to connect' | 'call ended' | null>('connecting')
 
+    const { createOffer } = UserRTC()
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
+
+
+
+    const { state } = useLocation()
+
+    const patientToCallDetails = state?.patientToCallDetails as {
+        doctorImage: string,
+        doctorName: string,
+        lastMessageTime: string,
+        numberOfUnreadMessages: number,
+        messageType: 'receiving' | 'sending'
+        messageRead: boolean,
+        message: string | null,
+        details: {
+            patientId: string
+            profilePicture?: string,
+            professionalTitle?: string,
+            specialization?: string,
+            currentClinic?: string,
+            department?: string,
+            bio?: string,
+            pricing?: string,
+
+            workAddress?: string,
+            experience?: {
+
+                hospitalName?: string,
+                NoOfPatientTreated?: string,
+                specializationAndDepartment?: string,
+                date?: string
+            },
+            workTime?: {
+                day?: string,
+                time?: string
+            }
+
+
+
+        }
+    } | null
+
+
     const [counter, setCounter] = useState<string>('00:00:00')
     const [counterId, setCounterId] = useState<NodeJS.Timeout>()
+
+    const [patientMessage, setPatientMessage] = useState<{
+
+        senderId: string,
+        receiverId: string,
+        messageType: string,
+        message: string,
+        timeStamp: string
+    }[] | null
+    >(null)
+
 
     const startTimer = () => {
         let countUp = 0
@@ -82,10 +144,158 @@ const VoiceCallPage = () => {
 
     useEffect(() => {
 
+
+        if (userSocketCon.userChats && userSocketCon.userChats.length > 0) {
+
+
+
+
+
+            const messagesFromServer: {
+                doctorImage: string,
+                doctorName: string,
+                lastMessageTime: string,
+                numberOfUnreadMessages: number,
+                messageType: 'receiving' | 'sending'
+                messageRead: boolean,
+                message: string | null
+                details: {
+                    patientId: string
+                    profilePicture?: string,
+                    professionalTitle?: string,
+                    specialization?: string,
+                    currentClinic?: string,
+                    department?: string,
+                    bio?: string,
+                    pricing?: string,
+
+                    workAddress?: string,
+                    experience?: {
+
+                        hospitalName?: string,
+                        NoOfPatientTreated?: string,
+                        specializationAndDepartment?: string,
+                        date?: string
+                    },
+                    workTime?: {
+                        day?: string,
+                        time?: string
+                    }
+
+
+
+                },
+                messages: {
+                    senderId: string,
+                    receiverId: string,
+                    messageType: string,
+                    message: string,
+                    timeStamp: string
+                }[]
+
+            }[] | null = []
+
+
+
+            userSocketCon.userChats?.map((data) => {
+
+                if (data.messages) {
+
+                    const senderProfile = data.userOneID.userId === user.data?._id ? data.userTwoID : data.userOneID
+
+                    const mapChat = data.messages.map(data => {
+                        return {
+                            senderId: data.sender!!,
+                            receiverId: data.reciever!!,
+                            messageType: data.message!!,
+                            message: data.message!!,
+                            timeStamp: data.timeStamp!!
+
+                        }
+                    })
+
+
+                    messagesFromServer.push({
+
+                        doctorImage: senderProfile.userProfile.profilePicture,
+                        doctorName: senderProfile.userName,
+                        lastMessageTime: data.messages[data.messages.length - 1].timeStamp!!,
+                        numberOfUnreadMessages: 8,
+                        messageType: 'sending',
+                        messageRead: false,
+                        message: data.messages[data.messages.length - 1].message!!,
+                        details: {
+                            ...senderProfile.userProfile,
+                            patientId: senderProfile.userId
+                        },
+                        messages: mapChat
+
+
+                    })
+
+
+                }
+
+            })
+
+
+
+            const userId = patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId
+
+            const chat = messagesFromServer.find(data => {
+                return userId === data.details.patientId
+            })
+
+            setPatientMessage(chat?.messages!!)
+          
+            setTimeout(() => {
+                if (messageScrollRef.current) {
+
+                    messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                }
+            }, 1000)
+
+
+        }
+
+
+    }, [userSocketCon.userChats])
+
+
+
+
+
+    useEffect(() => {
+
         console.log(userSocketCon.localStream)
         if (localVideoStream.current) {
             localVideoStream.current.srcObject = userSocketCon.localStream!!
 
+        }
+
+
+        if(userSocketCon && userSocketCon.socket && userSocketCon.localStream && userSocketCon.isCallInitiated){
+           userSocketCon.socket.emit('calling', {
+                userToCall:patientToCallDetails?.details.patientId,
+                userCallingDetails: {
+                  name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
+                  profilePicture: user.data?.profile?.profilePicture!!
+                },
+                callMode: userSocketCon.callMode
+      
+              })
+        }
+
+
+        if (userSocketCon.localStream && !userSocketCon.offerCreated) {
+
+            createOffer({ userToCall: patientToCallDetails?.details.patientId!!, userCalling: user.data?._id!! })
+
+            dispatch(updateUserCallingData({ remoteUserId: patientToCallDetails?.details.patientId, socket: null }))
+
+        } else {
+            stopAndClearTimer()
+            console.log('false alrdeay created')
         }
 
 
@@ -95,6 +305,9 @@ const VoiceCallPage = () => {
                 setTempModeOfCall(data.callMode as 'video' | 'audio')
             })
         }
+
+
+
 
         if (userSocketCon.connected && userSocketCon.socket) {
             userSocketCon.socket.on('failed_to_connect', () => {
@@ -135,7 +348,7 @@ const VoiceCallPage = () => {
 
             <div className="w-full h-full  grid grid-rows-5 relative">
 
-                <div className='w-full h-[100vh] bg-black relative'>
+                <div className='w-full h-[100vh] bg-black relative pt-6 '>
 
                     <div className=" h-[100px] m-6 w-full  flex flex-col justify-center place-items-center text-white font-bold absolute z-[200]">
 
@@ -163,18 +376,22 @@ const VoiceCallPage = () => {
 
                                 }}>reject</span>
                             </div>
-                            <div>
-                                <p className='mt-6'>{userSocketCon.remoteCallerDetails?.name ?? 'User'}</p>
 
-
-
-                                {
-                                    callState === 'failed to connect' ? <span className='italic text-red-600'>{callState}</span> : <span className={`${callState === 'connecting' ? 'text-yellow-500' : 'text-green-600'}`}>{callState}</span>}
-
-
-                            </div>
                         </div>
+
+                        <div className='w-full flex flex-col place-items-center justify-center pt-8'>
+                            <p className=''>{userSocketCon.remoteCallerDetails?.name ?? patientToCallDetails?.doctorName ?? 'User'}</p>
+
+
+
+                            {
+                                callState === 'failed to connect' ? <span className='italic text-red-600'>{callState}</span> : <span className={`${callState === 'connecting' ? 'text-yellow-500' : 'text-green-600'}`}>{callState}</span>}
+
+
+                        </div>
+
                     </div>
+
 
                     <video ref={remoteVideoSteam} autoPlay className='  h-[100vh] w-full object-cover' />
 
@@ -205,14 +422,18 @@ const VoiceCallPage = () => {
                                 </div>
 
                                 <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
-                                    cancelMediaStream().then(() => {
-                                        userSocketCon.socket?.emit('call_ended',{
-                                          remoteId:userSocketCon.remoteUserId  
-                                        })
-                                        dispatch(tearDownConnection({ tearDown: true, socket: null }))
-                                        stopAndClearTimer()
-                                        navigate(-1)
+
+                                    userSocketCon.socket?.emit('call_ended', {
+                                        remoteId: userSocketCon.remoteUserId
                                     })
+
+
+
+                                    await cancelMediaStream()
+                                    console.log('fired...')
+                                    dispatch(tearDownConnection({ tearDown: true, socket: null }))
+                                    stopAndClearTimer()
+                                    navigate(-1)
 
 
                                 }}>
@@ -254,13 +475,16 @@ const VoiceCallPage = () => {
             <div className="w-full h-full  grid grid-rows-5">
 
                 <div className="row-span-1 h-full flex flex-col  justify-center place-items-center text-white font-bold">
-                    {userSocketCon.remoteCallerDetails?.name ?? 'User'}
+                    {userSocketCon.remoteCallerDetails?.name ? userSocketCon.remoteCallerDetails?.name : patientToCallDetails?.doctorName ?? patientToCallDetails?.doctorName}
+
                     {
                         callState === 'failed to connect' ? <span className='italic text-red-600 text-[12px]'>{callState}</span> : <span className={`${callState === 'connecting' ? 'text-yellow-500' : 'text-green-600'} ext-[12px] italic`}>{callState}</span>}
 
                 </div>
-                <div className="row-span-2 h-full flex flex-col gap-8 justify-center place-items-center">
-                    <img src={userSocketCon.remoteCallerDetails?.profilePicture ?? '/'} className={'h-[150px] w-[150px] rounded-full bg-black'} />
+
+
+                <div className="row-span-1 h-full flex flex-col gap-8 justify-center place-items-center">
+                    <img src={userSocketCon.remoteCallerDetails?.profilePicture ?? patientToCallDetails?.details.profilePicture ?? '/'} className={'h-[150px] w-[150px] rounded-full bg-black'} />
 
                     <div className={`${requestingForModeChange ? 'flex' : 'hidden'}  w-full cursor-default  justify-center gap-2 flex-col place-items-center`}>
                         <p className='text-white text-[12px]'>{`${userSocketCon.remoteCallerDetails?.name} is requesting to switch to ${tempModeOfCall}`} </p>
@@ -291,6 +515,7 @@ const VoiceCallPage = () => {
 
                     </div>
                 </div>
+
                 <div className="row-span-2 flex flex-col justify-center place-items-center h-full">
 
                     <div className="w-full flex flex-col place-items-center justify-center p-1 gap-2 mt-2">
@@ -314,9 +539,9 @@ const VoiceCallPage = () => {
                             <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
 
                                 cancelMediaStream().then(() => {
-                                    userSocketCon.socket?.emit('call_ended',{
-                                        remoteId:userSocketCon.remoteUserId  
-                                      })
+                                    userSocketCon.socket?.emit('call_ended', {
+                                        remoteId: userSocketCon.remoteUserId
+                                    })
                                     dispatch(tearDownConnection({ tearDown: true, socket: null }))
                                     stopAndClearTimer()
                                     navigate(-1)
@@ -369,20 +594,26 @@ const VoiceCallPage = () => {
             </div>
 
 
-            <div className=' bg-white'>
+            <div className=' bg-white '>
                 <div className=" h-full flex justify-evenly place-items-center">
-                    <img src={docImage} className='h-[40px] w-[40px] rounded-full' />
-                    <p>Jennifer Williams</p>
+                    <img src={patientToCallDetails?.doctorImage ?? userSocketCon.remoteCallerDetails?.profilePicture} className='h-[40px] w-[40px] rounded-full' />
+                    <p>{patientToCallDetails?.doctorName ?? userSocketCon.remoteCallerDetails?.profilePicture}</p>
                     <i className='fa fa-ellipsis-v' />
                 </div>
             </div>
 
-            <div className=' w-full h-full  bg-cosmic-bg-chat-background relative'>
+
+            <div className=' w-full h-dvh  bg-cosmic-bg-chat-background relative'>
 
 
 
-                <div className='  h-full overflow-y-auto'>
-                    sss
+                <div ref={messageScrollRef} className='  h-[67vh] overflow-y-auto'>
+                    {
+                        patientMessage && patientMessage.length > 0 && patientMessage.map((data, i) => (
+
+                            <DoctorChatMessage key={i} message={data.message} messageType='' profilePicture={patientToCallDetails?.doctorImage!! ?? userSocketCon.remoteCallerDetails?.profilePicture} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
+                        ))
+                    }
                 </div>
 
 
@@ -397,12 +628,99 @@ const VoiceCallPage = () => {
                                 <img src={attachButton} alt='attach' />
                             </div>
 
-                            <textarea placeholder="enter text" className=" w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  "></textarea>
+                            <textarea placeholder="enter text"  value={typedMessage} className=" mt-2 w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  " onChange={(e)=>{
+                                setTypeMessage(e.target.value)
+                            }}></textarea>
                         </div>
                         <div className="w-full flex justify-end pe-6 gap-3 mt-2">
 
 
-                            <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full '>
+                            <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full ' onClick={() => {
+
+                                if (!typedMessage) {
+                                    return
+                                }
+
+
+                                if (userSocketCon) {
+
+                                    userSocketCon.socket?.emit('send_message', {
+
+                                        senderId: user.data?._id!!,
+                                        receiverId: patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId,
+                                        messageType: 'text',
+                                        message: typedMessage,
+                                        timeStamp: new Date().toLocaleString('UTC', {
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                            hour12: true
+                                        })
+
+                                    })
+                                }
+
+                                if (!patientMessage) {
+
+                                    setPatientMessage([
+                                        {
+                                            senderId: user.data?._id!!,
+                                            receiverId: patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId!!,
+                                            messageType: 'text',
+                                            message: typedMessage,
+                                            timeStamp: new Date().toLocaleString('UTC', {
+                                                hour: '2-digit',
+                                                minute: '2-digit',
+                                                hour12: true
+                                            })
+
+                                        }
+                                    ])
+
+                                    setTypeMessage('')
+
+                                    setTimeout(() => {
+                                        if (messageScrollRef.current) {
+
+                                            messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                                        }
+                                    }, 1000)
+
+                                    return
+                                }
+
+
+                                setPatientMessage((prevMessage) => {
+
+
+                                    prevMessage?.push({
+                                        senderId: user.data?._id!!,
+                                        receiverId: patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId!!,
+                                        messageType: 'text',
+                                        message: typedMessage,
+                                        timeStamp: new Date().toLocaleString('UTC', {
+                                            hour: '2-digit',
+                                            minute: '2-digit',
+                                            hour12: true
+                                        })
+                                    })
+                                    return [
+                                        ...patientMessage,
+
+                                    ]
+                                })
+
+                                setTypeMessage('')
+
+                                setTimeout(() => {
+                                    if (messageScrollRef.current) {
+
+                                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                                    }
+                                }, 1000)
+
+
+
+                            }}>
                                 <img alt='mic' className='' src={sendMessageIcon} />
                             </div>
 

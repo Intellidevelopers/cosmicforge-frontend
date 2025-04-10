@@ -35,7 +35,14 @@ const useGetMediaStream = () => {
         if(mediaStream){
             mediaStream.getTracks().forEach(track => {
                track.stop()
+              
+            }) 
+
+        }
+        if(mediaStream){
+            mediaStream.getTracks().forEach(track => {
                mediaStream.removeTrack(track)
+              
             }) 
 
         }

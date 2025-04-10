@@ -42,7 +42,7 @@ const DoctorBioPage = () => {
   }, [])
 
 
-  return <div className="relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full p-5 overflow-x-hidden"
+  return <div className=" relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full p-5 overflow-x-hidden"
   >
     <div className=" place-items-center gap-3 hidden md:flex " onClick={() => {
       navigate(-1)
@@ -169,11 +169,11 @@ const DoctorBioPage = () => {
 
     <div className="mt-8 text-white flex gap-2">
       <div className="w-full bg-cosmic-primary-color text-[12px] md:text-[14px] p-2 rounded-md text-center" onClick={() => {
-        navigate('/patient/appointment/book',{
-          state:{
-            doctorImage:state?.doctorImage, 
+        navigate('/patient/appointment/book', {
+          state: {
+            doctorImage: state?.doctorImage,
             doctorName: state?.doctorName,
-            doctorSpecialization:state?.doctorSpecialization,
+            doctorSpecialization: state?.doctorSpecialization,
             department: state?.department,
             clinic: state?.clinic,
             address: state?.address,

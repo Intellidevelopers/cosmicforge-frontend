@@ -1,7 +1,7 @@
 import { useState, MutableRefObject, useRef, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { RootReducer } from "../../../../store/initStore"
-import { updateCallMode } from "../../../../store/reducers/userSocketReducer"
+import { updateCallInitialization, updateCallMode } from "../../../../store/reducers/userSocketReducer"
 import DoctorChatMessage from "../../../component/chat/doctor/DoctorChatMessage"
 import { useLocation, useNavigate } from "react-router-dom"
 import videoIcon from '../../../../../assets/icons/cosmic-chat-video-icon.svg'
@@ -312,15 +312,28 @@ const DoctorMobileChatPage = () => {
                             <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
 
                                 if (userSocket.connected) {
+                                    
                                     dispatch(updateCallMode({ callMode: 'audio', socket: null }))
-                                    navigate("/doctor/appointment/voice-call")
+                                    dispatch(updateCallInitialization({isCallInitiated:true,socket:null}))
+                                    navigate("/doctor/appointment/voice-call",{
+                                      state:{
+                                        patientToCallDetails:chatSelected
+                                      }  
+                                    })
+
+                                    
                                 }
 
                             }} />
                             <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} onClick={() => {
                                 if (userSocket.connected) {
                                     dispatch(updateCallMode({ callMode: 'video', socket: null }))
-                                    navigate("/doctor/appointment/voice-call")
+                                    dispatch(updateCallInitialization({isCallInitiated:true,socket:null}))
+                                    navigate("/doctor/appointment/voice-call",{
+                                        state:{
+                                          patientToCallDetails:chatSelected
+                                        }  
+                                      })
                                 }
                             }} />
                             <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />

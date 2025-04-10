@@ -7,8 +7,9 @@ import sendMessageIcon from '../../../../assets/icons/cosmic-chat-send-message-i
 import ChatMessagesBody from '../../component/chat/ChatMessagesBody'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
+import { updateCallMode } from '../../../store/reducers/userSocketReducer'
 
 
 
@@ -17,6 +18,7 @@ const ChatPage = () => {
 
     const navigate = useNavigate()
 
+     const dispatch = useDispatch()
 
     const messageScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
@@ -158,10 +160,39 @@ const ChatPage = () => {
             <div className='flex gap-3 w-fit absolute right-2 md:me-3'>
 
                 <img src={callIcon} className='w-[24px] h-[40px] ' alt='call' onClick={() => {
-                    alert('dhh')
+                 dispatch(updateCallMode({callMode:'audio',socket:null}))
+
+              navigate('/patient/find-a-specialist/consult', {
+                state: {
+                    doctorImage: doctorDetails.doctorImage,
+                    doctorName: doctorDetails.doctorName,
+                    doctorSpecialization: doctorDetails.doctorSpecialization,
+                    clinic:doctorDetails.clinic,
+                    address: doctorDetails.address,
+                    title:'Virtual Consult',
+                    department:doctorDetails.department,
+                    docId:doctorDetails.docId
+                }
+            })
 
                 }} />
-                <img className='w-[24px] h-[40px]' src={videoIcon} alt='video' />
+                <img className='w-[24px] h-[40px]' src={videoIcon} alt='video' onClick={()=>{
+
+                            dispatch(updateCallMode({callMode:'video',socket:null}))
+
+                     navigate('/patient/find-a-specialist/consult', {
+                        state: {
+                            doctorImage: doctorDetails.doctorImage,
+                            doctorName: doctorDetails.doctorName,
+                            doctorSpecialization: doctorDetails.doctorSpecialization,
+                            clinic:doctorDetails.clinic,
+                            address: doctorDetails.address,
+                            title:'Virtual Consult',
+                            department:doctorDetails.department,
+                            docId:doctorDetails.docId
+                        }
+                    })
+                }} />
 
             </div>
 
@@ -230,7 +261,9 @@ const ChatPage = () => {
 
 
                 <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full ' onClick={() => {
-
+                     if(!typedMessage){
+                        return
+                     }
 
                     if (userSocket) {
 

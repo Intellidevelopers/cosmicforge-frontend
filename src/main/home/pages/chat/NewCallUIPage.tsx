@@ -52,7 +52,7 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
             audioRef.current.play()
          }
          if (socketCon.localStream && !socketCon.offerCreated) {
-           
+
 
             createOffer({ userToCall: socketCon.remoteUserId!!, userCalling: user.data?._id!! })
 
@@ -76,8 +76,12 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
 
       if (!socketCon.startPlayingRingTone && socketCon.localStream) {
          if (audioRef.current) {
-            audioRef.current.load()
+            
+            if (audioRef.current) {
+
+               audioRef.current.load()
             audioRef.current.pause()
+               }
          }
       }
    }, [socketCon.startPlayingRingTone])
@@ -101,28 +105,32 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
                            userCalling: socketCon.remoteUserId,
                            remoteId: user.data?._id,
                         })
-                        
+
                         store.dispatch(updateRingTone({ startPlayingRingTone: false, socket: null }))
 
-                        switch(user.data?.role){
+                        switch (user.data?.role) {
                            case 'client': {
                               onAnswer()
+                              navigate('/patient/find-a-specialist/consult')
                               return
                            }
 
-                           case 'doctor' :{
+                           case 'doctor': {
                               onAnswer()
-                              navigate('/doctor/appointment/voice-call')
+                               
+                                 navigate('/doctor/appointment/voice-call')
+                               
+                             
                               return
                            }
                         }
-                       
+
 
                      }
-                   
+
                   }}>answer</p>
                   <p className='bg-red-600 p-2 rounded-lg text-white' onClick={() => {
-                     store.dispatch(tearDownConnection({tearDown:true,socket:null}))
+                     store.dispatch(tearDownConnection({ tearDown: true, socket: null }))
                      store.dispatch(updateRingTone({ startPlayingRingTone: false, socket: null }))
                      onDecline()
                   }}>decline</p>

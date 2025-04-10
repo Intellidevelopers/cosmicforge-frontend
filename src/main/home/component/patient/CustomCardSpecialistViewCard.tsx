@@ -5,7 +5,7 @@ import appointmentButton from '../../../../assets/icons/appointment-icon.svg'
 import verifiedThick from '../../../../assets/icons/home/verifiedThick.svg'
 import ratingStar from '../../../../assets/icons/star-icon.svg'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { updateCallMode } from '../../../store/reducers/userSocketReducer'
+import { updateCallInitialization, updateCallMode } from '../../../store/reducers/userSocketReducer'
 import { useDispatch } from 'react-redux'
 
 
@@ -81,7 +81,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                        
                        dispatch(updateCallMode({callMode:'audio',socket:null}))
                        
-                       
+                       dispatch(updateCallInitialization({isCallInitiated:true,socket:null}))
                        navigate('/patient/find-a-specialist/consult', {
                             state: {
                                 doctorImage: details.profilePicture,

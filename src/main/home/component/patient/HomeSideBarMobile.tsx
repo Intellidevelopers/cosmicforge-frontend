@@ -70,6 +70,7 @@ const dispatch = useDispatch()
             })
           
              navigate('/patient/profile')
+             closeSideBar()
           }}>
             Edit Profile
           </p>
@@ -110,7 +111,9 @@ const dispatch = useDispatch()
                 isCalenderActive:false,
                 isProfileActive:false
               })
+            
               navigate('/patient/run-diagnosis')
+              closeSideBar()
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Run Diagnosis</p>
@@ -130,8 +133,9 @@ const dispatch = useDispatch()
                 isCalenderActive:false,
                 isProfileActive:false
               })
-              closeSideBar()
+            
               navigate('/patient/messages')
+              closeSideBar()
             }}>
               <img alt="message icon" src={messageIcon} />
               <p className="">Messages</p>
@@ -171,6 +175,7 @@ const dispatch = useDispatch()
                 isProfileActive:false
               })
               navigate('/patient/analytics')
+              closeSideBar()
             }}>
               <img alt="home" src={analyticsIcon} />
               <p className="">Analytics</p>
@@ -252,6 +257,7 @@ const dispatch = useDispatch()
                 isProfileActive:false
               })
               navigate('/patient/calendar')
+              closeSideBar()
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Calendar</p>

@@ -32,7 +32,7 @@ const VirtualConsultBody = () => {
   const remoteVideoSteam: MutableRefObject<HTMLVideoElement | null> = useRef(null)
 
   let { state } = useLocation()
-  let data = state as ConsultProps
+  let data = state as ConsultProps 
 
   const user = useSelector((state: RootReducer) => state.user)
 
@@ -83,7 +83,8 @@ const VirtualConsultBody = () => {
 
     if (socketCon.connected && socketCon.socket) {
 
-      if (socketCon.localStream) {
+      if (socketCon.localStream && socketCon.isCallInitiated) {
+
         socketCon.socket.emit('calling', {
           userToCall: data.docId,
           userCallingDetails: {
@@ -101,6 +102,7 @@ const VirtualConsultBody = () => {
           setCallState('failed to connect')
          })
       }
+      
 
       if (socketCon.connected && socketCon.socket) {
         socketCon.socket.on('on_call_ended', () => {
@@ -186,6 +188,7 @@ const VirtualConsultBody = () => {
 
   return (
     <div className="w-full h-full ">
+
       <HomeNavBar title="Virtual Consult" />
       <HomeMobileNavBar title="Virtual Consult" />
 
@@ -198,6 +201,7 @@ const VirtualConsultBody = () => {
             cancelMediaStream()
 
             navigate(-1)
+            
           }}></i>
           <p className="font-extralight">Go back</p>
         </div>
@@ -207,8 +211,8 @@ const VirtualConsultBody = () => {
           <div className="w-full   flex justify-center place-items-center absolute  mt-6 z-50  font-light ">
 
             <div className={`w-full ${(socketCon.callMode === 'video') && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
-              <p>Dr   {data.doctorName}</p>
-              <p>{data.department}</p>
+              <p>Dr   {data?.doctorName ?? socketCon.remoteCallerDetails?.name}</p>
+              <p>{data?.department ?? ''}</p>
               <p className="font-light italic text-sm">{callState === 'answered'? <span className="text-green-600">answered</span> : callState}</p>
             </div>
           </div>
@@ -231,7 +235,7 @@ const VirtualConsultBody = () => {
 
               <div className="w-full h-full flex justify-center place-items-center ">
                 <div className="w-[200px] h-[200px] rounded-full object-contain mt-16 ">
-                  <img className=" h-full w-full rounded-full" src={data.doctorImage} alt="doctors profile" />
+                  <img className=" h-full w-full rounded-full" src={data?.doctorImage ?? socketCon.remoteCallerDetails?.profilePicture} alt="doctors profile" />
                   <audio hidden ref={localAudioStream} controls autoPlay />
                 </div>
 

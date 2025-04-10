@@ -28,7 +28,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     callMode?: 'audio' | 'video' | null,
     tearDown?:boolean,
     newPeerConnectionInstance?:boolean,
-    newInComingCall?:boolean
+    newInComingCall?:boolean,
+    isCallInitiated?:boolean
 
 
     
@@ -134,6 +135,7 @@ workTime?: {
    tearDown:false,
    newPeerConnectionInstance:false,
    newInComingCall:false,
+   isCallInitiated:false,
 
 
    //user chat state
@@ -202,7 +204,8 @@ workTime?: {
           state.offerReceived = false
           state.remoteConnected = false
           state.callMode =  null
-          state.newInComingCall = false
+          state.newInComingCall = false,
+          state.isCallInitiated =false
         },
 
         updateRingTone (state,action:PayloadAction<UserSocketProps>){
@@ -221,6 +224,9 @@ workTime?: {
           state.newPeerConnectionInstance = action.payload.newPeerConnectionInstance?? state.newPeerConnectionInstance
         },
 
+        updateCallInitialization(state,action:PayloadAction<UserSocketProps>){
+          state.isCallInitiated = action.payload.isCallInitiated ?? state.isCallInitiated
+        },
         updateIncomingCall(state,action:PayloadAction<UserSocketProps>){
           state.newInComingCall = action.payload.newInComingCall?? state.newInComingCall
         },
@@ -233,12 +239,14 @@ workTime?: {
 
 
 
+
+
     }
 
  })
 
  export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode,updatePeerNewConnectionInstance,
-  updateUserChat,updateIncomingCall
+  updateUserChat,updateIncomingCall,updateCallInitialization
  } =userSocketSlice.actions
 
 
