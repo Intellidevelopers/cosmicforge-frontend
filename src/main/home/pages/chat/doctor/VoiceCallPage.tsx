@@ -247,7 +247,7 @@ const VoiceCallPage = () => {
             })
 
             setPatientMessage(chat?.messages!!)
-          
+
             setTimeout(() => {
                 if (messageScrollRef.current) {
 
@@ -274,16 +274,16 @@ const VoiceCallPage = () => {
         }
 
 
-        if(userSocketCon && userSocketCon.socket && userSocketCon.localStream && userSocketCon.isCallInitiated){
-           userSocketCon.socket.emit('calling', {
-                userToCall:patientToCallDetails?.details.patientId,
+        if (userSocketCon && userSocketCon.socket && userSocketCon.localStream && userSocketCon.isCallInitiated) {
+            userSocketCon.socket.emit('calling', {
+                userToCall: patientToCallDetails?.details.patientId,
                 userCallingDetails: {
-                  name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
-                  profilePicture: user.data?.profile?.profilePicture!!
+                    name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
+                    profilePicture: user.data?.profile?.profilePicture!!
                 },
                 callMode: userSocketCon.callMode
-      
-              })
+
+            })
         }
 
 
@@ -538,14 +538,15 @@ const VoiceCallPage = () => {
 
                             <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
 
-                                cancelMediaStream().then(() => {
-                                    userSocketCon.socket?.emit('call_ended', {
-                                        remoteId: userSocketCon.remoteUserId
-                                    })
-                                    dispatch(tearDownConnection({ tearDown: true, socket: null }))
-                                    stopAndClearTimer()
-                                    navigate(-1)
+                                userSocketCon.socket?.emit('call_ended', {
+                                    remoteId: userSocketCon.remoteUserId
                                 })
+
+                                await cancelMediaStream()
+
+                                dispatch(tearDownConnection({ tearDown: true, socket: null }))
+                                stopAndClearTimer()
+                                navigate(-1)
 
 
                             }}>
@@ -628,7 +629,7 @@ const VoiceCallPage = () => {
                                 <img src={attachButton} alt='attach' />
                             </div>
 
-                            <textarea placeholder="enter text"  value={typedMessage} className=" mt-2 w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  " onChange={(e)=>{
+                            <textarea placeholder="enter text" value={typedMessage} className=" mt-2 w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  " onChange={(e) => {
                                 setTypeMessage(e.target.value)
                             }}></textarea>
                         </div>
