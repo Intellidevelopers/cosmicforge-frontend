@@ -32,7 +32,7 @@ const VirtualConsultBody = () => {
   const remoteVideoSteam: MutableRefObject<HTMLVideoElement | null> = useRef(null)
 
   let { state } = useLocation()
-  let data = state as ConsultProps 
+  let data = state as ConsultProps
 
   const user = useSelector((state: RootReducer) => state.user)
 
@@ -46,7 +46,7 @@ const VirtualConsultBody = () => {
 
   const dispatch = useDispatch()
 
-  const [callState, setCallState] = useState<'calling' | 'answered' | 'failed to connect' | 'call ended'| null>('calling')
+  const [callState, setCallState] = useState<'calling' | 'answered' | 'failed to connect' | 'call ended' | null>('calling')
 
   const [counter, setCounter] = useState<string>('00:00:00')
   const [counterId, setCounterId] = useState<NodeJS.Timeout>()
@@ -97,21 +97,21 @@ const VirtualConsultBody = () => {
       }
 
 
-      if(socketCon.localStream && socketCon.socket){
-         socketCon.socket.on('failed_to_connect',()=>{
+      if (socketCon.localStream && socketCon.socket) {
+        socketCon.socket.on('failed_to_connect', () => {
           setCallState('failed to connect')
-         })
+        })
       }
-      
+
 
       if (socketCon.connected && socketCon.socket) {
         socketCon.socket.on('on_call_ended', () => {
           stopAndClearTimer()
           setCounter('00:00:00')
-         
-            setCallState('call ended')
+
+          setCallState('call ended')
         })
-    }
+      }
 
       if (socketCon.localStream && !socketCon.offerCreated) {
 
@@ -197,11 +197,11 @@ const VirtualConsultBody = () => {
 
 
           <i className="fa fa-chevron-left fa-2xl" aria-hidden="true" onClick={() => {
-          dispatch(tearDownConnection({tearDown:true,socket:null}))
+            dispatch(tearDownConnection({ tearDown: true, socket: null }))
             cancelMediaStream()
 
             navigate(-1)
-            
+
           }}></i>
           <p className="font-extralight">Go back</p>
         </div>
@@ -213,7 +213,7 @@ const VirtualConsultBody = () => {
             <div className={`w-full ${(socketCon.callMode === 'video') && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
               <p>Dr   {data?.doctorName ?? socketCon.remoteCallerDetails?.name}</p>
               <p>{data?.department ?? ''}</p>
-              <p className="font-light italic text-sm">{callState === 'answered'? <span className="text-green-600">answered</span> : callState}</p>
+              <p className="font-light italic text-sm">{callState === 'answered' ? <span className="text-green-600">answered</span> : callState}</p>
             </div>
           </div>
 
@@ -268,15 +268,15 @@ const VirtualConsultBody = () => {
                   callMode: 'audio',
                   remoteId: data.docId
                 })
-              
+
               }
-              dispatch(updateCallMode({callMode:'audio',socket:null}))
+              dispatch(updateCallMode({ callMode: 'audio', socket: null }))
             }}>
 
 
               <img className="w-full h-full" src={callButton} onClick={() => {
 
-              
+
 
 
                 // toggleVideo()
@@ -292,7 +292,7 @@ const VirtualConsultBody = () => {
                   callMode: 'video',
                   remoteId: data.docId
                 })
-                dispatch(updateCallMode({callMode:'video',socket:null}))
+                dispatch(updateCallMode({ callMode: 'video', socket: null }))
 
               }
 
@@ -302,16 +302,16 @@ const VirtualConsultBody = () => {
             </div>
 
             <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
-            
-            socketCon.socket?.emit('call_ended',{
-              remoteId:socketCon.remoteUserId  
-            })
-            
-             await  cancelMediaStream()
-             console.log('fired...')
-             dispatch(tearDownConnection({tearDown:true,socket:null}))
-             stopAndClearTimer()
-             navigate(-1)
+
+              socketCon.socket?.emit('call_ended', {
+                remoteId: socketCon.remoteUserId
+              })
+
+              await cancelMediaStream()
+              console.log('fired...')
+              dispatch(tearDownConnection({ tearDown: true, socket: null }))
+              stopAndClearTimer()
+              navigate(-1)
 
             }}>
               <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>

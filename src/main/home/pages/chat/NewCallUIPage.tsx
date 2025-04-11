@@ -111,14 +111,18 @@ const NewCallUIPage = ({ newCall, onDecline, onAnswer, userCallingDetails }: New
                         switch (user.data?.role) {
                            case 'client': {
                               onAnswer()
-                              navigate('/patient/find-a-specialist/consult')
+                              navigate('/patient/find-a-specialist/consult',{
+                                 replace:true
+                              })
                               return
                            }
 
                            case 'doctor': {
                               onAnswer()
                                
-                                 navigate('/doctor/appointment/voice-call')
+                                 navigate('/doctor/appointment/voice-call',{
+                                 replace:true
+                              })
                                
                              
                               return

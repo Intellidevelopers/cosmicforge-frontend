@@ -37,11 +37,11 @@ const MainRouterPage = () => {
     }>()
 
 
-    useEffect(()=>{
+    useEffect(() => {
 
         setNewCall(store.getState().socket.newInComingCall!!)
 
-    },[store.getState().socket.newInComingCall])
+    }, [store.getState().socket.newInComingCall])
 
 
     useEffect(() => {
@@ -60,7 +60,7 @@ const MainRouterPage = () => {
                 dispatch(updateRingTone({ startPlayingRingTone: true, socket: null }))
                 dispatch(updateUserCallingData({ remoteUserId: data.caller._id, socket: null, remoteCallerDetails: data.userCallingDetails }))
                 setUserCallingDetails(data.userCallingDetails)
-                dispatch(updateIncomingCall({newInComingCall:true,socket:null}))
+                dispatch(updateIncomingCall({ newInComingCall: true, socket: null }))
                 //  navigate('/doctor/appointment/voice-call')
             })
         }
@@ -166,32 +166,32 @@ const MainRouterPage = () => {
 
             socket.on('connect', async () => {
                 store.dispatch(connectSocket({ connected: true, socket }))
-               store.dispatch(updatePeerConnectionInstance({
+                store.dispatch(updatePeerConnectionInstance({
                     localPeerConnectionInstance: new RTCPeerConnection({
                         iceServers: rtcConfig.iceServers
                     }), remotePeerConnectionInstance: new RTCPeerConnection({
                         iceServers: rtcConfig.iceServers
                     }), socket: null
                 }))
-              
-             try {
 
-                const result = await getUserChats(user.data?.token!!)
-                 console.log(result)
-                if(result.status === 200){
-                 store.dispatch(updateUserChat({userChats:result.data,socket:null}))
-                }
-                
-             } catch (error) {
-                const result = await getUserChats(user.data?.token!!)
-                 console.log(result)
-                if(result.status === 200){
-                 store.dispatch(updateUserChat({userChats:result.data,socket:null}))
-                }
-             }
+                try {
 
-                
-                
+                    const result = await getUserChats(user.data?.token!!)
+                    console.log(result)
+                    if (result.status === 200) {
+                        store.dispatch(updateUserChat({ userChats: result.data, socket: null }))
+                    }
+
+                } catch (error) {
+                    const result = await getUserChats(user.data?.token!!)
+                    console.log(result)
+                    if (result.status === 200) {
+                        store.dispatch(updateUserChat({ userChats: result.data, socket: null }))
+                    }
+                }
+
+
+
 
 
 
@@ -199,7 +199,7 @@ const MainRouterPage = () => {
             })
 
 
-            socket.on('update_chat',async(d:{
+            socket.on('update_chat', async (d: {
                 chatID: string;
                 userOneID: {
                     userId: string;
@@ -256,87 +256,87 @@ const MainRouterPage = () => {
                     sender?: string;
                     reciever?: string;
                 }] | null;
-            })=>{
-              
+            }) => {
 
-                let chats = store.getState().socket.userChats?.filter(data=>{
+
+                let chats = store.getState().socket.userChats?.filter(data => {
                     return data.chatID !== d.chatID
-                })  as [{  
-     
-                    chatID:string,
-                  userOneID:{
-                    userId:string,
-                   userName:string,
-                   userProfile:{
-                
-                    profilePicture:string,
-                    professionalTitle?: string,
-                    specialization?: string,
-                    currentClinic?: string,
-                    department?: string,
-                    bio?: string,
-                    pricing?: string,
-              
-                    workAddress?:string,
-                    experience?: {
-              
-                        hospitalName?: string,
-                        NoOfPatientTreated?: string,
-                        specializationAndDepartment?: string,
-                        date?: string
+                }) as [{
+
+                    chatID: string,
+                    userOneID: {
+                        userId: string,
+                        userName: string,
+                        userProfile: {
+
+                            profilePicture: string,
+                            professionalTitle?: string,
+                            specialization?: string,
+                            currentClinic?: string,
+                            department?: string,
+                            bio?: string,
+                            pricing?: string,
+
+                            workAddress?: string,
+                            experience?: {
+
+                                hospitalName?: string,
+                                NoOfPatientTreated?: string,
+                                specializationAndDepartment?: string,
+                                date?: string
+                            },
+                            workTime?: {
+                                day?: string,
+                                time?: string
+                            }
+                        }
                     },
-                    workTime?: {
-                        day?: string,
-                        time?: string
+                    userTwoID: {
+                        userId: string,
+                        userName: string,
+                        userProfile: {
+
+                            profilePicture: string,
+                            professionalTitle?: string,
+                            specialization?: string,
+                            currentClinic?: string,
+                            department?: string,
+                            bio?: string,
+                            pricing?: string,
+
+                            workAddress?: string,
+                            experience?: {
+
+                                hospitalName?: string,
+                                NoOfPatientTreated?: string,
+                                specializationAndDepartment?: string,
+                                date?: string
+                            },
+                            workTime?: {
+                                day?: string,
+                                time?: string
+                            }
+                        }
                     }
-                   }
-                  },
-                  userTwoID:{
-                    userId:string,
-                   userName:string,
-                   userProfile:{
-              
-              profilePicture:string,
-              professionalTitle?: string,
-              specialization?: string,
-              currentClinic?: string,
-              department?: string,
-              bio?: string,
-              pricing?: string,
-              
-              workAddress?:string,
-              experience?: {
-              
-                  hospitalName?: string,
-                  NoOfPatientTreated?: string,
-                  specializationAndDepartment?: string,
-                  date?: string
-              },
-              workTime?: {
-                  day?: string,
-                  time?: string
-              }
-                   }
-                  }
-              
-                  messages:[{
-                    messageType?:string,
-                    message?:string,
-                    timeStamp?:string,
-                    sender?:string,
-                    reciever?:string
-               
-                  }] | null
-                 
-               }]| null
+
+                    messages: [{
+                        messageType?: string,
+                        message?: string,
+                        timeStamp?: string,
+                        sender?: string,
+                        reciever?: string
+
+                    }] | null
+
+                }] | null
 
 
                 chats?.unshift(d)
-                store.dispatch(updateUserChat({userChats:chats,socket:null}))
+                store.dispatch(updateUserChat({ userChats: chats, socket: null }))
             })
 
 
-           
+
 
 
 
@@ -667,10 +667,10 @@ const MainRouterPage = () => {
     return <div className="w-full h-full relative">
         {
             isNewCall && <NewCallUIPage userCallingDetails={userCallingDetails!!} newCall={isNewCall} onDecline={() => {
-                store.dispatch(updateIncomingCall({newInComingCall:false,socket:null}))
-            }} onAnswer={ () => {
+                store.dispatch(updateIncomingCall({ newInComingCall: false, socket: null }))
+            }} onAnswer={() => {
                 console.log('answered.')
-                store.dispatch(updateIncomingCall({newInComingCall:false,socket:null}))
+                store.dispatch(updateIncomingCall({ newInComingCall: false, socket: null }))
 
             }} />
         }

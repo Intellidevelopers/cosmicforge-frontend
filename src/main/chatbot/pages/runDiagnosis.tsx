@@ -156,6 +156,7 @@ const AiChatbot = () => {
                 </div>
           </div>
         </div>
+        
         <div className="flex-none md:p-4  bg-white border-t border-gray-300 relative">
           {/* STOP LOADING BUTTON HERE */}
 

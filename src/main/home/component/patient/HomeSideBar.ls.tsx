@@ -222,8 +222,9 @@ const HomeSideBar = () => {
             <div className="w-full pl-[15%] flex justify-start transition-all duration-200 ease-out text-cosmic-color-warning-color  hover:underline ">
               <img className={"h-[25px] w-[25px]"} alt="home" src={logOutIcon} />
               <p className=" text-[15.5px]" onClick={() => {
+                  
                 dispatch(authenticateUser({ isAunthenticated: false, data: {}, emailValidated: false, keepMeSignedIn: false }))
-                navigate('/')
+              
               }} >Log out</p>
             </div>
           </div>

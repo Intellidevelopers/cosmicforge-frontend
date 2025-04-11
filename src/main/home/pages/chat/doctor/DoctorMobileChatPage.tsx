@@ -281,20 +281,23 @@ const DoctorMobileChatPage = () => {
 
 
 
-    return <div className="w-full h-dvh overflow-hidden">
+    return <div className="w-full  h-dvh overflow-hidden  relative">
         <DoctorHomeNavBar title="Messages" />
         <DoctorNavBarHome title="Messages" />
 
-        <div ref={chatPageForWebRef} className="bg-cosmic-bg-chat-background   flex-col col-span-2">
+
+
+
+        <div ref={chatPageForWebRef} className="bg-cosmic-bg-chat-background   h-dvh  relative   ">
 
 
 
 
-            <div className={`w-full relative h-full ${chatSelected ? 'block' : 'hidden'} `}>
+            <div className={`w-full  h-full  relative ${chatSelected ? 'block' : 'hidden'} `}>
 
 
 
-                <div className="bg-white w-full h-[60px] p-3">
+                <div className="bg-white w-full h-[10vh] p-3">
 
                     <div className="grid grid-cols-3  ">
 
@@ -312,28 +315,28 @@ const DoctorMobileChatPage = () => {
                             <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
 
                                 if (userSocket.connected) {
-                                    
+
                                     dispatch(updateCallMode({ callMode: 'audio', socket: null }))
-                                    dispatch(updateCallInitialization({isCallInitiated:true,socket:null}))
-                                    navigate("/doctor/appointment/voice-call",{
-                                      state:{
-                                        patientToCallDetails:chatSelected
-                                      }  
+                                    dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
+                                    navigate("/doctor/appointment/voice-call", {
+                                        state: {
+                                            patientToCallDetails: chatSelected
+                                        }
                                     })
 
-                                    
+
                                 }
 
                             }} />
                             <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} onClick={() => {
                                 if (userSocket.connected) {
                                     dispatch(updateCallMode({ callMode: 'video', socket: null }))
-                                    dispatch(updateCallInitialization({isCallInitiated:true,socket:null}))
-                                    navigate("/doctor/appointment/voice-call",{
-                                        state:{
-                                          patientToCallDetails:chatSelected
-                                        }  
-                                      })
+                                    dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
+                                    navigate("/doctor/appointment/voice-call", {
+                                        state: {
+                                            patientToCallDetails: chatSelected
+                                        }
+                                    })
                                 }
                             }} />
                             <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />
@@ -347,133 +350,178 @@ const DoctorMobileChatPage = () => {
 
 
 
-                <div ref={messageScrollRef} className="bg-transparent h-[73vh] overflow-y-auto">
+               
 
 
-                    {
-                        messages?.length && messages?.length > 0 && messages.map((data, i) => (
+<div className="w-full h-[90vh] flex flex-col  ">
 
-                            <DoctorChatMessage key={i} message={data.message} messageType='' profilePicture={chatSelected?.doctorImage!!} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
-                        ))
-                    }
-
-                </div>
+<div ref={messageScrollRef} className="bg-transparent  h-[70vh]  overflow-y-auto ">
 
 
+{
+    messages?.length && messages?.length > 0 && messages.map((data, i) => (
+
+        <DoctorChatMessage key={i} message={data.message} messageType='' profilePicture={chatSelected?.doctorImage!!} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
+    ))
+}
+
+</div>
 
 
-                <div className="bg-white w-full h-[90px]">
 
-                    <div className="grid grid-cols-3 ">
-                        <div className="flex place-items-center j gap-3 col-span-2
+<div className=" w-full  bg-white  pt-2 h-[25vh] ">
+
+<div className="grid grid-cols-3 ">
+    <div className="flex place-items-center  gap-3 col-span-2
 ">
-                            <div className='bg-cosmic-primary-color flex justify-center place-items-center ms-2 w-[40px] h-[40px] rounded-full'>
-                                <img src={attachButton} alt='attach' />
-                            </div>
+        <div className='bg-cosmic-primary-color flex justify-center place-items-center ms-2 w-[40px] h-[40px] rounded-full'>
+            <img src={attachButton} alt='attach' />
+        </div>
 
-                            <textarea placeholder="enter text" value={typedMessage} className=" w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  " onChange={(e) => {
-                                setTypeMessage(e.target.value)
-                            }}></textarea>
-                        </div>
-                        <div className="w-full flex justify-end pe-6 gap-3 mt-2">
-                            <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full '>
-                                <img alt='mic' className=' ' src={micIcon} />
-                            </div>
+        <textarea placeholder="enter text" value={typedMessage} className=" w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  " onChange={(e) => {
+            setTypeMessage(e.target.value)
+        }}></textarea>
+    </div>
+    <div className="w-full flex justify-end pe-6 gap-3 mt-2">
+        <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full '>
+            <img alt='mic' className=' ' src={micIcon} />
+        </div>
 
-                            <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full ' onClick={() => {
+        <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full ' onClick={() => {
 
-                                if (userSocket) {
+            if (userSocket) {
 
-                                    userSocket.socket?.emit('send_message', {
+                userSocket.socket?.emit('send_message', {
 
-                                        senderId: user.data?._id!!,
-                                        receiverId: chatSelected?.details.patientId,
-                                        messageType: 'text',
-                                        message: typedMessage,
-                                        timeStamp: new Date().toLocaleString('UTC', {
-                                            hour: '2-digit',
-                                            minute: '2-digit',
-                                            hour12: true
-                                        })
+                    senderId: user.data?._id!!,
+                    receiverId: chatSelected?.details.patientId,
+                    messageType: 'text',
+                    message: typedMessage,
+                    timeStamp: new Date().toLocaleString('UTC', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    })
 
-                                    })
-                                }
+                })
+            }
 
-                                if (!messages) {
+            if (!messages) {
 
-                                    setMessages([
-                                        {
-                                            senderId: user.data?._id!!,
-                                            receiverId: chatSelected?.details.patientId!!,
-                                            messageType: 'text',
-                                            message: typedMessage,
-                                            timeStamp: new Date().toLocaleString('UTC', {
-                                                hour: '2-digit',
-                                                minute: '2-digit',
-                                                hour12: true
-                                            })
+                setMessages([
+                    {
+                        senderId: user.data?._id!!,
+                        receiverId: chatSelected?.details.patientId!!,
+                        messageType: 'text',
+                        message: typedMessage,
+                        timeStamp: new Date().toLocaleString('UTC', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                        })
 
-                                        }
-                                    ])
+                    }
+                ])
 
-                                    setTypeMessage('')
+                setTypeMessage('')
 
-                                    setTimeout(() => {
-                                        if (messageScrollRef.current) {
+                setTimeout(() => {
+                    if (messageScrollRef.current) {
 
-                                            messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
-                                        }
-                                    }, 1000)
+                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                    }
+                }, 1000)
 
-                                    return
-                                }
-
-
-                                setMessages((prevMessage) => {
+                return
+            }
 
 
-                                    prevMessage?.push({
-                                        senderId: user.data?._id!!,
-                                        receiverId: chatSelected?.details.patientId!!,
-                                        messageType: 'text',
-                                        message: typedMessage,
-                                        timeStamp: new Date().toLocaleString('UTC', {
-                                            hour: '2-digit',
-                                            minute: '2-digit',
-                                            hour12: true
-                                        })
-                                    })
-                                    return [
-                                        ...messages,
-
-                                    ]
-                                })
-
-                                setTypeMessage('')
-
-                                setTimeout(() => {
-                                    if (messageScrollRef.current) {
-
-                                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
-                                    }
-                                }, 1000)
+            setMessages((prevMessage) => {
 
 
+                prevMessage?.push({
+                    senderId: user.data?._id!!,
+                    receiverId: chatSelected?.details.patientId!!,
+                    messageType: 'text',
+                    message: typedMessage,
+                    timeStamp: new Date().toLocaleString('UTC', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    })
+                })
+                return [
+                    ...messages,
 
-                            }}>
-                                <img alt='mic' className='' src={sendMessageIcon} />
-                            </div>
+                ]
+            })
 
-                        </div>
+            setTypeMessage('')
 
-                    </div>
-                </div>
+            setTimeout(() => {
+                if (messageScrollRef.current) {
+
+                    messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                }
+            }, 1000)
+
+
+
+        }}>
+            <img alt='mic' className='' src={sendMessageIcon} />
+        </div>
+
+    </div>
+
+</div>
+</div>
+
+
+</div>
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
             </div>
 
+
+
+
+
+
+          
+
+
         </div>
+
+
+        
+
+
+
+
+
+
+
+
     </div>
 
 

@@ -145,6 +145,8 @@ const router = createBrowserRouter([
          path:'/alerts/cancel-appointment',
          element:<CancelAppointment/>
         },
+
+        
      {
        path:'patient',
        element:<HomeMainPage/>,
