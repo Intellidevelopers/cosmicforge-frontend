@@ -99,7 +99,7 @@ const useGetMediaStream = () => {
 
 
             } catch (error: any) {
-                alert(error.message)
+                //alert(error.message)
                 return null
             }
         })()
