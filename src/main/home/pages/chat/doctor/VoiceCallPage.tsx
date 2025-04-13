@@ -8,11 +8,11 @@ import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
-import { RootReducer } from '../../../../store/initStore'
+import { RootReducer} from '../../../../store/initStore'
 import useGetMediaStream from '../../../hook/useGetMediaStream'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { tearDownConnection, updateCallMode, updateUserCallingData } from '../../../../store/reducers/userSocketReducer'
-import UserRTC from '../../../hook/UserRTC'
+import {  useLocation, useNavigate } from 'react-router-dom'
+import { tearDownConnection, updateCallMode} from '../../../../store/reducers/userSocketReducer'
+
 import DoctorChatMessage from '../../../component/chat/doctor/DoctorChatMessage'
 
 
@@ -42,12 +42,12 @@ const VoiceCallPage = () => {
 
     const [callState, setCallState] = useState<'connecting' | 'connected' | 'failed to connect' | 'call ended' | null>('connecting')
 
-    const { createOffer } = UserRTC()
+
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-
+const {} = useGetMediaStream()
 
 
     const { state } = useLocation()
@@ -92,6 +92,9 @@ const VoiceCallPage = () => {
     const [counter, setCounter] = useState<string>('00:00:00')
     const [counterId, setCounterId] = useState<NodeJS.Timeout>()
 
+  
+
+
     const [patientMessage, setPatientMessage] = useState<{
 
         senderId: string,
@@ -131,13 +134,13 @@ const VoiceCallPage = () => {
 
     useEffect(() => {
         console.log(userSocketCon?.remoteStream?.getTracks().length)
-        if (remoteVideoSteam.current && userSocketCon.remoteStream) {
-
+        if (remoteVideoSteam.current && userSocketCon.remoteStream && userSocketCon.locallyConnected) {
+            
             remoteVideoSteam.current.srcObject = userSocketCon.remoteStream!!
 
         }
 
-    }, [userSocketCon.remoteStream])
+    }, [userSocketCon.remoteStream,userSocketCon.locallyConnected])
 
 
 
@@ -267,6 +270,8 @@ const VoiceCallPage = () => {
 
     useEffect(() => {
 
+        
+
         console.log(userSocketCon.localStream)
         if (localVideoStream.current) {
             localVideoStream.current.srcObject = userSocketCon.localStream!!
@@ -274,29 +279,317 @@ const VoiceCallPage = () => {
         }
 
 
-        if (userSocketCon && userSocketCon.socket && userSocketCon.localStream && userSocketCon.isCallInitiated) {
-            userSocketCon.socket.emit('calling', {
-                userToCall: patientToCallDetails?.details.patientId,
-                userCallingDetails: {
-                    name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
-                    profilePicture: user.data?.profile?.profilePicture!!
-                },
-                callMode: userSocketCon.callMode
+     /*   if (userSocketCon && userSocketCon.socket && userSocketCon.localStream && userSocketCon.isCallInitiated) {
+            (async()=>{
+            
+                      try {
+                       if(userSocketCon.socket)
+                        userSocketCon.socket.emit('calling', {
+                            userToCall: patientToCallDetails?.details.patientId,
+                            userCallingDetails: {
+                                name: user.data?.lastName?.concat('').concat(user.data.fullName!!),
+                                profilePicture: user.data?.profile?.profilePicture!!
+                            },
+                            callMode: userSocketCon.callMode
+            
+                        })
+            
+                        userSocketCon.localStream?.getTracks().forEach(tracks=>{
+                            localPeerConnection.addTrack(tracks, store.getState().socket.localStream!!)
+                        })
+                        const offer = await  localPeerConnection.createOffer({
+                          iceRestart:true,
+                          offerToReceiveAudio:true,
+                          offerToReceiveVideo:true
+                       })
+                  
+                       await localPeerConnection.setLocalDescription(offer)
+                      // dispatch(updateLocalDescription({localDescription:offer as RTCSessionDescription,socket:null}))
+                         dispatch(updateOfferOrAnswer({offerCreated:true,socket:null}))
+                         //dispatch(updatePeerConnectionInstance({localPeerConnectionInstance:localPeerConnection,remotePeerConnectionInstance:remotePeerConnection,socket:null}))
+                          let  userToCall = patientToCallDetails?.details.patientId
+                          let userCalling = user.data?._id 
+            
+                         if(userSocketCon.connected && userSocketCon.socket){
+                            userSocketCon.socket.emit('create_offer',{
+                              userToCall ,
+                               userCalling,
+                               user_calling_offer:offer
+                            })
+                       }
+            
+                           
+                    dispatch(updateUserCallingData({ remoteUserId: patientToCallDetails?.details.patientId, socket: null }))
+                        
+                      } catch (error) {
+                         console.log(error)
+                      }
+                    })()
 
-            })
-        }
+
+
+
+                    try {
+
+                        localPeerConnection.addEventListener('icecandidate', async (e: RTCPeerConnectionIceEvent) => {
+              
+                          if(userSocketCon.socket){
+                            userSocketCon.socket.emit('local_ice_candidate', {
+                              userToCall: userSocketCon.remoteUserId,
+                              userCalling: user.data?._id,
+                              user_calling_ice_candidate: e.candidate
+                          })
+                          }
+                              
+              
+              
+                        })
+              
+              
+                        remotePeerConnection.addEventListener('icecandidate', async (e: RTCPeerConnectionIceEvent) => {
+              
+                            if (userSocketCon.connected && userSocketCon.socket) {
+                                userSocketCon.socket.emit('remote_ice_candidate', {
+                                    userToCall: user.data?._id,
+                                    userCalling: userSocketCon.remoteUserId,
+                                    user_recieving_call_ice_candidate: e.candidate
+                                })
+                            }
+              
+              
+                        })
+              
+              
+              
+                        if (userSocketCon.connected && userSocketCon.socket) {
+              
+                          userSocketCon.socket.on('local_ice_candidate', (data: {
+                                userToCall: string,
+                                userCalling: string,
+                                user_calling_ice_candidate: RTCIceCandidate
+                            }) => {
+              
+                                if (remotePeerConnection.localDescription && remotePeerConnection.remoteDescription) {
+                                    console.log('called')
+                                    try {
+                                        remotePeerConnection.addIceCandidate(data.user_calling_ice_candidate)
+                                    } catch (error) {
+              
+                                    }
+                                }
+              
+              
+                            })
+              
+              
+              
+                        }
+              
+              
+              
+                        if (userSocketCon.connected && userSocketCon.socket) {
+                            userSocketCon.socket.on('remote_ice_candidate', (data: {
+                                userToCall: string,
+                                userCalling: string,
+                                user_recieving_call_ice_candidate: RTCIceCandidate
+                            }) => {
+              
+                                if (localPeerConnection.remoteDescription && localPeerConnection.localDescription && localPeerConnection.signalingState !== 'closed') {
+                                    try {
+                                        localPeerConnection.addIceCandidate(data.user_recieving_call_ice_candidate)
+                                    } catch (error) {
+              
+                                    }
+                                }
+              
+                            })
+                        }
+              
+              
+              
+              
+              
+              
+              
+                        remotePeerConnection.addEventListener('track', async (e) => {
+                            console.log('tracks.....')
+                            console.log(e.track.kind)
+              
+                            dispatch(updateRemoteStream({ remoteStream: e.streams[0], socket: null }))
+              
+                        })
+              
+              
+              
+                        localPeerConnection.onconnectionstatechange = (async () => {
+                            console.log('change...')
+                            console.log(localPeerConnection.connectionState)
+              
+              
+              
+              
+                            if (userSocketCon.socket && localPeerConnection.connectionState === 'connected') {
+                                  store.dispatch(updateLocalConection({locallyConnected:true}))
+                                userSocketCon.socket?.emit('connected', {
+                                    remoteId: userSocketCon.remoteUserId
+                                })
+              
+                            } else if (userSocketCon.socket && localPeerConnection.connectionState === 'failed') {
+                                userSocketCon?.socket.emit('failed_to_connect', { userId: userSocketCon.remoteUserId })
+              
+                            }
+              
+                        })
+              
+              
+              
+              
+                        localPeerConnection.onicecandidate = (async () => {
+                            //console.log(localPeerConnection.iceConnectionState)
+                            // console.log(localPeerConnection.iceConnectionState )
+                        })
+              
+                       if (userSocketCon.connected && userSocketCon.socket) {
+                           userSocketCon.socket.on('offer_received', async (data: {
+                                userToCall: string,
+                                userCalling: string,
+                                user_calling_offer: RTCSessionDescription
+                            }) => {
+              
+              
+              
+                                try {
+              
+                                    if(remotePeerConnection.signalingState !== "closed" && !userSocketCon.offerCreated)
+                                    await remotePeerConnection.setRemoteDescription(data.user_calling_offer)
+              
+              
+                                   // dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnection, remotePeerConnectionInstance: remotePeerConnection, socket: null }))
+              
+                                    //   dispatch(updateRemoteDescription({remoteDescription:data.user_calling_offer,socket:null}))
+                                    console.log(remotePeerConnection.remoteDescription)
+                                    console.log('offer received')
+                                    console.log(data.userCalling)
+                                    console.log(user.data?._id)
+              
+                                    dispatch(updateOfferOrAnswer(({ offerReceived: true, socket: null })))
+              
+              
+              
+                                } catch (error) {
+                                    console.log(error)
+                                }
+              
+              
+              
+                            })
+              
+                        }
+              
+              
+                        if (userSocketCon.connected && userSocketCon.socket) {
+              
+                            userSocketCon.socket.on('answer_received', async (data: {
+                                userToCall: string,
+                                userCalling: string,
+                                user_receiving_call_answer: RTCSessionDescription
+                            }) => {
+                                // alert(JSON.stringify(data))
+                                try {
+                                    console.log('anser received')
+                                    const localPeerConnectionInstance = store.getState().socket.localPeerConnectionInstance
+                                    const remotePeerConnectionInstance = store.getState().socket.remotePeerConnectionInstance
+              
+                                    await localPeerConnectionInstance?.setRemoteDescription(data.user_receiving_call_answer)
+                                    dispatch(updatePeerConnectionInstance({ localPeerConnectionInstance: localPeerConnectionInstance, remotePeerConnectionInstance: remotePeerConnectionInstance, socket: null }))
+              
+                                } catch (error: any) {
+                                    console.log(error.message)
+                                }
+              
+                            })
+                        }
+              
+              
+              
+                        if (userSocketCon.connected && userSocketCon.socket) {
+              
+                            userSocketCon.socket.on('remote_answered_call', () => {
+              
+                             //   createAnswer({ userToCall: store.getState().user.data?._id!!, userCalling: store.getState().socket.remoteUserId!! })
+              
+                                console.log('call answer receiversll remote')
+                            })
+                        }
+              
+              
+                        if (userSocketCon.connected && userSocketCon.socket) {
+              
+              
+                           userSocketCon.socket.on('failed_to_connect', () => {
+                                console.log('called failed')
+              
+                            })
+                        }
+              
+              
+              
+                        if (userSocketCon.connected && userSocketCon.socket) {
+                            userSocketCon.socket.on('on_call_end', () => {
+                                console.log('tearing downn')
+                                dispatch(tearDownConnection({ tearDown: true, socket: null }))
+              
+                            })
+                        }
+              
+              
+                        if (userSocketCon.connected && userSocketCon.socket) {
+                            userSocketCon.socket.on('on_connected', () => {
+                                store.dispatch(updateRemoteConnection({ remoteConnected: true, socket: null }))
+                            })
+                        }
+              
+              
+              
+              
+              
+              
+              
+              
+                    } catch (error: any) {
+              
+                        // alert(error.message)
+              
+              
+                    }
+              
+
+
+                     
+
+
+        }*/
+
+
+
 
 
         if (userSocketCon.localStream && !userSocketCon.offerCreated) {
 
-            createOffer({ userToCall: patientToCallDetails?.details.patientId!!, userCalling: user.data?._id!! })
 
-            dispatch(updateUserCallingData({ remoteUserId: patientToCallDetails?.details.patientId, socket: null }))
+
+            
+
+          //  createOffer({ userToCall: patientToCallDetails?.details.patientId!!, userCalling: user.data?._id!! })
+
+           // dispatch(updateUserCallingData({ remoteUserId: patientToCallDetails?.details.patientId, socket: null }))
 
         } else {
             stopAndClearTimer()
             console.log('false alrdeay created')
         }
+
+
 
 
         if (userSocketCon.connected && userSocketCon.socket) {
@@ -328,11 +621,11 @@ const VoiceCallPage = () => {
 
 
     useEffect(() => {
-        if (userSocketCon.remoteConnected) {
+        if (userSocketCon.remoteConnected && userSocketCon.locallyConnected) {
             setCallState('connected')
             startTimer()
         }
-    }, [userSocketCon.remoteConnected])
+    }, [userSocketCon.remoteConnected,userSocketCon.locallyConnected])
 
 
 
@@ -433,7 +726,7 @@ const VoiceCallPage = () => {
                                     console.log('fired...')
                                     dispatch(tearDownConnection({ tearDown: true, socket: null }))
                                     stopAndClearTimer()
-                                    navigate(-1)
+                                    navigate("/doctor/home")
 
 
                                 }}>
@@ -546,7 +839,7 @@ const VoiceCallPage = () => {
 
                                 dispatch(tearDownConnection({ tearDown: true, socket: null }))
                                 stopAndClearTimer()
-                                navigate(-1)
+                                navigate("/doctor/home")
 
 
                             }}>

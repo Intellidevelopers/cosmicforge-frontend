@@ -263,19 +263,9 @@ const router = createBrowserRouter([
          }
        
        ]},
-      
-  {
-    path: '/',
-    element: <MainRouterPage />,
-    children: [
 
 
-      {
-        path: '',
-        element: <LandingPage />,
-
-      },
-      {
+       {
         path: 'departments',
         element: <DepartmentsPage />,
 
@@ -509,62 +499,63 @@ const router = createBrowserRouter([
 
         ]
       },
+      
+    //please all doctor route should be here
 
-      //please all doctor route should be here
+    {
+      path: '/doctor',
+      element: <DoctorHomeMainPage />,
+      children: [
+        {
+          path: 'home',
+          element: <DoctorHome />
+        },
+      
+       
+      ]
+    },
+    {
+      path: '/doctor/appointment',
+      element: <VoiceAndVideoContainerPage />,
+      children:[
+        {
+          path: 'voice-call',
+          element: <VoiceCallPage />
+        },
+      ]
+    },
 
-      {
-        path: '/doctor',
-        element: <DoctorHomeMainPage />,
-        children: [
-          {
-            path: 'home',
-            element: <DoctorHome />
-          },
-        
-         
-        ]
-      },
-      {
-        path: '/doctor/appointment',
-        element: <VoiceAndVideoContainerPage />,
-        children:[
-          {
-            path: 'voice-call',
-            element: <VoiceCallPage />
-          },
-        ]
-      },
+    {
+      path: '/doctor/appointments/',
+      element: < DoctorAppointmentPage/>,
+      children:[
+        {
+          path:'',
+          element:<DoctorTable/>
+        },
+        {
+          path:'calendar',
+          element:<DoctorCalendar/>
+        }
+      ]
+    },
+    {
+      path: '/doctor/messages',
+      element: <DoctorMainChatPage />
+    },
+    {
+      path: '/doctor/messages/chat',
+      element: <DoctorMobileChatPage />
+    },
+   
+   
+    {
+      path: '/doctor/edit-profile',
+      element: <DoctorEditProfilePage/>
+    }
 
-      {
-        path: '/doctor/appointments/',
-        element: < DoctorAppointmentPage/>,
-        children:[
-          {
-            path:'',
-            element:<DoctorTable/>
-          },
-          {
-            path:'calendar',
-            element:<DoctorCalendar/>
-          }
-        ]
-      },
-      {
-        path: '/doctor/messages',
-        element: <DoctorMainChatPage />
-      },
-      {
-        path: '/doctor/messages/chat',
-        element: <DoctorMobileChatPage />
-      },
-     
-     
-      {
-        path: '/doctor/edit-profile',
-        element: <DoctorEditProfilePage/>
-      }
-    ]
-  }
+
+  
 ]}
 ])
 

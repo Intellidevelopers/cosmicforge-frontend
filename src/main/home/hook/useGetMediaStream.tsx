@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import { store } from "../../store/initStore"
 import { updateUserLocalStream } from "../../store/reducers/userSocketReducer"
 
@@ -76,35 +76,39 @@ const useGetMediaStream = () => {
     }
 
 
-    useEffect(() => {
-        (async () => {
-            try {
-               if(!mediaStream){
+    const getStream = async () =>{
 
-                const localVideoStream = await navigator.mediaDevices.getUserMedia({
-                    audio: true,
-                    video: true,
+       return new Promise(async(res,rej)=>{
+        try {
+            if(!mediaStream){
 
-
-                })
-                
-                setMediaStream(localVideoStream)
-                store.dispatch(updateUserLocalStream({localStream:localVideoStream,socket:null}))
-              
-
-               }
-                
+             const localVideoStream = await navigator.mediaDevices.getUserMedia({
+                 audio: true,
+                 video: true,
 
 
+             })
+             
+             setMediaStream(localVideoStream)
+             store.dispatch(updateUserLocalStream({localStream:localVideoStream,socket:null}))
+               res(localVideoStream)
 
-
-            } catch (error: any) {
-                //alert(error.message)
-                return null
             }
-        })()
+             
 
-    }, [])
+
+
+
+         } catch (error: any) {
+             //alert(error.message)
+             rej(null)
+             return null
+         }
+       })
+    }
+
+
+    
 
     
     const toggleMic = async () => {
@@ -241,7 +245,7 @@ const useGetMediaStream = () => {
     
 
 
-    return { mediaStream, cancelMediaStream, toggleMic, toggleVideo, startStream, switchToAudio,mode }
+    return { mediaStream, cancelMediaStream, toggleMic, toggleVideo, startStream, switchToAudio,mode,getStream }
 }
 
 

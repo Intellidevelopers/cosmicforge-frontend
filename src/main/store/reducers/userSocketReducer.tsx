@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
   export interface UserSocketProps {
 
-    socket:SocketIOClient.Socket | null,
+    socket?:SocketIOClient.Socket | null,
     isOnline?:boolean,
     connected?:boolean,
     remoteUserId?:string,
@@ -29,8 +29,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     tearDown?:boolean,
     newPeerConnectionInstance?:boolean,
     newInComingCall?:boolean,
-    isCallInitiated?:boolean
-
+    isCallInitiated?:boolean,
+    locallyConnected?:boolean,
+    onCallAnswered?:boolean
 
     
     
@@ -136,7 +137,9 @@ workTime?: {
    newPeerConnectionInstance:false,
    newInComingCall:false,
    isCallInitiated:false,
-
+   locallyConnected:false,
+   onCallAnswered:false,
+   
 
    //user chat state
    userChats: null
@@ -205,7 +208,13 @@ workTime?: {
           state.remoteConnected = false
           state.callMode =  null
           state.newInComingCall = false,
-          state.isCallInitiated =false
+          state.isCallInitiated =false,
+          state.locallyConnected  = false,
+          state.localPeerConnectionInstance?.close()
+          state.remotePeerConnectionInstance?.close()
+          state.localPeerConnectionInstance = null
+          state.remotePeerConnectionInstance = null,
+          state.onCallAnswered = false
         },
 
         updateRingTone (state,action:PayloadAction<UserSocketProps>){
@@ -227,6 +236,7 @@ workTime?: {
         updateCallInitialization(state,action:PayloadAction<UserSocketProps>){
           state.isCallInitiated = action.payload.isCallInitiated ?? state.isCallInitiated
         },
+
         updateIncomingCall(state,action:PayloadAction<UserSocketProps>){
           state.newInComingCall = action.payload.newInComingCall?? state.newInComingCall
         },
@@ -234,7 +244,16 @@ workTime?: {
  
         updateUserChat(state,action:PayloadAction<UserSocketProps>){
           state.userChats = action.payload.userChats?? state.userChats
-        }
+        },
+
+        updateLocalConection(state,action:PayloadAction<UserSocketProps>){
+          state.locallyConnected = action.payload.locallyConnected?? state.locallyConnected
+        },
+
+        updateCallAnswered(state,action:PayloadAction<UserSocketProps>){
+          state.onCallAnswered = action.payload.onCallAnswered?? state.onCallAnswered
+        },
+        
 
 
 
@@ -246,7 +265,7 @@ workTime?: {
  })
 
  export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode,updatePeerNewConnectionInstance,
-  updateUserChat,updateIncomingCall,updateCallInitialization
+  updateUserChat,updateIncomingCall,updateCallInitialization,updateLocalConection,updateCallAnswered
  } =userSocketSlice.actions
 
 
