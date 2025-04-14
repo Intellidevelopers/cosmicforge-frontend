@@ -810,7 +810,8 @@ if(store.getState().socket.localStream){
 
                 const localPeerConnection = store.getState().socket.localPeerConnectionInstance
                    
-                if(   !userSocket.offerCreated && localPeerConnection && localPeerConnection.signalingState !== 'closed' ){
+                console.log('create offer.....')
+               if(!userSocket.offerCreated && localPeerConnection && localPeerConnection.signalingState !== 'closed' && !userSocket.offerCreated && userSocket.newInComingCall ){
                 
                     console.log('called ')
           
@@ -830,7 +831,7 @@ if(store.getState().socket.localStream){
                        await localPeerConnection.setLocalDescription(offer)
                       // dispatch(updateLocalDescription({localDescription:offer as RTCSessionDescription,socket:null}))
                          dispatch(updateOfferOrAnswer({offerCreated:true,socket:null}))
-                         dispatch(updatePeerConnectionInstance({localPeerConnectionInstance:localPeerConnection}))
+                         //dispatch(updatePeerConnectionInstance({localPeerConnectionInstance:localPeerConnection}))
                          
                        
         
@@ -856,6 +857,7 @@ if(store.getState().socket.localStream){
 
 
        }
+
      },[store.getState().socket.localPeerConnectionInstance])
 
 

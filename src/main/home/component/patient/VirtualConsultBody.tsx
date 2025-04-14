@@ -588,13 +588,13 @@ const VirtualConsultBody = () => {
   useEffect(() => {
 
     console.log(socketCon?.remoteStream?.getTracks().length)
-    if (remoteVideoSteam.current && socketCon.remoteStream && socketCon.onCallAnswered) {
+    if (remoteVideoSteam.current && socketCon.remoteStream && socketCon.onCallAnswered && socketCon.locallyConnected) {
 
 
       remoteVideoSteam.current.srcObject = socketCon.remoteStream!!
     }
 
-  }, [socketCon.remoteStream,socketCon.onCallAnswered])
+  }, [socketCon.remoteStream,socketCon.onCallAnswered,socketCon.locallyConnected])
 
 
 
@@ -603,7 +603,7 @@ const VirtualConsultBody = () => {
       setCallState('connected')
       startTimer()
     }
-  }, [socketCon.remoteConnected,socketCon.onCallAnswered])
+  }, [socketCon.remoteConnected,socketCon.onCallAnswered,socketCon.locallyConnected])
 
 
 
