@@ -6,6 +6,9 @@ import totalEarningsIcon from "../../../../assets/icons/cosmic-doctor-earnings-i
 import DoctorChartGraph from "./DoctorChartGrap";
 import DoctorNavBarHome from "./DoctorNavBarMobile";
 import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../../store/initStore";
+import DoctorTable from "../../pages/doctor/DoctorTable";
 //import DoctorTable from "../../pages/doctor/DoctorTable";
 
 
@@ -14,7 +17,7 @@ import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
 const DoctorHomeBody = () => {
 
 
-
+const  appointments = useSelector((state:RootReducer)=>state.appointments)
 
  
   
@@ -41,7 +44,7 @@ const DoctorHomeBody = () => {
               </div>
               <div>
                 <p className="font-light mt-1">Appointments</p>
-                <p className="font-bold">25</p>
+                <p className="font-bold">{appointments.totalAppointments??0}</p>
               </div>
             </div>
           </div>
@@ -87,7 +90,7 @@ const DoctorHomeBody = () => {
 
               <div>
 
-                <p className="font-light mt-1">Total Patients</p>
+                <p className="font-light mt-1">Total Earnings</p>
 
                 <p className="font-bold">₦ 356,082.00</p>
 
@@ -110,11 +113,11 @@ const DoctorHomeBody = () => {
 
 
        <div className="p-2 h-[400px]  overflow-x-hidden overflow-y-auto  ">
-        <div className="w-full h-full flex justify-center place-items-center">
+        <div className={` ${ (appointments.appointments && appointments.totalAppointments>0) ? 'hidden':'block'} w-full h-full flex justify-center place-items-center`}>
           <p>No appointment yet</p>
         </div>
       {
-        /** <DoctorTable/> */
+        appointments.appointments && appointments.totalAppointments>0 && <DoctorTable/> 
       }
        </div>
 

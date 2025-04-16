@@ -44,6 +44,9 @@ const VirtualConsultBody = () => {
   const socketCon = useSelector((state: RootReducer) => state.socket)
 
 
+  
+
+
 
   const dispatch = useDispatch()
 
@@ -588,6 +591,12 @@ const VirtualConsultBody = () => {
   useEffect(() => {
 
     console.log(socketCon?.remoteStream?.getTracks().length)
+
+    if(!socketCon.isCallInitiated && socketCon.remoteConnected  && socketCon.locallyConnected && remoteVideoSteam.current){
+      remoteVideoSteam.current.srcObject = socketCon.remoteStream!!
+      return
+    }
+
     if (remoteVideoSteam.current && socketCon.remoteStream && socketCon.onCallAnswered && socketCon.locallyConnected) {
 
 
@@ -599,6 +608,12 @@ const VirtualConsultBody = () => {
 
 
   useEffect(() => {
+      if(!socketCon.isCallInitiated && socketCon.remoteConnected  && socketCon.locallyConnected){
+        setCallState('connected')
+      startTimer()
+      return
+      }
+
     if (socketCon.remoteConnected && socketCon.onCallAnswered && socketCon.locallyConnected) {
       setCallState('connected')
       startTimer()

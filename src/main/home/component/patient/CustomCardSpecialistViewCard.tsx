@@ -128,6 +128,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                             bio:details.bio,
                             title:state.title,
                             workingHour:details.workTime,
+                            doctorId:details.userId._id,
                             details:details
                         }
                     })  

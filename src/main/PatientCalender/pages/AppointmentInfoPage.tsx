@@ -12,14 +12,21 @@ import verifiedThick from '../../../assets/icons/home/verifiedThick.svg'
 import ratingStar from '../../../assets/icons/star-icon.svg'
 const AppointmentInfoPage = () => {
     const navigate = useNavigate()
-    return <div className="w-full font-poppins overflow-hidden">
-        <HomeSideBar />
-        <HomeSideBarMobile />
+    return <div className="w-full font-poppins overflow-hidden flex">
+       
+    
+       <HomeSideBarMobile />
 
-        <HomeNavBar title="Appointment Info" />
+       <div className="hidden md:block w-[25%]">
+       <HomeSideBar />
+       </div>
+
+<div className="w-full">
+
+<HomeNavBar title="Appointment Info" />
         <HomeMobileNavBar title="Appointment Info" />
 
-        <div className=" h-[600px] md:ps-[250px] relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-y-auto   font-poppins w-full p-3  ">
+        <div className=" h-[600px]  relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-y-auto   font-poppins w-full p-3  ">
 
             <div className=" place-items-center gap-3 hidden md:flex m-8 " onClick={() => {
                 navigate(-1)
@@ -133,6 +140,8 @@ const AppointmentInfoPage = () => {
             </div>
 
         </div>
+</div>
+      
     </div>
 }
 

@@ -1,7 +1,8 @@
 
 import { useEffect, useState } from "react";
-import dayjs from 'dayjs';
-import docImage from '../../../assets/images/doctor-image.jpeg'
+import dayjs, { Dayjs } from 'dayjs';
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../store/initStore";
 
 /*interface PatientCalendarProps {
    // onDateSelected: (age: number, dateSelected: string) => void;
@@ -25,19 +26,68 @@ const PatientCalendarPage = () => {
     const endYear = dayjs().year();
 
 
+    const monnths = ['January','February','March','April','May','June','July','September','October','November','December']
+   
 
-    const custAppointments = [
-        dayjs('2025-03-26 14:30:00'),
-        dayjs('2025-03-15 14:30:00'),
-        dayjs('2025-04-26 14:30:00'),
-        dayjs('2025-05-15 14:30:00')
-    ]
+    const appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
+
+ const [custAppointments,setCustAppointment] = useState<Dayjs[]>()
+
+ const [image,setImage] = useState<string>()
+  const [date,setDate] = useState<string>()
+  const [time,setTime] = useState<string>()
 
 
-    useEffect(() => {
+   
+   useEffect(()=>{
+
+    if(appointments && appointments.length>0){
+
+        let items:Dayjs[] = []
+
+         appointments.forEach((appoinment,_)=>{
+
+             let date = appoinment.appointmentDate.split(' ')
+
+             const day = date[1].replace(/^(\d+)(st|nd|th|rd)/,'$1')
+
+             const month = monnths.indexOf(date[2])
+
+             const year = date[4]
+ 
+             const customDate = dayjs(`${year}-${month+1}-${day}`)
+          
+                 items.push(customDate)
+ 
+            
+         })
+
+         setImage(appointments[0].medicalPersonelDetails.profilePicture)
+         setDate(appointments[0].appointmentDate)
+   setTime(appointments[0].appointmentTime)
+
+         setCustAppointment((prev)=>{
+              
+                if(!prev){
+                    return items
+                }
+
+              return prev
+         })
+
+       
+        }
 
 
+   },[appointments])
 
+  
+  
+  
+   useEffect(() => {
+
+
+        
 
 
         const customYears: number[] = [];
@@ -143,7 +193,7 @@ const PatientCalendarPage = () => {
 
                     <div className="col-span-7 grid grid-cols-7 gap-3 mt-4">
                         {daysInMonth && new Array(daysInMonth).fill(0).map((_, index) => (
-                            (index === 0) && <p key={index} className={`${(selectedDay === index + 1) && ' border-cosmic-color-lightBlue border'}    ${custAppointments.length > 0 && custAppointments.find((appointment, _) => {
+                            (index === 0) && <p key={index} className={`${(selectedDay === index + 1) && ' border-cosmic-color-lightBlue border'}    ${  custAppointments && custAppointments.length > 0 && custAppointments.find((appointment, _) => {
 
                                 return appointment.month(appointment.month()).format("MMMM").toString() === currentMonth && Number(appointment.format('D')) === index + 1
 
@@ -153,7 +203,7 @@ const PatientCalendarPage = () => {
 
 
 
-                            (index + 1 === selectedDay) && <p key={index} className={`${custAppointments.length > 0 && custAppointments.find((appointment, _) => {
+                            (index + 1 === selectedDay) && <p key={index} className={`${ custAppointments &&  custAppointments.length > 0 && custAppointments.find((appointment, _) => {
                                 return appointment.month(appointment.month()).format("MMMM").toString() === currentMonth && Number(appointment.format('D')) === index + 1
 
 
@@ -162,7 +212,7 @@ const PatientCalendarPage = () => {
 
 
 
-                            <p key={index} className={` ${custAppointments.length > 0 && custAppointments.find((appointment, _) => {
+                            <p key={index} className={` ${  custAppointments &&  custAppointments.length > 0 && custAppointments.find((appointment, _) => {
                                 return appointment.month(appointment.month()).format("MMMM").toString() === currentMonth && Number(appointment.format('D')) === index + 1
 
 
@@ -176,11 +226,11 @@ const PatientCalendarPage = () => {
             <div className="m-4">
                 <p className="font-bold">Upcoming Appointment</p>
                 <div className="w-full m-2 p-3 flex gap-2 relative bg-white rounded-md shadow">
-                    <img className='w-[50px] h-[50px] md:w-[70px] md:h-[70px] rounded-full' alt='card-profile' src={docImage} />
+                    <img className='w-[50px] h-[50px] md:w-[70px] md:h-[70px] rounded-full' alt='card-profile' src={image} />
                     <div className='w-full flex flex-col gap-1 relative'>
                         <p className="w-full text-[14px] md:text-[16px] font-bold">{"Grace has an Appointment"}</p>
 
-                        <p className='text-justify mt-2 text-[14px] md:text-[16px] font-extralight'>{"9th December 2024,12:00 PM"}</p>
+                        <p className='text-justify mt-2 text-[14px] md:text-[16px] font-extralight'>{date?.concat(',').concat(time!!)}</p>
 
                     </div>
                 </div>

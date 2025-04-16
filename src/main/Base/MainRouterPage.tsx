@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { getUserChats, validateUserSession } from "./service"
+import { getAppointments, getUserChats, validateUserSession } from "./service"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
@@ -11,6 +11,7 @@ import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 import NewCallUIPage from "../home/pages/chat/NewCallUIPage"
 import useGetMediaStream from "../home/hook/useGetMediaStream"
 import ringtone from '../../assets/call/ringtone4.mp3'
+import { updateAppointments } from "../store/reducers/doctorAppointmentsReducer"
 
 
 
@@ -195,6 +196,24 @@ const MainRouterPage = () => {
                             store.dispatch(updateUserChat({ userChats: result.data }))
                         }
                     }
+
+                }
+
+
+             
+
+                if(user && user.data){
+
+                    const result = await getAppointments(user.data.token!!)
+
+                    if(result.status === 200 && result.data){
+                        console.log(result.data)
+                        store.dispatch(updateAppointments({appointments:result.data.appointments,totalAppointments:result.data.totalAppointments}))
+                    }else{
+                        console.log(result.error)
+                    }
+                   
+
 
                 }
 
@@ -870,7 +889,7 @@ if(store.getState().socket.localStream){
               isNewCall &&  <NewCallUIPage userCallingDetails={userCallingDetails!!} newCall={userSocket.newInComingCall!!} onDecline={() => {
                 store.dispatch(updateIncomingCall({ newInComingCall: false }))
             }} onAnswer={() => {
-                console.log('answered.')
+               
                 store.dispatch(updateIncomingCall({ newInComingCall: false }))
 
             }} />

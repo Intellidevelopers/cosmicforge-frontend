@@ -34,3 +34,22 @@ export const  getUserChats = async (token:string) => {
    
       return result
 }
+
+
+
+export const  getAppointments = async (token:string) => {
+
+    const response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/user/medics/appointments`,{
+           method:'get',
+          headers:{
+            
+           "Content-Type":'application/json',
+           "Authorization":`Bearer ${token}`
+          },
+        
+       })
+
+      const result  = await response.json()  as ResponseBodyProps
+   
+      return result
+}

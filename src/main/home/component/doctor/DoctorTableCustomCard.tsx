@@ -1,11 +1,15 @@
-import docImage from '../../../../assets/images/doctor-image.jpeg'
+
 
 interface DoctorTableCustomCard {
-    scrollWidth: number
+    scrollWidth: number,
+    patientName:string,
+    patientProfile:string,
+    appointmentmentTime:string,
+    appointmentDate:string
 }
 
 
-const DoctorTableCustomCard = ({ scrollWidth }: DoctorTableCustomCard
+const DoctorTableCustomCard = ({ scrollWidth ,appointmentDate,appointmentmentTime,patientName,patientProfile}: DoctorTableCustomCard
 
 ) => {
 
@@ -14,12 +18,12 @@ const DoctorTableCustomCard = ({ scrollWidth }: DoctorTableCustomCard
      mb-3 cursor-default md:hover:border md:hover:border-cosmic-primary-color rounded-full justify-evenly'>
           
             <div className=" min-w-[200px]  flex gap-2  m-2 ">
-                <img alt='image' className='w-[30px] h-[30px] rounded-full place-items-center justify-center' src={docImage} />
-                <p className='text-[14px]' >Agwu Emmanuel Chihwkwu</p>
+                <img alt='image' className='w-[30px] h-[30px] rounded-full place-items-center justify-center' src={patientProfile} />
+                <p className='text-[14px]' >{patientName}</p>
             </div>
             <p className="min-w-[120px]  m-2 ">Female</p>
-            <p className="min-w-[120px]   m-2  ">9/12/2025</p>
-            <p className="min-w-[100px]   m-2  ">12:00pm</p>
+            <p className="min-w-[120px]   m-2  ">{appointmentDate}</p>
+            <p className="min-w-[100px]   m-2  ">{appointmentmentTime}</p>
           
            
 

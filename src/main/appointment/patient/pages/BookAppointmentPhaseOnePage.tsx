@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom"
 import AppointmentCalender from "./AppointmentCalender"
 import Loader from "../../../generalComponents/Loader"
-import { useState } from "react"
+import { MutableRefObject, useRef, useState } from "react"
 
 const BookAppointmentPhaseOnePage = () => {
 
@@ -10,7 +10,7 @@ const BookAppointmentPhaseOnePage = () => {
     const [errorMesage,setErrorMesage] = useState<string>('')
 
   
-
+   const bodyRef:MutableRefObject<HTMLDivElement | null> = useRef(null)
 
     const { state } = useLocation()
 
@@ -24,7 +24,7 @@ const BookAppointmentPhaseOnePage = () => {
 
 
 
-    return <div className="relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full p-5 overflow-x-hidden"
+    return <div  ref ={bodyRef} className="relative bg-[#F5F5F5] bg-opacity-50  cursor-default  font-poppins w-full p-5 overflow-x-hidden  h-full  overflow-y-auto"
     >
         <div className=" place-items-center gap-3 hidden md:flex " onClick={() => {
             navigate(-1)
@@ -109,10 +109,14 @@ const BookAppointmentPhaseOnePage = () => {
                      return !( value ===  '' || value === 'None')
                 })
 
-              alert(JSON.stringify(appointmentmentDetails))
+         
    
                 if(!dataComplete){
                     setErrorMesage('please provide all details needed.')
+                    if(bodyRef.current){
+                       
+                        bodyRef.current.scrollBy({top:bodyRef.current.scrollHeight,behavior:'smooth'})
+                    }
                     return
                 }
                 navigate("/patient/appointment/checkout",{
@@ -128,6 +132,7 @@ const BookAppointmentPhaseOnePage = () => {
                         bio: state?.bio,
                         title: state?.title,
                         workingHour: state?.workingHour,
+                        doctorId:state?.doctorId
                     }
                 })
             

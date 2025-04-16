@@ -2,11 +2,18 @@ import { useLocation, useNavigate } from "react-router-dom"
 import AppointmentDoctorDescriptionCard from "../component/AppointmentDoctorDescriptionCard"
 import editIcon from '../../../../assets/icons/cosmic-edit-button.svg'
 import cal from '../../../../assets/icons/home/cosmic-home-calander.svg'
+import { PaystackButton } from 'react-paystack'
+import { book_appointment } from "../../service"
+import { useSelector } from "react-redux"
+import { RootReducer } from "../../../store/initStore"
 
 const CheckoutPage = () => {
     const navigate = useNavigate()
     const { state } = useLocation()
-    return <div className="relative  bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full md:p-5 overflow-x-hidden"
+    const user = useSelector((state: RootReducer) => state.user)
+
+    const amount: number = state?.pricing.replace(',', '')
+    return <div className="relative  bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full md:p-5 overflow-x-hidden h-full overflow-y-auto pb-8"
     >
         <div className=" place-items-center gap-3 hidden md:flex " onClick={() => {
             navigate(-1)
@@ -64,7 +71,7 @@ const CheckoutPage = () => {
 
                 <div className="w-full relative p-2 flex  ">
                     <p className="font-light">Card Fee(Family)</p>
-                    <p className="absolute top-2 right-8 decoration-cosmic-primary-color font-bold">N10,000.00</p>
+                    <p className="absolute top-2 right-8 decoration-cosmic-primary-color font-bold">N00.00</p>
                 </div>
 
                 <div className="w-full relative p-2 flex  ">
@@ -74,7 +81,7 @@ const CheckoutPage = () => {
 
                 <div className="w-full relative p-2 flex mt-2  ">
                     <p className="font-light">Total</p>
-                    <p className="absolute top-2 right-8 decoration-cosmic-primary-color font-bold">N30,000.00</p>
+                    <p className="absolute top-2 right-8 decoration-cosmic-primary-color font-bold">N{`${state?.pricing} `}</p>
                 </div>
             </div>
 
@@ -82,12 +89,38 @@ const CheckoutPage = () => {
 
         <div className="mt-3 bg-cosmic-light-color-call p-6 flex justify-center flex-col place-items-center text-white">
             <p className="text-white">Total</p>
-            <p className=" mt-2 decoration-cosmic-primary-color font-bold">N30,000.00</p>
+            <p className=" mt-2 decoration-cosmic-primary-color font-bold">N {`${state?.pricing} `}</p>
         </div>
 
-        <div className="mt-3 flex justify-center flex-col place-items-center">
-            <p className="bg-cosmic-primary-color w-[200px] p-2 m-2 text-center text-white border rounded-md font-light">Continue</p>
-        </div>
+
+
+
+
+        <PaystackButton className="w-full" amount={Number(amount) * 100} email="ben@gmail.com" publicKey="pk_test_5064b4c81898b5c11f082d5fbabe15b2d00bfb07" onSuccess={async (e: {
+            reference: string, status: string
+        }) => {
+
+            alert(state?.doctorId)
+            if (e.reference) {
+
+                const result = await book_appointment(user.data?.token!!, {
+                    doctorId: state?.doctorId, date: state?.appointmentmentDetails.date, time: state?.appointmentmentDetails.time, appointmentType: state?.appointmentmentDetails.appointmentType, appointmentStatus: 'booked', payment: {
+                        cardType: 'individual',
+                        consultationFee: (Number(amount) * 100).toString(),
+                        paymentReference: e.reference,
+                        total: (Number(amount) * 100).toString(),
+                        vat: ''
+                    }
+                })
+
+                alert(JSON.stringify(result))
+            }
+            alert(JSON.stringify(e))
+        }}>
+            <div className="mt-3 flex justify-center flex-col place-items-center">
+                <p className="bg-cosmic-primary-color w-[200px] p-2 m-2 text-center text-white border rounded-md font-light">Continue</p>
+            </div>
+        </PaystackButton>
     </div>
 }
 

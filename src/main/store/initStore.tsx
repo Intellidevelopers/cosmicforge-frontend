@@ -7,6 +7,7 @@ import userReducer, { UserProps } from './reducers/userReducers'
 import  userSocketReducer,{ UserSocketProps } from "./reducers/userSocketReducer";
 import userDiagnosisReducer,{ UserDiagnosisProps } from "./reducers/diagnosisReducer";
 import  specialistDetailsReducer,{ SpecialistDetailsProps } from "./reducers/specialistDetailsReducer";
+import  appoinmentsReducer,{ DoctorAppointmentInterface } from "./reducers/doctorAppointmentsReducer";
 
 
 
@@ -20,7 +21,8 @@ const persistConfig = {
     user:UserProps,
     socket:UserSocketProps,
     diagnosis:UserDiagnosisProps,
-    specialistDetails:SpecialistDetailsProps
+    specialistDetails:SpecialistDetailsProps,
+    appointments:DoctorAppointmentInterface
  }
 
 
@@ -28,7 +30,8 @@ const rootReducer =  combineReducers({
   user:userReducer,
   socket:userSocketReducer,
   diagnosis:userDiagnosisReducer,
-  specialistDetails:specialistDetailsReducer
+  specialistDetails:specialistDetailsReducer,
+  appointments:appoinmentsReducer
 })
 
 

@@ -28,7 +28,7 @@ const DoctorBioPage = () => {
 
   const { state } = useLocation()
 
-
+ 
 
   useEffect(() => {
 
@@ -42,7 +42,7 @@ const DoctorBioPage = () => {
   }, [])
 
 
-  return <div className=" relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full p-5 overflow-x-hidden"
+  return <div className=" relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full p-5 overflow-x-hidden h-full "
   >
     <div className=" place-items-center gap-3 hidden md:flex " onClick={() => {
       navigate(-1)
@@ -181,6 +181,7 @@ const DoctorBioPage = () => {
             bio: state?.bio,
             title: state?.title,
             workingHour: state?.workingHour,
+            doctorId:state?.doctorId
           }
         })
       }}>

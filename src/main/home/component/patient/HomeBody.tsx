@@ -6,7 +6,7 @@ import arrowIcon from "../../../../assets/icons/cosmic-arrow.svg";
 //import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProductCard";
 
 //import tempProductImage from '../../../../assets/images/cosmic-wellness-product-temp.svg'
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import useSetScrollbar from "../../hook/patient/useSetUpScrollbar";
 import HomeMobileNavBar from "./HomeMobileNavBar";
 import { useNavigate } from "react-router-dom";
@@ -80,27 +80,60 @@ const HomeBody = () => {
 
 
   const { scrollWellnessProductCardRight, scrollWellnessProductCardLeft } = useSetScrollbar()
-   const navigate = useNavigate()  
+  const navigate = useNavigate()
 
-    const user = useSelector((state:RootReducer)=>state.user)
-      const specialistDetailsCache = useSelector((state:RootReducer)=>state.specialistDetails)
-      const dispatch = useDispatch()
+  const user = useSelector((state: RootReducer) => state.user)
+  const specialistDetailsCache = useSelector((state: RootReducer) => state.specialistDetails)
+  const dispatch = useDispatch()
+
+  const appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
+
+  const [latestAppointmentDetails,setLatestAppointmentDetails] = useState<{
+    name:string,
+    profilePicture:string,
+    department:string,
+    appointmentDate:string,
+    appointmentTime:string,
+    doctorSpecialization:string,
+    clinic:string,
+    address: string,
+    docId:string
+    
+  }>()
 
 
-      useEffect(()=>{
-       (async()=>{
-          if(specialistDetailsCache.specialists === null){
+  useMemo(()=>{
 
-          const result = await  getDoctorDeparments(user.data?.token!!)
-       
-          if(result.status === 200){
-              dispatch(cacheSpecialistDetails({specialists:result.data}))
-             
-              return
-          }
-          }
-       })()
-      },[])
+    if(appointments){
+      setLatestAppointmentDetails({
+        profilePicture:appointments[0].medicalPersonelDetails.profilePicture!!,
+        name:appointments[0].medicalPersonelID?.lastName.concat(" ").concat(appointments[0].medicalPersonelID.fullName)!!,
+        department:appointments[0].medicalPersonelDetails.department,
+        appointmentDate:appointments[0].appointmentDate,
+        appointmentTime:appointments[0].appointmentTime,
+        doctorSpecialization:appointments[0].medicalPersonelDetails.specializationTitle,
+        clinic:appointments[0].medicalPersonelDetails.currentClinic,
+        address:appointments[0].medicalPersonelDetails.workAddress,
+        docId:appointments[0].medicalPersonelID?._id!!
+      })
+    }
+
+  },[appointments])
+
+  useEffect(() => {
+    (async () => {
+      if (specialistDetailsCache.specialists === null) {
+
+        const result = await getDoctorDeparments(user.data?.token!!)
+
+        if (result.status === 200) {
+          dispatch(cacheSpecialistDetails({ specialists: result.data }))
+
+          return
+        }
+      }
+    })()
+  }, [])
 
 
 
@@ -112,8 +145,8 @@ const HomeBody = () => {
 
       <div className="  ">
         <div className="w-full  md:ps-10  md:justify-start md:pt-8  md:gap-12  inline-flex overflow-x-auto" style={{
-          scrollbarWidth:'none',
-        
+          scrollbarWidth: 'none',
+
         }}>
           <img
             src={aiImage}
@@ -127,8 +160,62 @@ const HomeBody = () => {
           />
         </div>
 
+       {
+        latestAppointmentDetails &&  <div className="w-full md:ps-10 md:mt-6 relative">
 
+        <p className="font-extrabold w-fit md:w-[30%] mt-2 ms-2 ">
+          Upcomming Appointments
+        </p>
+        <p className=" absolute top-0 right-0 hover:cursor-pointer hover:opacity-70 md:right-6 md:ms-0   md:w-[66%] text-end md:pe-12 text-cosmic-primary-color" onClick={() => {
+          navigate('/patient/calendar')
+        }}>
+          see more
+        </p>
+        <div className="md:w-[92%] w-[100%]  mt-2 h-[200px] bg-cosmic-primary-color rounded-md relative p-2">
+          <p className="text-white">{user.data?.lastName?.concat(" ").concat(user.data.fullName!!)}{' has an appointment'}</p>
 
+          <div className="w-full text-white mt-2 flex  place-items-center  gap-2">
+
+            <img alt="doctor-profile" src={latestAppointmentDetails?.profilePicture} className="w-[100px] h-[100px] rounded-full" />
+                <div>
+                  <p>Dr {latestAppointmentDetails?.name}</p>
+                  <p>{latestAppointmentDetails?.department}</p>
+                </div>
+          </div>
+
+          <div className="mt-6 text-white flex gap-4">
+           
+           <div>
+            <p>{latestAppointmentDetails?.appointmentDate}</p>
+           </div>
+
+           <div>
+            <p>{latestAppointmentDetails?.appointmentTime}</p>
+           </div>
+          </div>
+
+         <div className="bg-white absolute bottom-0 right-0 h-[60px] w-[80px] rounded-l-sm flex justify-center p-2">
+         <div className=" bg-white shadow-black shadow-sm rounded-md" onClick={()=>{
+             navigate('/patient/messages/chat', {
+              state: {
+                  doctorImage: latestAppointmentDetails.profilePicture,
+                  doctorName: latestAppointmentDetails.name,
+                  doctorSpecialization:latestAppointmentDetails.doctorSpecialization,
+                  clinic:latestAppointmentDetails.clinic,
+                  address: latestAppointmentDetails.address,
+                  title:"Messages",
+                  department:latestAppointmentDetails.department,
+                  docId:latestAppointmentDetails.docId
+              }
+          }) 
+         }}>
+         <p >Message</p>
+         </div>
+         </div>
+        </div>
+      </div>
+
+       }
 
         <div className="w-full md:ps-10 md:mt-6 ">
 
@@ -136,7 +223,7 @@ const HomeBody = () => {
             <p className="font-extrabold w-fit md:w-[30%] mt-2 ms-2">
               Find a specialist
             </p>
-            <p className=" absolute right-0 hover:cursor-pointer hover:opacity-70 md:right-10 md:ms-0 mt-2 me-2  md:w-[66%] text-end md:pe-12 text-cosmic-primary-color" onClick={()=>{
+            <p className=" absolute right-0 hover:cursor-pointer hover:opacity-70 md:right-10 md:ms-0 mt-2 me-2  md:w-[66%] text-end md:pe-12 text-cosmic-primary-color" onClick={() => {
               navigate('/patient/find-a-specialist')
             }}>
               see more
@@ -170,24 +257,24 @@ const HomeBody = () => {
           <div ref={wellnessScrollContainerRef} className="cursor-default font-medium  space-x-2  md:w-[100%] w-[98%] inline-flex  overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
 
 
-           <div className="w-full h-[400px] flex justify-center place-items-center">
-            <p>No product yet</p>
-           </div>
+            <div className="w-full h-[400px] flex justify-center place-items-center">
+              <p>No product yet</p>
+            </div>
             {
-/**   wellnessProducts.map((item: WellnessProductCardProps, index) => (
-                <WellnessProductCard key={index} productTitle={item.productTitle} productDescription={item.productDescription} productImage={item.productImage} productPrice={item.productPrice} />
-              )) */
-             
+              /**   wellnessProducts.map((item: WellnessProductCardProps, index) => (
+                              <WellnessProductCard key={index} productTitle={item.productTitle} productDescription={item.productDescription} productImage={item.productImage} productPrice={item.productPrice} />
+                            )) */
+
 
 
             }
           </div>
 
         </div>
-        </div>
-
-
       </div>
+
+
+    </div>
   );
 };
 

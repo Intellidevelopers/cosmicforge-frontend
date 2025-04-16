@@ -17,7 +17,7 @@ const AppointmentMainBody = () => {
         </div>
 
 
-        <div className=" w-full md:w-[80vw] overflow-y-auto">
+        <div className=" w-full md:w-[80vw] overflow-hidden h-full pb-10">
         <HomeNavBar title="Book Appointment" />
         <HomeMobileNavBar title="Book Appointment" />
 
