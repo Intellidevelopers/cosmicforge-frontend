@@ -68,27 +68,58 @@ const DoctorTable = () => {
                     })
                     if(filteredArray.length>0)
                     setAppointments(filteredArray as [{
-                      appointmentDate: string;
-                      appointmentStatus: string;
-                      appointmentTime: string;
-                      appointmentType: string;
-                      medicalPersonelID: string;
-                      patientID: {
-                          fullName: string;
-                          lastName: string;
-                      } | null;
-                      patientDetails: {
-                          profilePicture: string;
-                      };
-                      payment: {
-                          cardFee: number;
-                          cardType: string;
-                          consultationFee: string;
-                          paymentReference: string;
-                          paymentStatus: string;
-                          total: number;
-                          vat: string;
-                      };
+                      appointmentDate
+                      : string
+                      appointmentStatus
+                      :string
+                      appointmentTime
+                      :string
+                      appointmentType
+                      :string
+                      medicalPersonelID
+                      :{
+                          fullName:string,
+                          lastName:string,
+                          _id:string
+              
+                      } | null
+                      patientID
+                      :{
+                          fullName:string,
+                          lastName:string,
+                          _id:string
+              
+                      } | null,
+              
+                      patientDetails:{
+                          profilePicture:string
+                      },
+                      medicalPersonelDetails:{
+                          profilePicture:string | undefined ,
+                          department:string,
+                          currentClinic:string,
+                          specializationTitle:string,
+                          workAddress:string
+                      },
+                      payment
+                      : {
+                          cardFee
+                          :number
+                          cardType
+                          : string
+                          consultationFee
+                          :string
+                          paymentReference
+                          :string
+                          paymentStatus
+                          :string 
+                          total
+                          :number
+                          vat
+                          :string
+                      },
+                      
+                     
                   }] | null)
                   else setAppointments(null)
 
@@ -103,28 +134,59 @@ const DoctorTable = () => {
  
                        if(filteredArray.length>0)
                      setAppointments(filteredArray as [{
-                       appointmentDate: string;
-                       appointmentStatus: string;
-                       appointmentTime: string;
-                       appointmentType: string;
-                       medicalPersonelID: string;
-                       patientID: {
-                           fullName: string;
-                           lastName: string;
-                       } | null;
-                       patientDetails: {
-                           profilePicture: string;
-                       };
-                       payment: {
-                           cardFee: number;
-                           cardType: string;
-                           consultationFee: string;
-                           paymentReference: string;
-                           paymentStatus: string;
-                           total: number;
-                           vat: string;
-                       };
-                   }] | null)
+                      appointmentDate
+                      : string
+                      appointmentStatus
+                      :string
+                      appointmentTime
+                      :string
+                      appointmentType
+                      :string
+                      medicalPersonelID
+                      :{
+                          fullName:string,
+                          lastName:string,
+                          _id:string
+              
+                      } | null
+                      patientID
+                      :{
+                          fullName:string,
+                          lastName:string,
+                          _id:string
+              
+                      } | null,
+              
+                      patientDetails:{
+                          profilePicture:string
+                      },
+                      medicalPersonelDetails:{
+                          profilePicture:string | undefined ,
+                          department:string,
+                          currentClinic:string,
+                          specializationTitle:string,
+                          workAddress:string
+                      },
+                      payment
+                      : {
+                          cardFee
+                          :number
+                          cardType
+                          : string
+                          consultationFee
+                          :string
+                          paymentReference
+                          :string
+                          paymentStatus
+                          :string 
+                          total
+                          :number
+                          vat
+                          :string
+                      },
+                      
+                     
+                  }] | null)
 
                    else setAppointments(null)
 
@@ -139,28 +201,59 @@ const DoctorTable = () => {
                      })
      if(filteredArray.length>0)
                      setAppointments(filteredArray as [{
-                       appointmentDate: string;
-                       appointmentStatus: string;
-                       appointmentTime: string;
-                       appointmentType: string;
-                       medicalPersonelID: string;
-                       patientID: {
-                           fullName: string;
-                           lastName: string;
-                       } | null;
-                       patientDetails: {
-                           profilePicture: string;
-                       };
-                       payment: {
-                           cardFee: number;
-                           cardType: string;
-                           consultationFee: string;
-                           paymentReference: string;
-                           paymentStatus: string;
-                           total: number;
-                           vat: string;
-                       };
-                   }] | null)
+                      appointmentDate
+                      : string
+                      appointmentStatus
+                      :string
+                      appointmentTime
+                      :string
+                      appointmentType
+                      :string
+                      medicalPersonelID
+                      :{
+                          fullName:string,
+                          lastName:string,
+                          _id:string
+              
+                      } | null
+                      patientID
+                      :{
+                          fullName:string,
+                          lastName:string,
+                          _id:string
+              
+                      } | null,
+              
+                      patientDetails:{
+                          profilePicture:string
+                      },
+                      medicalPersonelDetails:{
+                          profilePicture:string | undefined ,
+                          department:string,
+                          currentClinic:string,
+                          specializationTitle:string,
+                          workAddress:string
+                      },
+                      payment
+                      : {
+                          cardFee
+                          :number
+                          cardType
+                          : string
+                          consultationFee
+                          :string
+                          paymentReference
+                          :string
+                          paymentStatus
+                          :string 
+                          total
+                          :number
+                          vat
+                          :string
+                      },
+                      
+                     
+                  }] | null)
                    else setAppointments(null)
 
                    return
