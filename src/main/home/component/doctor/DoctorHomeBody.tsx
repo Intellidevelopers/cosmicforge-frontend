@@ -19,6 +19,18 @@ const DoctorHomeBody = () => {
 
 const  appointments = useSelector((state:RootReducer)=>state.appointments)
 
+const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
+
+
+ const formatAmout = (amount:number)=>{
+   if(amount){
+     amount = amount/100
+    return new Intl.NumberFormat().format(amount)
+   }
+
+   return 0
+ }
+
  
   
   return (
@@ -92,7 +104,7 @@ const  appointments = useSelector((state:RootReducer)=>state.appointments)
 
                 <p className="font-light mt-1">Total Earnings</p>
 
-                <p className="font-bold">₦ 356,082.00</p>
+                <p className="font-bold">₦ { doctorWallet.wallet?.amount?formatAmout(doctorWallet.wallet?.amount!!):0}</p>
 
               </div>
             </div>

@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { getAppointments, getUserChats, validateUserSession } from "./service"
+import { getAppointments, getUserChats, getWalletBalance, validateUserSession } from "./service"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
@@ -12,6 +12,7 @@ import NewCallUIPage from "../home/pages/chat/NewCallUIPage"
 import useGetMediaStream from "../home/hook/useGetMediaStream"
 import ringtone from '../../assets/call/ringtone4.mp3'
 import { updateAppointments } from "../store/reducers/doctorAppointmentsReducer"
+import { updateDoctorWallet } from "../store/reducers/doctorWalletReducer"
 
 
 
@@ -195,6 +196,24 @@ const MainRouterPage = () => {
                         if (result.status === 200) {
                             store.dispatch(updateUserChat({ userChats: result.data }))
                         }
+                    }
+
+
+                    try {
+
+                   const result = await     getWalletBalance(user.data?.token!!)
+
+                       if(result.status=== 200){
+
+                        
+
+                        store.dispatch(updateDoctorWallet({wallet:result.data}))
+                       }
+
+                       console.log(result)
+                        
+                    } catch (error) {
+                        
                     }
 
                 }
@@ -819,7 +838,7 @@ if(store.getState().socket.localStream){
 
             (async ()=>{
                 const userSocket = store.getState().socket
-                if(userSocket.socket){
+                if(userSocket.socket && userSocket.newInComingCall){
                 userSocket.socket.emit('ringing',{
                     remoteId:userSocket.remoteUserId
                    })

@@ -53,3 +53,24 @@ export const  getAppointments = async (token:string) => {
    
       return result
 }
+
+
+
+export const getWalletBalance = async (token:string) =>{
+
+
+    const response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/wallet/details`,{
+        method:'get',
+       headers:{
+         
+        "Content-Type":'application/json',
+        "Authorization":`Bearer ${token}`
+       },
+     
+    })
+
+   const result  = await response.json()  as ResponseBodyProps
+
+   return result
+
+}

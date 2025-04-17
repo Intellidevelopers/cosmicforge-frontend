@@ -89,7 +89,7 @@ const CheckoutPage = () => {
 
         <div className="mt-3 bg-cosmic-light-color-call p-6 flex justify-center flex-col place-items-center text-white">
             <p className="text-white">Total</p>
-            <p className=" mt-2 decoration-cosmic-primary-color font-bold">N {`${state?.pricing} `}</p>
+            <p className=" mt-2 decoration-cosmic-primary-color font-bold">N {`${new Intl.NumberFormat().format(2000000000000)} `}</p>
         </div>
 
 
@@ -100,10 +100,10 @@ const CheckoutPage = () => {
             reference: string, status: string
         }) => {
 
-            alert(state?.doctorId)
+            
             if (e.reference) {
 
-                const result = await book_appointment(user.data?.token!!, {
+               await book_appointment(user.data?.token!!, {
                     doctorId: state?.doctorId, date: state?.appointmentmentDetails.date, time: state?.appointmentmentDetails.time, appointmentType: state?.appointmentmentDetails.appointmentType, appointmentStatus: 'booked', payment: {
                         cardType: 'individual',
                         consultationFee: (Number(amount) * 100).toString(),
@@ -113,7 +113,7 @@ const CheckoutPage = () => {
                     }
                 })
 
-                alert(JSON.stringify(result))
+               
             }
             alert(JSON.stringify(e))
         }}>

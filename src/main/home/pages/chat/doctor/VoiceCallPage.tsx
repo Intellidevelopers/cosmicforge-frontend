@@ -173,13 +173,18 @@ const VoiceCallPage = () => {
 
     useEffect(() => {
         console.log(userSocketCon?.remoteStream?.getTracks().length)
-        if (remoteVideoSteam.current && userSocketCon.remoteStream && userSocketCon.locallyConnected) {
-            
+        if(!userSocketCon.isCallInitiated && userSocketCon.remoteConnected  && userSocketCon.locallyConnected && remoteVideoSteam.current){
             remoteVideoSteam.current.srcObject = userSocketCon.remoteStream!!
+            return
+          }
+      
+          if (remoteVideoSteam.current && userSocketCon.remoteStream && userSocketCon.onCallAnswered && userSocketCon.locallyConnected) {
+      
+      
+            remoteVideoSteam.current.srcObject = userSocketCon.remoteStream!!
+          }
 
-        }
-
-    }, [userSocketCon.remoteStream,userSocketCon.locallyConnected])
+    }, [userSocketCon.remoteStream,userSocketCon.locallyConnected,userSocketCon.onCallAnswered])
 
 
 
@@ -1031,11 +1036,17 @@ const VoiceCallPage = () => {
 
 
     useEffect(() => {
-        if (userSocketCon.remoteConnected && userSocketCon.locallyConnected) {
+        if(!userSocketCon.isCallInitiated && userSocketCon.remoteConnected  && userSocketCon.locallyConnected){
             setCallState('connected')
-            startTimer()
+          startTimer()
+          return
+          }
+    
+        if (userSocketCon.remoteConnected && userSocketCon.onCallAnswered &&userSocketCon.locallyConnected) {
+          setCallState('connected')
+          startTimer()
         }
-    }, [userSocketCon.remoteConnected,userSocketCon.locallyConnected])
+    }, [userSocketCon.remoteConnected,userSocketCon.locallyConnected,userSocketCon.onCallAnswered])
 
 
 

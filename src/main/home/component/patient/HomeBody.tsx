@@ -163,7 +163,7 @@ const HomeBody = () => {
        {
         latestAppointmentDetails &&  <div className="w-full md:ps-10 md:mt-6 relative">
 
-        <p className="font-extrabold w-fit md:w-[30%] mt-2 ms-2 ">
+        <p className="font-extrabold w-fit md:w-[30%] mt-2 ms-2  ">
           Upcomming Appointments
         </p>
         <p className=" absolute top-0 right-0 hover:cursor-pointer hover:opacity-70 md:right-6 md:ms-0   md:w-[66%] text-end md:pe-12 text-cosmic-primary-color" onClick={() => {
@@ -186,16 +186,16 @@ const HomeBody = () => {
           <div className="mt-6 text-white flex gap-4">
            
            <div>
-            <p>{latestAppointmentDetails?.appointmentDate}</p>
+            <p className="text-[12px] md:text-[14px]">{latestAppointmentDetails?.appointmentDate}</p>
            </div>
 
            <div>
-            <p>{latestAppointmentDetails?.appointmentTime}</p>
+            <p className="text-[12px] md:text-[14px]">{latestAppointmentDetails?.appointmentTime}</p>
            </div>
           </div>
 
-         <div className="bg-white absolute bottom-0 right-0 h-[60px] w-[80px] rounded-l-sm flex justify-center p-2">
-         <div className=" bg-white shadow-black shadow-sm rounded-md" onClick={()=>{
+         <div className="bg-white absolute bottom-0 right-0 h-[60px] w-[50px] md:w-[80px] rounded-l-sm flex justify-center p-2">
+         <div className=" bg-white shadow-black shadow-sm rounded-md md:w-[50px]" onClick={()=>{
              navigate('/patient/messages/chat', {
               state: {
                   doctorImage: latestAppointmentDetails.profilePicture,
