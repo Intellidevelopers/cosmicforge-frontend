@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
 import { updateCallInitialization, updateCallMode } from '../../../store/reducers/userSocketReducer'
 import useGetAudioRecorder from '../../hook/useGetAudioRecorder'
-import {AudioVisualizer} from 'react-audio-visualize'
+
 
 
 
@@ -234,8 +234,7 @@ const ChatPage = () => {
        <div className='md:w-[80vw] shadow-black shadow-sm    w-[100vw] absolute bottom-[8%] bg-white  h-[8%]  flex'>
         kddkkk
         {
-            audioData?.audioUrl && <AudioVisualizer  width={100} height={200}
-            blob={audioData.blob}/>
+            audioData?.audioUrl
         }
        </div>
         <div className=' md:w-[80vw]   w-[100vw] absolute bottom-0  bg-white  h-[8%]  flex '>
