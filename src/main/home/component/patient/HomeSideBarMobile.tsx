@@ -155,9 +155,12 @@ const dispatch = useDispatch()
                 isCalenderActive:false,
                 isProfileActive:false
               })
+
+              navigate('/patient/shop')
+              closeSideBar()
             }}>
               <img alt="appointment icon" src={appointmentIcon} />
-              <p className="">Book Appointment</p>
+              <p className="">Shop</p>
             </div>
 
             <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{

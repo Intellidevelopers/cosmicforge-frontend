@@ -111,9 +111,10 @@ const HomeSideBar = () => {
                 isCalenderActive: false,
                 isProfileActive:false
               })
+              navigate('/patient/shop')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={appointmentIcon} />
-              <p className=" text-[15.5px]">Book Appointment</p>
+              <p className=" text-[15.5px]">Shop</p>
             </div>
 
             <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ' : 'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={() => {
@@ -171,7 +172,7 @@ const HomeSideBar = () => {
                 isCalenderActive: false,
                 isProfileActive:false
               })
-              navigate('/patient/shop')
+              navigate('/patient/chatbot')
             }}>
               <img className={"h-[25px] w-[25px]"} alt="home" src={calenderIcon} />
               <p className=" text-[15.5px]">Chat bot</p>

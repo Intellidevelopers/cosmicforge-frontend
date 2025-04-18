@@ -104,6 +104,8 @@ const BookAppointmentPhaseOnePage = () => {
         <div className="w-full p-8 flex justify-center">
             <p className="bg-cosmic-primary-color p-2 text-center text-white rounded-md w-[300px]" onClick={() => {
             setErrorMesage('')
+
+            alert(JSON.stringify(appointmentmentDetails))
               const dataComplete =  Object.entries(appointmentmentDetails).every(([,value],)=>{
               
                      return !( value ===  '' || value === 'None')

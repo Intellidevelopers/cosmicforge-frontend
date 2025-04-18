@@ -15,7 +15,7 @@ import CustomPatientAppointmentCard from "../component/CustomPatientAppointmentC
          
       {
         appointments && appointments.map((appoinment,i)=>(
-          <CustomPatientAppointmentCard key={i} docImage={appoinment.medicalPersonelDetails.profilePicture!!} userName={user.data?.lastName?.concat(user.data.fullName!!)!!} dateInFull={appoinment.appointmentDate.concat(appoinment.appointmentTime)!!}/>
+          <CustomPatientAppointmentCard key={i} docImage={appoinment.medicalPersonelDetails.profilePicture!!} userName={user.data?.lastName?.concat(user.data.fullName!!)!!} dateInFull={appoinment.appointmentDate.concat(",").concat(appoinment.appointmentTime)!!} paymentStatus={appoinment.paymentStatus}/>
         ))
        }
       </div>

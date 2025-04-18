@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build-production":"npm install --legacy-peer-deps && tsc -b && vite build "
   },
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.39",
@@ -28,6 +29,8 @@
     "leaflet": "^1.9.4",
     "react": "^18.0.0 || ^19.0.0",
     "react-apexcharts": "^1.7.0",
+    "react-audio-recorder": "^2.2.0",
+    "react-audio-visualize": "^1.2.0",
     "react-dom": "^18.0.0 || ^19.0.0",
     "react-leaflet": "^5.0.0",
     "react-paystack": "^6.0.0",

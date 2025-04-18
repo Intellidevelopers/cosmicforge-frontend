@@ -10,6 +10,8 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
 import { updateCallInitialization, updateCallMode } from '../../../store/reducers/userSocketReducer'
+import useGetAudioRecorder from '../../hook/useGetAudioRecorder'
+import {AudioVisualizer} from 'react-audio-visualize'
 
 
 
@@ -35,6 +37,10 @@ const ChatPage = () => {
         docId: string,
 
     }
+
+
+
+    const {startRecording,audioData,stopRecording} = useGetAudioRecorder()
 
 
 
@@ -225,6 +231,13 @@ const ChatPage = () => {
 
 
 
+       <div className='md:w-[80vw] shadow-black shadow-sm    w-[100vw] absolute bottom-[8%] bg-white  h-[8%]  flex'>
+        kddkkk
+        {
+            audioData?.audioUrl && <AudioVisualizer  width={100} height={200}
+            blob={audioData.blob}/>
+        }
+       </div>
         <div className=' md:w-[80vw]   w-[100vw] absolute bottom-0  bg-white  h-[8%]  flex '>
 
 
@@ -256,7 +269,11 @@ const ChatPage = () => {
             <div className='md:w-[10vw] w-[20vw]   pe-1 flex place-items-center justify-evenly md:justify-normal  ps-1 gap-3 '>
 
                 <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full  '>
-                    <img alt='mic' className=' ' src={micIcon} />
+                    <img alt='mic' className=' ' src={micIcon}  onMouseDown={()=>{
+                        startRecording()
+                    }}  onMouseUp={()=>{
+                        stopRecording()
+                    }}/>
                 </div>
 
 

@@ -147,8 +147,59 @@ const useGetActiveRoute = () => {
           isCalenderActive:false,
           isProfileActive:true
         }
+      }
+
+        case ActiveRoutePath["run-diagnosis"]: {
+
+          return{
+            isHomeActive: false,
+            isRunDiagnosisActive:true,
+            isMessageActive: false,
+            isBookAppoinmentActive:false,
+            isAnalyticsActive: false,
+            isFirstAidActive:false,
+            isChatBotActive: false,
+            isFindASpecialistActive:false,
+            isCalenderActive:false,
+            isProfileActive:false
+          }
         
       }
+
+      case ActiveRoutePath["book-appointment"]: {
+
+        return{
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:true,
+          isAnalyticsActive: false,
+          isFirstAidActive:false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:false
+        }
+      
+    }
+
+
+    case ActiveRoutePath["chat-bot"]: {
+
+      return{
+        isHomeActive: false,
+        isRunDiagnosisActive:false,
+        isMessageActive: false,
+        isBookAppoinmentActive:false,
+        isAnalyticsActive: false,
+        isFirstAidActive:false,
+        isChatBotActive: true,
+        isFindASpecialistActive:false,
+        isCalenderActive:false,
+        isProfileActive:false
+      }
+    
+  }
 
       
       default:  return {
@@ -248,6 +299,62 @@ const useGetActiveRoute = () => {
         return 
       }
 
+
+      case ActiveRoutePath["run-diagnosis"]: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:true,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:false
+        }})
+        return 
+      }
+
+
+      case ActiveRoutePath["book-appointment"]: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:true,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:false
+        }})
+        return 
+      }
+
+
+      case ActiveRoutePath["chat-bot"]: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: true,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:false
+        }})
+        return 
+      }
 
 
       case ActiveRoutePath.calendar: {
