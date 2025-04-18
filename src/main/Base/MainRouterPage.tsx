@@ -962,7 +962,7 @@ const MainRouterPage = () => {
 
                             <p className="absolute  bottom-0 right-20 flex gap-4 bg-red-600  p-1  rounded-md text-white " onClick={() => {
                                 dispatch(updateNewAppointmentNotification({ isNewAppointmentNotification: false, totalAppointments: 0 }))
-                            }}>cancel</p>
+                            }}>cancel</p> 
 
                         </div>
 

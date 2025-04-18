@@ -1,10 +1,9 @@
 import { useState } from "react"
-import useGetMediaStream from "./useGetMediaStream"
+
 
 
 const useGetAudioRecorder = () => {
 
-    const { getStream, cancelMediaStream } = useGetMediaStream()
 
     const [isRecording, setRecording] = useState<boolean>(false)
 
@@ -88,7 +87,7 @@ const useGetAudioRecorder = () => {
             console.log(audioData)
             mediaRecorder.stop()
             setMediaRecorder(null)
-            cancelMediaStream()
+           
         }
     }
 
