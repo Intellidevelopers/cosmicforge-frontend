@@ -47,7 +47,7 @@ const DoctorHomeMainPage = () => {
 
 
       <div className=" w-full grid grid-cols-1  relative ">
-        <div className="block md:hidden">
+        <div className="hidden md:hidden">
           <DoctorHomeSideBarMobile />
         </div>
         <Outlet />

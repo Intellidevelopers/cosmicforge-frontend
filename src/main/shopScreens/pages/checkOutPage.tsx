@@ -59,7 +59,7 @@ const CheckOutPage = () => {
     <>
         <HomeMobileNavBar title={'Check Out'}/>
         <HomeNavBar title={'Check Out'}/>
-        <div className="md:ms-[250px] p-4 flex flex-col gap-4">
+        <div className=" p-4 flex flex-col  gap-4">
             <div className="shadow-md rounded-xl border">
                 <div >
                     <div className="flex flex-col -full items-center justify-center  p-4 bg-cosmic-primary-color opacity-30">

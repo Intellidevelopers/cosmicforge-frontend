@@ -93,6 +93,14 @@ import RescheduleDecline from './main/alerts/pages/rescheduleDecline.tsx'
 import AppointmentReminder from './main/alerts/pages/appointmentReminder.tsx'
 import CancelAppointment from './main/alerts/pages/cancelAppointment.tsx'
 import DoctorMobileChatPage from './main/home/pages/chat/doctor/DoctorMobileChatPage.tsx'
+import PaymentComplete from './main/shopScreens/pages/paymentComplete.tsx'
+import TransactionHistory from './main/profile/patient/pages/transactionHistory.tsx'
+import PaymentReceipt from './main/profile/patient/pages/payment-receipt.tsx'
+import Earnings from './main/earnings-withdrawal/pages/earnings.tsx'
+import WithdrawalReceipt from './main/earnings-withdrawal/pages/withdrawalReceipt.tsx'
+import WithdrawalSubmitted from './main/earnings-withdrawal/pages/withdrawalSubmitted.tsx'
+import ConfirmWithdrawal from './main/earnings-withdrawal/pages/confirmWithdrawal.tsx'
+import Withdrawal from './main/earnings-withdrawal/pages/withdrawal.tsx'
 
 
 const router = createBrowserRouter([
@@ -244,6 +252,16 @@ const router = createBrowserRouter([
            path:'/patient/shop/checkout',
            element:<CheckOutPage/>
            },
+          {
+           path:'/patient/shop/payment-complete',
+           element:<PaymentComplete/>
+           },
+          {
+           path:'transaction-history',
+           element:<TransactionHistory/>
+           },
+          
+
           
          {
            path:'/patient',
@@ -264,6 +282,10 @@ const router = createBrowserRouter([
        
        ]},
 
+       {
+        path:'/patient/payment-receipt',
+        element:<PaymentReceipt/>
+        },
 
        {
         path: 'departments',
@@ -510,6 +532,10 @@ const router = createBrowserRouter([
           path: 'home',
           element: <DoctorHome />
         },
+        {
+          path:'/doctor/earnings',
+          element:<Earnings/>
+        },
       
        
       ]
@@ -552,7 +578,24 @@ const router = createBrowserRouter([
     {
       path: '/doctor/edit-profile',
       element: <DoctorEditProfilePage/>
-    }
+    },
+    {
+      path: '/doctor/withdrawal-receipt',
+      element: <WithdrawalReceipt/>
+    },
+    {
+      path: '/doctor/withdrawal-submitted',
+      element: <WithdrawalSubmitted/>
+    },
+    {
+      path: '/doctor/confirm-withdrawal',
+      element: <ConfirmWithdrawal/>
+    },
+    {
+      path: '/doctor/withdrawal',
+      element: <Withdrawal/>
+    },
+    
 
 
   
