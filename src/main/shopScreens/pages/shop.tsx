@@ -42,10 +42,10 @@ const Shop = () => {
     <>
         <HomeNavBar title={'Shop'}/>
         <HomeMobileNavBar title={'Shop'}/>
-        <div className='w-full p-4 gap-4 space-y-4'>
+        <div className='mt-12 w-full gap-8 flex flex-col place-items-center '>
           {
             shopCategories && shopCategories.map((item,index)=>(
-              <div key={index} className="flex flex-col overflow-hidden  gap-4 max-w-full">
+              <div key={index} className="flex flex-col overflow-hidden w-[88%]">
                 <div className="flex justify-between">
                   <div className="flex place-items-center gap-4">
                     <h2 className="font-bold">{item}</h2>

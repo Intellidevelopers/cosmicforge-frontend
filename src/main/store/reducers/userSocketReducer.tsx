@@ -1,3 +1,4 @@
+
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
@@ -31,7 +32,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     newInComingCall?:boolean,
     isCallInitiated?:boolean,
     locallyConnected?:boolean,
-    onCallAnswered?:boolean
+    onCallAnswered?:boolean,
+    isNewAppointmentNotification?:boolean,
+    totalAppointments?:number
 
     
     
@@ -139,6 +142,8 @@ workTime?: {
    isCallInitiated:false,
    locallyConnected:false,
    onCallAnswered:false,
+   isNewAppointmentNotification:false,
+   totalAppointments:0,
    
 
    //user chat state
@@ -254,6 +259,10 @@ workTime?: {
           state.onCallAnswered = action.payload.onCallAnswered?? state.onCallAnswered
         },
         
+        updateNewAppointmentNotification(state,action:PayloadAction<UserSocketProps>){
+          state.isNewAppointmentNotification = action.payload.isNewAppointmentNotification ?? state.isNewAppointmentNotification
+          state.totalAppointments = action.payload.totalAppointments ?? state.totalAppointments
+        }
 
 
 
@@ -265,7 +274,7 @@ workTime?: {
  })
 
  export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode,updatePeerNewConnectionInstance,
-  updateUserChat,updateIncomingCall,updateCallInitialization,updateLocalConection,updateCallAnswered
+  updateUserChat,updateIncomingCall,updateCallInitialization,updateLocalConection,updateCallAnswered,updateNewAppointmentNotification
  } =userSocketSlice.actions
 
 

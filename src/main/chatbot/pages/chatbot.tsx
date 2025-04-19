@@ -62,7 +62,7 @@ const Chatbot = () => {
     <>
       <HomeNavBar title='Chatbot'/>
       <HomeMobileNavBar title='Chatbot'/>
-      <div className="flex flex-col h-[90%] md:ms-[250px] bg-gray-100">
+      <div className="flex flex-col h-full overflow-hidden  bg-gray-100">
         <div className="flex-1 overflow-auto p-4" >
           {messages.map((message, index) => (
             <>

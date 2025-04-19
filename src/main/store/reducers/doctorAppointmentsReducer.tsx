@@ -55,6 +55,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
             vat
             :string
         },
+
+
+paymentStatus?:string
+
         
        
     }] | null,
