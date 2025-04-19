@@ -145,19 +145,19 @@ const MainRouterPage = () => {
                             return
                         }
                         // dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
-                        // navigate("/patient/account", {
-                        //     replace: true,
+                        navigate("/patient/account", {
+                            replace: true,
 
-                        // })
+                        })
 
                     } catch (error) {
 
                         //dispatch(authenticateUser({isAunthenticated:false,data:{},keepMeSignedIn:false,message:"sessionExpired"}))
 
-                        // navigate("/patient/account", {
-                        //     replace: true,
+                        navigate("/patient/account", {
+                            replace: true,
 
-                        // })
+                        })
                     }
                 })()
 
