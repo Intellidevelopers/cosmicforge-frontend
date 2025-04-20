@@ -33,7 +33,7 @@ const DoctorMainChatPage = () => {
         doctorName: string,
         lastMessageTime: string,
         numberOfUnreadMessages: number,
-        messageType: 'receiving' | 'sending'
+        messageType: string
         messageRead: boolean,
         message: string | null
         details: {
@@ -84,7 +84,7 @@ const DoctorMainChatPage = () => {
         doctorName: string,
         lastMessageTime: string,
         numberOfUnreadMessages: number,
-        messageType: 'receiving' | 'sending'
+        messageType: string,
         messageRead: boolean,
         message: string | null,
         details: {
@@ -152,7 +152,7 @@ const DoctorMainChatPage = () => {
                 doctorName: string,
                 lastMessageTime: string,
                 numberOfUnreadMessages: number,
-                messageType: 'receiving' | 'sending'
+                messageType: string
                 messageRead: boolean,
                 message: string | null
                 details: {
@@ -203,7 +203,7 @@ const DoctorMainChatPage = () => {
                         return {
                             senderId: data.sender!!,
                             receiverId: data.reciever!!,
-                            messageType: data.message!!,
+                            messageType: data.messageType!!,
                             message: data.message!!,
                             timeStamp: data.timeStamp!!
 
@@ -217,7 +217,7 @@ const DoctorMainChatPage = () => {
                         doctorName: senderProfile.userName,
                         lastMessageTime: data.messages[data.messages.length - 1].timeStamp!!,
                         numberOfUnreadMessages: 8,
-                        messageType: 'sending',
+                        messageType:data.messages[data.messages.length - 1].messageType!! ,
                         messageRead: false,
                         message: data.messages[data.messages.length - 1].message!!,
                         details: {
@@ -409,7 +409,7 @@ const DoctorMainChatPage = () => {
                         {
                             messages?.length && messages?.length > 0 && messages.map((data, i) => (
 
-                                <DoctorChatMessage key={i} message={data.message} messageType='' profilePicture={chatSelected?.doctorImage!!} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
+                                <DoctorChatMessage key={i} message={data.message} messageType={data.messageType} profilePicture={chatSelected?.doctorImage!!} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
                             ))
                         }
 

@@ -15,7 +15,6 @@ import useGetAudioRecorder from '../../hook/useGetAudioRecorder'
 
 
 
-
 const ChatPage = () => {
 
     const navigate = useNavigate()
@@ -23,6 +22,16 @@ const ChatPage = () => {
     const dispatch = useDispatch()
 
     const messageScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+
+    const [messageType, setMessageType] = useState<'text' | 'audio' | 'file'>('text')
+
+
+    const [updatedAudio] = useState<string>('')
+
+
+
+
+
 
     const { state } = useLocation()
 
@@ -40,7 +49,7 @@ const ChatPage = () => {
 
 
 
-    const {startRecording,audioData,stopRecording} = useGetAudioRecorder()
+    const { startRecording, audioData, stopRecording,isRecording} = useGetAudioRecorder()
 
 
 
@@ -49,6 +58,10 @@ const ChatPage = () => {
     const userSocket = useSelector((state: RootReducer) => state.socket)
 
     const [typedMessage, setTypeMessage] = useState<string>('')
+
+
+    const [sendVoiceNote, setSendVoiceNote] = useState<boolean>(false)
+
 
 
 
@@ -67,6 +80,13 @@ const ChatPage = () => {
 
 
 
+
+
+
+
+
+
+
     useEffect(() => {
 
         if (userSocket.userChats && userSocket.userChats.length > 0) {
@@ -79,7 +99,7 @@ const ChatPage = () => {
                     return {
                         senderId: data.sender,
                         receiverId: data.reciever,
-                        messageType: data.message,
+                        messageType: data.messageType,
                         message: data.message,
                         timeStamp: data.timeStamp
 
@@ -133,6 +153,105 @@ const ChatPage = () => {
         }
 
     }, [userSocket.userChats])
+
+
+
+
+
+    useEffect(() => {
+
+
+        if (!audioData?.base64 || audioData?.base64 === '' && !sendVoiceNote) {
+            return
+        }
+
+
+
+        if (userSocket) {
+
+            userSocket.socket?.emit('send_message', {
+
+                senderId: user.data?._id!!,
+                receiverId: doctorDetails.docId,
+                messageType: 'audio',
+                message: audioData?.base64,
+                timeStamp: new Date().toLocaleString('UTC', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                })
+
+            })
+        }
+
+        if (!messages) {
+
+            setMessages([
+                {
+                    senderId: user.data?._id!!,
+                    receiverId: doctorDetails.docId,
+                    messageType: 'audio',
+                    message: audioData?.base64,
+                    timeStamp: new Date().toLocaleString('UTC', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    })
+
+                }
+            ])
+
+            setTimeout(() => {
+                if (messageScrollRef.current) {
+
+                    messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                }
+            }, 1000)
+            setTypeMessage('')
+            setMessageType('text')
+            setSendVoiceNote(false)
+
+            return
+        }
+
+
+        setMessages((prevMessage) => {
+
+
+            prevMessage?.push({
+                senderId: user.data?._id!!,
+                receiverId: doctorDetails.docId,
+                messageType: 'audio',
+                message: audioData?.base64,
+                timeStamp: new Date().toLocaleString('UTC', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: true
+                })
+            })
+            return [
+                ...messages,
+
+            ]
+        })
+
+        setTypeMessage('')
+        setMessageType('text')
+        setTimeout(() => {
+            if (messageScrollRef.current) {
+
+                messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+            }
+        }, 1000)
+
+
+        setTimeout(() => {
+            setSendVoiceNote(false)
+        }, 3000)
+
+    }, [audioData?.base64])
+
+
 
 
     return <div className="w-full overflow-y-hidden cursor-default  ">
@@ -211,7 +330,7 @@ const ChatPage = () => {
             {
                 messages?.length && messages?.length > 0 && messages.map((data, i) => (
 
-                    <ChatMessagesBody key={i} message={data.message} messageType='' profilePicture={doctorDetails.doctorImage} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
+                    <ChatMessagesBody key={i} message={data.message} messageType={data.messageType} profilePicture={doctorDetails.doctorImage} senderId={data.senderId} receiverId=' ' timeStamp={data.timeStamp} />
                 ))
             }
 
@@ -231,12 +350,7 @@ const ChatPage = () => {
 
 
 
-       <div className='md:w-[80vw] shadow-black shadow-sm    w-[100vw] absolute bottom-[8%] bg-white  h-[8%]  flex'>
-        kddkkk
-        {
-            audioData?.audioUrl
-        }
-       </div>
+
         <div className=' md:w-[80vw]   w-[100vw] absolute bottom-0  bg-white  h-[8%]  flex '>
 
 
@@ -249,6 +363,7 @@ const ChatPage = () => {
                 </div>
 
                 <div className='w-full pt-6'>
+
                     <textarea name='message-box' value={typedMessage} placeholder='Type a message...' className='w-full outline-none   h-full resize-none ' onChange={(e) => {
 
                         setTypeMessage(e.target.value)
@@ -267,19 +382,29 @@ const ChatPage = () => {
 
             <div className='md:w-[10vw] w-[20vw]   pe-1 flex place-items-center justify-evenly md:justify-normal  ps-1 gap-3 '>
 
-                <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full  '>
-                    <img alt='mic' className=' ' src={micIcon}  onMouseDown={()=>{
+                <div className={`w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full  ${isRecording && 'border-cosmic-primary-color animate-pulse'}`}>
+                    <img alt='mic' className=' ' src={micIcon} onMouseDown={() => {
                         startRecording()
-                    }}  onMouseUp={()=>{
+                    }} onMouseUp={() => {
                         stopRecording()
-                    }}/>
+                        setMessageType('audio')
+
+                        setSendVoiceNote(true)
+
+
+
+                    }} />
                 </div>
 
 
-                <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full ' onClick={() => {
-                    if (!typedMessage) {
+                <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full  ' onClick={() => {
+
+
+                    if (!typedMessage && !updatedAudio) {
                         return
                     }
+
+
 
                     if (userSocket) {
 
@@ -287,8 +412,8 @@ const ChatPage = () => {
 
                             senderId: user.data?._id!!,
                             receiverId: doctorDetails.docId,
-                            messageType: 'text',
-                            message: typedMessage,
+                            messageType: messageType,
+                            message: (typedMessage && typedMessage! === '') ? typedMessage : updatedAudio,
                             timeStamp: new Date().toLocaleString('UTC', {
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -304,8 +429,8 @@ const ChatPage = () => {
                             {
                                 senderId: user.data?._id!!,
                                 receiverId: doctorDetails.docId,
-                                messageType: 'text',
-                                message: typedMessage,
+                                messageType: messageType,
+                                message: (typedMessage && typedMessage! === '') ? typedMessage : updatedAudio,
                                 timeStamp: new Date().toLocaleString('UTC', {
                                     hour: '2-digit',
                                     minute: '2-digit',
@@ -322,6 +447,7 @@ const ChatPage = () => {
                             }
                         }, 1000)
                         setTypeMessage('')
+                        setMessageType('text')
 
                         return
                     }
@@ -333,8 +459,8 @@ const ChatPage = () => {
                         prevMessage?.push({
                             senderId: user.data?._id!!,
                             receiverId: doctorDetails.docId,
-                            messageType: 'text',
-                            message: typedMessage,
+                            messageType: messageType,
+                            message: (typedMessage && typedMessage! === '') ? typedMessage : updatedAudio,
                             timeStamp: new Date().toLocaleString('UTC', {
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -348,6 +474,7 @@ const ChatPage = () => {
                     })
 
                     setTypeMessage('')
+                    setMessageType('text')
                     setTimeout(() => {
                         if (messageScrollRef.current) {
 

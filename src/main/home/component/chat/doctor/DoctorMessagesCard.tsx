@@ -8,7 +8,7 @@ export interface DoctorMessagesCardProps {
   doctorName: string,
   lastMessageTime: string,
   numberOfUnreadMessages: number,
-  messageType: 'receiving' | 'sending'
+  messageType: string
   messageRead: boolean,
   message: string | null
   details: {
@@ -50,7 +50,7 @@ export interface DoctorMessagesCardProps {
     doctorName: string,
     lastMessageTime: string,
     numberOfUnreadMessages: number,
-    messageType: 'receiving' | 'sending'
+    messageType: string
     messageRead: boolean,
     message: string | null
     details: {
@@ -177,7 +177,13 @@ const DoctorMessagesCard = ({
                * <img src={unReadMessage} className="w-[20px] h-[20px]  rounded-full " />
                */
             }
-            <p className="font-light text-[14px] w-[200px] text-nowrap text-ellipsis overflow-hidden">{message}</p>
+           {
+            messageType === "text" &&  <p className="font-light text-[14px] w-[200px] text-nowrap text-ellipsis overflow-hidden">{message}</p>
+           }
+
+{
+            messageType === "audio" &&  <i className="fa fa-file-audio mt-2" ></i>
+           }
           </div>
         </div>
 

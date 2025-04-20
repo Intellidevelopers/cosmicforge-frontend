@@ -15,7 +15,7 @@ const useGetAudioRecorder = () => {
 
     const [audioData, setAudioData] = useState<{
         audioUrl: string,
-        blob: Blob,
+        blob: Blob|null,
         base64: string
     }>()
 
@@ -23,6 +23,11 @@ const useGetAudioRecorder = () => {
 
         if (!isRecording)
             try {
+        setAudioData({
+            audioUrl:'',
+            blob:null,
+            base64:''
+        })
                 const stream = await navigator.mediaDevices.getUserMedia({
                     audio: true
                 })
@@ -86,6 +91,7 @@ const useGetAudioRecorder = () => {
             })
             console.log(audioData)
             mediaRecorder.stop()
+            setRecording(false)
             setMediaRecorder(null)
            
         }
@@ -113,7 +119,7 @@ const useGetAudioRecorder = () => {
 
 
 
-    return { startRecording, stopRecording, audioData }
+    return { startRecording, stopRecording, audioData,isRecording }
 }
 
 

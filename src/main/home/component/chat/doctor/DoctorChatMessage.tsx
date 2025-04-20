@@ -8,11 +8,11 @@ interface MessageProps {
     receiverId: string,
     timeStamp: string,
     profilePicture: string,
-   
+
 }
 
 
-const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture }: MessageProps) => {
+const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture, messageType }: MessageProps) => {
 
 
     const user = useSelector((state: RootReducer) => state.user.data)
@@ -24,13 +24,25 @@ const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture }: Mes
         {user?._id === senderId ?
             <div className="w-full  flex justify-end p-3">
 
-                <div className={`   relative    max-w-[350px]  rounded-lg  h-fit bg-cosmic-light-color-call m-2 text-white`  } >
+                <div className={`   relative    max-w-[350px]  rounded-lg  h-fit bg-cosmic-light-color-call m-2 text-white`} >
 
-                    <div className='w-full    p-2' >
-                        <p>{message}</p>
-                        <p className="text-[12px] text-end">{timeStamp}</p>
+                    {
+                        messageType === "text" && <div className='w-full    p-2' >
+                            <p>{message}</p>
+                            <p className="text-[12px] text-end">{timeStamp}</p>
 
-                    </div>
+                        </div>
+
+                    }
+
+                    {
+                        messageType === "audio" && <div className='w-full    p-2' >
+                            <audio src={message} controls />
+                            <p className="text-[12px] text-end mt-2">{timeStamp}</p>
+
+                        </div>
+
+                    }
 
                 </div>
 
@@ -45,11 +57,23 @@ const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture }: Mes
 
                 <div className=' relative shadow-black shadow-sm    max-w-[350px]  rounded-lg  h-fit bg-white m-2 text-black' >
 
-                    <div className='w-full    p-2' >
-                        <p>{message}</p>
-                        <p className="text-[12px] text-end">{timeStamp}</p>
+                    {
+                        messageType === "text" && <div className='w-full    p-2' >
+                            <p>{message}</p>
+                            <p className="text-[12px] text-end">{timeStamp}</p>
 
-                    </div>
+                        </div>
+
+                    }
+
+                    {
+                        messageType === "audio" && <div className='w-full    p-2' >
+                            <audio src={message} controls />
+                            <p className="text-[12px] text-end mt-2">{timeStamp}</p>
+
+                        </div>
+
+                    }
 
                 </div>
             </div>

@@ -13,7 +13,7 @@ interface MessageProps {
   timeStamp: string,
   profilePicture: string
 }
-const ChatMessagesBody = ({ message, timeStamp, senderId, profilePicture }: MessageProps) => {
+const ChatMessagesBody = ({ message, timeStamp, senderId, profilePicture, messageType }: MessageProps) => {
 
   const user = useSelector((state: RootReducer) => state.user.data)
 
@@ -26,11 +26,23 @@ const ChatMessagesBody = ({ message, timeStamp, senderId, profilePicture }: Mess
 
         <div className=' relative    max-w-[350px]  rounded-lg  h-fit bg-cosmic-light-color-call m-2 ' >
 
-          <div className='w-full    p-2' >
-            <p>{message}</p>
-            <p className="text-[12px] text-end">{timeStamp}</p>
+          {
+            messageType === "text" && <div className='w-full    p-2' >
+              <p>{message}</p>
+              <p className="text-[12px] text-end">{timeStamp}</p>
 
-          </div>
+            </div>
+
+          }
+
+          {
+            messageType === "audio" && <div className='w-full    p-2' >
+              <audio src={message} controls />
+              <p className="text-[12px] text-end mt-2">{timeStamp}</p>
+
+            </div>
+
+          }
 
         </div>
 
@@ -43,11 +55,23 @@ const ChatMessagesBody = ({ message, timeStamp, senderId, profilePicture }: Mess
 
         <div className=' relative    max-w-[350px]  rounded-lg  h-fit bg-white shadow-black shadow-sm text-black m-2 ' >
 
-          <div className='w-full    p-2' >
-            <p>{message}</p>
-            <p className="text-[12px] text-end">{timeStamp}</p>
+        {
+            messageType === "text" && <div className='w-full    p-2' >
+              <p>{message}</p>
+              <p className="text-[12px] text-end">{timeStamp}</p>
 
-          </div>
+            </div>
+
+          }
+
+          {
+            messageType === "audio" && <div className='w-full    p-2' >
+              <audio src={message} controls />
+              <p className="text-[12px] text-end mt-2">{timeStamp}</p>
+
+            </div>
+
+          }
 
         </div>
       </div>

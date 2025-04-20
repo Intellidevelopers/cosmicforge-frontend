@@ -99,7 +99,7 @@ const HomeBody = () => {
     address: string,
     docId:string
     
-  }>()
+  }|null>(null)
 
 
   useMemo(()=>{
@@ -119,6 +119,7 @@ const HomeBody = () => {
     }
 
   },[appointments])
+
 
   useEffect(() => {
     (async () => {
@@ -161,7 +162,7 @@ const HomeBody = () => {
         </div>
 
        {
-        latestAppointmentDetails &&  <div className="w-full md:ps-10 md:mt-6 relative">
+        latestAppointmentDetails !== null &&  <div className="w-full md:ps-10 md:mt-6 relative">
 
         <p className="font-extrabold w-fit md:w-[30%] mt-2 ms-2  ">
           Upcomming Appointments
