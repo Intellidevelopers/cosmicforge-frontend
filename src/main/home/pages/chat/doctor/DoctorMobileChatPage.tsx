@@ -11,6 +11,7 @@ import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import DoctorHomeNavBar from "../../../component/doctor/DoctorHomeNavBar"
 import DoctorNavBarHome from "../../../component/doctor/DoctorNavBarMobile"
+import useGetAudioRecorder from "../../../hook/useGetAudioRecorder"
 
 
 
@@ -22,6 +23,9 @@ const DoctorMobileChatPage = () => {
     const user = useSelector((state: RootReducer) => state.user)
 
     const dispatch = useDispatch()
+
+    const { audioData, isRecording, startRecording, stopRecording } = useGetAudioRecorder()
+ const [sendVoiceNote, setSendVoiceNote] = useState<boolean>(false)
 
     // alert(JSON.stringify(userSocket.userChats))
     const navigate = useNavigate()
@@ -140,6 +144,95 @@ const DoctorMobileChatPage = () => {
             }
         }, 1000)
     })
+
+
+        useEffect(() => {
+    
+    
+            if (!audioData?.base64 || audioData?.base64 === '' && !sendVoiceNote) {
+                return
+            }
+    
+    
+            if (userSocket) {
+    
+                userSocket.socket?.emit('send_message', {
+    
+                    senderId: user.data?._id!!,
+                    receiverId: chatSelected?.details.patientId,
+                    messageType: 'audio',
+                    message: audioData?.base64,
+                    timeStamp: new Date().toLocaleString('UTC', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    })
+    
+                })
+            }
+    
+            if (!messages) {
+    
+                setMessages([
+                    {
+                        senderId: user.data?._id!!,
+                        receiverId: chatSelected?.details.patientId!!,
+                        messageType: 'audio',
+                        message: audioData?.base64,
+                        timeStamp: new Date().toLocaleString('UTC', {
+                            hour: '2-digit',
+                            minute: '2-digit',
+                            hour12: true
+                        })
+    
+                    }
+                ])
+    
+                setTypeMessage('')
+    
+                setTimeout(() => {
+                    if (messageScrollRef.current) {
+    
+                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                    }
+                }, 1000)
+    
+                return
+            }
+    
+    
+            setMessages((prevMessage) => {
+    
+    
+                prevMessage?.push({
+                    senderId: user.data?._id!!,
+                    receiverId: chatSelected?.details.patientId!!,
+                    messageType: 'audio',
+                    message: audioData?.base64,
+                    timeStamp: new Date().toLocaleString('UTC', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: true
+                    })
+                })
+                return [
+                    ...messages,
+    
+                ]
+            })
+    
+            setTypeMessage('')
+    
+            setTimeout(() => {
+                if (messageScrollRef.current) {
+    
+                    messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                }
+            }, 1000)
+    
+    
+    
+        }, [audioData?.base64])
 
     const [typedMessage, setTypeMessage] = useState<string>('')
 
@@ -383,9 +476,21 @@ const DoctorMobileChatPage = () => {
                                 }}></textarea>
                             </div>
                             <div className="w-full flex justify-end pe-6 gap-3 mt-2">
-                                <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full '>
-                                    <img alt='mic' className=' ' src={micIcon} />
+                               
+                            <div className={`w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full ${isRecording && 'border-cosmic-primary-color animate-pulse'}`}>
+                                    <img alt='mic' className=' ' src={micIcon} onMouseDown={() => {
+                                        startRecording()
+                                    }} onMouseUp={() => {
+                                        stopRecording()
+                                      
+
+                                        setSendVoiceNote(true)
+
+
+
+                                    }} />
                                 </div>
+
 
                                 <div className='w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full ' onClick={() => {
 

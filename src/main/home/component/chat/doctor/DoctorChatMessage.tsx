@@ -26,23 +26,27 @@ const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture, messa
 
                 <div className={`   relative    max-w-[350px]  rounded-lg  h-fit bg-cosmic-light-color-call m-2 text-white`} >
 
-                    {
-                        messageType === "text" && <div className='w-full    p-2' >
-                            <p>{message}</p>
-                            <p className="text-[12px] text-end">{timeStamp}</p>
 
-                        </div>
+                    <div className='w-full    p-2' >
 
-                    }
+                        {
+                            messageType === "text" ? <div>
+                                <p>{message}</p>
+                                <p className="text-[12px] text-end">{timeStamp}</p>
 
-                    {
-                        messageType === "audio" && <div className='w-full    p-2' >
-                            <audio src={message} controls />
-                            <p className="text-[12px] text-end mt-2">{timeStamp}</p>
+                            </div> : messageType === "audio" && <div>
+                                <audio src={message} controls />
+                                <p className="text-[12px] text-end mt-2">{timeStamp}</p>
 
-                        </div>
 
-                    }
+                            </div>
+                        }
+
+                    </div>
+
+
+
+
 
                 </div>
 
@@ -56,24 +60,18 @@ const DoctorChatMessage = ({ message, timeStamp, senderId, profilePicture, messa
                 <img src={profilePicture} alt="profile" className="bg-transparent rounded-full w-[30px] h-[30px]" />
 
                 <div className=' relative shadow-black shadow-sm    max-w-[350px]  rounded-lg  h-fit bg-white m-2 text-black' >
+                {
+                            messageType === "text" ? <div>
+                                <p>{message}</p>
+                                <p className="text-[12px] text-end">{timeStamp}</p>
 
-                    {
-                        messageType === "text" && <div className='w-full    p-2' >
-                            <p>{message}</p>
-                            <p className="text-[12px] text-end">{timeStamp}</p>
+                            </div> : messageType === "audio" && <div>
+                                <audio src={message} controls />
+                                <p className="text-[12px] text-end mt-2">{timeStamp}</p>
 
-                        </div>
 
-                    }
-
-                    {
-                        messageType === "audio" && <div className='w-full    p-2' >
-                            <audio src={message} controls />
-                            <p className="text-[12px] text-end mt-2">{timeStamp}</p>
-
-                        </div>
-
-                    }
+                            </div>
+                        }
 
                 </div>
             </div>

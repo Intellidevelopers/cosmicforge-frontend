@@ -49,7 +49,7 @@ const ChatPage = () => {
 
 
 
-    const { startRecording, audioData, stopRecording,isRecording} = useGetAudioRecorder()
+    const { startRecording, audioData, stopRecording, isRecording } = useGetAudioRecorder()
 
 
 
@@ -130,7 +130,7 @@ const ChatPage = () => {
                     return {
                         senderId: data.sender!!,
                         receiverId: data.reciever!!,
-                        messageType: data.message!!,
+                        messageType: data.messageType!!,
                         message: data.message!!,
                         timeStamp: data.timeStamp!!
 

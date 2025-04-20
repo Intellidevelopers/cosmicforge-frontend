@@ -9,6 +9,7 @@ import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
 import DoctorTable from "../../pages/doctor/DoctorTable";
+
 //import DoctorTable from "../../pages/doctor/DoctorTable";
 
 
@@ -39,6 +40,7 @@ const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
       
       <DoctorHomeNavBar title="Dashboard" />
       <DoctorNavBarHome title="Dashboard" />
+      
 
       <div className="  w-full h-dvh  ">
 
