@@ -6,7 +6,7 @@ import img from '../../../assets/images/police.png'
 const PaymentComplete = () => {
 
     const [paymentType, setPaymentType] = useState('card')
-    const [paymentAmt, setPaymentAmt] = useState(3500)
+    const [paymentAmt, /*setPaymentAmt*/] = useState(3500)
 
     useEffect(()=>{setPaymentType('transfer')},[])
 
