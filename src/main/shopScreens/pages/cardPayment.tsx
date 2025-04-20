@@ -36,7 +36,7 @@ const CardPayment = () => {
     <>
         <HomeMobileNavBar title={'Card Payment'}/>
         <HomeNavBar title={'Card Payment'}/> 
-        <div className="md:ms-[250px] flex flex-col h-[80%]">
+        <div className="flex flex-col h-[80%]">
           <div  className='bg-white shadow-md rounded-md m-4'>
             <div className="flex flex-col w-full p-4">
               <div className="flex justify-between">

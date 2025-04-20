@@ -89,7 +89,7 @@ export interface DoctorMessagesCardProps {
       timeStamp: string
     }[] | null) => void,
 
-    isMobileScreen?:boolean
+  isMobileScreen?: boolean
 
 
 
@@ -108,8 +108,8 @@ const DoctorMessagesCard = ({
   messages,
   details,
   onChatSelected,
-  
-  
+
+
 
 }: DoctorMessagesCardProps
 ) => {
@@ -177,13 +177,13 @@ const DoctorMessagesCard = ({
                * <img src={unReadMessage} className="w-[20px] h-[20px]  rounded-full " />
                */
             }
-           {
-            messageType === "text" &&  <p className="font-light text-[14px] w-[200px] text-nowrap text-ellipsis overflow-hidden">{message}</p>
-           }
+            {
+              messageType === "text" && <p className="font-light text-[14px] w-[200px] text-nowrap text-ellipsis overflow-hidden">{message}</p>
+            }
 
-{
-            messageType === "audio" &&  <i className="fa fa-file-audio mt-2" ></i>
-           }
+            {
+              messageType === "audio" && <i className="fa fa-file-audio mt-2" ></i>
+            }
           </div>
         </div>
 

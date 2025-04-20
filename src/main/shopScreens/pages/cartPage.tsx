@@ -43,7 +43,7 @@ const CartPage = () => {
     <HomeMobileNavBar title={'Cart'}/>
     <HomeNavBar title={'Cart'}/>
     <div>
-        <div className="flex flex-col gap-2 p-2 md:ms-[250px] max-h-[85dvh] overflow-hidden">
+        <div className="flex flex-col gap-2 p-2 max-h-[85dvh] overflow-hidden">
             <div className="flex flex-col max-h-3/4 overflow-y-scroll">
                 {cartItems && cartItems.map((item,index)=>(
                     <CartItem key={index} {...item}/>

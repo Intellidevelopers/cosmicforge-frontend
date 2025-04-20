@@ -38,7 +38,7 @@ const UserMessagesPage = () => {
                         doctorName: senderProfile.userName,
                         lastMessageTime:data.messages[data.messages.length-1].timeStamp!! ,
                         numberOfUnreadMessages: 8,
-                        messageType: 'sending',
+                        messageType: data.messages[data.messages.length-1].messageType!!,
                         messageRead: false,
                         message: data.messages[data.messages.length-1].message!!,
                         details:{

@@ -1,7 +1,12 @@
+import { useEffect } from 'react'
 import lantern from '../../../assets/images/lanternImg.png'
-
+import { useNavigate } from 'react-router-dom'
 
 const VerifyPayment = () => {
+
+  const navigate = useNavigate()
+
+  useEffect(()=>{setTimeout(()=>{navigate('/patient/shop/payment-complete')},3000)})
   return (
     <div className="flex justify-center items-center w-full h-screen">
       <div className="flex flex-col justify-center items-center w-full h-full">

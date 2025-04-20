@@ -52,7 +52,7 @@ const DetailsPage = () => {
     <>
       <HomeMobileNavBar title={'Details'}/>
       <HomeNavBar title={'Details'}/>
-      <div className="md:ms-[250px] w-full md:w-[70%] lg:w-[75%] gap-4 flex flex-col md:flex-row justify-between md:items-start items-center p-4">
+      <div className=" w-full md:w-[70%] lg:w-[75%] gap-4 flex flex-col md:flex-row justify-between md:items-start items-center p-4">
         <div className="md:w-1/2 overflow-hidden lg:w-[60%]">
           <img src={shopProduct?.image} alt={product} className="w-full" />
         </div>
