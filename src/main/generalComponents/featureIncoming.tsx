@@ -3,7 +3,7 @@ import incomingPic from'../../assets/images/featureIncoming.png'
 const FeatureIncoming = () => {
   return (
     <div className='flex flex-col gap-4 justify-center items-center h-screen w-screen p-8'>
-        <div className="relative w-full">
+        <div className="relative w-full flex justify-center items-center">
             <img src={incomingPic} alt="Feature unavailable"  className='relative z-1'/>
             <div className="absolute w-full h-20  left-0 bottom-0 z-10 bg-gradient-to-t from-white to-transparent"></div>
         </div>
