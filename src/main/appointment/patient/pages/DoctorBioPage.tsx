@@ -28,7 +28,7 @@ const DoctorBioPage = () => {
 
   const { state } = useLocation()
 
- 
+
 
   useEffect(() => {
 
@@ -181,7 +181,7 @@ const DoctorBioPage = () => {
             bio: state?.bio,
             title: state?.title,
             workingHour: state?.workingHour,
-            doctorId:state?.doctorId
+            doctorId: state?.doctorId
           }
         })
       }}>

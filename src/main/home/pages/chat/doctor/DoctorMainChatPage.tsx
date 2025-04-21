@@ -5,11 +5,11 @@ import callIcon from '../../../../..//assets/icons/cosmic-chat-call-icon.svg'
 import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
 import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
-import { useNavigate } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer } from "../../../../store/initStore"
 import { updateCallInitialization, updateCallMode } from "../../../../store/reducers/userSocketReducer"
-import { useState, useEffect, MutableRefObject, useRef } from "react"
+import { useState, useEffect, MutableRefObject, useRef} from "react"
 
 import DoctorMessagesCard from "../../../component/chat/doctor/DoctorMessagesCard"
 import DoctorChatMessage from "../../../component/chat/doctor/DoctorChatMessage"
@@ -20,7 +20,7 @@ const DoctorMainChatPage = () => {
 
     const { audioData, isRecording, startRecording, stopRecording } = useGetAudioRecorder()
 
-   
+
 
 
 
@@ -37,6 +37,45 @@ const DoctorMainChatPage = () => {
     const dispatch = useDispatch()
 
     // alert(JSON.stringify(userSocket.userChats))
+
+
+    const {state} = useLocation()
+
+    const userDetails = state as {
+        doctorImage: string,
+        doctorName: string,
+        lastMessageTime: string,
+        numberOfUnreadMessages: number,
+        messageType: string,
+        messageRead: boolean,
+        message: string | null,
+        details: {
+            patientId: string
+            profilePicture?: string,
+            professionalTitle?: string,
+            specialization?: string,
+            currentClinic?: string,
+            department?: string,
+            bio?: string,
+            pricing?: string,
+
+            workAddress?: string,
+            experience?: {
+
+                hospitalName?: string,
+                NoOfPatientTreated?: string,
+                specializationAndDepartment?: string,
+                date?: string
+            },
+            workTime?: {
+                day?: string,
+                time?: string
+            }
+
+
+
+        }
+    } | null
 
 
     const [messagesUpdate, setMessagesUpdate] = useState<{
@@ -124,7 +163,7 @@ const DoctorMainChatPage = () => {
 
 
         }
-    } | null>(null)
+    } | null>( userDetails ?? null)
 
 
     const [messages, setMessages] = useState<{
@@ -138,6 +177,10 @@ const DoctorMainChatPage = () => {
 
         return null
     })
+
+
+
+ 
 
 
 
@@ -241,15 +284,7 @@ const DoctorMainChatPage = () => {
 
     useEffect(() => {
 
-
-
-
         if (userSocket.userChats && userSocket.userChats.length > 0) {
-
-
-
-
-
             const messagesFromServer: {
                 doctorImage: string,
                 doctorName: string,
@@ -339,6 +374,28 @@ const DoctorMainChatPage = () => {
 
 
             setMessagesUpdate(messagesFromServer)
+
+
+
+
+            if(userDetails && messagesFromServer){
+
+                const chat = messagesFromServer.find(data=>{
+                   return chatSelected?.details.patientId === data.details.patientId
+               })
+   
+               if(chat){
+                   setMessages(chat.messages)
+                   setTimeout(() => {
+                    if (messageScrollRef.current) {
+
+                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                    }
+                }, 1000)
+               }
+              
+   
+           }
 
 
 
@@ -470,7 +527,7 @@ const DoctorMainChatPage = () => {
 
 
 
-                            <div className="w-full flex justify-end  gap-3">
+                            <div className={` ${userSocket.appointmentSessionStarted ? 'flex':'hidden'} w-full  justify-end  gap-3`}>
                                 <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
 
                                     if (userSocket.connected) {
@@ -521,7 +578,7 @@ const DoctorMainChatPage = () => {
 
 
 
-                    <div className="bg-white w-full h-[90px]">
+                    <div className={`${userSocket.appointmentSessionStarted ? 'flex':'hidden'}  bg-white w-full h-[90px]`}>
 
                         <div className="grid grid-cols-3 ">
                             <div className="flex place-items-center j gap-3 col-span-2
@@ -543,7 +600,7 @@ const DoctorMainChatPage = () => {
                                         startRecording()
                                     }} onMouseUp={() => {
                                         stopRecording()
-                                      
+
 
                                         setSendVoiceNote(true)
 
