@@ -5,6 +5,7 @@ import { categories, dummyProducts } from "../utils/dummyProducsList"
 import ProductCard from "../components/product-card"
 import { useNavigate } from "react-router-dom"
 import { product } from "../components/product-card"
+import incomingPic from'../../../assets/images/featureIncoming.png'
 
 
 const Shop = () => {
@@ -42,7 +43,12 @@ const Shop = () => {
     <>
         <HomeNavBar title={'Shop'}/>
         <HomeMobileNavBar title={'Shop'}/>
-        <div className='mt-12 w-full gap-8 flex flex-col place-items-center '>
+       { 
+        
+        /**
+         * comming sooon
+         */
+        <div className=' hidden mt-12 w-full gap-8 flex-col place-items-center '>
           {
             shopCategories && shopCategories.map((item,index)=>(
               <div key={index} className="flex flex-col overflow-hidden w-[88%]">
@@ -66,6 +72,22 @@ const Shop = () => {
             ))
           }
         </div>
+
+
+
+        }
+
+
+<div className='flex flex-col gap-4 justify-center items-center h-screen w-full '>
+        <div className="relative w-[300px] flex justify-center items-center">
+            <img src={incomingPic} alt="Feature unavailable"  className='relative z-1'/>
+            <div className="absolute w-full h-20  left-0 bottom-0 z-10 bg-gradient-to-t from-white to-transparent"></div>
+        </div>
+        <p className='text-center'>We are currently working on bringing this feature to you</p>
+        <button type="button" className='p-1 w-[200px] bg-cosmic-primary-color text-white rounded-md ' onClick={()=>{
+          navigate(-1)
+        }}>Go Back</button>
+    </div>
     </>
   )
 }
