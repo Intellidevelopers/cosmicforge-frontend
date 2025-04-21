@@ -101,6 +101,7 @@ import WithdrawalReceipt from './main/earnings-withdrawal/pages/withdrawalReceip
 import WithdrawalSubmitted from './main/earnings-withdrawal/pages/withdrawalSubmitted.tsx'
 import ConfirmWithdrawal from './main/earnings-withdrawal/pages/confirmWithdrawal.tsx'
 import Withdrawal from './main/earnings-withdrawal/pages/withdrawal.tsx'
+import FeatureIncoming from './main/generalComponents/featureIncoming.tsx'
 
 
 const router = createBrowserRouter([
@@ -111,6 +112,10 @@ const router = createBrowserRouter([
         {
           path:'',
          element:<LandingPage/>,
+       },
+        {
+          path:'/feature-unavailable',
+         element:<FeatureIncoming/>,
        },
        {
         path:'/verify-payment',
