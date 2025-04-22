@@ -3,6 +3,7 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import DoctorTableCustomCard from '../../component/doctor/DoctorTableCustomCard'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
+import { useNavigate } from 'react-router-dom'
 
 
 enum AppointmentsTypes {
@@ -13,310 +14,400 @@ enum AppointmentsTypes {
 
 const DoctorTable = () => {
 
-    const [scrollWidth,setScrollWidth] = useState<number>(200)
-  const scrollRef:MutableRefObject<HTMLDivElement | null> = useRef(null)
-  const [appointmentTypeSelected,setAppoinmentTypeSelected] = useState<'upcomming'|'past'| 'cancelled'>('upcomming')
-  const [activeAppointment,setActiveAppointment] = useState<string>(AppointmentsTypes.upcomming)
 
-  
+  const navigate = useNavigate()
 
-    const appoinmentsState = useSelector((state:RootReducer)=>state.appointments.appointments)
+  const [scrollWidth, setScrollWidth] = useState<number>(200)
+  const scrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+  const [appointmentTypeSelected, setAppoinmentTypeSelected] = useState<'upcomming' | 'past' | 'cancelled'>('upcomming')
+  const [activeAppointment, setActiveAppointment] = useState<string>(AppointmentsTypes.upcomming)
 
-    const [appoinments,setAppointments] = useState(appoinmentsState)
+const [toggleStartSesion,setToggleStartSession] = useState<boolean>(false)
 
-  useEffect(()=>{
-     
-  
-    window.addEventListener('resize',()=>{
+  const appoinmentsState = useSelector((state: RootReducer) => state.appointments.appointments)
+
+  const [appoinments, setAppointments] = useState(appoinmentsState)
+
+  const [patientWhoBookedAppopintmentDetails,setPatientWhoBookedAppopintmentDetails] = useState<{
+    doctorImage: string,
+        doctorName: string,
+        lastMessageTime: string,
+        numberOfUnreadMessages: number,
+        messageType: string,
+        messageRead: boolean,
+        message: string | null,
+        details: {
+            patientId: string
+            profilePicture?: string,
+            professionalTitle?: string,
+            specialization?: string,
+            currentClinic?: string,
+            department?: string,
+            bio?: string,
+            pricing?: string,
+
+            workAddress?: string,
+            experience?: {
+
+                hospitalName?: string,
+                NoOfPatientTreated?: string,
+                specializationAndDepartment?: string,
+                date?: string
+            },
+            workTime?: {
+                day?: string,
+                time?: string
+            }
+
+
+
+        }
+  }|null>(null)
+
+  useEffect(() => {
+
+
+    window.addEventListener('resize', () => {
       setScrollWidth(scrollRef.current?.scrollWidth!!)
-    
+
     })
-     if(scrollRef){
-        scrollRef.current?.addEventListener('scroll',()=>{
-            
-          // setScrollWidth(scrollRef.current?.scrollWidth!!)
+    if (scrollRef) {
+      scrollRef.current?.addEventListener('scroll', () => {
+
+        // setScrollWidth(scrollRef.current?.scrollWidth!!)
+      })
+      setScrollWidth(scrollRef.current?.scrollWidth!!)
+      // alert(window.innerWidth)
+    }
+
+    return () => {
+      window.removeEventListener('resize', () => { })
+    }
+  }, [window])
+
+
+
+  return <div className="w-full  overflow-y-auto bg-white rounded-md relative">
+
+
+
+    <div className='p-10 absolute  top-[10%] md:top-[30%] w-full z-[1000] flex justify-center' >
+      
+    <div className={` ${ toggleStartSesion? 'block':'hidden'}    h-[200px] w-[600px] bg-white shadow-black shadow-lg rounded-md relative`}>
+
+    <p className='font-bold text-center mt-20'>You are about to start  this appoinment session click continue to start</p>
+
+    <div className='absolute bottom-0  w-full  flex justify-end place-items-end p-2 gap-5 cursor-default'>
+      <p className='bg-red-600 p-2 text-white rounded-md' onClick={()=>{
+        setToggleStartSession(false)
+      }}>cancel</p>
+      <p className='bg-cosmic-primary-color p-2 text-white rounded-md' onClick={()=>{
+
+        navigate('/doctor/messages',{
+          state:patientWhoBookedAppopintmentDetails
         })
-        setScrollWidth(scrollRef.current?.scrollWidth!!)
-       // alert(window.innerWidth)
-     }
-
-     return () =>{
-      window.removeEventListener('resize',()=>{})
-     }
-  },[window])
+      }}>continue</p>
+    </div>
+    </div>
 
 
+    </div>
 
-    return <div className="w-full  overflow-y-auto bg-white rounded-md relative">
+    <div className="grid grid-cols-6 p-4 sticky top-0 bg-white z-[100]">
 
-        <div className="grid grid-cols-6 p-4 sticky top-0 bg-white z-[100]">
+      <div className="w-full col-span-4 md:col-span-5">
 
-            <div className="w-full col-span-4 md:col-span-5">
+        <p className="font-bold">{activeAppointment}</p>
+      </div>
 
-            <p className="font-bold">{activeAppointment}</p>
-            </div>
+      <div className="w-full col-span-2 md:col-span-1 text-end">
+        <select className='border rounded-md' value={appointmentTypeSelected} onChange={(e) => {
+          setAppoinmentTypeSelected(e.target.value!! as 'upcomming' | 'past' | 'cancelled')
+          const type = e.target.value!! as 'upcomming' | 'past' | 'cancelled'
+          setActiveAppointment(AppointmentsTypes[type as keyof typeof AppointmentsTypes])
 
-            <div className="w-full col-span-2 md:col-span-1 text-end">
-               <select className='border rounded-md' value={appointmentTypeSelected} onChange={(e)=>{
-                setAppoinmentTypeSelected(e.target.value!! as 'upcomming'|'past'| 'cancelled')
-                const type = e.target.value!! as 'upcomming'|'past'| 'cancelled' 
-                setActiveAppointment(AppointmentsTypes[ type as keyof typeof AppointmentsTypes])
-                   
-                if(type === 'upcomming' && appoinmentsState ){
-                 const filteredArray =   appoinmentsState.filter((appoinment)=>{
-                      return appoinment.appointmentStatus === 'booked'
-                    })
-                    if(filteredArray.length>0)
-                    setAppointments(filteredArray as [{
-                      appointmentDate
-                      : string
-                      appointmentStatus
-                      :string
-                      appointmentTime
-                      :string
-                      appointmentType
-                      :string
-                      medicalPersonelID
-                      :{
-                          fullName:string,
-                          lastName:string,
-                          _id:string
-              
-                      } | null
-                      patientID
-                      :{
-                          fullName:string,
-                          lastName:string,
-                          _id:string
-              
-                      } | null,
-              
-                      patientDetails:{
-                          profilePicture:string
-                      },
-                      medicalPersonelDetails:{
-                          profilePicture:string | undefined ,
-                          department:string,
-                          currentClinic:string,
-                          specializationTitle:string,
-                          workAddress:string
-                      },
-                      payment
-                      : {
-                          cardFee
-                          :number
-                          cardType
-                          : string
-                          consultationFee
-                          :string
-                          paymentReference
-                          :string
-                          paymentStatus
-                          :string 
-                          total
-                          :number
-                          vat
-                          :string
-                      },
-                      
-                     
-                  }] | null)
-                  else setAppointments(null)
+          if (type === 'upcomming' && appoinmentsState) {
+            const filteredArray = appoinmentsState.filter((appoinment) => {
+              return appoinment.appointmentStatus === 'booked'
+            })
+            if (filteredArray.length > 0)
+              setAppointments(filteredArray as [{
+                appointmentDate
+                : string
+                appointmentStatus
+                : string
+                appointmentTime
+                : string
+                appointmentType
+                : string
+                medicalPersonelID
+                : {
+                  fullName: string,
+                  lastName: string,
+                  _id: string
 
-                  return
-                }
+                } | null
+                patientID
+                : {
+                  fullName: string,
+                  lastName: string,
+                  _id: string
+
+                } | null,
+
+                patientDetails: {
+                  profilePicture: string
+                },
+                medicalPersonelDetails: {
+                  profilePicture: string | undefined,
+                  department: string,
+                  currentClinic: string,
+                  specializationTitle: string,
+                  workAddress: string
+                },
+                payment
+                : {
+                  cardFee
+                  : number
+                  cardType
+                  : string
+                  consultationFee
+                  : string
+                  paymentReference
+                  : string
+                  paymentStatus
+                  : string
+                  total
+                  : number
+                  vat
+                  : string
+                },
 
 
-                if(type === 'past' && appoinmentsState ){
-                  const filteredArray =   appoinmentsState.filter((appoinment)=>{
-                       return appoinment.appointmentStatus === 'completed'
-                     })
- 
-                       if(filteredArray.length>0)
-                     setAppointments(filteredArray as [{
-                      appointmentDate
-                      : string
-                      appointmentStatus
-                      :string
-                      appointmentTime
-                      :string
-                      appointmentType
-                      :string
-                      medicalPersonelID
-                      :{
-                          fullName:string,
-                          lastName:string,
-                          _id:string
-              
-                      } | null
-                      patientID
-                      :{
-                          fullName:string,
-                          lastName:string,
-                          _id:string
-              
-                      } | null,
-              
-                      patientDetails:{
-                          profilePicture:string
-                      },
-                      medicalPersonelDetails:{
-                          profilePicture:string | undefined ,
-                          department:string,
-                          currentClinic:string,
-                          specializationTitle:string,
-                          workAddress:string
-                      },
-                      payment
-                      : {
-                          cardFee
-                          :number
-                          cardType
-                          : string
-                          consultationFee
-                          :string
-                          paymentReference
-                          :string
-                          paymentStatus
-                          :string 
-                          total
-                          :number
-                          vat
-                          :string
-                      },
-                      
-                     
-                  }] | null)
+              }] | null)
+            else setAppointments(null)
 
-                   else setAppointments(null)
-
-                   return
-                 }
-                
+            return
+          }
 
 
-                 if(type === 'cancelled' && appoinmentsState ){
-                  const filteredArray =   appoinmentsState.filter((appoinment)=>{
-                       return appoinment.appointmentStatus === 'cancelled'
-                     })
-     if(filteredArray.length>0)
-                     setAppointments(filteredArray as [{
-                      appointmentDate
-                      : string
-                      appointmentStatus
-                      :string
-                      appointmentTime
-                      :string
-                      appointmentType
-                      :string
-                      medicalPersonelID
-                      :{
-                          fullName:string,
-                          lastName:string,
-                          _id:string
-              
-                      } | null
-                      patientID
-                      :{
-                          fullName:string,
-                          lastName:string,
-                          _id:string
-              
-                      } | null,
-              
-                      patientDetails:{
-                          profilePicture:string
-                      },
-                      medicalPersonelDetails:{
-                          profilePicture:string | undefined ,
-                          department:string,
-                          currentClinic:string,
-                          specializationTitle:string,
-                          workAddress:string
-                      },
-                      payment
-                      : {
-                          cardFee
-                          :number
-                          cardType
-                          : string
-                          consultationFee
-                          :string
-                          paymentReference
-                          :string
-                          paymentStatus
-                          :string 
-                          total
-                          :number
-                          vat
-                          :string
-                      },
-                      
-                     
-                  }] | null)
-                   else setAppointments(null)
+          if (type === 'past' && appoinmentsState) {
+            const filteredArray = appoinmentsState.filter((appoinment) => {
+              return appoinment.appointmentStatus === 'completed'
+            })
 
-                   return
-                 }
- 
- 
+            if (filteredArray.length > 0)
+              setAppointments(filteredArray as [{
+                appointmentDate
+                : string
+                appointmentStatus
+                : string
+                appointmentTime
+                : string
+                appointmentType
+                : string
+                medicalPersonelID
+                : {
+                  fullName: string,
+                  lastName: string,
+                  _id: string
 
-               }}>
-               <option className="text-end">upcomming</option>
-               <option className="text-end">cancelled</option>
-               <option className="text-end">past</option>
-               </select>
-            </div>
+                } | null
+                patientID
+                : {
+                  fullName: string,
+                  lastName: string,
+                  _id: string
+
+                } | null,
+
+                patientDetails: {
+                  profilePicture: string
+                },
+                medicalPersonelDetails: {
+                  profilePicture: string | undefined,
+                  department: string,
+                  currentClinic: string,
+                  specializationTitle: string,
+                  workAddress: string
+                },
+                payment
+                : {
+                  cardFee
+                  : number
+                  cardType
+                  : string
+                  consultationFee
+                  : string
+                  paymentReference
+                  : string
+                  paymentStatus
+                  : string
+                  total
+                  : number
+                  vat
+                  : string
+                },
 
 
-        </div>
+              }] | null)
 
-      <div ref={scrollRef} className=' w-full overflow-x-auto '>
+            else setAppointments(null)
+
+            return
+          }
+
+
+
+          if (type === 'cancelled' && appoinmentsState) {
+            const filteredArray = appoinmentsState.filter((appoinment) => {
+              return appoinment.appointmentStatus === 'cancelled'
+            })
+            if (filteredArray.length > 0)
+              setAppointments(filteredArray as [{
+                appointmentDate
+                : string
+                appointmentStatus
+                : string
+                appointmentTime
+                : string
+                appointmentType
+                : string
+                medicalPersonelID
+                : {
+                  fullName: string,
+                  lastName: string,
+                  _id: string
+
+                } | null
+                patientID
+                : {
+                  fullName: string,
+                  lastName: string,
+                  _id: string
+
+                } | null,
+
+                patientDetails: {
+                  profilePicture: string
+                },
+                medicalPersonelDetails: {
+                  profilePicture: string | undefined,
+                  department: string,
+                  currentClinic: string,
+                  specializationTitle: string,
+                  workAddress: string
+                },
+                payment
+                : {
+                  cardFee
+                  : number
+                  cardType
+                  : string
+                  consultationFee
+                  : string
+                  paymentReference
+                  : string
+                  paymentStatus
+                  : string
+                  total
+                  : number
+                  vat
+                  : string
+                },
+
+
+              }] | null)
+            else setAppointments(null)
+
+            return
+          }
+
+
+
+        }}>
+          <option className="text-end">upcomming</option>
+          <option className="text-end">cancelled</option>
+          <option className="text-end">past</option>
+        </select>
+      </div>
+
+
+    </div>
+
+    <div ref={scrollRef} className=' w-full overflow-x-auto '>
 
 
       <div className='w-full inline-flex   
      mb-3 cursor-default  rounded-full justify-evenly ms-4'>
-          
-            <div className=" min-w-[200px]  flex gap-2  m-2 ">
-                  <p className='text-[14px]' >Name</p>
-            </div>
-            <p className="min-w-[260px]  m-2 ">Gender</p>
-            <p className="min-w-[120px]   m-2  ">Date</p>
-            <p className="min-w-[100px]   m-2  ">Time</p>
-          
-           
 
-
+        <div className=" min-w-[200px]  flex gap-2  m-2 ">
+          <p className='text-[14px]' >Name</p>
         </div>
-
-        {
-          !appoinments && <div className='w-full flex justify-center mt-6'> <p>No appointment yet</p>  </div>
-        }
-
-        
-        {
-            appoinments  && appoinments.length   && appoinments.length>0 && appoinments.map((appointment,index)=>(
-                <DoctorTableCustomCard appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.lastName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} />
-            ))
-        }
-
-            
-
-         
+        <p className="min-w-[260px]  m-2 ">Gender</p>
+        <p className="min-w-[120px]   m-2  ">Date</p>
+        <p className="min-w-[100px]   m-2  ">Time</p>
 
 
-       
-           
 
 
       </div>
 
-           
+      {
+        !appoinments && <div className='w-full flex justify-center mt-6'> <p>No appointment yet</p>  </div>
+      }
 
-      
 
-       
+      {
+        appoinments && appoinments.length && appoinments.length > 0 && appoinments.map((appointment, index) => (
+          <DoctorTableCustomCard appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={(details) => {
+          //  alert(details.patientName)
+
+          setPatientWhoBookedAppopintmentDetails({
+            doctorImage:details.patientProfile,
+            doctorName:details.patientName,
+            lastMessageTime: "",
+            numberOfUnreadMessages: 0,
+            messageType: "",
+            messageRead:false,
+            message:'',
+            details: {
+                patientId:details.patientId,
+                profilePicture:details.patientProfile,
+                professionalTitle:"",
+                specialization:"",
+                currentClinic: "",
+                department: "",
+                bio:"",
+                pricing: "",
+    
+                workAddress:"",
+               
+            }
+          
+          })
+          setToggleStartSession(true)
+          }} />
+        ))
+      }
+
+
+
+
+
+
+
+
+
+
     </div>
+
+
+
+
+
+
+  </div>
 }
 
 

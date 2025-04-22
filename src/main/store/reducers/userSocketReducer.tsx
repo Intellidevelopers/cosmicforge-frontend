@@ -34,7 +34,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     locallyConnected?:boolean,
     onCallAnswered?:boolean,
     isNewAppointmentNotification?:boolean,
-    totalAppointments?:number
+    totalAppointments?:number,
+    appointmentSessionStarted?:boolean
 
     
     
@@ -144,6 +145,7 @@ workTime?: {
    onCallAnswered:false,
    isNewAppointmentNotification:false,
    totalAppointments:0,
+   appointmentSessionStarted:false,
    
 
    //user chat state
@@ -219,7 +221,8 @@ workTime?: {
           state.remotePeerConnectionInstance?.close()
           state.localPeerConnectionInstance = null
           state.remotePeerConnectionInstance = null,
-          state.onCallAnswered = false
+          state.onCallAnswered = false,
+          state.appointmentSessionStarted =false
         },
 
         updateRingTone (state,action:PayloadAction<UserSocketProps>){
@@ -262,7 +265,11 @@ workTime?: {
         updateNewAppointmentNotification(state,action:PayloadAction<UserSocketProps>){
           state.isNewAppointmentNotification = action.payload.isNewAppointmentNotification ?? state.isNewAppointmentNotification
           state.totalAppointments = action.payload.totalAppointments ?? state.totalAppointments
-        }
+        },
+
+        updateAppointmentSession(state,action:PayloadAction<UserSocketProps>){
+          state.appointmentSessionStarted = action.payload.appointmentSessionStarted?? state.appointmentSessionStarted
+        },
 
 
 
@@ -274,7 +281,7 @@ workTime?: {
  })
 
  export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode,updatePeerNewConnectionInstance,
-  updateUserChat,updateIncomingCall,updateCallInitialization,updateLocalConection,updateCallAnswered,updateNewAppointmentNotification
+  updateUserChat,updateIncomingCall,updateCallInitialization,updateLocalConection,updateCallAnswered,updateNewAppointmentNotification,updateAppointmentSession
  } =userSocketSlice.actions
 
 

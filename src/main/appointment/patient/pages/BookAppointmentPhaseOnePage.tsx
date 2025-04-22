@@ -17,7 +17,7 @@ const BookAppointmentPhaseOnePage = () => {
     const [appointmentmentDetails, setAppointmentmentDetails] = useState<{ date: string, time: string, appointmentType: 'None' | 'Virtual' | 'In-Person' }>({
         date: '',
         time: state?.workingHour.time,
-        appointmentType: 'None'
+        appointmentType: 'Virtual'
     })
 
     
@@ -68,7 +68,9 @@ const BookAppointmentPhaseOnePage = () => {
         </div>
 
 
-        <div className="w-full mt-8">
+        {
+            /*
+            <div className="w-full mt-8">
             <p className="font-bold ">Appointment Type</p>
 
             <div className="w-full mt-2">
@@ -98,6 +100,9 @@ const BookAppointmentPhaseOnePage = () => {
             </div>
         </div>
 
+            */
+        }
+
 
 
 
@@ -105,7 +110,7 @@ const BookAppointmentPhaseOnePage = () => {
             <p className="bg-cosmic-primary-color p-2 text-center text-white rounded-md w-[300px]" onClick={() => {
             setErrorMesage('')
 
-            alert(JSON.stringify(appointmentmentDetails))
+           
               const dataComplete =  Object.entries(appointmentmentDetails).every(([,value],)=>{
               
                      return !( value ===  '' || value === 'None')

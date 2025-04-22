@@ -38,9 +38,9 @@ export interface DoctorEditProfileProps {
 const DoctorEditProfilePage = () => {
 
 
-  const {state} = useLocation()
+    const { state } = useLocation()
 
-  const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const imageFileRef: MutableRefObject<HTMLInputElement | null> = useRef(null)
 
@@ -85,7 +85,7 @@ const DoctorEditProfilePage = () => {
     })
 
 
-   
+
     const [doctorsDep, setDoctorsDep] = useState<{ name: string, image: string }[]>()
 
     const { getImageBase64String } = useGetImageBase64String()
@@ -104,16 +104,16 @@ const DoctorEditProfilePage = () => {
 
     }, [])
 
-    const [successfulUpdate,setSuccessfulUpdate] = useState<boolean>(false)
+    const [successfulUpdate, setSuccessfulUpdate] = useState<boolean>(false)
 
     return <div className="w-full h-full cursor-default ">
 
 
-        <div className={`${successfulUpdate ? 'flex':'hidden'}  absolute bg-gray-500 bg-opacity-30  justify-center place-items-center w-full h-dvh z-[200]`}>
+        <div className={`${successfulUpdate ? 'flex' : 'hidden'}  absolute bg-gray-500 bg-opacity-30  justify-center place-items-center w-full h-dvh z-[200]`}>
             <div className="bg-white w-[300px] h-[300px] rounded-md flex flex-col place-items-center gap-12 relative">
-               <p className="font-bold mt-8 text-[20px]">Update profile status</p>
+                <p className="font-bold mt-8 text-[20px]">Update profile status</p>
                 <p className="text-green-600">Successfully Updated profile</p>
-                <p className="bg-cosmic-primary-color text-white p-2 rounded-md absolute right-4 bottom-2" onClick={()=>{
+                <p className="bg-cosmic-primary-color text-white p-2 rounded-md absolute right-4 bottom-2" onClick={() => {
                     setSuccessfulUpdate(false)
                 }}>ok</p>
             </div>
@@ -123,7 +123,7 @@ const DoctorEditProfilePage = () => {
         <DoctorNavBarHome title="Edit Profile" />
         <div className="  w-full h-dvh  relative ">
 
-            <div className="w-full md:flex place-items-center gap-2 m-4 hidden " onClick={()=>{
+            <div className="w-full md:flex place-items-center gap-2 m-4 hidden " onClick={() => {
                 navigate('/doctor/home')
             }}>
                 <i className="fa fa-angle-left fa-2x hover:text-cosmic-primary-color" />
@@ -481,7 +481,7 @@ const DoctorEditProfilePage = () => {
                                 const result = await updateDoctorProfile(updatedData, user.data?.token!!)
                                 setLoading(false)
                                 if (result.status === 200) {
-                                  
+
                                     if (result.token) {
                                         dispatch(authenticateUser({ data: result.data }))
                                         return
@@ -493,9 +493,9 @@ const DoctorEditProfilePage = () => {
                                         }
                                     }))
 
-                                    if(state && state.newAccount){
+                                    if (state && state.newAccount) {
                                         navigate('/doctor/home')
-                                    }else{
+                                    } else {
                                         setSuccessfulUpdate(true)
                                     }
                                     return

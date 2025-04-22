@@ -66,11 +66,13 @@ const VoiceCallPage = () => {
 
     const user = useSelector((state: RootReducer) => state.user)
 
-    const { getStream, cancelMediaStream, toggleVideo, toggleMic, switchToAudio } = useGetMediaStream()
+    const { getStream, cancelMediaStream, toggleMic } = useGetMediaStream()
 
     const [modeOfCall, setModeOfCall] = useState<'video' | 'audio'>(userSocketCon.callMode!!)
 
     const [requestingForModeChange, setRequestingForModeChange] = useState<boolean>(false)
+
+    const [requestingForModeChangeRemote, setRequestingForModeChangeRemote] = useState<boolean>(false)
 
     const [tempModeOfCall, setTempModeOfCall] = useState<'video' | 'audio' | null>(null)
 
@@ -131,7 +133,7 @@ const VoiceCallPage = () => {
     const [counter, setCounter] = useState<string>('00:00:00')
     const [counterId, setCounterId] = useState<NodeJS.Timeout>()
 
-
+    const [acceptedRequestForModeChange, setAcceptedRequestForModeChange] = useState<boolean>()
 
 
     const [patientMessage, setPatientMessage] = useState<{
@@ -1007,6 +1009,7 @@ const VoiceCallPage = () => {
 
 
 
+
         if (userSocketCon.connected && userSocketCon.socket) {
             userSocketCon.socket.on('request_to_switch_call_mode', (data: { callMode: string }) => {
                 setRequestingForModeChange(true)
@@ -1032,7 +1035,24 @@ const VoiceCallPage = () => {
 
 
 
+        if (userSocketCon.connected && userSocketCon.socket) {
+            userSocketCon.socket.on('accept_request_to_switch_call_mode', (data: { remoteId: string, userAccepted: boolean, callMode: string }) => {
+
+                if (data && data.userAccepted) {
+                    setRequestingForModeChange(false)
+                    setRequestingForModeChangeRemote(false)
+                    setAcceptedRequestForModeChange(true)
+                }
+            })
+        }
+
+
+
     }, [userSocketCon.localStream])
+
+
+
+
 
 
     useEffect(() => {
@@ -1050,6 +1070,30 @@ const VoiceCallPage = () => {
 
 
 
+
+    useEffect(() => {
+
+        if (requestingForModeChangeRemote && userSocketCon.remoteStream && remoteVideoSteam.current) {
+
+            remoteVideoSteam.current.srcObject = null
+
+        }
+
+    }, [requestingForModeChangeRemote])
+
+
+
+
+
+    useEffect(() => {
+
+        if (acceptedRequestForModeChange && userSocketCon.remoteStream && remoteVideoSteam.current) {
+
+            remoteVideoSteam.current.srcObject = userSocketCon.remoteStream
+
+        }
+
+    }, [acceptedRequestForModeChange])
 
 
 
@@ -1071,11 +1115,15 @@ const VoiceCallPage = () => {
 
                             <p className='text-white text-[12px]' onClick={() => {
 
-                            }}>{`${userSocketCon.remoteCallerDetails?.name} is requesting to switch to ${tempModeOfCall}`}  </p>
+                            }}>{`${userSocketCon.remoteCallerDetails?.name ?? patientToCallDetails?.doctorName} is requesting to switch to ${tempModeOfCall}`}  </p>
 
                             <div className=' flex  gap-6'>
                                 <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={() => {
 
+                                    if (userSocketCon.socket) {
+                                        userSocketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: userSocketCon.remoteUserId, userAccepted: true, callMode: tempModeOfCall })
+                                    }
+                                    setRequestingForModeChangeRemote(false)
                                     setRequestingForModeChange(false)
                                     setTempModeOfCall(null)
                                     dispatch(updateCallMode({ callMode: tempModeOfCall, socket: null }))
@@ -1087,7 +1135,9 @@ const VoiceCallPage = () => {
 
 
                                 <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={() => {
-
+                                    if (userSocketCon.socket) {
+                                        userSocketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: userSocketCon.remoteUserId, userAccepted: false, callMode: tempModeOfCall })
+                                    }
                                 }}>reject</span>
                             </div>
 
@@ -1124,13 +1174,40 @@ const VoiceCallPage = () => {
                             <div className="bg-cosmic-light-color-call  flex p-2 gap-5">
 
                                 <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
-                                    switchToAudio()
+                                    //switchToAudio()
+
+                                    //switchToAudio()
+                                    if (userSocketCon.connected && userSocketCon.socket && userSocketCon.remoteConnected && userSocketCon.callMode === 'video') {
+                                        console.log('fired...')
+                                        userSocketCon.socket.emit('request_to_switch_call_mode', {
+                                            callMode: 'audio',
+                                            remoteId: patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId
+                                        })
+
+                                    }
+                                    dispatch(updateCallMode({ callMode: 'audio', socket: null }))
+                                    setRequestingForModeChangeRemote(true)
+                                    setRequestingForModeChange(false)
+                                    setModeOfCall('audio')
                                 }}>
                                     <img className="w-full h-full" src={callButton} />
                                 </div>
 
                                 <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
-                                    toggleVideo()
+                                    //toggleVideo()
+
+                                    if (userSocketCon.connected && userSocketCon.socket && userSocketCon.remoteConnected && userSocketCon.callMode === 'audio') {
+                                        console.log('fired...')
+                                        userSocketCon.socket.emit('request_to_switch_call_mode', {
+                                            callMode: 'video',
+                                            remoteId: patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId
+                                        })
+
+                                    }
+                                    dispatch(updateCallMode({ callMode: 'video', socket: null }))
+                                    setRequestingForModeChangeRemote(true)
+                                    setRequestingForModeChange(false)
+                                    setModeOfCall('video')
                                 }}>
                                     <img src={videoButton} />
                                 </div>
@@ -1201,10 +1278,13 @@ const VoiceCallPage = () => {
                     <img src={userSocketCon.remoteCallerDetails?.profilePicture ?? patientToCallDetails?.details.profilePicture ?? '/'} className={'h-[150px] w-[150px] rounded-full bg-black'} />
 
                     <div className={`${requestingForModeChange ? 'flex' : 'hidden'}  w-full cursor-default  justify-center gap-2 flex-col place-items-center`}>
-                        <p className='text-white text-[12px]'>{`${userSocketCon.remoteCallerDetails?.name} is requesting to switch to ${tempModeOfCall}`} </p>
+                        <p className='text-white text-[12px]'>{`${userSocketCon.remoteCallerDetails?.name ?? patientToCallDetails?.doctorName} is requesting to switch to ${tempModeOfCall}`} </p>
                         <div className=' flex gap-6'>
                             <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={() => {
-
+                                if (userSocketCon.socket) {
+                                    userSocketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: userSocketCon.remoteUserId ?? patientToCallDetails?.details.patientId, userAccepted: true, callMode: tempModeOfCall })
+                                }
+                                setRequestingForModeChangeRemote(false)
                                 setRequestingForModeChange(false)
                                 setTempModeOfCall(null)
                                 dispatch(updateCallMode({ callMode: tempModeOfCall, socket: null }))
@@ -1212,7 +1292,9 @@ const VoiceCallPage = () => {
 
                             }}>accept</span>
                             <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={() => {
-
+                                if (userSocketCon.socket) {
+                                    userSocketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: userSocketCon.remoteUserId ?? patientToCallDetails?.details.patientId, userAccepted: false, callMode: tempModeOfCall })
+                                }
                             }}>reject</span>
                         </div>
                     </div>
@@ -1239,13 +1321,46 @@ const VoiceCallPage = () => {
                         <div className="bg-cosmic-light-color-call  flex p-2 gap-2">
 
                             <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
-                                switchToAudio()
+                                // switchToAudio()
+
+
+                                if (userSocketCon.connected && userSocketCon.socket && userSocketCon.remoteConnected && userSocketCon.callMode === 'video') {
+                                    console.log('fired...')
+                                    userSocketCon.socket.emit('request_to_switch_call_mode', {
+                                        callMode: 'audio',
+                                        remoteId: patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId
+                                    })
+
+                                }
+                                dispatch(updateCallMode({ callMode: 'audio', socket: null }))
+                                setRequestingForModeChangeRemote(true)
+                                setRequestingForModeChange(false)
+                                setModeOfCall('audio')
+
+
+
                             }}>
                                 <img className="w-full h-full" src={callButton} />
                             </div>
 
                             <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
-                                toggleVideo()
+                                //toggleVideo()
+
+
+                                if (userSocketCon.connected && userSocketCon.socket && userSocketCon.remoteConnected && userSocketCon.callMode === 'audio') {
+                                    console.log('fired...')
+                                    userSocketCon.socket.emit('request_to_switch_call_mode', {
+                                        callMode: 'video',
+                                        remoteId: patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId
+                                    })
+
+                                }
+                                dispatch(updateCallMode({ callMode: 'video', socket: null }))
+                                setRequestingForModeChange(false)
+                                setRequestingForModeChangeRemote(true)
+                                setModeOfCall('video')
+
+
                             }}>
                                 <img src={videoButton} />
                             </div>

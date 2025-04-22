@@ -26,7 +26,6 @@ const ChatPage = () => {
     const [messageType, setMessageType] = useState<'text' | 'audio' | 'file'>('text')
 
 
-    const [updatedAudio] = useState<string>('')
 
 
 
@@ -400,7 +399,7 @@ const ChatPage = () => {
                 <div className='w-[40px] h-[40px]  flex justify-center place-items-center border rounded-full  ' onClick={() => {
 
 
-                    if (!typedMessage && !updatedAudio) {
+                    if (!typedMessage || typedMessage === '') {
                         return
                     }
 
@@ -413,7 +412,7 @@ const ChatPage = () => {
                             senderId: user.data?._id!!,
                             receiverId: doctorDetails.docId,
                             messageType: messageType,
-                            message: (typedMessage && typedMessage! === '') ? typedMessage : updatedAudio,
+                            message: typedMessage,
                             timeStamp: new Date().toLocaleString('UTC', {
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -429,8 +428,8 @@ const ChatPage = () => {
                             {
                                 senderId: user.data?._id!!,
                                 receiverId: doctorDetails.docId,
-                                messageType: messageType,
-                                message: (typedMessage && typedMessage! === '') ? typedMessage : updatedAudio,
+                                messageType: 'text',
+                                message:  typedMessage,
                                 timeStamp: new Date().toLocaleString('UTC', {
                                     hour: '2-digit',
                                     minute: '2-digit',
@@ -460,7 +459,7 @@ const ChatPage = () => {
                             senderId: user.data?._id!!,
                             receiverId: doctorDetails.docId,
                             messageType: messageType,
-                            message: (typedMessage && typedMessage! === '') ? typedMessage : updatedAudio,
+                            message: typedMessage,
                             timeStamp: new Date().toLocaleString('UTC', {
                                 hour: '2-digit',
                                 minute: '2-digit',

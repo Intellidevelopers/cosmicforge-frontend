@@ -6,7 +6,8 @@ import robotProfilePic from '../../../assets/images/doctor-image.jpeg';
 import send from '../../../assets/images/Email Send.svg';
 import mic from '../../../assets/images/mic.svg'
 
-
+import incomingPic from'../../../assets/images/featureIncoming.png'
+import { useNavigate } from 'react-router-dom';
 
 const Chatbot = () => {
   const [messages, setMessages] = useState<{ sender: string, text: string, time:string }[]>([
@@ -57,12 +58,12 @@ const Chatbot = () => {
       }
     },[messages]
     )
-
+  const navigate = useNavigate()
   return (
     <>
       <HomeNavBar title='Chatbot'/>
       <HomeMobileNavBar title='Chatbot'/>
-      <div className="flex flex-col h-full overflow-hidden  bg-gray-100">
+      <div className=" hidden  flex-col h-full overflow-hidden  bg-gray-100">
         <div className="flex-1 overflow-auto p-4" >
           {messages.map((message, index) => (
             <>
@@ -101,6 +102,19 @@ const Chatbot = () => {
           </div>
         </div>
       </div>
+
+
+      <div className='flex flex-col gap-4 justify-center items-center h-screen w-full '>
+        <div className="relative w-[300px] flex justify-center items-center">
+            <img src={incomingPic} alt="Feature unavailable"  className='relative z-1'/>
+            <div className="absolute w-full h-20  left-0 bottom-0 z-10 bg-gradient-to-t from-white to-transparent"></div>
+        </div>
+        <p className='text-center'>We are currently working on bringing this feature to you</p>
+        <button type="button" className='p-1 w-[200px] bg-cosmic-primary-color text-white rounded-md ' onClick={()=>{
+          navigate(-1)
+        }}>Go Back</button>
+
+        </div>
     </>
   );
 };

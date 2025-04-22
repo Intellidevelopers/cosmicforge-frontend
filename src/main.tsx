@@ -533,7 +533,7 @@ const router = createBrowserRouter([
         ]
       },
       
-    //please all doctor route should be here
+    //please all doctor routes should be here
 
     {
       path: '/doctor',
