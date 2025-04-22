@@ -104,7 +104,7 @@ const Chatbot = () => {
       </div>
 
 
-      <div className='flex flex-col gap-4 justify-center items-center h-screen w-full '>
+      <div className='flex flex-col gap-4  absolute md:relative h-full justify-center   items-center  w-full '>
         <div className="relative w-[300px] flex justify-center items-center">
             <img src={incomingPic} alt="Feature unavailable"  className='relative z-1'/>
             <div className="absolute w-full h-20  left-0 bottom-0 z-10 bg-gradient-to-t from-white to-transparent"></div>

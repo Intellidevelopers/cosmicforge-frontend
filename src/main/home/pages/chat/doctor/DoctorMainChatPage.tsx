@@ -8,7 +8,7 @@ import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-messag
 import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer } from "../../../../store/initStore"
-import { updateCallInitialization, updateCallMode } from "../../../../store/reducers/userSocketReducer"
+import { updateAppointmentSession, updateCallInitialization, updateCallMode } from "../../../../store/reducers/userSocketReducer"
 import { useState, useEffect, MutableRefObject, useRef} from "react"
 
 import DoctorMessagesCard from "../../../component/chat/doctor/DoctorMessagesCard"
@@ -180,6 +180,12 @@ const DoctorMainChatPage = () => {
 
 
 
+
+    useEffect(()=>{
+        return() => {
+         dispatch(updateAppointmentSession({appointmentSessionStarted:false}))
+        }
+    },[])
  
 
 
@@ -578,10 +584,10 @@ const DoctorMainChatPage = () => {
 
 
 
-                    <div className={`${userSocket.appointmentSessionStarted ? 'flex':'hidden'}  bg-white w-full h-[90px]`}>
+                    <div className={`${userSocket.appointmentSessionStarted ? 'block':'hidden'}  bg-white w-full h-[90px]`}>
 
                         <div className="grid grid-cols-3 ">
-                            <div className="flex place-items-center j gap-3 col-span-2
+                            <div className="flex place-items-center   gap-3 col-span-2
 ">
                                 <div className='bg-cosmic-primary-color flex justify-center place-items-center ms-2 w-[40px] h-[40px] rounded-full'>
                                     <img src={attachButton} alt='attach' />

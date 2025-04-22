@@ -3,7 +3,7 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react'
 import DoctorTableCustomCard from '../../component/doctor/DoctorTableCustomCard'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
-import { useNavigate } from 'react-router-dom'
+
 
 
 enum AppointmentsTypes {
@@ -15,54 +15,20 @@ enum AppointmentsTypes {
 const DoctorTable = () => {
 
 
-  const navigate = useNavigate()
+
 
   const [scrollWidth, setScrollWidth] = useState<number>(200)
   const scrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
   const [appointmentTypeSelected, setAppoinmentTypeSelected] = useState<'upcomming' | 'past' | 'cancelled'>('upcomming')
   const [activeAppointment, setActiveAppointment] = useState<string>(AppointmentsTypes.upcomming)
 
-const [toggleStartSesion,setToggleStartSession] = useState<boolean>(false)
+
 
   const appoinmentsState = useSelector((state: RootReducer) => state.appointments.appointments)
 
   const [appoinments, setAppointments] = useState(appoinmentsState)
 
-  const [patientWhoBookedAppopintmentDetails,setPatientWhoBookedAppopintmentDetails] = useState<{
-    doctorImage: string,
-        doctorName: string,
-        lastMessageTime: string,
-        numberOfUnreadMessages: number,
-        messageType: string,
-        messageRead: boolean,
-        message: string | null,
-        details: {
-            patientId: string
-            profilePicture?: string,
-            professionalTitle?: string,
-            specialization?: string,
-            currentClinic?: string,
-            department?: string,
-            bio?: string,
-            pricing?: string,
-
-            workAddress?: string,
-            experience?: {
-
-                hospitalName?: string,
-                NoOfPatientTreated?: string,
-                specializationAndDepartment?: string,
-                date?: string
-            },
-            workTime?: {
-                day?: string,
-                time?: string
-            }
-
-
-
-        }
-  }|null>(null)
+ 
 
   useEffect(() => {
 
@@ -93,7 +59,9 @@ const [toggleStartSesion,setToggleStartSession] = useState<boolean>(false)
 
     <div className='p-10 absolute  top-[10%] md:top-[30%] w-full z-[1000] flex justify-center' >
       
-    <div className={` ${ toggleStartSesion? 'block':'hidden'}    h-[200px] w-[600px] bg-white shadow-black shadow-lg rounded-md relative`}>
+    {
+      /**
+       * <div className={` ${ toggleStartSesion? 'block':'hidden'}    h-[200px] w-[600px] bg-white shadow-black shadow-lg rounded-md relative`}>
 
     <p className='font-bold text-center mt-20'>You are about to start  this appoinment session click continue to start</p>
 
@@ -103,12 +71,12 @@ const [toggleStartSesion,setToggleStartSession] = useState<boolean>(false)
       }}>cancel</p>
       <p className='bg-cosmic-primary-color p-2 text-white rounded-md' onClick={()=>{
 
-        navigate('/doctor/messages',{
-          state:patientWhoBookedAppopintmentDetails
-        })
+       
       }}>continue</p>
     </div>
     </div>
+       */
+    }
 
 
     </div>
@@ -354,39 +322,16 @@ const [toggleStartSesion,setToggleStartSession] = useState<boolean>(false)
       </div>
 
       {
-        !appoinments && <div className='w-full flex justify-center mt-6'> <p>No appointment yet</p>  </div>
+        appoinments && appoinments.length <=0  && <div className='w-full flex justify-center mt-6'> <p>No appointment yet</p>  </div>
       }
 
 
       {
-        appoinments && appoinments.length && appoinments.length > 0 && appoinments.map((appointment, index) => (
-          <DoctorTableCustomCard appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={(details) => {
+        appoinments && appoinments.length>0  && appoinments.map((appointment, index) => (
+          <DoctorTableCustomCard appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
           //  alert(details.patientName)
 
-          setPatientWhoBookedAppopintmentDetails({
-            doctorImage:details.patientProfile,
-            doctorName:details.patientName,
-            lastMessageTime: "",
-            numberOfUnreadMessages: 0,
-            messageType: "",
-            messageRead:false,
-            message:'',
-            details: {
-                patientId:details.patientId,
-                profilePicture:details.patientProfile,
-                professionalTitle:"",
-                specialization:"",
-                currentClinic: "",
-                department: "",
-                bio:"",
-                pricing: "",
-    
-                workAddress:"",
-               
-            }
-          
-          })
-          setToggleStartSession(true)
+         
           }} />
         ))
       }

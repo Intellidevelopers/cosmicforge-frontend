@@ -104,7 +104,7 @@ const HomeBody = () => {
 
   useMemo(()=>{
 
-    if(appointments){
+    if(appointments && appointments.length>0){
       setLatestAppointmentDetails({
         profilePicture:appointments[0].medicalPersonelDetails.profilePicture!!,
         name:appointments[0].medicalPersonelID?.lastName.concat(" ").concat(appointments[0].medicalPersonelID.fullName)!!,
