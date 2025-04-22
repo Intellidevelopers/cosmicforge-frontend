@@ -102,6 +102,8 @@ import WithdrawalSubmitted from './main/earnings-withdrawal/pages/withdrawalSubm
 import ConfirmWithdrawal from './main/earnings-withdrawal/pages/confirmWithdrawal.tsx'
 import Withdrawal from './main/earnings-withdrawal/pages/withdrawal.tsx'
 import FeatureIncoming from './main/generalComponents/featureIncoming.tsx'
+import PatientSubscribe from './main/subscription/pages/patientSubscribe.tsx'
+import DoctorSubscribe from './main/subscription/pages/doctorSubscribe.tsx'
 
 
 const router = createBrowserRouter([
@@ -260,6 +262,10 @@ const router = createBrowserRouter([
           {
            path:'/patient/shop/payment-complete',
            element:<PaymentComplete/>
+           },
+          {
+           path:'/patient/subscription',
+           element:<PatientSubscribe/>
            },
           {
            path:'transaction-history',
@@ -538,6 +544,10 @@ const router = createBrowserRouter([
           element: <DoctorHome />
         },
         {
+          path:'/doctor/subscription',
+          element:<DoctorSubscribe/>
+        },
+        {
           path:'/doctor/earnings',
           element:<Earnings/>
         },
@@ -600,6 +610,7 @@ const router = createBrowserRouter([
       path: '/doctor/withdrawal',
       element: <Withdrawal/>
     },
+    
     
 
 
