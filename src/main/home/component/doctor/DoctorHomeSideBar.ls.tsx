@@ -125,6 +125,7 @@ const user = useSelector((state:RootReducer)=>state.user)
                 isProfileActive:true,
                 isEditProfileActive:false
               })
+              navigate('/doctor/profile')
             }}>
               <img alt="home" src={calenderIcon} />
               <p>Profile</p>

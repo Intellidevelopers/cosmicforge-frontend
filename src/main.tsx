@@ -104,6 +104,7 @@ import Withdrawal from './main/earnings-withdrawal/pages/withdrawal.tsx'
 import FeatureIncoming from './main/generalComponents/featureIncoming.tsx'
 import PatientSubscribe from './main/subscription/pages/patientSubscribe.tsx'
 import DoctorSubscribe from './main/subscription/pages/doctorSubscribe.tsx'
+import DoctorProfile from './main/profile/doctor/pages/doctorProfile.tsx'
 
 
 const router = createBrowserRouter([
@@ -551,6 +552,10 @@ const router = createBrowserRouter([
           path:'/doctor/earnings',
           element:<Earnings/>
         },
+        {
+          path: '/doctor/profile',
+          element: <DoctorProfile/>
+        },
       
        
       ]
@@ -594,6 +599,7 @@ const router = createBrowserRouter([
       path: '/doctor/edit-profile',
       element: <DoctorEditProfilePage/>
     },
+    
     {
       path: '/doctor/withdrawal-receipt',
       element: <WithdrawalReceipt/>
