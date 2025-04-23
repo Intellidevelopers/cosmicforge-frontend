@@ -5,10 +5,11 @@ import doctor from '../../../../assets/images/doctor-image.jpeg'
 import locationImg from '../../../../assets/images/Location.png'
 import calender from '../../../../assets/images/Calendar.png'
 import users from '../../../../assets/images/Users.png'
+import bell from '../../../../assets/icons/Bell.png'
 import wallet from '../../../../assets/images/Coin Wallet.png'
 // import patientIcon from '../../../../assets/images/patientsIcon.png'
 // import appointmentIcon from '../../../../assets/images/appointmentsIcon.png'
-import certification from '../../../../assets/images/smallCert.png'
+// import certification from '../../../../assets/images/smallCert.png'
 import deleteIcon from '../../../../assets/images/deleteIconAccount.png'
 import { settings } from "../utils/settings"
 
@@ -88,10 +89,10 @@ const DoctorProfile = () => {
             <div className="flex-col w-[90%] h-full flex">
               <div className="flex justify-between items-center p-2 rounded-md shadow-lg ">
                 <div className="flex items-center justify-start ">
-                  <img src={certification} alt="Certifications" className="w-8 h-8 " />
-                  <p className="font-bold p-2">Certifications</p>
+                  <img src={bell} alt="bells" className="w-8 h-8 " />
+                  <p className="font-bold p-2">Notification Toggle</p>
                 </div>
-                <div className={"rounded-full border-2 min-w-8 h-4  " + (toggleNotifs && 'bg-black')}
+                <div className={"rounded-full border-2  min-w-8 h-4  " + (toggleNotifs && 'bg-black')}
                         onClick={()=>{setToggleNotifs(!toggleNotifs)}}    
                         >
                         <div className={`rounded-[50%]  w-3 h-3 ${toggleNotifs ? 'translate-x-[100%] bg-white' : 'bg-black'}`}></div>
