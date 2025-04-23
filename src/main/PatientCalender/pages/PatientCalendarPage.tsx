@@ -223,19 +223,22 @@ const PatientCalendarPage = () => {
 
             </div>
 
-            <div className="m-4">
-                <p className="font-bold">Upcoming Appointment</p>
-                <div className="w-full m-2 p-3 flex gap-2 relative bg-white rounded-md shadow">
-                    <img className='w-[50px] h-[50px] md:w-[70px] md:h-[70px] rounded-full' alt='card-profile' src={image} />
-                    <div className='w-full flex flex-col gap-1 relative'>
-                        <p className="w-full text-[14px] md:text-[16px] font-bold">{"Grace has an Appointment"}</p>
+         {
 
-                        <p className='text-justify mt-2 text-[14px] md:text-[16px] font-extralight'>{date?.concat(',').concat(time!!)}</p>
+            (appointments && (appointments.length && appointments.length >0)) ? <div className="m-4">
+            <p className="font-bold">Upcoming Appointment</p>
+            <div className="w-full m-2 p-3 flex gap-2 relative bg-white rounded-md shadow">
+                <img className='w-[50px] h-[50px] md:w-[70px] md:h-[70px] rounded-full' alt='card-profile' src={image} />
+                <div className='w-full flex flex-col gap-1 relative'>
+                    <p className="w-full text-[14px] md:text-[16px] font-bold">{"Grace has an Appointment"}</p>
 
-                    </div>
+                    <p className='text-justify mt-2 text-[14px] md:text-[16px] font-extralight'>{date?.concat(',').concat(time!!)}</p>
+
                 </div>
-
             </div>
+
+        </div>:<p className="m-4"></p>
+         }
         </div>
     );
 };

@@ -1,3 +1,7 @@
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { updateAppointmentSession } from "../../../store/reducers/userSocketReducer"
 
 
 interface DoctorTableCustomCard {
@@ -14,12 +18,54 @@ interface DoctorTableCustomCard {
 }
 
 
-const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTime, patientName, patientId, patientProfile, onStartSession }: DoctorTableCustomCard
+const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTime, patientName, patientId, patientProfile, }: DoctorTableCustomCard
 
 
 
 ) => {
 
+
+    const navigate = useNavigate()
+
+    const dispatch = useDispatch()
+
+    const [toggleStartSesion, setToggleStartSession] = useState<boolean>(false)
+
+    const [patientWhoBookedAppopintmentDetails, setPatientWhoBookedAppopintmentDetails] = useState<{
+        doctorImage: string,
+        doctorName: string,
+        lastMessageTime: string,
+        numberOfUnreadMessages: number,
+        messageType: string,
+        messageRead: boolean,
+        message: string | null,
+        details: {
+            patientId: string
+            profilePicture?: string,
+            professionalTitle?: string,
+            specialization?: string,
+            currentClinic?: string,
+            department?: string,
+            bio?: string,
+            pricing?: string,
+
+            workAddress?: string,
+            experience?: {
+
+                hospitalName?: string,
+                NoOfPatientTreated?: string,
+                specializationAndDepartment?: string,
+                date?: string
+            },
+            workTime?: {
+                day?: string,
+                time?: string
+            }
+
+
+
+        }
+    } | null>(null)
 
     const getDaySuffice = (day: number) => {
         if (day >= 11 && day <= 13) {
@@ -76,8 +122,32 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
 
 
                 if ((customDateString === appointmentDate && (time === currentHour || currentHour === secondTime))) {
-                    onStartSession({ patientName, patientProfile, patientId })
+                    //  onStartSession({ patientName, patientProfile, patientId })
 
+                    setPatientWhoBookedAppopintmentDetails({
+                        doctorImage: patientProfile,
+                        doctorName: patientName,
+                        lastMessageTime: "",
+                        numberOfUnreadMessages: 0,
+                        messageType: "",
+                        messageRead: false,
+                        message: '',
+                        details: {
+                            patientId: patientId,
+                            profilePicture: patientProfile,
+                            professionalTitle: "",
+                            specialization: "",
+                            currentClinic: "",
+                            department: "",
+                            bio: "",
+                            pricing: "",
+
+                            workAddress: "",
+
+                        }
+
+                    })
+                    setToggleStartSession(true)
                 }
             }}>
 
@@ -95,6 +165,24 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
 
 
 
+        </div>
+        <div className={` ${toggleStartSesion ? 'block' : 'hidden'} `}>
+            <p className='font-bold  mt-2'>You are about to start  this appoinment session click continue to start</p>
+
+            <div className='absolute bottom-0  w-full  flex justify-end place-items-end p-2 gap-5 cursor-default'>
+                <p className='bg-red-600 p-2 text-white rounded-md mt-8 ' onClick={() => {
+                    setToggleStartSession(false)
+                }}>cancel</p>
+                <p className='bg-cosmic-primary-color p-2 text-white rounded-md' onClick={() => {
+                    dispatch(updateAppointmentSession({ appointmentSessionStarted: true }))
+                    navigate('/doctor/messages', {
+                        state: patientWhoBookedAppopintmentDetails
+                    })
+                }}>continue</p>
+            </div>
+            <div>
+
+            </div>
         </div>
         <div className={` h-[1px] border md:w-full`} style={{
             width: `${scrollWidth}px`
