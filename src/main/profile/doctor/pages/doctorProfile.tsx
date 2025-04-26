@@ -132,14 +132,14 @@ const DoctorProfile = () => {
 
 
             {settings.map((setting, index) => (
-              <div key={index} className="flex justify-between items-center p-2 rounded-md shadow-lg cursor-default " onClick={(e)=>{
+              <div key={index} className="flex justify-between items-center p-2 rounded-md shadow-lg cursor-default " onClick={()=>{
 
                if(setting.name === "Earnings"){
                 navigate('/doctor/earnings')
                   return
                }
                 if(setting.name){
-                     navigate('/doctor/withdrawal')
+                   
                   return
                 }
               }}>
