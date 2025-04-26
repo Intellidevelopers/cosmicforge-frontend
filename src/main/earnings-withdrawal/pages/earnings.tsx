@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom"
 
 const Earnings = () => {
 
-    const user = useSelector((state: RootReducer) => state.user)
+   // const user = useSelector((state: RootReducer) => state.user)
 
     const doctorWallet = useSelector((state: RootReducer) => state.doctorWallet)
 

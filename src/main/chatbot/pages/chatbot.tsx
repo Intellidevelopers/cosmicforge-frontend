@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import HomeMobileNavBar from '../../home/component/patient/HomeMobileNavBar';
 import HomeNavBar from '../../home/component/patient/HomeNavBar';
-import profilePic from '../../../assets/icons/home/cosmic-home-profile-pic-temp.svg';
 import robotProfilePic from '../../../assets/images/botImage.svg'
 import send from '../../../assets/images/Email Send.svg';
 import mic from '../../../assets/images/mic.svg'
