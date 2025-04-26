@@ -18,8 +18,8 @@ import { getDoctorDeparmentsForLandingPage } from '../../profile/service';
 import DepartmentCardS from '../component/DepartmentCard';
 import text from '../../../assets/background/whatPatientSay.svg'
 import docImage from '../../../assets/images/doctor-image.jpeg'
-import WellnessProductCard, { WellnessProductCardProps } from '../../home/component/patient/WellnessProductCard';
-import tempProductImage from '../../../assets/images/cosmic-wellness-product-temp.svg'
+//import { WellnessProductCardProps } from '../../home/component/patient/WellnessProductCard';
+//import tempProductImage from '../../../assets/images/cosmic-wellness-product-temp.svg'
 import linePath1 from '../../../assets/background/cosmic-line-path-1.svg'
 import linePath2 from '../../../assets/background/cosmic-line-path-2.svg'
 import linePath3 from '../../../assets/background/cosmic-line-path-3.svg'
@@ -79,7 +79,7 @@ const faq: { title: string, body: string }[] = [{
 
 
 const LandingPage: React.FC = () => {
-    const wellnessProducts: WellnessProductCardProps[] = [
+   /* const wellnessProducts: WellnessProductCardProps[] = [
         {
             productTitle: ' Ibuprofen 400mg',
             productDescription: ' 100 tablets',
@@ -129,12 +129,12 @@ const LandingPage: React.FC = () => {
             productPrice: " N 3,500"
 
         }
-    ]
+    ]*/
 
 
     const autoScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
-    const [departments, setDepartments] = useState<{ name: string, image: string,backgroundImage?:string,bodyText?:string }[]>()
+    const [departments, setDepartments] = useState<{ name: string, image: string, backgroundImage?: string, bodyText?: string }[]>()
 
     const navigate = useNavigate()
 
@@ -156,19 +156,19 @@ const LandingPage: React.FC = () => {
             })
         }
 
-      if(!departments || departments.length===0)
-        (async () => {
-            try {
-                const result = await getDoctorDeparmentsForLandingPage()
+        if (!departments || departments.length === 0)
+            (async () => {
+                try {
+                    const result = await getDoctorDeparmentsForLandingPage()
 
-                if (result.status === 200) {
-                    setDepartments(result.data)
+                    if (result.status === 200) {
+                        setDepartments(result.data)
+                    }
+                    // alert(JSON.stringify(result))
+                } catch (error) {
+
                 }
-                // alert(JSON.stringify(result))
-            } catch (error) {
-
-            }
-        })()
+            })()
 
 
 
@@ -194,14 +194,14 @@ const LandingPage: React.FC = () => {
                         <p className='hover:font-bold hover:text-[24px]'>About Us</p>
                         <p className='hover:font-bold hover:text-[24px]'>Features</p>
                         <p className='hover:font-bold hover:text-[24px]'>Pricing</p>
-                        <p className='hover:font-bold hover:text-[24px]' onClick={()=>{
+                        <p className='hover:font-bold hover:text-[24px]' onClick={() => {
                             navigate('/account/login')
                         }}>Login</p>
 
                     </div>
 
-                    <p className='bg-cosmic-primary-color text-white p-2 rounded-md ' onClick={()=>{
-                          navigate('/selectRole')
+                    <p className='bg-cosmic-primary-color text-white p-2 rounded-md ' onClick={() => {
+                        navigate('/selectRole')
                     }}>Register</p>
 
 
@@ -278,7 +278,10 @@ const LandingPage: React.FC = () => {
                     </div>
 
                 </div>
-                <div className='bg-cosmic-color-white-bacground backdrop-blur-2xl h-fit absolute w-full top-[90%]'>
+
+
+
+                {/* <div className='bg-cosmic-color-white-bacground backdrop-blur-2xl h-fit absolute w-full top-[90%]'>
                     <div className='w-full m-3 flex justify-center me-20 relative overflow-x-hidden'> <p>--Trusted By-</p></div>
                     <div ref={autoScrollRef} className='w-full inline-flex  gap-8 '>
                         <img src={nutellaImage} className='w-[300px] h-[100px]' />
@@ -289,7 +292,7 @@ const LandingPage: React.FC = () => {
                         <img src={uniliver} className='w-[300px] h-[100px]' />
                         <img src={milo} className='w-[300px] h-[100px]' />
 
-                        {/**dupicate */}
+                        {/**dupicate --}
                         <img src={nutellaImage} className='w-[300px] h-[100px]' />
                         <img src={pampers} className='w-[300px] h-[100px]' />
                         <img src={huggies} className='w-[300px] h-[100px]' />
@@ -298,9 +301,9 @@ const LandingPage: React.FC = () => {
                         <img src={uniliver} className='w-[300px] h-[100px]' />
                         <img src={milo} className='w-[300px] h-[100px]' />
                     </div>
-                </div>
+                </div>*/
 
-
+                }
 
 
             </div>
@@ -310,10 +313,10 @@ const LandingPage: React.FC = () => {
 
 
 
-{/**
+            {/**
  * what we offer container
  */}
-            <div className='w-full  col-span-7 h-full mt-[200px] '>
+            <div className='w-full  col-span-7 h-full md:mt-[50px] '>
                 <div className='w-full flex flex-col place-items-center justify-center gap-4 '>
                     <p className='text-cosmic-primary-color font-bold text-[24px] mt-4'>Our Features</p>
                     <p>What we are offering you.</p>
@@ -321,9 +324,9 @@ const LandingPage: React.FC = () => {
                     <div className='w-[100vw] md:w-[800px] inline-flex gap-3 overflow-x-auto'>
 
                         <div className='w-[300px] h-fit m-5 relative'>
-                       
+
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat relative '>
-                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
+                                <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5 '>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -336,16 +339,16 @@ const LandingPage: React.FC = () => {
 
                             </div>
                             <div className='w-[80px] h-[50px] absolute bottom-3 right-3  bg-white rounded-md flex justify-center place-items-center'>
-                            <img src={rightButton} />
+                                <img src={rightButton} />
                             </div>
 
-                         
+
                         </div>
 
 
                         <div className='w-[300px] h-fit m-5 relative'>
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
-                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
+                                <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5'>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -364,7 +367,7 @@ const LandingPage: React.FC = () => {
 
                         <div className='w-[300px] h-fit m-5 relative'>
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
-                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
+                                <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5'>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -384,7 +387,7 @@ const LandingPage: React.FC = () => {
 
                         <div className='w-[300px] h-fit m-5 relative'>
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
-                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
+                                <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5'>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -397,13 +400,13 @@ const LandingPage: React.FC = () => {
 
                             </div>
                             <div className='w-[80px] h-[50px] absolute bottom-3 right-3  bg-white rounded-md flex justify-center place-items-center'>
-                            <img src={rightButton} />
+                                <img src={rightButton} />
                             </div>
                         </div>
 
                         <div className='w-[300px] h-fit m-5 relative'>
                             <div className='bg-cosmic-landing-page-card-bg h-[400px] w-[300px] bg-contain bg-no-repeat '>
-                            <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
+                                <div className='hover:bg-cosmic-light-color-call h-[97%] w-[97%] absolute z-[200] rounded-md  '></div>
                                 <div className='w-full flex flex-col justify-center p-5'>
                                     <img src={image} className='h-[200px] w-[300px] border' />
 
@@ -497,12 +500,12 @@ const LandingPage: React.FC = () => {
 
                 <div className='w-full relative'>
                     <p className='text-cosmic-primary-color font-bold text-[24px] mt-4 ms-[50px]'>Browse by Departments</p>
-                    <p className='text-cosmic-primary-color  text-[14px] mt-4 ms-[40px] absolute top-0 right-8 font-light' onClick={()=>{
-                      navigate('/departments',{
-                        state:{
-                            departments
-                        }
-                      })
+                    <p className='text-cosmic-primary-color  text-[14px] mt-4 ms-[40px] absolute top-0 right-8 font-light' onClick={() => {
+                        navigate('/departments', {
+                            state: {
+                                departments
+                            }
+                        })
                     }}>See more</p>
                 </div>
 
@@ -811,7 +814,9 @@ const LandingPage: React.FC = () => {
 
 
 
-            <div className='w-full   col-span-7 h-fit bg-cosmic-primary-color  p-2 md:p-12 '>
+            {
+                /**
+                 * <div className='w-full   col-span-7 h-fit bg-cosmic-primary-color  p-2 md:p-12 '>
 
                 <div className='w-full h-fit bg-white'>
                     <div className='md:m-3 w-full flex justify-center flex-col place-items-center md:pt-8 relative'>
@@ -831,6 +836,8 @@ const LandingPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+                 */
+            }
 
 
             <div className='w-full  bg-white col-span-7 h-fit flex justify-center place-items-center md:p-8  '>

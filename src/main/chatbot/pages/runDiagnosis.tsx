@@ -1,13 +1,12 @@
-import  React, { useEffect, useRef, useState } from 'react';
+import  React, { useEffect, useMemo, useRef, useState } from 'react';
 import HomeMobileNavBar from '../../home/component/patient/HomeMobileNavBar';
 import HomeNavBar from '../../home/component/patient/HomeNavBar';
 import profilePic from '../../../assets/icons/home/cosmic-home-profile-pic-temp.svg';
 import send from '../../../assets/images/Email Send.svg';
 import mic from '../../../assets/images/mic.svg'
 import botImage from '../../../assets/images/botImage.svg'
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 import { RootReducer } from '../../store/initStore';
-import { cacheDiagnosis } from '../../store/reducers/diagnosisReducer';
 
 
 
@@ -15,7 +14,7 @@ const AiChatbot = () => {
 
   const  userSocket = useSelector((state:RootReducer)=>state.socket)
   const user = useSelector((state:RootReducer)=>state.user)
-  const dispatch = useDispatch()
+
   const userDiagnosis = useSelector((state:RootReducer)=>state.diagnosis)
   
   const [messages, setMessages] = useState<{ sender: string, message: string, timeStamp:string, _id?:string }[]>(userDiagnosis.diagnosisChat?.messages as { sender: string, message: string, timeStamp:string }[] ?? []);
@@ -60,6 +59,13 @@ const AiChatbot = () => {
 
       if(userSocket.connected && userSocket){
         userSocket.socket?.emit('perform-diagnosis',input)
+
+        userSocket.socket?.on('diagnosis', (d: any) => {
+          setShowLoader(false)
+          setLoadingResponse(false)
+          setMessages(d.messages as  { sender: string, message: string, timeStamp:string, _id?:string }[])
+      
+        })
       }
      
     }
@@ -67,16 +73,6 @@ const AiChatbot = () => {
 
   useEffect(()=>{
     if(userSocket.connected && userSocket.socket){
-
-      userSocket.socket.on('diagnosis',(data:any)=>{
-
-     
-      setShowLoader(false)
-      setLoadingResponse(false)
-      setMessages(data.messages)
-      dispatch(cacheDiagnosis({diagnosisChat:data}))
-      
-      },)
 
   userSocket.socket.on('diagnosis-failed',(d:any)=>{
     setShowLoader(false)
@@ -86,6 +82,17 @@ const AiChatbot = () => {
 
     }
   },[userSocket.socket])
+
+  useMemo(()=>{
+
+    if(userDiagnosis.diagnosisChat?.messages){
+      setShowLoader(false)
+      setLoadingResponse(false)
+      setMessages(userDiagnosis.diagnosisChat?.messages as  { sender: string, message: string, timeStamp:string, _id?:string }[])
+    }
+
+  },[userDiagnosis.diagnosisChat])
+
 
   useEffect(()=>{
     setMessages([...messages, { sender: 'bot', message:`Hello ${user.data?.fullName} i am your AI assistant how may i help you.`,timeStamp: Date() }]);
@@ -124,9 +131,10 @@ const AiChatbot = () => {
             <React.Fragment  key={message._id} >
               <div className={`mb-4 flex ${message.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
                 {message.sender == 'bot'&& <img src={botImage} alt="Profile" className='inline self-start rounded-[50%]  mr-2 h-8 w-8' />}
+
                 <div className={`inline-block p-3 rounded-lg shadow-lg ${message.sender === 'user' ? 'bg-cosmic-color-lightBlue text-white' : 'bg-white text-black'}`}>
                   
-                  {message.message}
+                 <p className='' style={{whiteSpace:'pre-wrap'}}> {message.message}</p>
                 <p className='text-xs mt-3 text-end '>{getTime(new Date(message.timeStamp))}</p>
                 </div>
                 {message.sender == 'user'&& <img src={user.data?.profile?.profilePicture?? profilePic} alt="Profile" className='inline-flex self-start rounded-[50%]  ml-2 h-8 w-8' />}

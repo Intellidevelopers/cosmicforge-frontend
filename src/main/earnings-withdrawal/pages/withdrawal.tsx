@@ -1,13 +1,16 @@
 import { useState } from "react"
+//import { useNavigate } from "react-router-dom"
 
 const Withdrawal = () => {
 
     const [withdrawalMethod,setWithdrawalMethod] = useState('bank')
 
+    //const  navigate = useNavigate()
+
   return (
     <div className="w-screen h-screen flex justify-center items-center">
         <div className="max-w-[800px] h-fit items-center justify-center w-full gap-4 flex flex-col p-4 shadow-md">
-            <p className="font-bold text-lg px-8 self-start">Withdrawal</p>
+            <p className="font-bold text-lg px-8 self-start" >Withdrawal</p>
             <div className="flex justify-around  gap-4 border-b-2 w-full">
                 <p onClick={()=>setWithdrawalMethod('bank')} className={`font-bold p-2 ${withdrawalMethod === 'bank' ? 'border-b-2 border-cosmic-primary-color' : 'border-none'}`}>Bank</p>
                 <p onClick={()=>setWithdrawalMethod('cryptocurrency')} className={`font-bold p-2 ${withdrawalMethod === 'cryptocurrency' ? 'border-b-2 border-cosmic-primary-color' : 'border-none'}`}>Cryptocurrency</p>

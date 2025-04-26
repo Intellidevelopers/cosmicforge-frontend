@@ -5,13 +5,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     }
 
   export interface UserDiagnosisProps {
-    diagnosisChat:{messages:DiagnosisChatProps[] }| null
+    diagnosisChat?:{messages:DiagnosisChatProps[] }| null,
+
+    chatBot?:{messages:DiagnosisChatProps[]} | null
    
  }
 
  const  initialState:UserDiagnosisProps= {
-   diagnosisChat:null
-   
+   diagnosisChat:null,
+   chatBot:null
  }
 
 
@@ -21,6 +23,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     reducers:{
         cacheDiagnosis(state,action:PayloadAction<UserDiagnosisProps>){
             state.diagnosisChat = action.payload.diagnosisChat ?? state.diagnosisChat!!
+            state.chatBot = action.payload.chatBot ?? state.chatBot!!
             
           
         }
