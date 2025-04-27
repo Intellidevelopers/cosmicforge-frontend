@@ -457,8 +457,14 @@ const MainRouterPage = () => {
 
 
             socket.on('all-diagnosis', (data: any) => {
+            
+                dispatch(cacheDiagnosis({ diagnosisChat: {messages:data.messages} }))
+            })
 
-                dispatch(cacheDiagnosis({ diagnosisChat: data }))
+            socket.on('all-chatBot', (data: any) => {
+               
+
+                dispatch(cacheDiagnosis({ chatBot:{messages: data.messages} }))
             })
 
             socket.on('disconnect', () => {

@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer } from "../../../../store/initStore"
 import { updateAppointmentSession, updateCallInitialization, updateCallMode } from "../../../../store/reducers/userSocketReducer"
-import { useState, useEffect, MutableRefObject, useRef} from "react"
+import { useState, useEffect, MutableRefObject, useRef } from "react"
 
 import DoctorMessagesCard from "../../../component/chat/doctor/DoctorMessagesCard"
 import DoctorChatMessage from "../../../component/chat/doctor/DoctorChatMessage"
@@ -39,7 +39,7 @@ const DoctorMainChatPage = () => {
     // alert(JSON.stringify(userSocket.userChats))
 
 
-    const {state} = useLocation()
+    const { state } = useLocation()
 
     const userDetails = state as {
         doctorImage: string,
@@ -163,7 +163,7 @@ const DoctorMainChatPage = () => {
 
 
         }
-    } | null>( userDetails ?? null)
+    } | null>(userDetails ?? null)
 
 
     const [messages, setMessages] = useState<{
@@ -181,12 +181,12 @@ const DoctorMainChatPage = () => {
 
 
 
-    useEffect(()=>{
-        return() => {
-         dispatch(updateAppointmentSession({appointmentSessionStarted:false}))
+    useEffect(() => {
+        return () => {
+            dispatch(updateAppointmentSession({ appointmentSessionStarted: false }))
         }
-    },[])
- 
+    }, [])
+
 
 
 
@@ -357,8 +357,8 @@ const DoctorMainChatPage = () => {
 
                     messagesFromServer.push({
 
-                        doctorImage: senderProfile.userProfile.profilePicture,
-                        doctorName: senderProfile.userName,
+                        doctorImage: senderProfile?.userProfile?.profilePicture ?? '/',
+                        doctorName: senderProfile?.userName ?? '',
                         lastMessageTime: data.messages[data.messages.length - 1].timeStamp!!,
                         numberOfUnreadMessages: 8,
                         messageType: data.messages[data.messages.length - 1].messageType!!,
@@ -384,24 +384,24 @@ const DoctorMainChatPage = () => {
 
 
 
-            if(userDetails && messagesFromServer){
+            if (userDetails && messagesFromServer) {
 
-                const chat = messagesFromServer.find(data=>{
-                   return chatSelected?.details.patientId === data.details.patientId
-               })
-   
-               if(chat){
-                   setMessages(chat.messages)
-                   setTimeout(() => {
-                    if (messageScrollRef.current) {
+                const chat = messagesFromServer.find(data => {
+                    return chatSelected?.details.patientId === data.details.patientId
+                })
 
-                        messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
-                    }
-                }, 1000)
-               }
-              
-   
-           }
+                if (chat) {
+                    setMessages(chat.messages)
+                    setTimeout(() => {
+                        if (messageScrollRef.current) {
+
+                            messageScrollRef.current.scrollTo({ top: messageScrollRef.current.scrollHeight, behavior: 'smooth' })
+                        }
+                    }, 1000)
+                }
+
+
+            }
 
 
 
@@ -533,7 +533,7 @@ const DoctorMainChatPage = () => {
 
 
 
-                            <div className={` ${userSocket.appointmentSessionStarted ? 'flex':'hidden'} w-full  justify-end  gap-3`}>
+                            <div className={` ${userSocket.appointmentSessionStarted ? 'flex' : 'hidden'} w-full  justify-end  gap-3`}>
                                 <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
 
                                     if (userSocket.connected) {
@@ -584,7 +584,7 @@ const DoctorMainChatPage = () => {
 
 
 
-                    <div className={`${userSocket.appointmentSessionStarted ? 'block':'hidden'}  bg-white w-full h-[90px]`}>
+                    <div className={`${userSocket.appointmentSessionStarted ? 'block' : 'hidden'}  bg-white w-full h-[90px]`}>
 
                         <div className="grid grid-cols-3 ">
                             <div className="flex place-items-center   gap-3 col-span-2

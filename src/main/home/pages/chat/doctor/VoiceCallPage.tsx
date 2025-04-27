@@ -266,7 +266,7 @@ const VoiceCallPage = () => {
 
                     messagesFromServer.push({
 
-                        doctorImage: senderProfile.userProfile.profilePicture,
+                        doctorImage: senderProfile.userProfile?.profilePicture ?? '',
                         doctorName: senderProfile.userName,
                         lastMessageTime: data.messages[data.messages.length - 1].timeStamp!!,
                         numberOfUnreadMessages: 8,
@@ -1426,8 +1426,8 @@ const VoiceCallPage = () => {
 
             <div className=' bg-white '>
                 <div className=" h-full flex justify-evenly place-items-center">
-                    <img src={patientToCallDetails?.doctorImage ?? userSocketCon.remoteCallerDetails?.profilePicture} className='h-[40px] w-[40px] rounded-full' />
-                    <p>{patientToCallDetails?.doctorName ?? userSocketCon.remoteCallerDetails?.profilePicture}</p>
+                    <img src={patientToCallDetails?.doctorImage ?? userSocketCon?.remoteCallerDetails?.profilePicture} className='h-[40px] w-[40px] rounded-full' />
+                    <p>{patientToCallDetails?.doctorName ?? userSocketCon?.remoteCallerDetails?.profilePicture}</p>
                     <i className='fa fa-ellipsis-v' />
                 </div>
             </div>
