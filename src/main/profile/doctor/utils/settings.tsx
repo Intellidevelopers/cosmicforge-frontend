@@ -14,43 +14,53 @@ import logOut from '../../../../assets/images/logOUt.png'
 const settings = [
     {
         image:bell,
-        name:'Notifications'
+        name:'Notifications',
+        path:''
     },
     {
         image:earn,
-        name:'Earnings'
+        name:'Earnings',
+        path:'/doctor/earnings'
     },
     {
         image:sub,
-        name:'Subscription'
+        name:'Subscription',
+        path:'/doctor/subscription'
     },
     {
         image:pWord,
-        name:'Password'
+        name:'Password',
+        path:''
     },
     {
         image:AI,
-        name:'AI Chat Bot'
+        name:'AI Chat Bot',
+        path:''
     },
     {
         image:help,
-        name:'Help Center'
+        name:'Help Center',
+        path:''
     },
     {
         image:language,
-        name:'Language'
+        name:'Language',
+        path:'/doctor/select-language'
     },
     {
         image:faqs,
-        name:'FAQS'
+        name:'FAQS',
+        path:'/doctor/faqs'
     },
     {
         image:privacyPolicy,
-        name:'Privacy Policy'
+        name:'Privacy Policy',
+        path:''
     },
     {
         image:logOut,
-        name:'Log Out'
+        name:'Log Out',
+        path:''
     },
 ]
 

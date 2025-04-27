@@ -7,18 +7,21 @@ import calender from '../../../../assets/images/Calendar.png'
 import users from '../../../../assets/images/Users.png'
 import bell from '../../../../assets/icons/Bell.png'
 import wallet from '../../../../assets/images/Coin Wallet.png'
-// import patientIcon from '../../../../assets/images/patientsIcon.png'
-// import appointmentIcon from '../../../../assets/images/appointmentsIcon.png'
-// import certification from '../../../../assets/images/smallCert.png'
+import patientIcon from '../../../../assets/images/patientsIcon.png'
+import appointmentIcon from '../../../../assets/images/appointmentsIcon.png'
+import certification from '../../../../assets/images/smallCert.png'
 import deleteIcon from '../../../../assets/images/deleteIconAccount.png'
 import { settings } from "../utils/settings"
 
 
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 
 
 const DoctorProfile = () => {
+
+  const navigate = useNavigate()
 
   const [toggleNotifs, setToggleNotifs] = useState(false)
 
@@ -26,7 +29,7 @@ const DoctorProfile = () => {
     <div className="overflow-y-scroll">
         <DoctorHomeNavBar title="My Profile" />
         <DoctorNavBarMobile title="My Profile" />
-        <div className="justify-center items-center flex flex-col ">
+        <div className="justify-center items-center flex flex-col mb-4">
           {/* INFO SECTION */}
           <div className="flex flex-col items-center justify-center  rounded-lg p-4 m-4 shadow-lg md:w-fit">
             <img src={qrCode} alt='qrcode' className="w-8 self-end" />
@@ -72,7 +75,7 @@ const DoctorProfile = () => {
           </div>
           {/* SETINGS SECTION */}
           <div className="flex w-full flex-col justify-center items-center h-full">
-            {/* <div className="flex-col w-[90%] h-full flex">
+            <div className="flex-col w-[90%] h-full flex">
               <div className="flex items-center justify-start rounded-md shadow-lg p-2">
                 <img src={patientIcon} alt="Patients" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Patients</p>
@@ -81,12 +84,13 @@ const DoctorProfile = () => {
                 <img src={appointmentIcon} alt="Appointments" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Appointments</p>
               </div>
-              <div className="flex items-center justify-start rounded-md shadow-lg p-2">
+              <div className="flex items-center justify-start rounded-md shadow-lg p-2" onClick={()=>{navigate('/doctor/certifications')}}>
                 <img src={certification} alt="Certifications" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Certifications</p>
               </div>
-              </div> */}
+            </div>
             <div className="flex-col w-[90%] h-full flex">
+              <p className="self-start font-bold m-4">SETTINGS</p>
               <div className="flex justify-between items-center p-2 rounded-md shadow-lg ">
                 <div className="flex items-center justify-start ">
                   <img src={bell} alt="bells" className="w-8 h-8 " />
@@ -99,7 +103,7 @@ const DoctorProfile = () => {
                     </div>
               </div>
               {settings.map((setting,index)=>(
-              <div key={index} className="flex justify-between items-center p-2 rounded-md shadow-lg ">
+              <div key={index} className="flex justify-between items-center p-2 rounded-md shadow-lg " onClick={()=>{navigate(setting.path)}}>
                 <div className="flex items-center justify-start ">
                   <img src={setting.image} alt="Certifications" className="w-8 h-8" />
                   <p className={ `font-bold p-2  ${setting.name === 'Log Out' &&'text-red-500' }` }>{setting.name}</p>

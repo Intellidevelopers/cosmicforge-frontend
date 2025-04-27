@@ -105,6 +105,13 @@ import FeatureIncoming from './main/generalComponents/featureIncoming.tsx'
 import PatientSubscribe from './main/subscription/pages/patientSubscribe.tsx'
 import DoctorSubscribe from './main/subscription/pages/doctorSubscribe.tsx'
 import DoctorProfile from './main/profile/doctor/pages/doctorProfile.tsx'
+import Certifications from './main/profile/doctor/pages/certifications.tsx'
+import CertificationUpload from './main/profile/doctor/pages/certificationUpload.tsx'
+import LiscenceUpload from './main/profile/doctor/pages/liscenceUpload.tsx'
+import Faqs from './main/profile/doctor/pages/faqs.tsx'
+import UploadCertificateDetails from './main/profile/doctor/pages/uploadCertificateDetails.tsx'
+import UploadLiscenceDetails from './main/profile/doctor/pages/uploadLiscenceDetails.tsx'
+import SelectLanguage from './main/profile/doctor/pages/selectLanguage.tsx'
 
 
 const router = createBrowserRouter([
@@ -555,6 +562,34 @@ const router = createBrowserRouter([
         {
           path: '/doctor/profile',
           element: <DoctorProfile/>
+        },
+        {
+          path: '/doctor/certifications',
+          element: <Certifications/>
+        },
+        {
+          path: '/doctor/certification-upload',
+          element: <CertificationUpload/>
+        },
+        {
+          path: '/doctor/liscence-upload',
+          element: <LiscenceUpload/>
+        },
+        {
+          path: '/doctor/certificate-details-upload',
+          element: <UploadCertificateDetails/>
+        },
+        {
+          path: '/doctor/liscence-details-upload',
+          element: <UploadLiscenceDetails/>
+        },
+        {
+          path: '/doctor/faqs',
+          element: <Faqs/>
+        },
+        {
+          path: '/doctor/select-language',
+          element: <SelectLanguage/>
         },
       
        
