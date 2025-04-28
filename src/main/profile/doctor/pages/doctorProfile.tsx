@@ -6,9 +6,9 @@ import calender from '../../../../assets/images/Calendar.png'
 import users from '../../../../assets/images/Users.png'
 import bell from '../../../../assets/icons/Bell.png'
 import wallet from '../../../../assets/images/Coin Wallet.png'
-// import patientIcon from '../../../../assets/images/patientsIcon.png'
-// import appointmentIcon from '../../../../assets/images/appointmentsIcon.png'
-// import certification from '../../../../assets/images/smallCert.png'
+import patientIcon from '../../../../assets/images/patientsIcon.png'
+import appointmentIcon from '../../../../assets/images/appointmentsIcon.png'
+import certification from '../../../../assets/images/smallCert.png'
 import deleteIcon from '../../../../assets/images/deleteIconAccount.png'
 import { settings } from "../utils/settings"
 
@@ -22,6 +22,8 @@ import { Navigate, useNavigate } from "react-router-dom"
 
 const DoctorProfile = () => {
 
+  const navigate = useNavigate()
+
   const [toggleNotifs, setToggleNotifs] = useState(false)
 
   const user = useSelector((state:RootReducer)=>state.user)
@@ -30,7 +32,7 @@ const DoctorProfile = () => {
 
   const doctorWallet= useSelector((state:RootReducer)=>state.doctorWallet)
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
    if(!user.isAunthenticated){
         
@@ -103,7 +105,7 @@ const DoctorProfile = () => {
 
         {/* SETINGS SECTION */}
         <div className="flex w-full flex-col justify-center items-center h-full">
-          {/* <div className="flex-col w-[90%] h-full flex">
+          <div className="flex-col w-[90%] h-full flex">
               <div className="flex items-center justify-start rounded-md shadow-lg p-2">
                 <img src={patientIcon} alt="Patients" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Patients</p>
@@ -112,11 +114,11 @@ const DoctorProfile = () => {
                 <img src={appointmentIcon} alt="Appointments" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Appointments</p>
               </div>
-              <div className="flex items-center justify-start rounded-md shadow-lg p-2">
+              <div className="flex items-center justify-start rounded-md shadow-lg p-2" onClick={()=>{navigate('/doctor/certifications')}}>
                 <img src={certification} alt="Certifications" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Certifications</p>
               </div>
-              </div> */}
+              </div>
           <div className="flex-col w-[90%] h-full flex">
             <div className="flex justify-between items-center p-2 rounded-md shadow-lg ">
               <div className="flex items-center justify-start ">
