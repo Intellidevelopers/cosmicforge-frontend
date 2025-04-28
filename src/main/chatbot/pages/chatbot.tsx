@@ -23,12 +23,7 @@ const Chatbot = () => {
   const user = useSelector((state:RootReducer)=>state.user)
 
 
-  const getTime = (date: Date) => {
-    const hours = date.getHours()
-    const minutes = date.getMinutes()
-    const time = hours > 12 ? 'PM' : 'AM'
-    return `${hours}:${minutes} ${time}`
-  }
+  
 
 
   useMemo(()=>{
@@ -41,7 +36,7 @@ const Chatbot = () => {
 
   const handleSend = () => {
     if (input.trim()) {
-      setMessages([...messages, { sender: 'user', message: input, timeStamp: Date.now().toString()},{ sender: 'bot', message: 'typing....', timeStamp:Date.now().toString() }]);
+      setMessages([...messages, { sender: 'user', message: input, timeStamp: Date.now().toLocaleString('en-Us')},{ sender: 'bot', message: 'typing....', timeStamp:Date.now().toLocaleString('en-Us') }]);
 
       setInput('');
       if (userSocket.socket && (input !== '' || undefined)) {
