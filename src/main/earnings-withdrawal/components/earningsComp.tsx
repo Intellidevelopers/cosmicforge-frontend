@@ -6,7 +6,7 @@ interface EarningsProps {
     date:string;
     time:string;
     id:string;
-    amount:number;
+    amount:string;
     status:string;
     action:string;
 }

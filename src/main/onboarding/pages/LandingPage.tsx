@@ -79,57 +79,57 @@ const faq: { title: string, body: string }[] = [{
 
 
 const LandingPage: React.FC = () => {
-   /* const wellnessProducts: WellnessProductCardProps[] = [
-        {
-            productTitle: ' Ibuprofen 400mg',
-            productDescription: ' 100 tablets',
-            productImage: tempProductImage,
-            productPrice: " N 3,500"
-
-        },
-        {
-            productTitle: ' Ibuprofen 400mg',
-            productDescription: ' 100 tablets',
-            productImage: tempProductImage,
-            productPrice: " N 3,500"
-
-        },
-        {
-            productTitle: ' Ibuprofen 400mg',
-            productDescription: ' 100 tablets',
-            productImage: tempProductImage,
-            productPrice: " N 3,500"
-
-        },
-        {
-            productTitle: ' Ibuprofen 400mg',
-            productDescription: ' 100 tablets',
-            productImage: tempProductImage,
-            productPrice: " N 3,500"
-
-        },
-        {
-            productTitle: ' Ibuprofen 400mg',
-            productDescription: ' 100 tablets',
-            productImage: tempProductImage,
-            productPrice: " N 3,500"
-
-        },
-        {
-            productTitle: ' Ibuprofen 400mg',
-            productDescription: ' 100 tablets',
-            productImage: tempProductImage,
-            productPrice: " N 3,500"
-
-        }
-        , {
-            productTitle: ' Ibuprofen 400mg',
-            productDescription: ' 100 tablets',
-            productImage: tempProductImage,
-            productPrice: " N 3,500"
-
-        }
-    ]*/
+    /* const wellnessProducts: WellnessProductCardProps[] = [
+         {
+             productTitle: ' Ibuprofen 400mg',
+             productDescription: ' 100 tablets',
+             productImage: tempProductImage,
+             productPrice: " N 3,500"
+ 
+         },
+         {
+             productTitle: ' Ibuprofen 400mg',
+             productDescription: ' 100 tablets',
+             productImage: tempProductImage,
+             productPrice: " N 3,500"
+ 
+         },
+         {
+             productTitle: ' Ibuprofen 400mg',
+             productDescription: ' 100 tablets',
+             productImage: tempProductImage,
+             productPrice: " N 3,500"
+ 
+         },
+         {
+             productTitle: ' Ibuprofen 400mg',
+             productDescription: ' 100 tablets',
+             productImage: tempProductImage,
+             productPrice: " N 3,500"
+ 
+         },
+         {
+             productTitle: ' Ibuprofen 400mg',
+             productDescription: ' 100 tablets',
+             productImage: tempProductImage,
+             productPrice: " N 3,500"
+ 
+         },
+         {
+             productTitle: ' Ibuprofen 400mg',
+             productDescription: ' 100 tablets',
+             productImage: tempProductImage,
+             productPrice: " N 3,500"
+ 
+         }
+         , {
+             productTitle: ' Ibuprofen 400mg',
+             productDescription: ' 100 tablets',
+             productImage: tempProductImage,
+             productPrice: " N 3,500"
+ 
+         }
+     ]*/
 
 
     const autoScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)

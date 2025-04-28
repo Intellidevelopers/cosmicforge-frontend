@@ -548,10 +548,7 @@ const router = createBrowserRouter([
           path:'/doctor/subscription',
           element:<DoctorSubscribe/>
         },
-        {
-          path:'/doctor/earnings',
-          element:<Earnings/>
-        },
+        
         {
           path: '/doctor/profile',
           element: <DoctorProfile/>
@@ -616,6 +613,10 @@ const router = createBrowserRouter([
       path: '/doctor/withdrawal',
       element: <Withdrawal/>
     },
+    {
+      path:'/doctor/earnings',
+      element:<Earnings/>
+    }
     
     
 

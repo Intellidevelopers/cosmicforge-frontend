@@ -4,7 +4,70 @@ import CustomPatientAppointmentCard from "../component/CustomPatientAppointmentC
 
   const UpcomingAppointmentPage = () =>{
 
-    const appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
+    let appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
+
+     if(appointments && appointments.length>0){
+       appointments  = appointments.filter((appointment)=>{
+       return appointment.appointmentStatus === "booked"
+       }) as [{
+        appointmentDate
+        : string
+        appointmentStatus
+        :string
+        appointmentTime
+        :string
+        appointmentType
+        :string
+        medicalPersonelID
+        :{
+            fullName:string,
+            lastName:string,
+            _id:string
+
+        } | null
+        patientID
+        :{
+            fullName:string,
+            lastName:string,
+            _id:string
+
+        } | null,
+
+        patientDetails:{
+            profilePicture:string
+        },
+        medicalPersonelDetails:{
+            profilePicture:string | undefined ,
+            department:string,
+            currentClinic:string,
+            specializationTitle:string,
+            workAddress:string
+        },
+        payment
+        : {
+            cardFee
+            :number
+            cardType
+            : string
+            consultationFee
+            :string
+            paymentReference
+            :string
+            paymentStatus
+            :string 
+            total
+            :number
+            vat
+            :string
+        },
+
+
+paymentStatus?:string
+
+        
+       
+    }] | null
+     }
 
   const user = useSelector((state:RootReducer)=>state.user)
   

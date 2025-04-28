@@ -41,7 +41,7 @@ const Chatbot = () => {
 
   const handleSend = () => {
     if (input.trim()) {
-      setMessages([...messages, { sender: 'user', message: input, timeStamp: getTime(new Date()) },{ sender: 'bot', message: 'typing....', timeStamp: getTime(new Date()) }]);
+      setMessages([...messages, { sender: 'user', message: input, timeStamp: Date.now().toString()},{ sender: 'bot', message: 'typing....', timeStamp:Date.now().toString() }]);
 
       setInput('');
       if (userSocket.socket && (input !== '' || undefined)) {
