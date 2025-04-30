@@ -74,3 +74,21 @@ export const getWalletBalance = async (token:string) =>{
    return result
 
 }
+
+
+
+export  const getCertificateOrLicence  = async (token:string) => { 
+ 
+ 
+    const response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/user/medics/certification/all`,{
+        method:'get',
+       headers:{
+        "Authorization":`Bearer ${token}`,
+        "Content-Type":'application/json'
+       }
+    })
+ 
+   const result  = await response.json()  as ResponseBodyProps
+ 
+   return result
+ }

@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react"
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
-import { getAppointments, getUserChats, getWalletBalance, validateUserSession } from "./service"
+import { getAppointments, getCertificateOrLicence, getUserChats, getWalletBalance, validateUserSession } from "./service"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
@@ -13,6 +13,7 @@ import useGetMediaStream from "../home/hook/useGetMediaStream"
 import ringtone from '../../assets/call/ringtone4.mp3'
 import { updateAppointments } from "../store/reducers/doctorAppointmentsReducer"
 import { updateDoctorWallet } from "../store/reducers/doctorWalletReducer"
+import { cacheDoctorCertificateAndLicence } from "../store/reducers/doctorCertificateAndLicence"
 
 
 
@@ -200,6 +201,21 @@ const MainRouterPage = () => {
 
 
                     try {
+                        const result = await getAppointments(user.data?.token!!)
+
+                        if (result.status === 200) {
+                            console.log(result.data)
+                            store.dispatch(updateAppointments({ appointments: result.data.appointments, totalAppointments: result.data.totalAppointments }))
+                        } else {
+                            console.log(result.error)
+                        }
+                        
+                    } catch (error) {
+                        
+                    }
+
+
+                    try {
 
                         const result = await getWalletBalance(user.data?.token!!)
 
@@ -216,25 +232,42 @@ const MainRouterPage = () => {
 
                     }
 
-                }
+
+                    try {
+                        const result = await getCertificateOrLicence(user.data?.token!!)
+
+                        if (result.status === 200) {
 
 
+                            store.dispatch(cacheDoctorCertificateAndLicence({licence:result.data.licence,certification:result.data.certification}))
+
+                         
+                            return
+                        }
 
 
-                if (user && user.data) {
+                     
 
-                    const result = await getAppointments(user.data.token!!)
-
-                    if (result.status === 200 && result.data) {
-                        console.log(result.data)
-                        store.dispatch(updateAppointments({ appointments: result.data.appointments, totalAppointments: result.data.totalAppointments }))
-                    } else {
-                        console.log(result.error)
+                        
+                    } catch (error:any) {
+                        //alert(JSON.stringify(error.message)) 
                     }
 
 
+                  
 
                 }
+
+
+
+
+               
+
+                   
+
+
+
+                
 
 
 

@@ -2,8 +2,9 @@
 // import { useState } from "react"
 import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar"
 import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobile"
-import certificate from '../../../../assets/images/cert.png'
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { RootReducer } from "../../../store/initStore"
 
 
 const CertificationUpload = () => {
@@ -18,6 +19,8 @@ const CertificationUpload = () => {
     //       setPreview(URL.createObjectURL(uploadedFile))
     //     }
     //   }
+
+    const certificateDetails = useSelector((state:RootReducer)=>state.doctorCertificateAndLicence)
   
     return (
     <div>
@@ -28,16 +31,18 @@ const CertificationUpload = () => {
         <button type="button" className="bg-cosmic-primary-color w-fit text-white p-2 font-bold rounded-md"
         onClick={()=>{navigate('/doctor/certificate-details-upload')}}
         >Upload New</button>
+
+        
         <div className={`bg-white  rounded-md shadow-md  p-4 `}>
           <div className={`max-w-full bg-white overflow-hidden  p-4 max-h-[60vh] `}>
-            {<img src={certificate} alt="Uploaded Image" className="w-full object-cover max-h-[60dvh]"/>}
+            {<img src={certificateDetails.certification?.certificateImage??'/'}  alt="No certificate uploaded yet" className="w-full bg-black bg-opacity-30 object-cover max-h-[60dvh]"/>}
             {/* {uploadedFile && uploadedFile.type ==='application/pdf' && <embed src={preview} type="application/pdf" width='100%' height='300px' className="overflow-hidden" />} */}
           </div>
           <div className="flex justify-between flex-wrap items-center border-t border-black mt-2 w-full px-4">
-            <p className="font-bold">#1</p>
-            <p className="font-bold">MBBS</p>
-            <p className="font-extralight">000012233545466</p>
-            <p className="font-extralight">31/02/2015</p>
+            <p className="font-bold">{certificateDetails.certification?.institution}</p>
+            <p className="font-bold">{certificateDetails.certification?.fullName??'not uploaded yet'}</p>
+            <p className="font-extralight">{certificateDetails.certification?.certificateNo}</p>
+            <p className="font-extralight">{certificateDetails.certification?.date}</p>
           </div>
         </div>
        </div>

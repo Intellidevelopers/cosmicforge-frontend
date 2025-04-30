@@ -86,3 +86,43 @@ export  const getDoctorDeparmentsForLandingPage = async () => {
 }
 
 
+export  const uploadCertificateOrLicence  = async (data:{ fullName: string;
+   institution: string;
+   certificateNo?: string;
+   licenceNo?: string;
+   licenceImage?: string;
+   certificateImage?: string;
+   date: string;
+   type: "licence" | "certificate";
+   photoWithLicence?:string},token:string) => { 
+
+      const abortController = new AbortController()
+
+      const signal = abortController.signal
+
+      const timeOut = setTimeout(()=>{
+         abortController.abort()
+      },3*60*1000)
+
+ 
+
+      const response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/user/medics/certification/upload`,{
+         signal,
+          method:'post',
+         headers:{
+          "Authorization":`Bearer ${token}`,
+          "Content-Type":'application/json'
+         },
+         body:JSON.stringify(data)
+      })
+   
+     const result  = await response.json()  as ResponseBodyProps
+
+     clearTimeout(timeOut)
+   
+     return result
+   
+  
+}
+
+

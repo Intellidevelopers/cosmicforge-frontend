@@ -270,49 +270,56 @@ const Withdrawal = () => {
                 <div className="flex justify-around gap-8">
                     <button type="button" className='rounded-md text-white bg-cosmic-primary-color py-2 px-4 opacity-50'>Cancel</button>
                     <button type="button" className='rounded-md text-white bg-cosmic-primary-color py-2 px-4' onClick={async () => {
-                        setErrorMessage('')
 
 
-                        alert(JSON.stringify(withdeawalDetails))
-                        const isNotDataComplete = Object.entries(withdeawalDetails).some(([_, value]) => {
-
-                            return !value || value === "" || value === undefined || value === null
-                        })
-
-                        if (isNotDataComplete) {
-                            setErrorMessage('Please fill all details as they are required to continue.')
-                            return
-                        }
-
-                        let amountToWithdraw = Number(withdeawalDetails.amount.replace(/,/g, '')) * 100
+                        if (withdrawalMethod === 'bank') {
 
 
+                            setErrorMessage('')
 
 
+                            const isNotDataComplete = Object.entries(withdeawalDetails).some(([_, value]) => {
 
+                                return !value || value === "" || value === undefined || value === null
+                            })
 
-                        if (walletBallance && walletBallance.wallet && amountToWithdraw > walletBallance.wallet.amount) {
-                            setErrorMessage('Insufficient fund on wallet.')
-                            return
-                        }
-                        setErrorMessage('')
-                        setLoading(true)
-
-                        try {
-                            const withdrawResponse = await withdrawBalance(user.data?.token!!, 'nuban', withdeawalDetails.accountName, withdeawalDetails.accountNumber, withdeawalDetails.bankCode, 'NGN', amountToWithdraw.toString())
-                            setLoading(false)
-
-                            if (withdrawResponse.status === 200) {
-                                setTrasactionProcessed(true)
-                                setLoading(false)
-                                store.dispatch(updateDoctorWallet({ wallet: withdrawResponse.data }))
+                            if (isNotDataComplete) {
+                                setErrorMessage('Please fill all details as they are required to continue.')
+                                return
                             }
 
+                            let amountToWithdraw = Number(withdeawalDetails.amount.replace(/,/g, '')) * 100
 
-                        } catch (error: any) {
-                            setLoading(false)
-                            alert(error.message)
+
+
+
+
+
+                            if (walletBallance && walletBallance.wallet && amountToWithdraw > walletBallance.wallet.amount) {
+                                setErrorMessage('Insufficient fund on wallet.')
+                                return
+                            }
+                            setErrorMessage('')
+                            setLoading(true)
+
+                            try {
+                                const withdrawResponse = await withdrawBalance(user.data?.token!!, 'nuban', withdeawalDetails.accountName, withdeawalDetails.accountNumber, withdeawalDetails.bankCode, 'NGN', amountToWithdraw.toString())
+                                setLoading(false)
+
+                                if (withdrawResponse.status === 200) {
+                                    setTrasactionProcessed(true)
+                                    setLoading(false)
+                                    store.dispatch(updateDoctorWallet({ wallet: withdrawResponse.data }))
+                                }
+
+
+                            } catch (error: any) {
+                                setLoading(false)
+                                alert(error.message)
+                            }
+
                         }
+
 
 
                     }}>Withdraw</button>

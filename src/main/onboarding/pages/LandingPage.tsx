@@ -3,13 +3,13 @@ import React, { MutableRefObject, useEffect, useRef, useState } from 'react';
 import Logo from '../../../assets/logo/logo_comsic_splash.svg'
 import rightButton from '../../../assets/icons/Right.svg'
 
-import nutellaImage from '../../../assets/advert/cosmic-advert-nutella.svg'
+/*import nutellaImage from '../../../assets/advert/cosmic-advert-nutella.svg'
 import pampers from '../../../assets/advert/cosmic-advert-pampers.svg'
 import huggies from '../../../assets/advert/cosmic-advert-huggies.svg'
 import nescafe from '../../../assets/advert/cosmic-advert-nescafe.svg'
 import cocacola from '../../../assets/advert/cosmic-advert-cocacola.svg'
 import milo from '../../../assets/advert/cosmic-advert-milo.png'
-import uniliver from '../../../assets/advert/cosmic-advert-uniliver.svg'
+import uniliver from '../../../assets/advert/cosmic-advert-uniliver.svg'*/
 import image from '../../../assets/images/image.png'
 import image1 from '../../../assets/images/FirstImagCustomView.svg'
 import image2 from '../../../assets/images/secondImagCustomview.svg'
@@ -20,10 +20,10 @@ import text from '../../../assets/background/whatPatientSay.svg'
 import docImage from '../../../assets/images/doctor-image.jpeg'
 //import { WellnessProductCardProps } from '../../home/component/patient/WellnessProductCard';
 //import tempProductImage from '../../../assets/images/cosmic-wellness-product-temp.svg'
-import linePath1 from '../../../assets/background/cosmic-line-path-1.svg'
+/*import linePath1 from '../../../assets/background/cosmic-line-path-1.svg'
 import linePath2 from '../../../assets/background/cosmic-line-path-2.svg'
 import linePath3 from '../../../assets/background/cosmic-line-path-3.svg'
-import linePath4 from '../../../assets/background/cosmic-line-path-4.svg'
+import linePath4 from '../../../assets/background/cosmic-line-path-4.svg'*/
 import FrequentlyAskedQuestionsCard from '../component/FrequentlyAskedQuestionCard';
 import playStore from '../../../assets/background/cosmic-download-android.svg'
 import appleStore from '../../../assets/background/cosmic-download-ios.svg'
@@ -839,7 +839,7 @@ const LandingPage: React.FC = () => {
                  */
             }
 
-
+       {/*
             <div className='w-full  bg-white col-span-7 h-fit flex justify-center place-items-center md:p-8  '>
 
                 <div className='w-[400px] relative mt-16'>
@@ -858,7 +858,7 @@ const LandingPage: React.FC = () => {
 
 
 
-            </div>
+            </div> */}
 
             <div className='w-full   bg-white col-span-7 h-fit md:p-8 '>
 

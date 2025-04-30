@@ -560,38 +560,12 @@ const router = createBrowserRouter([
           path: '/doctor/profile',
           element: <DoctorProfile/>
         },
-        {
-          path: '/doctor/certifications',
-          element: <Certifications/>
-        },
-        {
-          path: '/doctor/certification-upload',
-          element: <CertificationUpload/>
-        },
-        {
-          path: '/doctor/liscence-upload',
-          element: <LiscenceUpload/>
-        },
-        {
-          path: '/doctor/certificate-details-upload',
-          element: <UploadCertificateDetails/>
-        },
-        {
-          path: '/doctor/liscence-details-upload',
-          element: <UploadLiscenceDetails/>
-        },
-        {
-          path: '/doctor/faqs',
-          element: <Faqs/>
-        },
-        {
-          path: '/doctor/select-language',
-          element: <SelectLanguage/>
-        },
+     
       
        
       ]
     },
+
     {
       path: '/doctor/appointment',
       element: <VoiceAndVideoContainerPage />,
@@ -651,7 +625,36 @@ const router = createBrowserRouter([
     {
       path:'/doctor/earnings',
       element:<Earnings/>
-    }
+    },
+
+    {
+      path: '/doctor/certifications',
+      element: <Certifications/>
+    },
+    {
+      path: '/doctor/certification-upload',
+      element: <CertificationUpload/>
+    },
+    {
+      path: '/doctor/liscence-upload',
+      element: <LiscenceUpload/>
+    },
+    {
+      path: '/doctor/certificate-details-upload',
+      element: <UploadCertificateDetails/>
+    },
+    {
+      path: '/doctor/liscence-details-upload',
+      element: <UploadLiscenceDetails/>
+    },
+    {
+      path: '/doctor/faqs',
+      element: <Faqs/>
+    },
+    {
+      path: '/doctor/select-language',
+      element: <SelectLanguage/>
+    },
     
     
 

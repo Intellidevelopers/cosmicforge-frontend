@@ -110,7 +110,9 @@ const DoctorProfile = () => {
                 <img src={patientIcon} alt="Patients" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Patients</p>
               </div>
-              <div className="flex items-center justify-start rounded-md shadow-lg p-2">
+              <div className="flex items-center justify-start rounded-md shadow-lg p-2" onClick={()=>{
+                 navigate('/doctor/appointments')
+              }}>
                 <img src={appointmentIcon} alt="Appointments" className="w-12 h-12 border-r-2 p-2" />
                 <p className="font-bold p-2">Appointments</p>
               </div>
@@ -135,15 +137,9 @@ const DoctorProfile = () => {
 
             {settings.map((setting, index) => (
               <div key={index} className="flex justify-between items-center p-2 rounded-md shadow-lg cursor-default " onClick={()=>{
-
-               if(setting.name === "Earnings"){
-                navigate('/doctor/earnings')
-                  return
-               }
-                if(setting.name){
-                   
-                  return
-                }
+               
+                navigate(setting.path)
+              
               }}>
                 <div className="flex items-center justify-start " >
                   <img src={setting.image} alt="Certifications" className="w-8 h-8" />

@@ -48,23 +48,24 @@ const Earnings = () => {
                         dateStyle: 'medium'
                     }),
                     time: new Date(transaction.date).toLocaleTimeString('en-US', {
-                        hour12: true
+                        hour12: true,
+                        timeStyle:'short'
                     }),
                     id: transaction.withdrawalReferenceId,
                     amount: formatAmout(Number(transaction.withdrawAmount)),
                     status: transaction.transferStatus,
                     action: 'details'
                 }
-            }) as [{
+            }) 
+
+            setWithdrawalHistories(formatedHistories?.reverse() as [{
                 date: string,
                 time: string,
                 id: string,
                 amount: string,
                 status: "pending" | "success" | "failed",
                 action: string
-            }] | null
-
-            setWithdrawalHistories(formatedHistories)
+            }] | null)
         }
 
 
