@@ -6,10 +6,10 @@ import { DoctorPlans } from "../utils/doctorPlans"
 const DoctorSubscribe = () => {
 
   return (
-    <div>
+    <div className="overflow-y-auto mb-8">
         <DoctorHomeNavBar title="Subscription" />
         <DoctorNavBarMobile title="Subscription" />
-        <div className="flex justify-center items-center flex-wrap">
+        <div className="flex   flex-wrap">
           {DoctorPlans.map((plan,index)=>(
             <SubscribeComp key={index} {...plan}/>
           ))}

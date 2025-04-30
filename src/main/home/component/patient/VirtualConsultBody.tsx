@@ -520,6 +520,8 @@ const VirtualConsultBody = () => {
         })
       }
 
+
+
       if (socketCon.connected && socketCon.socket) {
         socketCon.socket.on('request_to_switch_call_mode', (data: { callMode: string }) => {
           setRequestingForModeChangeRemote(true)
@@ -627,6 +629,7 @@ const VirtualConsultBody = () => {
   useEffect(() => {
     if (!socketCon.isCallInitiated && socketCon.remoteConnected && socketCon.locallyConnected) {
       setCallState('connected')
+      
       startTimer()
       return
     }
@@ -648,6 +651,8 @@ const VirtualConsultBody = () => {
     }
 
   }, [requestingForModeChange])
+
+
 
 
   useEffect(() => {
@@ -672,8 +677,12 @@ const VirtualConsultBody = () => {
   return (
     <div className="w-full h-full ">
 
-      <HomeNavBar title="Virtual Consult" />
-      <HomeMobileNavBar title="Virtual Consult" />
+      <HomeNavBar title="Virtual Consult"  onSearchFired={()=>{
+
+      }}/>
+      <HomeMobileNavBar title="Virtual Consult" onSearchFired={()=>{
+
+      }} />
 
       <div className="w-full ps-0  mt-4">
         <div className="hidden m-8 md:flex place-items-center gap-1">

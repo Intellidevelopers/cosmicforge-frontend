@@ -37,8 +37,8 @@ const AddCard = () => {
 
   return (
     <>
-        <HomeMobileNavBar title={'Add Card'}/>
-        <HomeNavBar title={'Add Card'}/>
+        <HomeMobileNavBar title={'Add Card'} onSearchFired={()=>{}}/>
+        <HomeNavBar title={'Add Card'} onSearchFired={()=>{}}/>
         <div className="md:ms-[250px] flex flex-col bg-white p-8 space-y-8 h-[85%]"> 
             <img src={card} alt="Add Card" className="w-fit"/>
             <div className="flex w-full flex-col gap-4">

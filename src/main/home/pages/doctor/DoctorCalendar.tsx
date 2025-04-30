@@ -11,7 +11,7 @@ interface DateDetailsProps {
     numberOfDaysInLastMonth: number,
     totalCalendarDisplay: number[],
     currentDayIndex: number,
-    selectedDay:number
+    selectedDay: number
 }
 const DoctorCalendar = () => {
 
@@ -28,7 +28,7 @@ const DoctorCalendar = () => {
         numberOfDaysInLastMonth: 0,
         totalCalendarDisplay: [],
         currentDayIndex: 0,
-        selectedDay:Number(dayjs().format("D"))
+        selectedDay: Number(dayjs().format("D"))
     })
 
     useEffect(() => {
@@ -136,28 +136,28 @@ const DoctorCalendar = () => {
         <div className=" w-full h-[300px]  col-span-3 md:col-span-1">
 
             <div className="w-full p-6 ">
-               <div className="w-full h-fit flex gap-4">
-               <p className="text-cosmic-primary-color font-bold text-[24px]" >{dayjs().month(dateDetails.currentMonth).format("MMMM")}</p>
-               <p className="font-bold text-[24px]">{dateDetails.selectedDay}</p>
-               </div>
+                <div className="w-full h-fit flex gap-4">
+                    <p className="text-cosmic-primary-color font-bold text-[24px]" >{dayjs().month(dateDetails.currentMonth).format("MMMM")}</p>
+                    <p className="font-bold text-[24px]">{dateDetails.selectedDay}</p>
+                </div>
                 <p>{dayjs().month(dateDetails.currentMonth).format("dddd")}</p>
 
                 <div className="mt-6">
                     <p>Appointments</p>
                     <div className="w-full">
-                    <div className="w-full flex md:place-items-center gap-3 mt-2">
-                        <img className="rounded-full w-[40px] h-[40px]"   src={docImage} alt="profile"/>
-                        <div className="w-full ">
-                            <p>Grace Williams</p>
-                            <p>1:20pm - 6:30pm</p>
+                        <div className="w-full flex md:place-items-center gap-3 mt-2">
+                            <img className="rounded-full w-[40px] h-[40px]" src={docImage} alt="profile" />
+                            <div className="w-full ">
+                                <p>Grace Williams</p>
+                                <p>1:20pm - 6:30pm</p>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
 
-       
-       
+
+
 
         </div>
     </div>

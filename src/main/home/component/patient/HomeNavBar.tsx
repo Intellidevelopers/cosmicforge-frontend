@@ -5,17 +5,19 @@ import shopIcon from '../../../../assets/icons/home/cosmic-home-shop.svg'
 import cartIcon from '../../../../assets/icons/home/cosmic-home-cart.svg'
 import botChatIcon from '../../../../assets/icons/home/cosmic-home-bot-chat.svg'
 import notificationIcon from '../../../../assets/icons/home/cosmic-home-notification.svg'
+import { useState } from 'react'
 
 interface NavBarProps {
-  title: string
+  title: string,
+  onSearchFired: (path:string,searchQuery?:string) => void
 }
 
 
 
 
-const HomeNavBar = ({ title }: NavBarProps) => {
+const HomeNavBar = ({ title,onSearchFired }: NavBarProps) => {
 
-
+const [textSearched,setTextSearched] = useState<string>('')
   return (
 
     <div className="  hidden md:block  bg-white w-full min-h-[70px] h-fit  p-5  sticky top-0  shadow-md shadow-black/10 z-[100]">
@@ -27,10 +29,15 @@ const HomeNavBar = ({ title }: NavBarProps) => {
 
         <div className=' p-1 w-full  relative grid grid-cols-5 mt-1 '>
 
-          <div className=" w-[50%] md:w-full col-span-3 font-light    flex flex-wrap  justify-center  place-items-center gap-2  ">
-            <div className='w-[50%] md:w-[60%] font-extralight min-w-[40px] rounded-md border p-1  flex gap-1'>
+          <div className=" w-[50%] md:w-full col-span-3 font-light    flex flex-wrap  justify-center  place-items-center gap-2 cursor-default ">
+            <div className='w-[50%] md:w-[60%] font-extralight min-w-[40px] rounded-md border p-1  flex gap-1' onClick={()=>{
+               onSearchFired(title,textSearched)
+            }}>
               <img alt='tune' src={searchIcon} />
-              <input className='w-full outline-none' type='search' placeholder='search here' />
+              <input className='w-full outline-none' type='search' placeholder='search here'  onChange={(e)=>{
+                  setTextSearched(e.target.value) 
+                   onSearchFired(title,e.target.value)
+              }}/>
 
 
 

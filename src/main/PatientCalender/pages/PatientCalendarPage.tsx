@@ -29,7 +29,7 @@ const PatientCalendarPage = () => {
     const monnths = ['January','February','March','April','May','June','July','September','October','November','December']
    
 
-    const appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
+    let appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
 
  const [custAppointments,setCustAppointment] = useState<Dayjs[]>()
 
@@ -43,9 +43,15 @@ const PatientCalendarPage = () => {
 
     if(appointments && appointments.length>0){
 
+        const bookedAppointment = appointments.filter(appointment=>{
+            return appointment.appointmentStatus === 'booked'
+        })
+       
+
+        if(bookedAppointment.length>0){
         let items:Dayjs[] = []
 
-         appointments.forEach((appoinment,_)=>{
+         bookedAppointment?.forEach((appoinment,_)=>{
 
              let date = appoinment.appointmentDate.split(' ')
 
@@ -62,9 +68,9 @@ const PatientCalendarPage = () => {
             
          })
 
-         setImage(appointments[0].medicalPersonelDetails.profilePicture)
-         setDate(appointments[0].appointmentDate)
-   setTime(appointments[0].appointmentTime)
+         setImage(bookedAppointment[0].medicalPersonelDetails.profilePicture)
+         setDate(bookedAppointment[0].appointmentDate)
+   setTime(bookedAppointment[0].appointmentTime)
 
          setCustAppointment((prev)=>{
               
@@ -77,6 +83,8 @@ const PatientCalendarPage = () => {
 
        
         }
+
+    }
 
 
    },[appointments])

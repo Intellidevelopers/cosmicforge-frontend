@@ -1,28 +1,68 @@
 const DoctorPlans = [
+   
     {
-        name:'Premium',
-        message:'Subscrie to all Premium Subscribers',
+        name:'Free',
+        message:'Suitable to all Subscribers',
         price:'0.00',
-        duration:'year',
+        duration:'month',
         active:true,
+        commission:30,
         offers:[
-            'Access to Unlimited Patients per Month.',
-            'Top Profile Listing',
-            'Video Consultations and Chat.',
-            'Access to Priority Support.'
+            'Access to 20 Patients per month',
+            'Regular Profile Listing',
+            'Access to 50 AI Responses.',
+            'Video Consultation and Chat',
+            'Access to Support'
         ]
     },
     {
         name:'Basic',
-        message:'Subscrie to all Basic Plan Subscribers',
-        price:'0.00',
+        message:'Suitable to all Basic Plan Subscribers',
+        price:'16,000',
         duration:'month',
         active:false,
+        commission:25,
         offers:[
-            'Access to 40 Patients per month.',
-            'Regular Profile Listing',
-            'Video Consultations and Chat.',
-            'Access to Standard Support.'
+            'Access to 50 Patients per month.',
+            'Regular Profile Listing.',
+            'Access to 200 AI Responses.',
+            'Video Consultation and Chat.',
+            'Access to Shop/Purchase.',
+            'Suitable for Individual accounts only.',
+            'Access to Standard support.'
+        ]
+    },
+
+    {
+        name:'Professional',
+        message:'Suitable to all Professional Plan Subscribers',
+        price:'100,000',
+        duration:'month',
+        active:false,
+        commission:20,
+        offers:[
+            'Access to 100 Patients per month.',
+            'Top Profile Listing.',
+            'Access to 400 AI Responses.',
+            'Video Consultation and Chat.',
+            'Access to Priority Support.'
+        ]
+    },
+
+    {
+        name:'Premium',
+        message:'Suitable to all Premium Subscribers',
+        price:'200,000',
+        duration:'month',
+        active:false,
+        commission:15,
+        offers:[
+            'Access to Unlimited Patients per month.',
+            'Top Profile Listing.',
+            'Access to Unlimited AI Responses.',
+            'Video Consultation and Chat.',
+            'Access to Priority Support.',
+           
         ]
     },
 ]

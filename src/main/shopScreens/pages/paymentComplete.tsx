@@ -12,8 +12,8 @@ const PaymentComplete = () => {
 
   return (
     <div>
-        <HomeMobileNavBar title={paymentType === 'card' ? 'Card Payment' : 'Transfer Payment'}/>
-        <HomeNavBar title={paymentType === 'card' ? 'Card Payment' : 'Transfer Payment'}/> 
+        <HomeMobileNavBar title={paymentType === 'card' ? 'Card Payment' : 'Transfer Payment'} onSearchFired={()=>{}}/>
+        <HomeNavBar title={paymentType === 'card' ? 'Card Payment' : 'Transfer Payment'} onSearchFired={()=>{}}/> 
         <div className="flex flex-col gap-2 mt-4">
             <div className="border rounded-lg shadow-md m-4 px-4 h-fit">
                 <div className="flex flex-col items-center relative justify-center border-b w-full p-8 border-slate-200">

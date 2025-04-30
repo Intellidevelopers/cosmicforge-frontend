@@ -57,8 +57,8 @@ const CheckOutPage = () => {
 
   return (
     <>
-        <HomeMobileNavBar title={'Check Out'}/>
-        <HomeNavBar title={'Check Out'}/>
+        <HomeMobileNavBar title={'Check Out'} onSearchFired={()=>{}}/>
+        <HomeNavBar title={'Check Out'} onSearchFired={()=>{}}/>
         <div className=" p-4 flex flex-col  gap-4">
             <div className="shadow-md rounded-xl border">
                 <div >

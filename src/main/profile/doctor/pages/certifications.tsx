@@ -4,6 +4,7 @@ import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobil
 
 const Certifications = () => {
     const navigate = useNavigate()
+    
   return (
     <div>
         <DoctorHomeNavBar title="Certifications" />

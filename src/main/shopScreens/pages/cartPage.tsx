@@ -40,8 +40,8 @@ const CartPage = () => {
 
   return (
     <>
-    <HomeMobileNavBar title={'Cart'}/>
-    <HomeNavBar title={'Cart'}/>
+    <HomeMobileNavBar title={'Cart'} onSearchFired={()=>{}}/>
+    <HomeNavBar title={'Cart'} onSearchFired={()=>{}}/>
     <div>
         <div className="flex flex-col gap-2 p-2 max-h-[85dvh] overflow-hidden">
             <div className="flex flex-col max-h-3/4 overflow-y-scroll">

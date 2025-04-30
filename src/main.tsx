@@ -283,11 +283,11 @@ const router = createBrowserRouter([
 
           
          {
-           path:'/patient',
+           path:'/patient/messages',
            element:<MainChatPage/>,
            children:[
              {
-               path:'messages',
+               path:'',
                element:<UserMessagesPage/>,
               
              },

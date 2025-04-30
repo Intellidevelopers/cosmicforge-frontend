@@ -10,6 +10,7 @@ import  specialistDetailsReducer,{ SpecialistDetailsProps } from "./reducers/spe
 import  appoinmentsReducer,{ DoctorAppointmentInterface } from "./reducers/doctorAppointmentsReducer";
 import doctorWalletReducer,{ DoctorWalletProps } from "./reducers/doctorWalletReducer";
 import doctorCertificateAndLicenceReducer,{ DoctorCertificateAndLicenceProps } from "./reducers/doctorCertificateAndLicence";
+import searchQueryReducer,{ GeneralSearchReducerProps } from "./reducers/generalSearchReducer";
 
 
 
@@ -26,7 +27,8 @@ const persistConfig = {
     specialistDetails:SpecialistDetailsProps,
     appointments:DoctorAppointmentInterface,
     doctorWallet:DoctorWalletProps
-    doctorCertificateAndLicence:DoctorCertificateAndLicenceProps
+    doctorCertificateAndLicence:DoctorCertificateAndLicenceProps,
+    searchQuery:GeneralSearchReducerProps
  }
 
 
@@ -37,7 +39,8 @@ const rootReducer =  combineReducers({
   specialistDetails:specialistDetailsReducer,
   appointments:appoinmentsReducer,
   doctorWallet:doctorWalletReducer,
-  doctorCertificateAndLicence:doctorCertificateAndLicenceReducer
+  doctorCertificateAndLicence:doctorCertificateAndLicenceReducer,
+  searchQuery:searchQueryReducer
 })
 
 

@@ -1,7 +1,8 @@
 import UserMessagesCard, { UserMessagesCardProps } from "../../component/chat/UserMessagesCard"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useSelector } from "react-redux"
 import { RootReducer } from "../../../store/initStore"
+import { useOutletContext } from "react-router-dom"
 
 const UserMessagesPage = () => {
 
@@ -16,7 +17,37 @@ const UserMessagesPage = () => {
         return null
     })
 
+    const [messagesUpdateCache, setMessagesUpdateCache] = useState<UserMessagesCardProps[] | null>(() => {
 
+
+        return null
+    })
+
+const searchText:{query:string} = useOutletContext()
+
+useMemo(()=>{
+    
+   if(searchText && searchText.query && messagesUpdateCache){
+      
+     const filteredList =  messagesUpdateCache.filter((message)=>{
+        return new RegExp(`^${searchText.query.toLocaleLowerCase()}`).test(message.doctorName?.toLocaleLowerCase()!!)
+        
+       })
+
+       if(filteredList.length>0){
+        
+       
+        setMessagesUpdate(filteredList)
+       }else{
+        setMessagesUpdate(messagesUpdateCache)
+       }
+
+   }else{
+    setMessagesUpdate(messagesUpdateCache)
+   }
+
+
+},[searchText])
 
     useEffect(() => {
 
@@ -49,7 +80,7 @@ const UserMessagesPage = () => {
                     })
             })
 
-
+            setMessagesUpdateCache(messagesFromServer)
             setMessagesUpdate(messagesFromServer)
 
 

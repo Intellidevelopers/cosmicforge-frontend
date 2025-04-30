@@ -40,8 +40,8 @@ const SelectCase = () => {
 
   return (
     <>
-      <HomeNavBar title={params.case ? params.case : ''}/>
-      <HomeMobileNavBar title={params.case ? params.case : ''}/>
+      <HomeNavBar title={params.case ? params.case : ''}  onSearchFired={()=>{}}/>
+      <HomeMobileNavBar title={params.case ? params.case : ''} onSearchFired={()=>{}}/>
       <div className="  flex flex-col items-start gap-4 p-4 bg-white  ">
         {
           persons.map((item,index)=>{

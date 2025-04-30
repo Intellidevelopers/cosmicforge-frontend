@@ -29,8 +29,8 @@ const PatientMainPP: React.FC = () => {
 
             </div>
             <div className="md:w-[75vw] w-full overflow-y-auto">
-                <HomeMobileNavBar title="My Profile" />
-                <HomeNavBar title="Profile" />
+                <HomeMobileNavBar title="My Profile" onSearchFired={()=>{}} />
+                <HomeNavBar title="Profile" onSearchFired={()=>{}} />
 
                 <div className="flex flex-col items-center justify-center pt-[10px] pb-[70px] gap-[10px] p-3  ">
                     <div className="bg-white rounded-[5px] w-[100%] md:h-[290px] h-fit shadow-md gap-2 flex md:flex-col flex-row justify-center items-center md:py-3 md:px-3 py-4 shadow-black/10">

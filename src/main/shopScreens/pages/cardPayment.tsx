@@ -34,8 +34,8 @@ const CardPayment = () => {
           
   return (
     <>
-        <HomeMobileNavBar title={'Card Payment'}/>
-        <HomeNavBar title={'Card Payment'}/> 
+        <HomeMobileNavBar title={'Card Payment'} onSearchFired={()=>{}}/>
+        <HomeNavBar title={'Card Payment'} onSearchFired={()=>{}}/> 
         <div className="flex flex-col h-[80%]">
           <div  className='bg-white shadow-md rounded-md m-4'>
             <div className="flex flex-col w-full p-4">

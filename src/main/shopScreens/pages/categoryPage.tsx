@@ -23,8 +23,8 @@ const CategoryPage = () => {
 
   return (
     <div>
-        <HomeNavBar title={category ? category : 'Shop'}/>
-        <HomeMobileNavBar title={category ? category : 'Shop'}/>
+        <HomeNavBar title={category ? category : 'Shop'} onSearchFired={()=>{}}/>
+        <HomeMobileNavBar title={category ? category : 'Shop'} onSearchFired={()=>{}}/>
         <div className="flex max-w-full  overflow-hidden justify-center md:ms-[250px] p-4 gap-8">
             <div className="flex justify-around md:justify-start xs:gap-2 gap-4 flex-wrap">
                 {products && products.map((item,index)=>(
