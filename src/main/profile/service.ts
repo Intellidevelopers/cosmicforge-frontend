@@ -99,6 +99,7 @@ export  const uploadCertificateOrLicence  = async (data:{ fullName: string;
       const abortController = new AbortController()
 
       const signal = abortController.signal
+      
 
       const timeOut = setTimeout(()=>{
          abortController.abort()

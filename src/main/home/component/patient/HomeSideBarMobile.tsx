@@ -198,6 +198,7 @@ const HomeSideBarMobile = () => {
                 isCalenderActive: false,
                 isProfileActive: false
               })
+              closeSideBar()
               navigate('/patient/first-aid')
             }}>
               <img alt="first aid icon" src={firstAidIcon} />
@@ -218,6 +219,7 @@ const HomeSideBarMobile = () => {
                 isCalenderActive: false,
                 isProfileActive: false
               })
+              closeSideBar()
               navigate('/patient/chatbot')
             }}>
               <img alt="home" src={calenderIcon} />
