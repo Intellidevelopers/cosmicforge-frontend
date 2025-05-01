@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react"
-import { Outlet, useLocation, useNavigate } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 import { getAppointments, getCertificateOrLicence, getUserChats, getWalletBalance, validateUserSession } from "./service"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
