@@ -324,9 +324,11 @@ const DoctorBioPage = () => {
             </div>
           }
           {
-            !loadingServerData && new Array(10).fill(0).map((_, index) => (
+           /* !loadingServerData && new Array(10).fill(0).map((_, index) => (
               <ReviewCard key={index} clientName="Janet Opeyemi" comment="Dr. Josh Olawale was really Integral to my treatment process. I’m grateful for him." clientProfile={docImage} ratings={4} time="3sec ago" />
-            ))
+            ))*/
+
+              <p>No review now.</p>
           }
         </div>
 

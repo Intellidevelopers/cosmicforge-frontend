@@ -23,8 +23,8 @@ const MainRouterPage = () => {
     const user = useSelector((state: RootReducer) => state.user)
     let userSocket = useSelector((state: RootReducer) => state.socket)
     const dispatch = useDispatch()
-    const { pathname } = useLocation()
-    const path = pathname.split('/')[2]
+   // const { pathname } = useLocation()
+    //const path = pathname.split('/')[2]
 
 
     const { getStream } = useGetMediaStream()
@@ -125,45 +125,87 @@ const MainRouterPage = () => {
          // navigate("/patient/calendar")
          },5000)*/
 
-        switch (path) {
-            case 'homem':
-
-                (async () => {
-                    try {
+        
+         const isReferesh = localStorage.getItem('loadedOnce')
 
 
-                        const result = await validateUserSession({ isKeepMeSignedIn: user.keepMeSignedIn!!, token: user.data?.token!! })
+         if(!isReferesh){
+          localStorage.setItem('loadedOnce','true')
+           
+         }
 
-                        if (result.status === 200) {
-                            if (result.token) {
-                                dispatch(authenticateUser({
-                                    data: {
-                                        ...user.data,
-                                        token: result.token
-                                    }
-                                }))
-                            }
-                            return
+
+         if(isReferesh === 'true'){
+            (async () => {
+                try {
+
+            
+                    const result = await validateUserSession({ isKeepMeSignedIn: user.keepMeSignedIn!!, token: user.data?.token!! })
+
+                    if (result.status === 200) {
+                        
+                        if (result.token) {
+                            dispatch(authenticateUser({
+                                data: {
+                                    ...user.data,
+                                    token: result.token
+                                }
+                            }))
                         }
-                        // dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
-                        navigate("/patient/account", {
-                            replace: true,
-
-                        })
-
-                    } catch (error) {
-
-                        //dispatch(authenticateUser({isAunthenticated:false,data:{},keepMeSignedIn:false,message:"sessionExpired"}))
-
-                        navigate("/patient/account", {
-                            replace: true,
-
-                        })
+                        return
                     }
-                })()
+
+                    if (user.data?.token === 'client') {
+                        dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
+                        navigate("/patient/account", {
+                            replace: true,
+
+                        })
+
+                        return
+                    }
 
 
-        }
+                    if (user.data?.token === 'doctor') {
+                         dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
+                        navigate("/doctor/account", {
+                            replace: true,
+
+                        })
+
+                        return
+                    }
+
+
+                } catch (error:any) {
+
+                     if(!error.message.includes("failed to fetch"))
+                    if (user.data?.token === 'client') {
+                        dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
+                        navigate("/patient/account", {
+                            replace: true,
+
+                        })
+
+                        return
+                    }
+
+
+                    if (user.data?.token === 'doctor') {
+                         dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
+                        navigate("/doctor/account", {
+                            replace: true,
+
+                        })
+
+                        return
+                    }
+                }
+            })()
+         }
+
+
+
 
 
 
@@ -179,95 +221,105 @@ const MainRouterPage = () => {
             socket.on('connect', async () => {
 
                 if (!store.getState().socket.connected) {
-                    store.dispatch(connectSocket({ connected: true, socket }))
-                    try {
-
-
-                        const result = await getUserChats(user.data?.token!!)
-                        console.log(result)
-                        if (result.status === 200) {
-                            store.dispatch(updateUserChat({ userChats: result.data }))
-                        }
-
-
-
-                    } catch (error) {
-                        const result = await getUserChats(user.data?.token!!)
-                        console.log(result)
-                        if (result.status === 200) {
-                            store.dispatch(updateUserChat({ userChats: result.data }))
-                        }
-                    }
-
-
-                    try {
-                        const result = await getAppointments(user.data?.token!!)
-
-                        if (result.status === 200) {
-                            console.log(result.data)
-                            store.dispatch(updateAppointments({ appointments: result.data.appointments, totalAppointments: result.data.totalAppointments }))
-                        } else {
-                            console.log(result.error)
-                        }
-                        
-                    } catch (error) {
-                        
-                    }
-
-
-                    try {
-
-                        const result = await getWalletBalance(user.data?.token!!)
-
-                        if (result.status === 200) {
-
-
-
-                            store.dispatch(updateDoctorWallet({ wallet: result.data }))
-                        }
-
-                        console.log(result)
-
-                    } catch (error) {
-
-                    }
-
-
-                    try {
-                        const result = await getCertificateOrLicence(user.data?.token!!)
-
-                        if (result.status === 200) {
-
-
-                            store.dispatch(cacheDoctorCertificateAndLicence({licence:result.data.licence,certification:result.data.certification}))
-
-                         
-                            return
-                        }
-
-
-                     
+                    
+                    store.dispatch(connectSocket({ connected: true,socket }))
 
                         
-                    } catch (error:any) {
-                        //alert(JSON.stringify(error.message)) 
-                    }
 
-
-                  
 
                 }
+
+                try {
+
+
+                    const result = await getUserChats(user.data?.token!!)
+                    console.log(result)
+                    if (result.status === 200) {
+                        store.dispatch(updateUserChat({ userChats: result.data }))
+                    }
+
+
+
+                } catch (error) {
+                    const result = await getUserChats(user.data?.token!!)
+                    console.log(result)
+                    if (result.status === 200) {
+                        store.dispatch(updateUserChat({ userChats: result.data }))
+                    }
+                }
+
+
+
+
+                try {
+                    const result = await getAppointments(user.data?.token!!)
+
+                    if (result.status === 200) {
+                        console.log(result.data)
+                        store.dispatch(updateAppointments({ appointments: result.data.appointments, totalAppointments: result.data.totalAppointments }))
+                    } else {
+                        console.log(result.error)
+                    }
+
+                } catch (error) {
+
+                }
+
+
+                try {
+
+                    const result = await getWalletBalance(user.data?.token!!)
+
+                    if (result.status === 200) {
+
+
+
+                        store.dispatch(updateDoctorWallet({ wallet: result.data }))
+                    }
+
+                    console.log(result)
+
+                } catch (error) {
+
+                }
+
+
+                try {
+                    const result = await getCertificateOrLicence(user.data?.token!!)
+
+                    if (result.status === 200) {
+
+
+                        store.dispatch(cacheDoctorCertificateAndLicence({ licence: result.data.licence, certification: result.data.certification }))
+
+
+                        return
+                    }
+
+
+
+
+
+                } catch (error: any) {
+                    //alert(JSON.stringify(error.message)) 
+                }
+
 
 
 
 
                
 
-                   
 
 
 
-                
+
+
+
+
+
+
+
 
 
 
@@ -490,14 +542,14 @@ const MainRouterPage = () => {
 
 
             socket.on('all-diagnosis', (data: any) => {
-            
-                dispatch(cacheDiagnosis({ diagnosisChat: {messages:data.messages} }))
+
+                dispatch(cacheDiagnosis({ diagnosisChat: { messages: data.messages } }))
             })
 
             socket.on('all-chatBot', (data: any) => {
-               
 
-                dispatch(cacheDiagnosis({ chatBot:{messages: data.messages} }))
+
+                dispatch(cacheDiagnosis({ chatBot: { messages: data.messages } }))
             })
 
             socket.on('disconnect', () => {
@@ -518,6 +570,10 @@ const MainRouterPage = () => {
         }
 
 
+        return () =>{
+
+            localStorage.removeItem('loadedOnce')
+        }
 
 
 
@@ -882,69 +938,76 @@ const MainRouterPage = () => {
         }
     }, [userSocket.startPlayingRingTone])
 
+
+
     useEffect(() => {
-        if (store.getState().socket.localPeerConnectionInstance) {
+      
+
+        (async () => {
+            const userSocket = store.getState().socket
+            if (userSocket.socket &&  userSocket.localPeerConnectionInstance && userSocket.newInComingCall ) {
 
 
-            (async () => {
-                const userSocket = store.getState().socket
-                if (userSocket.socket && userSocket.newInComingCall) {
-                    userSocket.socket.emit('ringing', {
-                        remoteId: userSocket.remoteUserId
+            if (userSocket.socket) {
+
+                console.log('emit ringing...')
+                userSocket.socket.emit('ringing', {
+                    remoteId: userSocket.remoteUserId
+                })
+
+            }
+
+
+            const localPeerConnection = store.getState().socket.localPeerConnectionInstance
+
+            console.log('create offer.....now')
+            if (!userSocket.offerCreated && localPeerConnection && localPeerConnection.signalingState !== 'closed' && !userSocket.offerCreated && userSocket.newInComingCall) {
+
+                console.log('called ')
+
+
+                userSocket.localStream?.getTracks().forEach(tracks => {
+
+                    localPeerConnection.addTrack(tracks, userSocket.localStream!!)
+                })
+
+
+                const offer = await localPeerConnection.createOffer({
+                    iceRestart: true,
+                    offerToReceiveAudio: true,
+                    offerToReceiveVideo: true
+                })
+
+                await localPeerConnection.setLocalDescription(offer)
+                // dispatch(updateLocalDescription({localDescription:offer as RTCSessionDescription,socket:null}))
+                dispatch(updateOfferOrAnswer({ offerCreated: true, socket: null }))
+                //dispatch(updatePeerConnectionInstance({localPeerConnectionInstance:localPeerConnection}))
+
+
+
+
+                let userToCall = store.getState().socket.remoteUserId
+                let userCalling = store.getState().user.data?._id
+
+                if (userSocket.connected && userSocket.socket) {
+                    userSocket.socket.emit('create_offer', {
+                        userToCall,
+                        userCalling,
+                        user_calling_offer: offer
                     })
-
                 }
 
 
-                const localPeerConnection = store.getState().socket.localPeerConnectionInstance
-
-                console.log('create offer.....')
-                if (!userSocket.offerCreated && localPeerConnection && localPeerConnection.signalingState !== 'closed' && !userSocket.offerCreated && userSocket.newInComingCall) {
-
-                    console.log('called ')
 
 
-                    userSocket.localStream?.getTracks().forEach(tracks => {
-
-                        localPeerConnection.addTrack(tracks, userSocket.localStream!!)
-                    })
-
-
-                    const offer = await localPeerConnection.createOffer({
-                        iceRestart: true,
-                        offerToReceiveAudio: true,
-                        offerToReceiveVideo: true
-                    })
-
-                    await localPeerConnection.setLocalDescription(offer)
-                    // dispatch(updateLocalDescription({localDescription:offer as RTCSessionDescription,socket:null}))
-                    dispatch(updateOfferOrAnswer({ offerCreated: true, socket: null }))
-                    //dispatch(updatePeerConnectionInstance({localPeerConnectionInstance:localPeerConnection}))
-
-
-
-
-                    let userToCall = store.getState().socket.remoteUserId
-                    let userCalling = store.getState().user.data?._id
-
-                    if (userSocket.connected && userSocket.socket) {
-                        userSocket.socket.emit('create_offer', {
-                            userToCall,
-                            userCalling,
-                            user_calling_offer: offer
-                        })
-                    }
-
-
-
-
-                }
-            })()
-
-
-
+            }
 
         }
+        })()
+
+       
+
+       
 
     }, [store.getState().socket.localPeerConnectionInstance])
 
@@ -1001,7 +1064,7 @@ const MainRouterPage = () => {
 
                             <p className="absolute  bottom-0 right-20 flex gap-4 bg-red-600  p-1  rounded-md text-white " onClick={() => {
                                 dispatch(updateNewAppointmentNotification({ isNewAppointmentNotification: false, totalAppointments: 0 }))
-                            }}>cancel</p> 
+                            }}>cancel</p>
 
                         </div>
 

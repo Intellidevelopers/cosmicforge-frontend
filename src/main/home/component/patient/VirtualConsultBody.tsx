@@ -639,7 +639,7 @@ const VirtualConsultBody = () => {
 
      if(socketCon.socket){
       socketCon.socket.on('sessionID',(data:{sessionID:string})=>{
-
+       console.log(data.sessionID)
         store.dispatch(updateAppointmentSession({sessionID:data.sessionID}))
 
       })

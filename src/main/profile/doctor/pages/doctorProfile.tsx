@@ -1,7 +1,6 @@
 import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar"
 import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobile"
 import qrCode from '../../../../assets/images/qr-code.png'
-import doctor from '../../../../assets/images/doctor-image.jpeg'
 import calender from '../../../../assets/images/Calendar.png'
 import users from '../../../../assets/images/Users.png'
 import bell from '../../../../assets/icons/Bell.png'
@@ -61,7 +60,7 @@ const DoctorProfile = () => {
           <img src={qrCode} alt='qrcode' className="w-8 self-end" />
           <div className="flex flex-col justify-center items-center">
             <div className="overflow-hidden flex justify-center items-center rounded-[50%] w-[150px] h-[150px]">
-              <img src={doctor} alt="Doctor" className=" h-full  object-cover" />
+              <img src={user.data?.profile?.profilePicture??'/'} alt="Doctor" className=" h-full  object-cover" />
             </div>
             <div className="flex justify-center items-center flex-col">
               <p className="font-extrabold text-cosmic-primary-color">{user.data?.lastName?.concat(' ').concat(user.data.fullName!!)}</p>
