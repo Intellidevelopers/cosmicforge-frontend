@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer, store } from '../../../../store/initStore'
 import useGetMediaStream from '../../../hook/useGetMediaStream'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { tearDownConnection, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateUserCallingData } from '../../../../store/reducers/userSocketReducer'
+import { tearDownConnection, updateAppointmentSession, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateUserCallingData } from '../../../../store/reducers/userSocketReducer'
 
 import DoctorChatMessage from '../../../component/chat/doctor/DoctorChatMessage'
 
@@ -256,7 +256,7 @@ const VoiceCallPage = () => {
                         return {
                             senderId: data.sender!!,
                             receiverId: data.reciever!!,
-                            messageType: data.message!!,
+                            messageType: data.messageType!!,
                             message: data.message!!,
                             timeStamp: data.timeStamp!!
 
@@ -1018,6 +1018,13 @@ const VoiceCallPage = () => {
         }
 
 
+        if(userSocketCon.connected && userSocketCon.socket){
+              userSocketCon.socket.on('sessionID',(data:{sessionID:string})=>{
+        
+                store.dispatch(updateAppointmentSession({sessionID:data.sessionID}))
+        
+              })
+             }
 
 
         if (userSocketCon.connected && userSocketCon.socket) {
@@ -1058,6 +1065,14 @@ const VoiceCallPage = () => {
     useEffect(() => {
         if (!userSocketCon.isCallInitiated && userSocketCon.remoteConnected && userSocketCon.locallyConnected) {
             setCallState('connected')
+            
+            userSocketCon.socket?.emit('appointmentSessionStarted',{
+                doctorID:userSocketCon.remoteUserId,patientID:user.data?._id,startTime:Date.now(),caller:'doctor'
+              
+        
+               })
+        
+            
             startTimer()
             return
         }
@@ -1218,7 +1233,10 @@ const VoiceCallPage = () => {
                                         remoteId: userSocketCon.remoteUserId
                                     })
 
-
+                                    userSocketCon.socket?.emit('appointmentSessionEnded', {
+                                        doctorID:userSocketCon.remoteUserId,patientID:user.data?._id,endTime:Date.now(),sessionID:userSocketCon.sessionID,duration:counter
+                                    })
+    
 
                                     await cancelMediaStream()
                                     console.log('fired...')
@@ -1370,6 +1388,12 @@ const VoiceCallPage = () => {
                                 userSocketCon.socket?.emit('call_ended', {
                                     remoteId: userSocketCon.remoteUserId
                                 })
+
+                                userSocketCon.socket?.emit('appointmentSessionEnded', {
+                                    doctorID:userSocketCon.remoteUserId,patientID:user.data?._id,endTime:Date.now(),sessionID:userSocketCon.sessionID,duration:counter
+                                })
+
+                               
 
                                 await cancelMediaStream()
 

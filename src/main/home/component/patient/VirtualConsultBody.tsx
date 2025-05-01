@@ -11,7 +11,7 @@ import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../../../store/initStore"
 
-import { tearDownConnection, updateCallInitialization, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateUserCallingData } from "../../../store/reducers/userSocketReducer"
+import { tearDownConnection, updateAppointmentSession, updateCallInitialization, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateUserCallingData } from "../../../store/reducers/userSocketReducer"
 
 const VirtualConsultBody = () => {
 
@@ -629,6 +629,23 @@ const VirtualConsultBody = () => {
   useEffect(() => {
     if (!socketCon.isCallInitiated && socketCon.remoteConnected && socketCon.locallyConnected) {
       setCallState('connected')
+
+       socketCon.socket?.emit('appointmentSessionStarted',{
+        doctorID:socketCon.remoteUserId,patientID:user.data?._id,startTime:Date.now(),caller:'patient'
+      
+
+       })
+
+
+     if(socketCon.socket){
+      socketCon.socket.on('sessionID',(data:{sessionID:string})=>{
+
+        store.dispatch(updateAppointmentSession({sessionID:data.sessionID}))
+
+      })
+     }
+
+
       
       startTimer()
       return
@@ -850,7 +867,9 @@ const VirtualConsultBody = () => {
                 remoteId: socketCon.remoteUserId
               })
 
-
+              socketCon.socket?.emit('appointmentSessionEnded', {
+                doctorID:socketCon.remoteUserId,patientID:user.data?._id,endTime:Date.now(),sessionID:socketCon.sessionID,duration:counter
+            })
 
 
               await cancelMediaStream()
