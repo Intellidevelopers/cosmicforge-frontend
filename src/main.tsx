@@ -170,6 +170,7 @@ const router = createBrowserRouter([
         },
 
         
+        
      {
        path:'patient',
        element:<HomeMainPage/>,
