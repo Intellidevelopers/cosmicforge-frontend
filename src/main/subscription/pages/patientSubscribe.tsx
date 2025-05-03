@@ -9,7 +9,7 @@ const PatientSubscribe = () => {
     <div>
         <HomeNavBar title={'Subscription'}/>
         <HomeMobileNavBar title={'Subscription'}/>
-        <div className="flex justify-center items-center flex-wrap">
+        <div className="flex justify-start px-[auto] mx-[auto] items-center flex-wrap">
           {patientPlans.map((plan,index)=>(
             <SubscribeComp key={index} {...plan}/>
           ))}

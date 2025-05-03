@@ -2,6 +2,7 @@ export interface Plans {
     name:string;
     message:string;
     price:string;
+    commission?:string;
     duration:string;
     active:boolean;
     offers:string[];
