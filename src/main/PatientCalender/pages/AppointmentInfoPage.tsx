@@ -38,8 +38,10 @@ const AppointmentInfoPage = () => {
 
         <div className="w-full">
 
-            <HomeNavBar title="Appointment Info" />
-            <HomeMobileNavBar title="Appointment Info" />
+            <HomeNavBar title="Appointment Info" onSearchFired={() => {
+                alert('ddf')
+            }} />
+            <HomeMobileNavBar title="Appointment Info" onSearchFired={() => { }} />
 
             <div className=" h-[600px]  relative bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-y-auto   font-poppins w-full p-3  ">
 
@@ -132,7 +134,7 @@ const AppointmentInfoPage = () => {
                 <div className="w-full mt-3 h-[200px] flex justify-center place-items-center">
 
                     <div className="bg-green-600 bg-opacity-20 p-3">
-                        <p className=" text-cosmic-color-green-color">{(details.paymentStatus && details.paymentStatus ==="success")?'Confirmed':details.paymentStatus}</p>
+                        <p className=" text-cosmic-color-green-color">{(details.paymentStatus && details.paymentStatus === "success") ? 'Confirmed' : details.paymentStatus}</p>
                     </div>
 
                 </div>

@@ -79,8 +79,8 @@ const FindASpecalistCustomViewBody = () => {
     return (
         <div className="font-poppins w-full   relative  h-dvh overflow-x-hidden    overflow-y-hidden flex flex-col cursor-default">
 
-            <HomeNavBar title={state.title} />
-            <HomeMobileNavBar title={state.title} />
+            <HomeNavBar title={state.title} onSearchFired={()=>{}} />
+            <HomeMobileNavBar title={state.title} onSearchFired={()=>{}} />
 
             <div className="w-full  ">
 

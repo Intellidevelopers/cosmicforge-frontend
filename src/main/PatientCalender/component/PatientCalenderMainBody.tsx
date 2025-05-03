@@ -5,12 +5,15 @@ import HomeSideBar from "../../home/component/patient/HomeSideBar.ls"
 import HomeSideBarMobile from "../../home/component/patient/HomeSideBarMobile"
 import useGetCalendarActiveState from "../hook/useGetCalendarActiveState"
 import newAppointmentIcon from '../../../assets/icons/new-appoinment-icon.svg'
+import { useState } from "react"
 
 const PatientCalendarMainBody = () => {
 
     const navigate = useNavigate()
 
     const { activeState, setActiveState } = useGetCalendarActiveState()
+
+    const [searchText,setSearchText] = useState<string>('')
 
     return <div className="w-full font-poppins flex h-dvh overflow-hidden">
 
@@ -23,8 +26,17 @@ const PatientCalendarMainBody = () => {
 
         <div className=" w-full md:w-[75vw] overflow-y-auto">
 
-            <HomeNavBar title="Calendar" />
-            <HomeMobileNavBar title="Calendar" />
+            <HomeNavBar title="Calendar" onSearchFired={(path,searchText)=>{
+
+           if(path === "Calendar" && searchText ){
+           
+                setSearchText(searchText)
+           }
+
+            }} />
+            <HomeMobileNavBar title="Calendar" onSearchFired={()=>{
+
+            }}/>
             <div className="m-6 flex justify-end  ">
 
 
@@ -85,7 +97,7 @@ const PatientCalendarMainBody = () => {
                 }}>Cancelled</p>
             </div>
 
-            <Outlet />
+            <Outlet context={{searchText}} />
         </div>
 
     </div>

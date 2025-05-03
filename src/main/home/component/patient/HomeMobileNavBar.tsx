@@ -9,10 +9,10 @@ import { RootReducer } from "../../../store/initStore";
 
  interface NavBarProps {
     title:string
-   
+    onSearchFired: (path:string,searchQuery?:string) => void
   }
 
- const HomeMobileNavBar  =  ({title}:NavBarProps) =>{
+ const HomeMobileNavBar  =  ({title,onSearchFired}:NavBarProps) =>{
   const navigate =  useNavigate()
 
   const user = useSelector((state:RootReducer)=>state.user)
@@ -69,7 +69,9 @@ import { RootReducer } from "../../../store/initStore";
            
 
            <div className={`w-full ${title!=='Home'?'hidden':''} mt-5 flex flex-wrap   place-items-center gap-2 `}> 
-              <div className={`font-extralight border p-[5px] w-[84%] rounded-md flex `}>
+              <div className={`font-extralight border p-[5px] w-[84%] rounded-md flex `} onClick={()=>{
+                onSearchFired(title)
+              }}>
                   <img alt='search' src={searchIcon} />
                   <textarea className='w-full resize-none h-[25px] outline-none bg-[#F5F5F5]' />
 

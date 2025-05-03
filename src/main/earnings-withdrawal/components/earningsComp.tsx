@@ -6,7 +6,7 @@ interface EarningsProps {
     date:string;
     time:string;
     id:string;
-    amount:number;
+    amount:string;
     status:string;
     action:string;
 }
@@ -18,7 +18,7 @@ const EarningsComp = ({date,time,id,amount,status,action}:EarningsProps)=> {
 
     useEffect(()=>{
         switch (status) {
-            case 'successful':
+            case 'success':
                 setColor('text-green-400')
                 break;
             case 'pending':

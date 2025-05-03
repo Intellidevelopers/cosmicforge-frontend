@@ -17,8 +17,8 @@ const FirstAidSteps = () => {
     const {person} = params
     return (
         <>
-            <HomeNavBar title={params.person ? params.person : ''}/>
-            <HomeMobileNavBar title={params.person ? params.person : ''}/>
+            <HomeNavBar title={params.person ? params.person : ''} onSearchFired={()=>{}}/>
+            <HomeMobileNavBar title={params.person ? params.person : ''} onSearchFired={()=>{}}/>
             <div className=' p-4 bg-white gap-4 flex flex-col '>
                 <h2 className='font-bold '>Steps for {person} </h2>
                 <div className="flex flex-col gap-2">

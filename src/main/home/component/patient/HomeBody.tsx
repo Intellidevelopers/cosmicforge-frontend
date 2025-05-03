@@ -15,10 +15,46 @@ import { RootReducer } from "../../../store/initStore";
 import { getDoctorDeparments } from "../../service";
 import { cacheSpecialistDetails } from "../../../store/reducers/specialistDetailsReducer";
 
+import diagnosis from '../../../../assets/search/searchDiagnosis.svg'
+import CustomHomeSearchCard, { CustomHomeSearchCardProps } from "./CustomHomeSearchCard";
+import searchBookAppointment from '../../../../assets/search/searchBookAppoinment.png'
+import searchFindASpecialist from '../../../../assets/search/searchFindASpecialist.png'
+import searchFirstAid from '../../../../assets/search/searchFirtstAid.png'
+import searchChatBot from '../../../../assets/search/searchChatBot.png'
+
 
 
 //Importing here to avoid typing the classes over and over again
 
+export const searchCards:CustomHomeSearchCardProps[] | null = [{
+  title:'Run Diagnosis',
+  image:diagnosis,
+  navigationPath:'/patient/run-diagnosis'
+},
+{
+  title:'Book Appointment',
+  image:searchBookAppointment,
+  navigationPath:'/patient/find-a-specialist'
+},
+
+{
+  title:'Find A Specialist',
+  image:searchFindASpecialist,
+  navigationPath:'/patient/find-a-specialist'
+},
+{
+  title:'First Aid',
+  image:searchFirstAid,
+  navigationPath:'/patient/first-aid'
+},
+
+{
+  title:'Chat Bot',
+  image:searchChatBot,
+  navigationPath:'/patient/chatbot'
+}
+
+]
 
 const HomeBody = () => {
 
@@ -77,6 +113,7 @@ const HomeBody = () => {
 
   const wellnessScrollContainerRef = useRef(null)
 
+ 
 
 
   const { scrollWellnessProductCardRight, scrollWellnessProductCardLeft } = useSetScrollbar()
@@ -86,7 +123,10 @@ const HomeBody = () => {
   const specialistDetailsCache = useSelector((state: RootReducer) => state.specialistDetails)
   const dispatch = useDispatch()
 
-  const appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
+  let appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
+
+  const [toggleSearch,setToggleSearch] = useState<boolean>(false)
+  
 
   const [latestAppointmentDetails,setLatestAppointmentDetails] = useState<{
     name:string,
@@ -103,6 +143,68 @@ const HomeBody = () => {
 
 
   useMemo(()=>{
+    if(appointments && appointments.length>0){
+      appointments  = appointments.filter((appointment)=>{
+      return appointment.appointmentStatus === "booked"
+      }) as [{
+       appointmentDate
+       : string
+       appointmentStatus
+       :string
+       appointmentTime
+       :string
+       appointmentType
+       :string
+       medicalPersonelID
+       :{
+           fullName:string,
+           lastName:string,
+           _id:string
+  
+       } | null
+       patientID
+       :{
+           fullName:string,
+           lastName:string,
+           _id:string
+  
+       } | null,
+  
+       patientDetails:{
+           profilePicture:string
+       },
+       medicalPersonelDetails:{
+           profilePicture:string | undefined ,
+           department:string,
+           currentClinic:string,
+           specializationTitle:string,
+           workAddress:string
+       },
+       payment
+       : {
+           cardFee
+           :number
+           cardType
+           : string
+           consultationFee
+           :string
+           paymentReference
+           :string
+           paymentStatus
+           :string 
+           total
+           :number
+           vat
+           :string
+       },
+  
+  
+  paymentStatus?:string
+  
+       
+      
+   }] | null
+    }
 
     if(appointments && appointments.length>0){
       setLatestAppointmentDetails({
@@ -141,9 +243,45 @@ const HomeBody = () => {
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col">
 
-      <HomeNavBar title="Home" />
-      <HomeMobileNavBar title="Home" />
+      <HomeNavBar title="Home" onSearchFired={(path)=>{
+       if(path === 'Home'){
+        setToggleSearch(!toggleSearch)
+       }
+      }}/>
 
+      <HomeMobileNavBar title="Home"  onSearchFired={(path)=>{
+
+    
+       if(path === 'Home'){
+        setToggleSearch(!toggleSearch)
+       }
+       }} />
+
+     {
+      toggleSearch && <div className="absolute  bg-white w-full top-[9%] z-[600] min-h-[350px] p-10 md:flex flex-col place-items-center justify-center">
+       <div className="w-full h-[20px] relative ">
+       <i className="fa  font-bold text-[30px] fa-times absolute right-0 hover:text-cosmic-primary-color" onClick={()=>{
+        setToggleSearch(false)
+       }}/>
+
+     
+        </div>
+       
+       <div className="mt-6 bg-black bg-opacity-5 w-[90%] h-full flex  justify-center gap-8 p-8 flex-wrap ">
+
+
+      {
+        searchCards  && searchCards.map((card)=>(
+          <CustomHomeSearchCard title={card.title} image={card.image} navigationPath={card.navigationPath} />
+        ))
+      }
+       
+
+        </div>
+     </div>
+     }
+
+     
       <div className="  ">
         <div className="w-full  md:ps-10  md:justify-start md:pt-8  md:gap-12  inline-flex overflow-x-auto" style={{
           scrollbarWidth: 'none',

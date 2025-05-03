@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom"
-import docImage from '../../../../assets/images/doctor-image.jpeg'
+//import docImage from '../../../../assets/images/doctor-image.jpeg'
 //import Map from "../component/Map"
 
 import unratedStar from '../../../../assets/icons/unrated-star.svg'
@@ -7,7 +7,7 @@ import unratedStar from '../../../../assets/icons/unrated-star.svg'
 import ratedStar from '../../../../assets/icons/rated-star.svg'
 import { useEffect, useState } from "react"
 import Loader from "../../../generalComponents/Loader"
-import ReviewCard from "../component/ReviewCard"
+//import ReviewCard from "../component/ReviewCard"
 import callButton from '../../../../assets/icons/call-button.svg'
 import videoButton from '../../../../assets/icons/cosmic-video-call-button.svg'
 import calender from '../../../../assets/icons/cosmic-dark-calender.svg'
@@ -324,9 +324,11 @@ const DoctorBioPage = () => {
             </div>
           }
           {
-            !loadingServerData && new Array(10).fill(0).map((_, index) => (
+           /* !loadingServerData && new Array(10).fill(0).map((_, index) => (
               <ReviewCard key={index} clientName="Janet Opeyemi" comment="Dr. Josh Olawale was really Integral to my treatment process. I’m grateful for him." clientProfile={docImage} ratings={4} time="3sec ago" />
-            ))
+            ))*/
+
+              <p>No review now.</p>
           }
         </div>
 

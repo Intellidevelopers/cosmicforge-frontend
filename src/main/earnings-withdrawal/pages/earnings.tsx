@@ -4,14 +4,27 @@ import DoctorNavBarMobile from "../../home/component/doctor/DoctorNavBarMobile"
 import { RootReducer } from "../../store/initStore"
 // import DoctorNavBarHome from "../../home/component/doctor/DoctorNavBarMobile"
 import EarningsComp from "../components/earningsComp"
-import { tableData } from "../utils/earnings.utils"
 import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
 
 const Earnings = () => {
 
-   // const user = useSelector((state: RootReducer) => state.user)
+    // const user = useSelector((state: RootReducer) => state.user)
 
     const doctorWallet = useSelector((state: RootReducer) => state.doctorWallet)
+
+    const [withdrawalHistories, setWithdrawalHistories] = useState<[{
+        date: string,
+        time: string,
+        id: string,
+        amount: string,
+        status: "pending" | "success" | "failed",
+        action: string
+    }] | null>(null)
+
+
+
+
 
     const navigate = useNavigate()
 
@@ -24,11 +37,48 @@ const Earnings = () => {
 
         return 0
     }
+
+
+    useEffect(() => {
+
+        if (doctorWallet.wallet && doctorWallet.wallet.withdrawalHistories) {
+            const formatedHistories = doctorWallet.wallet.withdrawalHistories.map((transaction) => {
+                return {
+                    date: new Date(transaction.date).toLocaleDateString('en-Us', {
+                        dateStyle: 'medium'
+                    }),
+                    time: new Date(transaction.date).toLocaleTimeString('en-US', {
+                        hour12: true,
+                        timeStyle:'short'
+                    }),
+                    id: transaction.withdrawalReferenceId,
+                    amount: formatAmout(Number(transaction.withdrawAmount)),
+                    status: transaction.transferStatus,
+                    action: 'details'
+                }
+            }) 
+
+            setWithdrawalHistories(formatedHistories?.reverse() as [{
+                date: string,
+                time: string,
+                id: string,
+                amount: string,
+                status: "pending" | "success" | "failed",
+                action: string
+            }] | null)
+        }
+
+
+
+    }, [doctorWallet])
+
+
+
     return (
-        <div>
+        <div className="">
             <DoctorHomeNavBar title="Earnings" />
             <DoctorNavBarMobile title="Earnings" />
-            <div className="rounded-md shadow-md m-4 h-full ">
+            <div className="rounded-md shadow-md md:m-4 h-full ">
                 <p className="font-bold text-left px-4">Earnings & Withdrawal</p>
                 <div className="flex justify-between shadow-md p-4 mt-2">
                     <div className="flex flex-col">
@@ -40,6 +90,8 @@ const Earnings = () => {
                         navigate('/doctor/withdrawal')
                     }}>Withdraw</button>
                 </div>
+
+
                 <div className="block max-h-[70vh] overflow-scroll">
                     <table className="rounded-md shadow-md p-4 w-full">
                         <thead className="w-full bg-slate-400">
@@ -52,7 +104,7 @@ const Earnings = () => {
                             </tr>
                         </thead>
                         <tbody className="w-full">
-                            {tableData.map((data, index) => (
+                            { withdrawalHistories && withdrawalHistories.map((data, index) => (
                                 <EarningsComp key={index} {...data} />
                             ))}
                         </tbody>

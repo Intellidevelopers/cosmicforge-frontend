@@ -21,6 +21,7 @@ export default {
         'backCard':'backCard',
         flow: 'flow .5s linear infinite',
         rotate:'spin 0.5s linear infinite',
+        customBounce:'bounce  1s ease-in'
       },
       keyframes:{
         spin:{
@@ -64,7 +65,22 @@ transform:'rotateY(180deg)'
           '100%':{
             transform:'translateX(200%)'
           }
-        }
+        },
+        bounce:{
+          '0%': {
+            transform: 'translateY(-25%)',
+            'animation-timing-function': 'cubic-bezier(0.8,0,1,1)'
+        } ,
+          
+          '100%': {
+              transform: 'translateY(-25%)',
+              'animation-timing-function': 'cubic-bezier(0.8,0,1,1)'
+          },
+          '50%': {
+              transform: 'none',
+              'animation-timing-function': 'cubic-bezier(0,0,0.2,1)'
+          }
+      }
       },
       screens:{
         'xs':{'max' :' 390px'}

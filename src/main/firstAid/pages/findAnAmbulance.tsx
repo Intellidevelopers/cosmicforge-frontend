@@ -10,8 +10,8 @@ const FindAnAmbulance = () => {
 
   return (
     <>
-        <HomeNavBar title={'Find an Ambulance'}/>
-        <HomeMobileNavBar title={'Find an Ambulance'}/>
+        <HomeNavBar title={'Find an Ambulance'} onSearchFired={()=>{}}/>
+        <HomeMobileNavBar title={'Find an Ambulance'} onSearchFired={()=>{}}/>
         <div className=" p-4 flex flex-col lg:flex-row gap-8">
             <div className="w-full lg:w-[60%] max-h-[40dvh] lg:max-h-[800dvh] md:h-[80dvh] shadow-2xl border rounded-md overflow-hidden">
                 <img src={mapImg} alt="Map Image" className="min-w-fit" />

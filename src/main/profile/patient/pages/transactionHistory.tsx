@@ -6,8 +6,8 @@ const TransactionHistory = () => {
     const dates = ['Today', 'Yesterday', 'A week ago']
   return (
     <div>
-        <HomeMobileNavBar title='Transaction History'/>
-        <HomeNavBar title='Transaction History'/>
+        <HomeMobileNavBar title='Transaction History' onSearchFired={()=>{}}/>
+        <HomeNavBar title='Transaction History' onSearchFired={()=>{}}/>
         <div className="flex flex-col w-full ">
             {dates.map((date,index)=>(
                 <div key={index} className="w-full space-y-4 mt-4 px-4">

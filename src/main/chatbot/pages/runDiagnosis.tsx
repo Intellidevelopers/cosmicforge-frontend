@@ -8,6 +8,12 @@ import botImage from '../../../assets/images/botImage.svg'
 import {  useSelector } from 'react-redux';
 import { RootReducer } from '../../store/initStore';
 
+import searchBookAppointment from '../../../assets/search/searchBookAppoinment.png'
+import searchFindASpecialist from '../../../assets/search/searchFindASpecialist.png'
+import searchFirstAid from '../../../assets/search/searchFirtstAid.png'
+import searchChatBot from '../../../assets/search/searchChatBot.png'
+import diagnosis from '../../../assets/search/searchDiagnosis.svg'
+import CustomHomeSearchCard, { CustomHomeSearchCardProps } from '../../home/component/patient/CustomHomeSearchCard';
 
 
 const AiChatbot = () => {
@@ -116,14 +122,82 @@ const AiChatbot = () => {
     },[messages]
     )
 
+    const [toggleSearch,setToggleSearch] = useState<boolean>(false)
 
+
+    const searchCards:CustomHomeSearchCardProps[] | null = [{
+      title:'Run Diagnosis',
+      image:diagnosis,
+      navigationPath:'/patient/run-diagnosis'
+    },
+    {
+      title:'Book Appointment',
+      image:searchBookAppointment,
+      navigationPath:'/patient/find-a-specialist'
+    },
+    
+    {
+      title:'Find A Specialist',
+      image:searchFindASpecialist,
+      navigationPath:'/patient/find-a-specialist'
+    },
+    {
+      title:'First Aid',
+      image:searchFirstAid,
+      navigationPath:'/patient/first-aid'
+    },
+    
+    {
+      title:'Chat Bot',
+      image:searchChatBot,
+      navigationPath:'/patient/chatbot'
+    }
+    
+    ]
 
   return (
-    <div className='overflow-hidden'>
-      <HomeNavBar title='AI Diagnosis'/>
-      <HomeMobileNavBar title='AI Diagnosis'/>
+    <div className='overflow-hidden relative'>
+      
+      <HomeNavBar title='AI Diagnosis' onSearchFired={(path)=>{
+       if(path === 'AI Diagnosis'){
+        setToggleSearch(!toggleSearch)
+       }}
+      }/>
+      <HomeMobileNavBar title='AI Diagnosis' onSearchFired={()=>{
+       
+      }
+      }/>
+
+
+
+      {
+      toggleSearch && <div className="absolute  bg-white w-full top-[12%] z-[600] min-h-[350px] p-10 md:flex flex-col place-items-center justify-center">
+       <div className="w-full h-[20px] relative ">
+       <i className="fa  font-bold text-[30px] fa-times absolute right-0 hover:text-cosmic-primary-color" onClick={()=>{
+        setToggleSearch(false)
+       }}/>
+
+     
+        </div>
+       
+       <div className="mt-6 bg-black bg-opacity-5 w-[90%] h-full flex  justify-center gap-8 p-8 flex-wrap  relative">
+
+
+      {
+        searchCards  && searchCards.map((card)=>(
+          <CustomHomeSearchCard title={card.title} image={card.image} navigationPath={card.navigationPath} />
+        ))
+      }
+       
+
+        </div>
+     </div>
+     }
+
 
       <div className="flex flex-col h-[90%]  bg-gray-100">
+
+
 
 
         <div className="flex-1 overflow-auto p-4" >

@@ -12,8 +12,9 @@ const Upload = ({hideComp,handleFileUpload,uploadedFile}:Props) => {
     //   const [preview, setPreview ]= useState<string|undefined>()
       
   return (
-    <div className='absolute top-0 bottom-0 left-0 right-0 bg-gray-400 opacity-80 flex justify-center items-center p-4'>
-        <div className='flex flex-col  justify-between items-center bg-white w-[60%] max-w-[600px] h-[400px] p-4'>
+    <div className='absolute top-0 bottom-0 left-0 right-0 bg-gray-400 opacity-80 flex justify-center z-[900] items-center p-4'>
+        <div className='flex flex-col  justify-between items-center bg-white w-[60%]  shadow-md shadow-black  z-[2000]    max-w-[600px] h-[400px] p-4'>
+            
             <div className="flex justify-between items-center w-full">
                 <p className="font-bold">Upload File</p>
                 <i className="fas fa-close" onClick={hideComp}></i>

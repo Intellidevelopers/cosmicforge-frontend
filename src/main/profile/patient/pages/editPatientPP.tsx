@@ -85,8 +85,8 @@ const EditPatientPP: React.FC = () => {
             </div>
 
             <div className="md:w-[75vw] w-full overflow-y-auto">
-                <HomeMobileNavBar title="Edit Profile" />
-                <HomeNavBar title="Edit Profile" />
+                <HomeMobileNavBar title="Edit Profile" onSearchFired={()=>{}} />
+                <HomeNavBar title="Edit Profile"  onSearchFired={()=>{}}/>
                 <div className=" flex flex-col items-center justify-center pt-[10px] pb-[70px] gap-[10px] p-3  ">
                     <input
                         className="hidden"

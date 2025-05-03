@@ -6,9 +6,45 @@ import ProductCard from "../components/product-card"
 import { useNavigate } from "react-router-dom"
 import { product } from "../components/product-card"
 import incomingPic from'../../../assets/images/featureIncoming.png'
-
+import searchBookAppointment from '../../../assets/search/searchBookAppoinment.png'
+import searchFindASpecialist from '../../../assets/search/searchFindASpecialist.png'
+import searchFirstAid from '../../../assets/search/searchFirtstAid.png'
+import searchChatBot from '../../../assets/search/searchChatBot.png'
+import diagnosis from '../../../assets/search/searchDiagnosis.svg'
+import CustomHomeSearchCard, { CustomHomeSearchCardProps } from "../../home/component/patient/CustomHomeSearchCard"
 
 const Shop = () => {
+
+  const [toggleSearch,setToggleSearch] = useState<boolean>(false)
+   const searchCards:CustomHomeSearchCardProps[] | null = [{
+          title:'Run Diagnosis',
+          image:diagnosis,
+          navigationPath:'/patient/run-diagnosis'
+        },
+        {
+          title:'Book Appointment',
+          image:searchBookAppointment,
+          navigationPath:'/patient/find-a-specialist'
+        },
+        
+        {
+          title:'Find A Specialist',
+          image:searchFindASpecialist,
+          navigationPath:'/patient/find-a-specialist'
+        },
+        {
+          title:'First Aid',
+          image:searchFirstAid,
+          navigationPath:'/patient/first-aid'
+        },
+        
+        {
+          title:'Chat Bot',
+          image:searchChatBot,
+          navigationPath:'/patient/chatbot'
+        }
+        
+        ]
 
   const [shopCategories, setShopCategories] = useState<string[]>()
   const [products,setProuducts] = useState<product[]>()
@@ -40,9 +76,16 @@ const Shop = () => {
   const navigate = useNavigate()
 
   return (
-    <>
-        <HomeNavBar title={'Shop'}/>
-        <HomeMobileNavBar title={'Shop'}/>
+    <div className="w-full relative overflow-hidden">
+        <HomeNavBar title={'Shop'} onSearchFired={(path)=>{
+          if(path === 'Shop'){
+setToggleSearch(!toggleSearch)
+          }
+
+        }}/>
+        <HomeMobileNavBar title={'Shop'} onSearchFired={()=>{
+
+        }}/>
        { 
         
         /**
@@ -77,8 +120,35 @@ const Shop = () => {
 
         }
 
+{
+      toggleSearch && <div className="absolute  bg-white w-full top-[9%] z-[600] min-h-[350px] p-10 md:flex flex-col place-items-center justify-center">
+       <div className="w-full h-[20px] relative ">
+       <i className="fa  font-bold text-[30px] fa-times absolute right-0 hover:text-cosmic-primary-color" onClick={()=>{
+        setToggleSearch(false)
+       }}/>
 
-  <div className='flex flex-col gap-4  absolute md:relative h-full justify-center   items-center  w-full '>
+     
+        </div>
+       
+       <div className="mt-6 bg-black bg-opacity-5 w-[90%] h-full flex  justify-center gap-8 p-8 flex-wrap ">
+
+
+      {
+        searchCards  && searchCards.map((card)=>(
+          <CustomHomeSearchCard title={card.title} image={card.image} navigationPath={card.navigationPath} />
+        ))
+      }
+       
+
+        </div>
+     </div>
+     }
+
+
+  <div className='flex flex-col gap-4  absolute md:relative h-full justify-center   items-center  w-full  '>
+       
+       
+       
         <div className="relative w-[300px] flex justify-center items-center">
             <img src={incomingPic} alt="Feature unavailable"  className='relative z-1'/>
             <div className="absolute w-full h-20  left-0 bottom-0 z-10 bg-gradient-to-t from-white to-transparent"></div>
@@ -89,7 +159,7 @@ const Shop = () => {
         }}>Go Back</button>
 
         </div>
-    </>
+    </div>
   )
 }
 

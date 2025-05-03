@@ -1,8 +1,9 @@
 // import React, { useState } from "react"
 import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar"
 import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobile"
-import liscence from '../../../../assets/images/lisc.png'
 import { useNavigate } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { RootReducer } from "../../../store/initStore"
 
 
 const LiscenceUpload = () => {
@@ -15,7 +16,11 @@ const LiscenceUpload = () => {
   //     setUploadedFile(uploadedFile)
   //     setPreview(URL.createObjectURL(uploadedFile))
   //   }
+
+
   // }
+
+  const licenceDetails = useSelector((state:RootReducer)=>state.doctorCertificateAndLicence)
 
   return (
     <div>
@@ -28,14 +33,14 @@ const LiscenceUpload = () => {
         >Upload New</button >
         <div className={`bg-white  rounded-md shadow-md  p-4 `}>
           <div className={`max-w-full bg-white overflow-hidden  p-4 max-h-[60vh] `}>
-            {<img src={liscence} alt="Uploaded Image" className="w-full object-cover max-h-[60dvh]"/>}
+            {<img src={licenceDetails.licence?.licenseImage??'/'} alt="Uploaded Image" className="w-full object-cover max-h-[60dvh]"/>}
             {/* {uploadedFile && uploadedFile.type ==='application/pdf' && <embed src={preview} type="application/pdf" width='100%' height='300px' className="overflow-hidden" />} */}
           </div>
           <div className="flex justify-between flex-wrap items-center border-t border-black mt-2 w-full px-4">
-            <p className="font-bold">#1</p>
-            <p className="font-bold">ACLS Liscence</p>
-            <p className="font-extralight">000012233545466</p>
-            <p className="font-extralight">31/02/2015</p>
+            <p className="font-bold">{licenceDetails.licence?.institution??'not uploaded yet.'}</p>
+            <p className="font-bold">{licenceDetails.licence?.fullName??'not uploaded yet.'}</p>
+            <p className="font-extralight">{licenceDetails.licence?.licenseNo??'no upload yet'}</p>
+            <p className="font-extralight">{licenceDetails.licence?.date??'no upload yet'}</p>
           </div>
         </div>
        </div>

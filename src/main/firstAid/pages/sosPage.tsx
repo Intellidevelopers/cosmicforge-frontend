@@ -35,8 +35,8 @@ interface personCard {
 
   return (
     <>
-      <HomeNavBar title='SOS'/>
-      <HomeMobileNavBar title='SOS'/>
+      <HomeNavBar title='SOS' onSearchFired={()=>{}}/>
+      <HomeMobileNavBar title='SOS' onSearchFired={()=>{}}/>
       <div className="  flex flex-col items-start gap-4 p-4 bg-white  ">
         {
             sos.map((item,index)=>{

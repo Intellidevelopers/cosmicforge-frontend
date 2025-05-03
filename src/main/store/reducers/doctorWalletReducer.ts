@@ -1,13 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
+
  export interface DoctorWalletProps {
 
  wallet:{
 
     amount:number,
-    currency:string
- } | null
+    currency:string,
+    withdrawalHistories:[{
+        date: Date
+          withdrawalReferenceId:string,
+          transferStatus:"pending" | "success" | "failed",
+          transferReferenceID:string,
+          withdrawAmount:string,
+          currency:string,
+          accountName:string,
+          accountNumber:string
+     }]
+ } | null,
+
+
 
 
 

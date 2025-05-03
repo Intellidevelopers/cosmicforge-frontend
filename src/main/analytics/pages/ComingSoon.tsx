@@ -10,8 +10,8 @@ const ComingSoon:React.FC = () => {
 
     return (
         <div className="w-full  relative  h-dvh bg-gray-100 overflow-x-hidden overflow-y-auto flex flex-col cursor-default">
-            <HomeNavBar title="Analytics"/>
-            <HomeMobileNavBar title="Analytics"/>
+            <HomeNavBar title="Analytics" onSearchFired={()=>{}}/>
+            <HomeMobileNavBar title="Analytics" onSearchFired={()=>{}}/>
             <HomeSideBar/>
             <div className="flex flex-col items-center justify-center pt-[10px] pb-[70px] gap-[20px] p-3  md:ps-[265px]">
             <div className="flex-col items-center mt-[10%] md:mt-0 h-[90%] justify-between flex md:w-[400px] w-[90%] md:h-fit">

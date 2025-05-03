@@ -429,7 +429,7 @@ const ChatPage = () => {
                                 senderId: user.data?._id!!,
                                 receiverId: doctorDetails.docId,
                                 messageType: 'text',
-                                message:  typedMessage,
+                                message: typedMessage,
                                 timeStamp: new Date().toLocaleString('UTC', {
                                     hour: '2-digit',
                                     minute: '2-digit',

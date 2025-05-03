@@ -6,7 +6,7 @@ import { DoctorPlans } from "../utils/doctorPlans"
 const DoctorSubscribe = () => {
 
   return (
-    <div>
+    <div className="overflow-y-auto mb-8">
         <DoctorHomeNavBar title="Subscription" />
         <DoctorNavBarMobile title="Subscription" />
         <div className="flex justify-start items-center flex-wrap">

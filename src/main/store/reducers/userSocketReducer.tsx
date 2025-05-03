@@ -35,7 +35,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
     onCallAnswered?:boolean,
     isNewAppointmentNotification?:boolean,
     totalAppointments?:number,
-    appointmentSessionStarted?:boolean
+    appointmentSessionStarted?:boolean,
+    sessionID?:string | null
 
     
     
@@ -146,6 +147,7 @@ workTime?: {
    isNewAppointmentNotification:false,
    totalAppointments:0,
    appointmentSessionStarted:false,
+   sessionID:null,
    
 
    //user chat state
@@ -223,6 +225,7 @@ workTime?: {
           state.remotePeerConnectionInstance = null,
           state.onCallAnswered = false,
           state.appointmentSessionStarted =false
+          state.sessionID= null
         },
 
         updateRingTone (state,action:PayloadAction<UserSocketProps>){
@@ -269,6 +272,7 @@ workTime?: {
 
         updateAppointmentSession(state,action:PayloadAction<UserSocketProps>){
           state.appointmentSessionStarted = action.payload.appointmentSessionStarted?? state.appointmentSessionStarted
+          state.sessionID = action.payload.sessionID?? state.sessionID
         },
 
 
