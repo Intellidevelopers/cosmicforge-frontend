@@ -15,7 +15,10 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "composite": true,
- 
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -31,6 +34,5 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src","global.d.ts","vite.config.ts"]
+  "include": ["src", "global.d.ts", "vite.config.ts"]
 }
-
