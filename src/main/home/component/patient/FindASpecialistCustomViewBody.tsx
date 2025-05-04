@@ -29,6 +29,7 @@ const FindASpecalistCustomViewBody = () => {
             fullName?: string,
             lastName?:string,
         },
+        userCosmicID?:string,
         professionalTitle?: string,
         specialization?: string,
         currentClinic?: string,
@@ -45,6 +46,31 @@ const FindASpecalistCustomViewBody = () => {
             day?: string,
             time?: string
         }}[]>([])
+
+    
+        const [doctorDetailsCache,setDoctorDetailsCache] = useState<{ 
+            userId:{
+                fullName?: string,
+                lastName?:string,
+            },
+            userCosmicID?:string,
+            professionalTitle?: string,
+            specialization?: string,
+            currentClinic?: string,
+            department?: string,
+            bio?: string,
+            pricing?: string,
+            experience?: {
+                hospitalName?: string,
+                NoOfPatientTreated?: string,
+                specializationAndDepartment?: string,
+                date?: string
+            },
+            workTime?: {
+                day?: string,
+                time?: string
+            }}[]>([])
+
 
     useEffect(() => {
        
@@ -65,6 +91,7 @@ const FindASpecalistCustomViewBody = () => {
           setLoading(false)
             if(result.status === 200){
                 setDoctorDetails(result.data)
+                setDoctorDetailsCache(result.data)
             }
           
 
@@ -93,7 +120,29 @@ const FindASpecalistCustomViewBody = () => {
     return (
         <div className="font-poppins w-full   relative  h-dvh overflow-x-hidden    overflow-y-hidden flex flex-col cursor-default">
 
-            <HomeNavBar title={state.title} onSearchFired={()=>{}} />
+            <HomeNavBar title={state.title} onSearchFired={(path,query)=>{
+                   
+                   if(path === state.title && query){
+                   
+
+                    const filter = doctorDetailsCache.filter(doctorDetails => {
+
+
+                        return new RegExp(`^${query.toLocaleLowerCase()}`).test(doctorDetails.userId.fullName?.toLocaleLowerCase()!!) || doctorDetails.userCosmicID === query ||new RegExp(`^${query.toLocaleLowerCase()}`).test(doctorDetails.userId.lastName?.toLocaleLowerCase()!!)
+          
+          
+                      })
+          
+                      
+                      if (filter.length > 0) {
+                        setDoctorDetails(filter )
+          
+                      }
+                    } else {
+                      setDoctorDetails(doctorDetailsCache)
+                    }
+                   
+            }} />
             <HomeMobileNavBar title={state.title} onSearchFired={()=>{}} />
 
             <div className="w-full  ">

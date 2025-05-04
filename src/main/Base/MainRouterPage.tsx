@@ -276,7 +276,7 @@ const MainRouterPage = () => {
 
                 } catch (error: any) {
 
-                    alert(error.mesage)
+                   
 
                 }
 
