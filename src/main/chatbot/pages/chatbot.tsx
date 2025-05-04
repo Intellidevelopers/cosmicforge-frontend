@@ -55,32 +55,95 @@ const Chatbot = () => {
 
   const userChatBot = useSelector((state:RootReducer)=>state.diagnosis.chatBot)
 
+ let   [countChatForThisMonth,setCountChatForThisMonth] = useState<any[]>([])
+
   const user = useSelector((state:RootReducer)=>state.user)
 
 
   const [toggleSearch,setToggleSearch] = useState<boolean>(false)
 
+  const subscription = useSelector((state:RootReducer)=>state.subscription)
+
+  const accessAccordingToSubscription = [
+    {
+      plan:'Free',
+      access:10
+   },
+    
+    {
+     plan:'Basic',
+     access:50
+  },
+  {
+    plan:'Medium',
+    access:100
+ },
+ ]
 
   useMemo(()=>{
 
+   
   
    if(userChatBot?.messages){
+     
     setMessages(userChatBot.messages as { sender: 'user' | 'bot', message: string, timeStamp: string }[] )
+
+     if(subscription.userSubcription?.planName !== 'Premium'){
+      setCountChatForThisMonth( userChatBot.messages.filter((message)=>{
+        return  new Date(message.timeStamp!!).toLocaleString('en-Us',{
+         month:'long'
+       }) === new Date().toLocaleString('en-Us',{
+           month:'long'
+         })
+     })
+    )
+    
+
+     }
+ 
+   
    }
+
+
   },[userChatBot])
 
+
+
+
   const handleSend = () => {
-    if (input.trim()) {
-      setMessages([...messages, { sender: 'user', message: input, timeStamp: Date.now().toLocaleString('en-Us')},{ sender: 'bot', message: 'typing....', timeStamp:Date.now().toLocaleString('en-Us') }]);
+
+    if(subscription.userSubcription?.planName && subscription.userSubcription?.planName !== 'Premium'){
+      const  data = accessAccordingToSubscription.find((sub)=>{
+       return sub.plan === (subscription.userSubcription?.planName ??'Free')
+      })
+
+
+  
+      
+      if(data?.access && (countChatForThisMonth.length >= data?.access)){
+        setInput('');
+        setMessages([...messages, { sender: 'user', message: input, timeStamp:`${new Date(Date.now()).toLocaleDateString('en-US')}` },{ sender: 'bot', message: 'Sorry you are out of free triers for this month. Upgrade plan to enjoy using this feature.',timeStamp: `${new Date(Date.now()).toLocaleDateString('en-US')}` }]);
+
+return
+      }
+
+
+
+     }
+
+
+
+    if (input.trim() && userSocket.connected) {
+      setMessages([...messages, { sender: 'user', message: input, timeStamp:`${new Date().toLocaleDateString('en-US',{
+       
+      })}` },{ sender: 'bot', message: 'typing....',timeStamp: `${new Date().toLocaleDateString('en-US')}` }]);
 
       setInput('');
       if (userSocket.socket && (input !== '' || undefined)) {
         userSocket.socket.emit('ai-chat', input)
 
 
-        userSocket.socket.on('ai-chatbot', (d: any) => {
-          setMessages(d.messages)
-        })
+      
       }
       // Simulate a bot response
       /*  setTimeout(() => {
@@ -90,7 +153,12 @@ const Chatbot = () => {
 
     }
   };
+
+ 
+
+
   const lastMessageRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (lastMessageRef.current) {
@@ -98,9 +166,13 @@ const Chatbot = () => {
     }
   }, [messages]
   )
+
+
   const navigate = useNavigate()
   return (
-    <div className='w-full relative overflow-y-hidden'>
+    <div className='w-full relative overflow-y-hidden '>
+
+
       <HomeNavBar title='Chatbot' onSearchFired={(path)=>{
        if(path === 'Chatbot'){
         setToggleSearch(!toggleSearch)
@@ -115,7 +187,7 @@ const Chatbot = () => {
 
 
 {
-      toggleSearch && <div className="absolute  bg-white w-full  z-[600] min-h-[350px] p-10 md:flex flex-col place-items-center justify-center">
+      toggleSearch && <div className="absolute  bg-white w-full       z-[600] min-h-[350px] p-10 md:flex flex-col place-items-center justify-center">
        <div className="w-full h-[20px] relative ">
        <i className="fa  font-bold text-[30px] fa-times absolute right-0 hover:text-cosmic-primary-color" onClick={()=>{
         setToggleSearch(false)
@@ -139,7 +211,7 @@ const Chatbot = () => {
      }
 
 
-      <div className=" flex  flex-col h-full overflow-hidden  bg-gray-100 ">
+      <div className=" flex  flex-col h-[80%] overflow-y-auto bg-gray-100   relative">
     
      
 
@@ -158,7 +230,13 @@ const Chatbot = () => {
             </>
           ))}
         </div>
-        <div className="flex-none p-4  bg-white border-t border-gray-300">
+
+
+        
+      </div>
+
+
+      <div className="flex-none p-4 w-full  bg-white border-t border-gray-300 absolute bottom-0">
           <div className="flex w-full">
             <input
               title='enter text'
@@ -181,7 +259,6 @@ const Chatbot = () => {
             </div>
           </div>
         </div>
-      </div>
 
 
       <div className='  hidden flex-col gap-4  absolute md:relative h-full justify-center   items-center  w-full '>

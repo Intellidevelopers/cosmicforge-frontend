@@ -474,6 +474,12 @@ const DoctorEditProfilePage = () => {
                                 return
                             }
 
+                              if(!doctorEditProfileDetails.department || !doctorEditProfileDetails.workingHours?.time || !doctorEditProfileDetails.workingHours.day){
+
+                                setErrorMessage('Please fill the department,time and day fields ')
+                                return
+                              }
+
 
                             try {
                                 setLoading(true)

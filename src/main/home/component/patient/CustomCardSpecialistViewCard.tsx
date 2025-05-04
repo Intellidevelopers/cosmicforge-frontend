@@ -60,7 +60,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
 
             <div className="w-full flex flex-col gap-4 md:ms-4 relative">
                 <div className='flex  place-items-center mt-2'>
-                    <p className="font-bold text-[14px]  ">Dr {details.userId.fullName}</p>
+                    <p className="font-bold text-[14px]  ">Dr {details?.userId?.fullName??details?.userId?.lastName}</p>
                     <img className=' h-[24px] ' src={verifiedThick} />
 
                 </div>

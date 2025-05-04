@@ -1,5 +1,4 @@
 import logo from "../../../../assets/logo/logo_comsic_splash.svg";
-import profileIconTmp from "../../../../assets/icons/home/cosmic-home-profile-pic-temp.svg";
 import homeIcon from "../../../../assets/icons/home/cosmic-home-active.svg";
 import calenderIcon from "../../../../assets/icons/home/cosmic-home-calander.svg";
 import appointmentIcon from "../../../../assets/icons/home/cosmic-shop-medium.svg";
@@ -39,7 +38,7 @@ const HomeSideBarMobile = () => {
 
 
   return (
-    <div ref={sideBarRef} className="hidden md:hidden w-[294px] h-[100%] bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-[200]  cursor-default overflow-y-hidden">
+    <div ref={sideBarRef} className="hidden md:hidden w-[60%] h-screen bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-[200]  cursor-default overflow-y-hidden">
 
       <div className="w-full ">
 
@@ -51,7 +50,7 @@ const HomeSideBarMobile = () => {
         <div className="user-profile-container w-full flex flex-col gap-1  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px]  rounded-full bg-gray-500">
 
-            <img className="w-[100px] h-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ?? profileIconTmp} />
+            <img className="w-[100px] h-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ?? '/'} />
           </div>
           <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color'}  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
 
@@ -66,7 +65,8 @@ const HomeSideBarMobile = () => {
               isChatBotActive: false,
               isFindASpecialistActive: false,
               isCalenderActive: false,
-              isProfileActive: true
+              isProfileActive: true,
+              isSettingsActive:false
             })
 
             navigate('/patient/profile')
@@ -88,7 +88,8 @@ const HomeSideBarMobile = () => {
                 isFirstAidActive: false,
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
-                isCalenderActive: false
+                isCalenderActive: false,
+                isSettingsActive:false
               })
               closeSideBar()
               navigate('/patient/home')
@@ -109,7 +110,8 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
 
               navigate('/patient/run-diagnosis')
@@ -131,7 +133,8 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
 
               navigate('/patient/messages')
@@ -153,7 +156,8 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
 
               navigate('/patient/shop')
@@ -175,7 +179,8 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
               navigate('/patient/analytics')
               closeSideBar()
@@ -196,7 +201,8 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
               closeSideBar()
               navigate('/patient/first-aid')
@@ -217,7 +223,8 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: true,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
               closeSideBar()
               navigate('/patient/chatbot')
@@ -238,7 +245,8 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: true,
                 isCalenderActive: false,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
               closeSideBar()
               navigate('/patient/find-a-specialist')
@@ -259,13 +267,37 @@ const HomeSideBarMobile = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: true,
-                isProfileActive: false
+                isProfileActive: false,
+                isSettingsActive:false
               })
               navigate('/patient/calendar')
               closeSideBar()
             }}>
               <img alt="home" src={calenderIcon} />
               <p className="">Calendar</p>
+            </div>
+
+
+            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isSettingsActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={() => {
+              setActiveRoutePath({
+                ...activeRoutePath,
+                isHomeActive: false,
+                isRunDiagnosisActive: false,
+                isMessageActive: false,
+                isBookAppoinmentActive: false,
+                isAnalyticsActive: false,
+                isFirstAidActive: false,
+                isChatBotActive: false,
+                isFindASpecialistActive: false,
+                isCalenderActive: false,
+                isProfileActive: false,
+                isSettingsActive:true
+              })
+              closeSideBar()
+              navigate('/patient/settings')
+            }}>
+              <img alt="first aid icon" src={firstAidIcon} />
+              <p className="">Settings</p>
             </div>
 
             <div className="w-full flex justify-start ms-5 text-cosmic-color-warning-color  hover:underline ">

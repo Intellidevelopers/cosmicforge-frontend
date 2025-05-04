@@ -112,6 +112,7 @@ import Faqs from './main/profile/doctor/pages/faqs.tsx'
 import UploadCertificateDetails from './main/profile/doctor/pages/uploadCertificateDetails.tsx'
 import UploadLiscenceDetails from './main/profile/doctor/pages/uploadLiscenceDetails.tsx'
 import SelectLanguage from './main/profile/doctor/pages/selectLanguage.tsx'
+import PatientSettings from './main/profile/patient/pages/PatientSettings.tsx'
 
 
 const router = createBrowserRouter([
@@ -431,6 +432,10 @@ const router = createBrowserRouter([
       {
         path: '/patient/profile',
         element: <PatientMainPP />
+      },
+      {
+        path: '/patient/settings',
+        element: <PatientSettings/>
       },
       {
         path: '/patient/profile/edit-profile',

@@ -37,7 +37,11 @@ const DoctorTable = () => {
       setScrollWidth(scrollRef.current?.scrollWidth!!)
 
     })
+
+
     if (scrollRef) {
+      
+
       scrollRef.current?.addEventListener('scroll', () => {
 
         // setScrollWidth(scrollRef.current?.scrollWidth!!)

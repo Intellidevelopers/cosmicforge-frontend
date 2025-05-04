@@ -1,15 +1,15 @@
 
-import videoIcon from '../../../../assets/icons/cosmic-chat-video-icon.svg'
-import callIcon from '../../../../assets/icons/cosmic-chat-call-icon.svg'
+//import videoIcon from '../../../../assets/icons/cosmic-chat-video-icon.svg'
+//import callIcon from '../../../../assets/icons/cosmic-chat-call-icon.svg'
 import attachButton from '../../../../assets/icons/cosmic-attach-icon.svg'
 import micIcon from '../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import ChatMessagesBody from '../../component/chat/ChatMessagesBody'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { MutableRefObject, useEffect, useRef, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
-import { updateCallInitialization, updateCallMode } from '../../../store/reducers/userSocketReducer'
+//import { updateCallInitialization, updateCallMode } from '../../../store/reducers/userSocketReducer'
 import useGetAudioRecorder from '../../hook/useGetAudioRecorder'
 
 
@@ -19,7 +19,7 @@ const ChatPage = () => {
 
     const navigate = useNavigate()
 
-    const dispatch = useDispatch()
+   // const dispatch = useDispatch()
 
     const messageScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
@@ -280,7 +280,7 @@ const ChatPage = () => {
 
 
 
-
+{/*
             <div className='flex gap-3 w-fit absolute right-2 md:me-3'>
 
                 <img src={callIcon} className='w-[24px] h-[40px] ' alt='call' onClick={() => {
@@ -318,7 +318,7 @@ const ChatPage = () => {
                     })
                 }} />
 
-            </div>
+            </div>  */ }
 
         </div>
 

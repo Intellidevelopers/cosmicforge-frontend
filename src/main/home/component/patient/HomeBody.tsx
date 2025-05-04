@@ -21,6 +21,7 @@ import searchBookAppointment from '../../../../assets/search/searchBookAppoinmen
 import searchFindASpecialist from '../../../../assets/search/searchFindASpecialist.png'
 import searchFirstAid from '../../../../assets/search/searchFirtstAid.png'
 import searchChatBot from '../../../../assets/search/searchChatBot.png'
+import appointmentImage from '../../../../assets/icons/appointmentMessageIcon.png'
 
 
 
@@ -334,7 +335,7 @@ const HomeBody = () => {
           </div>
 
          <div className="bg-white absolute bottom-0 right-0 h-[60px] w-[50px] md:w-[80px] rounded-l-sm flex justify-center p-2">
-         <div className=" bg-white shadow-black shadow-sm rounded-md md:w-[50px]" onClick={()=>{
+         <div className=" bg-white shadow-black shadow-sm rounded-md md:w-[50px] flex place-items-center justify-center" onClick={()=>{
              navigate('/patient/messages/chat', {
               state: {
                   doctorImage: latestAppointmentDetails.profilePicture,
@@ -348,7 +349,7 @@ const HomeBody = () => {
               }
           }) 
          }}>
-         <p >Message</p>
+         <img className="w-[40px] h-[40px]" src={appointmentImage} alt="image" />
          </div>
          </div>
         </div>

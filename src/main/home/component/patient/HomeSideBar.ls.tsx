@@ -1,5 +1,4 @@
 import logo from "../../../../assets/logo/logo_comsic_splash.svg";
-import profileIconTmp from "../../../../assets/icons/home/cosmic-home-profile-pic-temp.svg";
 import homeIcon from "../../../../assets/icons/home/cosmic-home-active.svg";
 import calenderIcon from "../../../../assets/icons/home/cosmic-home-calander.svg";
 import appointmentIcon from "../../../../assets/icons/home/cosmic-shop-medium.svg";
@@ -25,7 +24,7 @@ const HomeSideBar = () => {
         <img alt="logo" className="h-[50px] w-[60%] mx-auto" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500">
-            <img className="h-[100px] w-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ??profileIconTmp} />
+            <img className="h-[100px] w-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ??'/'} />
           </div>
           <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color' }  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
              navigate('/patient/profile')
@@ -46,7 +45,8 @@ const HomeSideBar = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
               })
               navigate('/patient/home')
             }}   >
@@ -66,7 +66,9 @@ const HomeSideBar = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
+
               })
               navigate('/patient/run-diagnosis')
             }}>
@@ -86,7 +88,8 @@ const HomeSideBar = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
               })
               navigate('/patient/messages')
             }}>
@@ -109,7 +112,8 @@ const HomeSideBar = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
               })
               navigate('/patient/shop')
             }}>
@@ -129,7 +133,8 @@ const HomeSideBar = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
               })
 
               navigate('/patient/analytics')
@@ -170,7 +175,8 @@ const HomeSideBar = () => {
                 isChatBotActive: true,
                 isFindASpecialistActive: false,
                 isCalenderActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
               })
               navigate('/patient/chatbot')
             }}>
@@ -190,7 +196,8 @@ const HomeSideBar = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: true,
                 isCalenderActive: false,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
               })
               navigate('/patient/find-a-specialist')
             }}>
@@ -210,7 +217,8 @@ const HomeSideBar = () => {
                 isChatBotActive: false,
                 isFindASpecialistActive: false,
                 isCalenderActive: true,
-                isProfileActive:false
+                isProfileActive:false,
+                isSettingsActive:false
               })
               navigate('/patient/calendar')
             }}>
@@ -218,6 +226,28 @@ const HomeSideBar = () => {
               <p className=" text-[15.5px]" onClick={()=>{
                 
               }}>Calendar</p>
+            </div>
+
+
+            <div className={`w-full flex justify-start transition-all duration-200 ease-out  place-items-center gap-4 ${(activeRoutePath.isSettingsActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-gray-400 shadow-md font-semibold pl-[15%] ' : 'opacity-50'} pl-[15%]  text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:cursor-pointer rounded-md  hover:shadow-gray-400 hover:shadow-md p-1`} onClick={() => {
+              setActiveRoutePath({
+                ...activeRoutePath,
+                isHomeActive: false,
+                isRunDiagnosisActive: false,
+                isMessageActive: false,
+                isBookAppoinmentActive: false,
+                isAnalyticsActive: false,
+                isFirstAidActive: false,
+                isChatBotActive: false,
+                isFindASpecialistActive: false,
+                isCalenderActive: false,
+                isProfileActive:false,
+                isSettingsActive:true
+              })
+              navigate('/patient/settings')
+            }}>
+              <img className={"h-[25px] w-[25px]"} alt="home" src={firstAidIcon} />
+              <p className=" text-[15.5px]">Settings</p>
             </div>
 
             <div className="w-full pl-[15%] flex justify-start transition-all duration-200 ease-out text-cosmic-color-warning-color  hover:underline ">

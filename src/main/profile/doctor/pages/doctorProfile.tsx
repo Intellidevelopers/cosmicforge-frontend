@@ -83,7 +83,7 @@ const DoctorProfile = () => {
                 <div className="flex flex-col justify-center items-center">
                   <img src={users} alt="users" className="w-8 h-8" />
                   <div className="flex flex-col justify-center items-center">
-                    <p className="font-bold">150</p>
+                    <p className="font-bold">{appointment.totalAppointments??0}</p>
                     <p className="text-sm">Patients</p>
                   </div>
                 </div>

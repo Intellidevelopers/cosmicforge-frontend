@@ -21,7 +21,7 @@ const DoctorMainChatPage = () => {
     const { audioData, isRecording, startRecording, stopRecording } = useGetAudioRecorder()
 
 
-
+    const subscription = useSelector((state:RootReducer)=>state.subscription.userSubcription)
 
 
     const [sendVoiceNote, setSendVoiceNote] = useState<boolean>(false)
@@ -533,10 +533,11 @@ const DoctorMainChatPage = () => {
 
 
 
-                            <div className={` ${userSocket.appointmentSessionStarted ? 'flex' : 'hidden'} w-full  justify-end  gap-3`}>
+                         {
+                            subscription?.planName !=="Free" &&    <div className={` ${userSocket.appointmentSessionStarted ? 'flex' : 'hidden'} w-full  justify-end  gap-3`}>
                                 <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
 
-                                    if (userSocket.connected) {
+                                    if (userSocket.connected ) {
                                         dispatch(updateCallMode({ callMode: 'audio', socket: null }))
                                         dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
                                         navigate("/doctor/appointment/voice-call", {
@@ -548,7 +549,7 @@ const DoctorMainChatPage = () => {
 
                                 }} />
                                 <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} onClick={() => {
-                                    if (userSocket.connected) {
+                                    if (userSocket.connected ) {
                                         dispatch(updateCallMode({ callMode: 'video', socket: null }))
                                         dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
                                         navigate("/doctor/appointment/voice-call", {
@@ -561,6 +562,7 @@ const DoctorMainChatPage = () => {
                                 <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />
                             </div>
 
+                         }
                         </div>
 
 

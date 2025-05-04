@@ -29,6 +29,7 @@ const user = useSelector((state:RootReducer)=>state.user)
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-2">
             <img alt="profile-image " className="w-[100%] h-[100%] rounded-full" src={user.data?.profile?.profilePicture ??'/'} />
           </div>
+          <p>ID:<span className="text-sm font-light">{user.data?.profile?.userCosmicID}</span></p>
           <p>Dr {user.data?.fullName}</p>
           <p className={`font-extralight text-cosmic-primary-color ${(activeRoutePath.isEditProfileActive) && 'underline'}`} onClick={()=>{
               setActiveRoutePath({

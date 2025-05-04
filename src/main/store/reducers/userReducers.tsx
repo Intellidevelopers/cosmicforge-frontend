@@ -23,6 +23,7 @@ interface PatientUserProfileProps{
 
   fullName?: string,
   lastName?:string,
+  userCosmicID?:string,
   professionalTitle?: string,
   specialization?: string,
   currentClinic?: string,

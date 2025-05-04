@@ -60,6 +60,7 @@ const VoiceCallPage = () => {
     const localVideoStream: MutableRefObject<HTMLVideoElement | null> = useRef(null)
     //const localAudioStream: MutableRefObject<HTMLAudioElement | null> = useRef(null)
     const remoteVideoSteam: MutableRefObject<HTMLVideoElement | null> = useRef(null)
+    
 
 
     const userSocketCon = useSelector((state: RootReducer) => state.socket)

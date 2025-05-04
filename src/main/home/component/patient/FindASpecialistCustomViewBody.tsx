@@ -16,6 +16,7 @@ const FindASpecalistCustomViewBody = () => {
 
     const user = useSelector((state:RootReducer)=>state.user)
 
+     const subscription = useSelector((state:RootReducer)=>state.subscription.userSubcription)
      
 
     
@@ -46,11 +47,18 @@ const FindASpecalistCustomViewBody = () => {
         }}[]>([])
 
     useEffect(() => {
+       
      
+        if((subscription?.planName?? 'Free') === 'Free' &&  (state.title.trim().toLowerCase()!== 'General Medicine'.trim().toLowerCase())){
+            setLoading(false)
+            setDoctorDetails([])
+        setCustomMessage('You can only access General Medicine on free plan')
+        return
+        }
 
        (async()=>{
         setLoading(true)
-      
+        setCustomMessage('No specialist available now')
         try {
             
           const result = await getDoctorsBySpecificDeparment(user.data?.token!!,state?.title)
@@ -75,6 +83,12 @@ const FindASpecalistCustomViewBody = () => {
             nearBy: false
         }
     })
+
+
+    const  [customMessage,setCustomMessage] = useState<string>('No specialist available now')
+
+
+    
 
     return (
         <div className="font-poppins w-full   relative  h-dvh overflow-x-hidden    overflow-y-hidden flex flex-col cursor-default">
@@ -150,9 +164,9 @@ const FindASpecalistCustomViewBody = () => {
                 </div>
 
                 <div className={`${(!loading && doctorDetails.length===0) ? 'flex' : 'hidden'}  w-full h-dvh  justify-center mt-[20%]`}>
-                    <p>No specialist available now</p>
+                    <p>{customMessage}</p>
                 </div>
-                <div className={`${(!loading) ? 'flex' : 'hidden'} w-full h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
+                <div className={`${(!loading ) ?'flex' : 'hidden'} w-full h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
 
                     {
                      doctorDetails.length>0 &&   doctorDetails.map((item, index) => (

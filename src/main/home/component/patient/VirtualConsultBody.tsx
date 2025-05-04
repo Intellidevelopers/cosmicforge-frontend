@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom"
+import {  useLocation, useNavigate } from "react-router-dom"
 import HomeMobileNavBar from "./HomeMobileNavBar"
 import HomeNavBar from "./HomeNavBar"
 import callButton from '../../../../assets/icons/call-button.svg'
@@ -34,6 +34,25 @@ const VirtualConsultBody = () => {
   let { state } = useLocation()
 
   let data = state as ConsultProps
+
+
+
+  if (true) {
+
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+
 
   const user = useSelector((state: RootReducer) => state.user)
 
@@ -630,23 +649,23 @@ const VirtualConsultBody = () => {
     if (!socketCon.isCallInitiated && socketCon.remoteConnected && socketCon.locallyConnected) {
       setCallState('connected')
 
-       socketCon.socket?.emit('appointmentSessionStarted',{
-        doctorID:socketCon.remoteUserId,patientID:user.data?._id,startTime:Date.now(),caller:'patient'
-      
+      socketCon.socket?.emit('appointmentSessionStarted', {
+        doctorID: socketCon.remoteUserId, patientID: user.data?._id, startTime: Date.now(), caller: 'patient'
 
-       })
-
-
-     if(socketCon.socket){
-      socketCon.socket.on('sessionID',(data:{sessionID:string})=>{
-       console.log(data.sessionID)
-        store.dispatch(updateAppointmentSession({sessionID:data.sessionID}))
 
       })
-     }
 
 
-      
+      if (socketCon.socket) {
+        socketCon.socket.on('sessionID', (data: { sessionID: string }) => {
+          console.log(data.sessionID)
+          store.dispatch(updateAppointmentSession({ sessionID: data.sessionID }))
+
+        })
+      }
+
+
+
       startTimer()
       return
     }
@@ -688,221 +707,226 @@ const VirtualConsultBody = () => {
 
 
 
+  if(data || socketCon.remoteCallerDetails){
+
+  return <div className="w-full h-full ">
+
+  <HomeNavBar title="Virtual Consult" onSearchFired={() => {
+
+  }} />
+  <HomeMobileNavBar title="Virtual Consult" onSearchFired={() => {
+
+  }} />
+
+  <div className="w-full ps-0  mt-4">
+    <div className="hidden m-8 md:flex place-items-center gap-1">
+
+
+      <i className="fa fa-chevron-left fa-2xl" aria-hidden="true" onClick={() => {
+        dispatch(tearDownConnection({ tearDown: true, socket: null }))
+        cancelMediaStream()
+
+        navigate(-1)
+
+      }}></i>
+      <p className="font-extralight">Go back</p>
+    </div>
 
 
 
-  return (
-    <div className="w-full h-full ">
 
-      <HomeNavBar title="Virtual Consult"  onSearchFired={()=>{
+    <div className="w-full relative ">
 
-      }}/>
-      <HomeMobileNavBar title="Virtual Consult" onSearchFired={()=>{
-
-      }} />
-
-      <div className="w-full ps-0  mt-4">
-        <div className="hidden m-8 md:flex place-items-center gap-1">
+      <div className=" h-[100px]  w-full  flex flex-col justify-center place-items-center text-white font-bold absolute z-[200] 
+">
 
 
-          <i className="fa fa-chevron-left fa-2xl" aria-hidden="true" onClick={() => {
-            dispatch(tearDownConnection({ tearDown: true, socket: null }))
-            cancelMediaStream()
+        <div className={`${requestingForModeChangeRemote ? 'flex bg-black' : 'hidden'}  w-full cursor-default  justify-center gap-2 flex-col place-items-center`}>
 
-            navigate(-1)
+          <p className='text-white text-[12px]' onClick={() => {
 
-          }}></i>
-          <p className="font-extralight">Go back</p>
+          }}>{`${socketCon.remoteCallerDetails?.name ?? data?.doctorName} is requesting to switch to ${tempModeOfCall}`}  </p>
+
+          <div className=' flex  gap-6'>
+            <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={() => {
+
+              if (socketCon.socket) {
+                socketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: socketCon.remoteUserId, userAccepted: true, callMode: tempModeOfCall })
+              }
+              setRequestingForModeChangeRemote(false)
+              setTempModeOfCall(null)
+              dispatch(updateCallMode({ callMode: tempModeOfCall, socket: null }))
+              setModeOfCall(tempModeOfCall!!)
+
+
+
+            }}>accept</span>
+
+
+            <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={() => {
+              if (socketCon.socket) {
+                socketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: socketCon.remoteUserId, userAccepted: false, callMode: tempModeOfCall })
+              }
+            }}>reject</span>
+          </div>
+
         </div>
 
 
 
+      </div>
 
-        <div className="w-full relative ">
+      <div className="w-full   flex justify-center place-items-center absolute  mt-6 z-50  font-light ">
 
-        <div className=" h-[100px]  w-full  flex flex-col justify-center place-items-center text-white font-bold absolute z-[200] 
-      ">
-
-
-<div className={`${requestingForModeChangeRemote ? 'flex bg-black' : 'hidden'}  w-full cursor-default  justify-center gap-2 flex-col place-items-center`}>
-
-  <p className='text-white text-[12px]' onClick={() => {
-
-  }}>{`${socketCon.remoteCallerDetails?.name ?? data.doctorName} is requesting to switch to ${tempModeOfCall}`}  </p>
-
-  <div className=' flex  gap-6'>
-    <span className='bg-green-600 text-white   w-[80px] text-center p-2 rounded-md' onClick={() => {
-
-      if (socketCon.socket) {
-        socketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: socketCon.remoteUserId, userAccepted: true, callMode: tempModeOfCall })
-      }
-      setRequestingForModeChangeRemote(false)
-      setTempModeOfCall(null)
-      dispatch(updateCallMode({ callMode: tempModeOfCall, socket: null }))
-      setModeOfCall(tempModeOfCall!!)
-
-
-
-    }}>accept</span>
-
-
-    <span className='bg-red-600 p-2  w-[80px] text-white text-center rounded-md' onClick={() => {
-      if (socketCon.socket) {
-        socketCon.socket.emit('accept_request_to_switch_call_mode', { remoteId: socketCon.remoteUserId, userAccepted: false, callMode: tempModeOfCall })
-      }
-    }}>reject</span>
-  </div>
-
-</div>
-
-
-
-</div>
-
-          <div className="w-full   flex justify-center place-items-center absolute  mt-6 z-50  font-light ">
-
-            <div className={`w-full ${(socketCon.callMode === 'video') && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
-              <p>Dr   {data?.doctorName ?? socketCon.remoteCallerDetails?.name}</p>
-              <p>{data?.department ?? ''}</p>
-              <p className="font-light italic text-sm">{callState === 'connected' ? <span className="text-green-600">answered</span> : callState}</p>
-            </div>
-          </div>
-
-
-
-          <div className="md:ps-10 md:pe-10 h-[450px] ">
-
-            <div className={`w-full  ${(socketCon.callMode === 'video') ? 'block' : 'hidden'}`}>
-              <video ref={remoteVideoSteam} autoPlay className="h-[450px] w-full  bg-black  opacity-90  object-cover" />
-              <div className="z-50 rounded-lg">
-                <div className="absolute  rounded-lg h-[200px] w-[150px]  md:h-[250px] md:w-[200px]  bg-black   md:right-[60px]  bottom-0 right-0   md:bottom-5 z-50">
-                  <video ref={localVideoStream} muted autoPlay className=" w-full h-full  object-cover " src="/" />
-                </div>
-              </div>
-
-
-            </div>
-
-
-           
-
-            <div className={`h-full  w-full  ${(socketCon.callMode === 'audio') ? 'block' : 'hidden'}`}>
-
-              <div className="w-full h-full flex justify-center place-items-center ">
-                <div className="w-[200px] h-[200px] rounded-full object-contain mt-16 ">
-                  <img className=" h-full w-full rounded-full" src={data?.doctorImage ?? socketCon.remoteCallerDetails?.profilePicture} alt="doctors profile" />
-                  <audio hidden ref={localAudioStream} controls autoPlay />
-                  
-                </div>
-
-
-              </div>
-
-            </div>
-
-
-
-          </div>
-
-
-
-
-
-
-        </div>
-
-        <div className="w-full flex flex-col place-items-center justify-center p-1 gap-2 mt-2">
-          <p className="bg-cosmic-light-color-call w-[100px] text-center text-white font-light p-1 rounded-md">{counter}</p>
-
-          <div className="bg-cosmic-light-color-call  flex p-2 gap-2">
-
-
-
-            <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
-              //switchToAudio()
-              if (socketCon.connected && socketCon.socket && socketCon.remoteConnected && socketCon.callMode === 'video') {
-                console.log('fired...')
-                socketCon.socket.emit('request_to_switch_call_mode', {
-                  callMode: 'audio',
-                  remoteId: data.docId ?? socketCon.remoteUserId
-                })
-
-              }
-              dispatch(updateCallMode({ callMode: 'audio', socket: null }))
-              setRequestingForModeChange(true)
-            }}>
-
-
-              <img className="w-full h-full" src={callButton} onClick={() => {
-
-
-
-
-                // toggleVideo()
-              }}
-              />
-            </div>
-
-            <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
-
-              if (socketCon.connected && socketCon.socket && socketCon.remoteConnected && socketCon.callMode === 'audio') {
-                console.log('fired...')
-                socketCon.socket.emit('request_to_switch_call_mode', {
-                  callMode: 'video',
-                  remoteId: data.docId ?? socketCon.remoteUserId
-                })
-                dispatch(updateCallMode({ callMode: 'video', socket: null }))
-                setRequestingForModeChange(true)
-
-              }
-
-              // toggleVideo()
-            }}>
-              <img src={videoButton} />
-            </div>
-
-            <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
-
-              socketCon.socket?.emit('call_ended', {
-                remoteId: socketCon.remoteUserId
-              })
-
-              socketCon.socket?.emit('appointmentSessionEnded', {
-                doctorID:socketCon.remoteUserId,patientID:user.data?._id,endTime:Date.now(),sessionID:socketCon.sessionID,duration:counter
-            })
-
-
-              await cancelMediaStream()
-              console.log('fired...')
-              dispatch(updateCallInitialization({ isCallInitiated: false }))
-              dispatch(tearDownConnection({ tearDown: true, socket: null }))
-              stopAndClearTimer()
-              navigate(-1)
-
-            }}>
-              <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>
-            </div>
-
-
-
-            <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
-              await toggleMic()
-            }}>
-
-              <img className="w-full h-full" src={muteMic} />
-            </div>
-
-
-            <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center">
-
-              <img className="w-full h-full" src={messageIcon} />
-            </div>
-
-          </div>
+        <div className={`w-full ${(socketCon.callMode === 'video') && 'text-white'} flex flex-col justify-center place-items-center gap-2`}>
+          <p>Dr   {data?.doctorName ?? socketCon.remoteCallerDetails?.name}</p>
+          <p>{data?.department ?? ''}</p>
+          <p className="font-light italic text-sm">{callState === 'connected' ? <span className="text-green-600">answered</span> : callState}</p>
         </div>
       </div>
+
+
+
+      <div className="md:ps-10 md:pe-10 h-[450px] ">
+
+        <div className={`w-full  ${(socketCon.callMode === 'video') ? 'block' : 'hidden'}`}>
+          <video ref={remoteVideoSteam} autoPlay className="h-[450px] w-full  bg-black  opacity-90  object-cover" />
+          <div className="z-50 rounded-lg">
+            <div className="absolute  rounded-lg h-[200px] w-[150px]  md:h-[250px] md:w-[200px]  bg-black   md:right-[60px]  bottom-0 right-0   md:bottom-5 z-50">
+              <video ref={localVideoStream} muted autoPlay className=" w-full h-full  object-cover " src="/" />
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+
+        <div className={`h-full  w-full  ${(socketCon.callMode === 'audio') ? 'block' : 'hidden'}`}>
+
+          <div className="w-full h-full flex justify-center place-items-center ">
+            <div className="w-[200px] h-[200px] rounded-full object-contain mt-16 ">
+              <img className=" h-full w-full rounded-full" src={data?.doctorImage ?? socketCon.remoteCallerDetails?.profilePicture} alt="doctors profile" />
+              <audio hidden ref={localAudioStream} controls autoPlay />
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+
     </div>
-  )
+
+    <div className="w-full flex flex-col place-items-center justify-center p-1 gap-2 mt-2">
+      <p className="bg-cosmic-light-color-call w-[100px] text-center text-white font-light p-1 rounded-md">{counter}</p>
+
+      <div className="bg-cosmic-light-color-call  flex p-2 gap-2">
+
+
+
+        <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
+          //switchToAudio()
+          if (socketCon.connected && socketCon.socket && socketCon.remoteConnected && socketCon.callMode === 'video') {
+            console.log('fired...')
+            socketCon.socket.emit('request_to_switch_call_mode', {
+              callMode: 'audio',
+              remoteId: socketCon.remoteUserId
+            })
+
+          }
+          dispatch(updateCallMode({ callMode: 'audio', socket: null }))
+          setRequestingForModeChange(true)
+        }}>
+
+
+          <img className="w-full h-full" src={callButton} onClick={() => {
+
+
+
+
+            // toggleVideo()
+          }}
+          />
+        </div>
+
+        <div className="w-[30px] h-[30px] bg-cosmic-primary-color p-1 rounded-full" onClick={() => {
+
+          if (socketCon.connected && socketCon.socket && socketCon.remoteConnected && socketCon.callMode === 'audio') {
+            console.log('fired...')
+            socketCon.socket.emit('request_to_switch_call_mode', {
+              callMode: 'video',
+              remoteId: data.docId ?? socketCon.remoteUserId
+            })
+            dispatch(updateCallMode({ callMode: 'video', socket: null }))
+            setRequestingForModeChange(true)
+
+          }
+
+          // toggleVideo()
+        }}>
+          <img src={videoButton} />
+        </div>
+
+        <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
+
+          socketCon.socket?.emit('call_ended', {
+            remoteId: socketCon.remoteUserId
+          })
+
+          socketCon.socket?.emit('appointmentSessionEnded', {
+            doctorID: socketCon.remoteUserId, patientID: user.data?._id, endTime: Date.now(), sessionID: socketCon.sessionID, duration: counter
+          })
+
+
+          await cancelMediaStream()
+          console.log('fired...')
+          dispatch(updateCallInitialization({ isCallInitiated: false }))
+          dispatch(tearDownConnection({ tearDown: true, socket: null }))
+          stopAndClearTimer()
+          navigate(-1)
+
+        }}>
+          <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>
+        </div>
+
+
+
+        <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center" onClick={async () => {
+          await toggleMic()
+        }}>
+
+          <img className="w-full h-full" src={muteMic} />
+        </div>
+
+
+        <div className="w-[30px] h-[30px] bg-white p-1 rounded-full flex justify-center place-items-center">
+
+          <img className="w-full h-full" src={messageIcon} />
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+  }else{
+
+    navigate(-1)
+  return null
+  }
+
+
+ 
 }
 
 export default VirtualConsultBody

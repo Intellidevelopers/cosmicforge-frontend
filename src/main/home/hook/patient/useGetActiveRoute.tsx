@@ -11,7 +11,8 @@ export enum ActiveRoutePath {
   "chat-bot"= "chat-bot",
   "find-a-specialist"= "find-a-specialist",
   calendar="calendar",
- profile="profile"
+ profile="profile",
+ settings="settings"
 }
 
 interface ActiveRoutePathProps {
@@ -24,7 +25,8 @@ interface ActiveRoutePathProps {
   isChatBotActive: boolean;
   isFindASpecialistActive: boolean;
   isCalenderActive: boolean;
-  isProfileActive:boolean
+  isProfileActive:boolean;
+  isSettingsActive:boolean;
 }
 const useGetActiveRoute = () => {
   const routePath = useLocation();
@@ -48,7 +50,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         };
       }
 
@@ -65,7 +68,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         };
       }
 
@@ -80,7 +84,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:true,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         };
       }
 
@@ -95,7 +100,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }
         
       }
@@ -111,7 +117,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:true,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }
         
       }
@@ -128,7 +135,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }
         
       }
@@ -145,7 +153,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:true
+          isProfileActive:true,
+          isSettingsActive:false
         }
       }
 
@@ -161,7 +170,8 @@ const useGetActiveRoute = () => {
             isChatBotActive: false,
             isFindASpecialistActive:false,
             isCalenderActive:false,
-            isProfileActive:false
+            isProfileActive:false,
+            isSettingsActive:false
           }
         
       }
@@ -178,7 +188,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }
       
     }
@@ -196,10 +207,31 @@ const useGetActiveRoute = () => {
         isChatBotActive: true,
         isFindASpecialistActive:false,
         isCalenderActive:false,
-        isProfileActive:false
+        isProfileActive:false,
+        isSettingsActive:false
       }
     
   }
+
+
+
+  case ActiveRoutePath["settings"]: {
+
+    return{
+      isHomeActive: false,
+      isRunDiagnosisActive:false,
+      isMessageActive: false,
+      isBookAppoinmentActive:false,
+      isAnalyticsActive: false,
+      isFirstAidActive:false,
+      isChatBotActive: false,
+      isFindASpecialistActive:false,
+      isCalenderActive:false,
+      isProfileActive:false,
+      isSettingsActive:true
+    }
+  
+}
 
       
       default:  return {
@@ -212,7 +244,8 @@ const useGetActiveRoute = () => {
         isChatBotActive: false,
         isFindASpecialistActive:false,
         isCalenderActive:false,
-        isProfileActive:false
+        isProfileActive:false,
+        isSettingsActive:false
       }
     }
   });
@@ -236,7 +269,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return
       }
@@ -256,7 +290,9 @@ const useGetActiveRoute = () => {
             isChatBotActive: false,
             isFindASpecialistActive:false,
             isCalenderActive:false,
-            isProfileActive:false
+            isProfileActive:false,
+            isSettingsActive:false,
+
           
         }})
         return 
@@ -276,7 +312,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:true,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return 
       }
@@ -294,7 +331,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return 
       }
@@ -313,7 +351,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return 
       }
@@ -332,7 +371,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return 
       }
@@ -351,7 +391,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: true,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return 
       }
@@ -370,7 +411,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:true,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return 
       }
@@ -389,7 +431,8 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:false
+          isProfileActive:false,
+          isSettingsActive:false
         }})
         return 
       }
@@ -407,11 +450,30 @@ const useGetActiveRoute = () => {
           isChatBotActive: false,
           isFindASpecialistActive:false,
           isCalenderActive:false,
-          isProfileActive:true
+          isProfileActive:true,
+          isSettingsActive:false
         }})
         return 
       }
 
+      case ActiveRoutePath.settings: {
+        setActiveRoutePath(prevState=>{
+          return{
+          ...prevState,
+          isHomeActive: false,
+          isRunDiagnosisActive:false,
+          isMessageActive: false,
+          isBookAppoinmentActive:false,
+          isAnalyticsActive: false,
+          isFirstAidActive: false,
+          isChatBotActive: false,
+          isFindASpecialistActive:false,
+          isCalenderActive:false,
+          isProfileActive:false,
+          isSettingsActive:true
+        }})
+        return 
+      }
 
 
       default: setActiveRoutePath(prevState=> {
@@ -425,7 +487,8 @@ const useGetActiveRoute = () => {
         isChatBotActive: false,
         isFindASpecialistActive:false,
         isCalenderActive:false,
-        isProfileActive:false
+        isProfileActive:false,
+        isSettingsActive:false
 
       }
       })  
