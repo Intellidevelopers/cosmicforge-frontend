@@ -129,7 +129,7 @@ const AiChatbot = () => {
       setLoadingResponse(false)
       setMessages(userDiagnosis.diagnosisChat?.messages as { sender: string, message: string, timeStamp: string, _id?: string }[])
 
-      if (subscription?.planName !== 'Premium') {
+      if ((subscription?.planName ?? 'Free' )!== 'Premium') {
         setCountChatForThisMonth(userDiagnosis.diagnosisChat?.messages?.filter((message) => {
           return new Date(message.timeStamp!!).toLocaleString('en-Us', {
             month: 'long'

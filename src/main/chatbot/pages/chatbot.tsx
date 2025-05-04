@@ -88,7 +88,8 @@ const Chatbot = () => {
      
     setMessages(userChatBot.messages as { sender: 'user' | 'bot', message: string, timeStamp: string }[] )
 
-     if(subscription.userSubcription?.planName !== 'Premium'){
+     if((subscription.userSubcription?.planName??'Free') !== 'Premium'){
+
       setCountChatForThisMonth( userChatBot.messages.filter((message)=>{
         return  new Date(message.timeStamp!!).toLocaleString('en-Us',{
          month:'long'
@@ -112,7 +113,7 @@ const Chatbot = () => {
 
   const handleSend = () => {
 
-    if(subscription.userSubcription?.planName && subscription.userSubcription?.planName !== 'Premium'){
+    if((subscription.userSubcription?.planName ?? 'Free' )!== 'Premium'){
       const  data = accessAccordingToSubscription.find((sub)=>{
        return sub.plan === (subscription.userSubcription?.planName ??'Free')
       })
@@ -128,7 +129,7 @@ return
       }
 
 
-
+return
      }
 
 
