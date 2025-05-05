@@ -79,7 +79,7 @@ const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
 
                 <p className="font-light mt-1">Total Patients</p>
 
-                <p className="font-bold">125</p>
+                <p className="font-bold">{appointments.totalAppointments??0}</p>
               </div>
             </div>
 

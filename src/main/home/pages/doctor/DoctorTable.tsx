@@ -128,7 +128,10 @@ const DoctorTable = () => {
                 } | null,
 
                 patientDetails: {
-                  profilePicture: string
+                  profilePicture: string,
+                  vitalSigns:{
+                    gender:string
+                  }
                 },
                 medicalPersonelDetails: {
                   profilePicture: string | undefined,
@@ -194,7 +197,10 @@ const DoctorTable = () => {
                 } | null,
 
                 patientDetails: {
-                  profilePicture: string
+                  profilePicture: string,
+                  vitalSigns:{
+                    gender:string
+                  }
                 },
                 medicalPersonelDetails: {
                   profilePicture: string | undefined,
@@ -261,7 +267,10 @@ const DoctorTable = () => {
                 } | null,
 
                 patientDetails: {
-                  profilePicture: string
+                  profilePicture: string,
+                  vitalSigns:{
+                    gender:string
+                  }
                 },
                 medicalPersonelDetails: {
                   profilePicture: string | undefined,
@@ -332,7 +341,7 @@ const DoctorTable = () => {
 
       {
         appoinments && appoinments.length>0  && appoinments.map((appointment, index) => (
-          <DoctorTableCustomCard appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
+          <DoctorTableCustomCard gender={appointment?.patientDetails?.vitalSigns?.gender} appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
           //  alert(details.patientName)
 
          

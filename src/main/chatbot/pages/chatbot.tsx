@@ -201,8 +201,8 @@ return
 
 
       {
-        searchCards  && searchCards.map((card)=>(
-          <CustomHomeSearchCard title={card.title} image={card.image} navigationPath={card.navigationPath} />
+        searchCards  && searchCards.map((card,key)=>(
+          <CustomHomeSearchCard key={key} title={card.title} image={card.image} navigationPath={card.navigationPath} />
         ))
       }
        
@@ -218,7 +218,7 @@ return
 
         <div className="flex-1 overflow-auto p-8" >
           {messages.map((data, index) => (
-            <>
+          
               <div key={index} className={`mb-4 flex m-4 ${data.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
                 {data.sender == 'bot' && <img src={robotProfilePic} alt="Profile" className='inline self-end rounded-[50%]  mr-2 h-8 w-8' />}
                 <div className={`inline-block p-3 rounded-lg shadow-lg ${data.sender === 'user' ? 'bg-cosmic-color-lightBlue text-white' : 'bg-white text-black'}`}>
@@ -228,7 +228,7 @@ return
                 </div>
                 {data.sender == 'user' && <img src={user.data?.profile?.profilePicture} alt="Profile" className='inline-flex self-end rounded-[50%]  ml-2 h-8 w-8' />}
               </div>
-            </>
+         
           ))}
         </div>
 
@@ -239,16 +239,18 @@ return
 
       <div className="flex-none p-4 w-full  bg-white border-t border-gray-300 absolute bottom-0">
           <div className="flex w-full">
+           
             <input
-              title='enter text'
+              title='enter text '
               placeholder=' '
               name='chat'
               type="text"
-              className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none"
+              className="flex-1 p-2 border w-[60%] border-gray-300 rounded-l-lg focus:outline-none"
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyUp={(e) => e.key === 'Enter' && handleSend()}
             />
+
             <div className="flex gap-2 ml-4">
               <img src={mic} alt="Mic" className='w-8 cursor-pointer' />
               {/* <div

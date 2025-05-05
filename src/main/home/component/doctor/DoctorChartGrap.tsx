@@ -1,7 +1,79 @@
 import Chart from 'react-apexcharts'
+import { useSelector } from 'react-redux';
+import { RootReducer } from '../../../store/initStore';
+import { useMemo, useState } from 'react';
 //import { mangoFusionPalette } from '@mui/x-charts/colorPalettes';
 
 const DoctorChartGraph = () => {
+
+  const [monthDetails,setMonthDetails] = useState<number[]>()
+
+  const [monthDetailsFemale,setMonthDetailsFemale] = useState<number[]>()
+
+   const appointmentDetails = useSelector((state:RootReducer)=>state.appointments)
+
+
+
+   useMemo(()=>{
+
+    
+
+    if(appointmentDetails.appointments){
+
+      let monthd = [{month:'Jan',numberOfAppointment:0},{month:'Feb',numberOfAppointment:0},{month:'Mar',numberOfAppointment:0},{month:'Apr',numberOfAppointment:0},{month:'May',numberOfAppointment:0},{month:'Jun',numberOfAppointment:0},{month:'July',numberOfAppointment:0},{month:'Aug',numberOfAppointment:0},{month:'Sept',numberOfAppointment:0},{month:'Oct',numberOfAppointment:0},{month:'Nov',numberOfAppointment:0},{month:'Dev',numberOfAppointment:0}]  
+      let monthNumber:number[] = []
+      let femalcount:number[] = []
+
+      monthd.filter((monthDetail)=>{
+
+      const count = appointmentDetails.appointments?.filter((appointment)=>{
+         return appointment.appointmentDate.includes(monthDetail.month) && appointment.patientDetails.vitalSigns?.gender === 'male'
+        })
+
+
+        const countForFemale = appointmentDetails.appointments?.filter((appointment)=>{
+          return appointment.appointmentDate.includes(monthDetail.month) && appointment.patientDetails.vitalSigns?.gender === 'female'
+         })
+
+
+         if(countForFemale){
+          femalcount.push(countForFemale.length)
+         }else{
+          femalcount.push(0)
+         }
+
+
+
+
+        if(count){
+          monthNumber.push(count.length)
+          monthd.push({
+            month:monthDetail.month,
+            numberOfAppointment:count.length
+             
+          })
+         }else{
+          monthNumber.push(0)
+          monthd.push({
+            month:monthDetail.month,
+            numberOfAppointment:0
+             
+          })
+         }
+
+        })
+
+     setMonthDetailsFemale(femalcount)
+
+      setMonthDetails(monthNumber)
+      
+
+    
+
+    }
+
+   },[appointmentDetails.appointments])
+
 
   return (
 
@@ -72,11 +144,11 @@ const DoctorChartGraph = () => {
 
         series={[
           {
-            data: [1, 2, 3, 2, 3, 3, 2, 1.5, 3, 5, 3.9],
+            data:monthDetails!! ,
 
           },
           {
-            data: [2, 4, 2, 4, 2, 3, 2, 3.5, 3, 5, 4.2],
+            data:monthDetailsFemale!!,
 
           }
         ]} type='area' width={'100%'} height={300} />

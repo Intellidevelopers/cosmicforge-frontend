@@ -1,12 +1,12 @@
 
-import callIcon from '../../../../assets/icons/call-button.svg'
+//import callIcon from '../../../../assets/icons/call-button.svg'
 import messageButton from '../../../../assets/icons/message-icon.svg'
 import appointmentButton from '../../../../assets/icons/appointment-icon.svg'
 import verifiedThick from '../../../../assets/icons/home/verifiedThick.svg'
 import ratingStar from '../../../../assets/icons/star-icon.svg'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { updateCallInitialization, updateCallMode } from '../../../store/reducers/userSocketReducer'
-import { useDispatch } from 'react-redux'
+//import { updateCallInitialization, updateCallMode } from '../../../store/reducers/userSocketReducer'
+//import { useDispatch } from 'react-redux'
 
 
 export interface CustomCardSpecialistViewCardProps {
@@ -44,7 +44,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
     const navigate = useNavigate()
     const {state} = useLocation()
 
-    const  dispatch = useDispatch()
+   //// const  dispatch = useDispatch()
 
    
 
@@ -77,7 +77,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
 
                 <div className=" relative md:absolute bottom-5 right-5 inline-flex  justify-end md:mt-2    flex-row gap-3">
 
-                    <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
+                { /*   <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
                        
                        dispatch(updateCallMode({callMode:'audio',socket:null}))
                        
@@ -96,7 +96,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                         })
                     }}>
                         <img src={callIcon} alt="call button" />
-                    </div>
+                    </div>  */}
 
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={()=>{
                            navigate('/patient/messages/chat', {

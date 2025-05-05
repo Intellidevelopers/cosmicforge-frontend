@@ -50,7 +50,7 @@ useMemo(()=>{
     <div>
         <HomeNavBar title={'Subscription'} onSearchFired={()=>{}}/>
         <HomeMobileNavBar title={'Subscription'} onSearchFired={()=>{}}/>
-        <div className="flex  items-center flex-wrap">
+        <div className="flex  items-center justify-center md:justify-start flex-wrap">
           {subcriptions?.map((plan,index)=>(
             <SubscribeComp key={index} {...plan}/>
           ))}
