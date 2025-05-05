@@ -38,7 +38,10 @@ const PastAppointment = () => {
       } | null,
 
       patientDetails: {
-        profilePicture: string
+        profilePicture: string,
+        vitalSigns:{
+          gender:string
+      }
       },
       medicalPersonelDetails: {
         profilePicture: string | undefined,
