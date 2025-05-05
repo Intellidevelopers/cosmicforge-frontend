@@ -1,12 +1,20 @@
 import React from "react";
+
+// components imports
+import BrowseFeatures from "./components/BrowseFeatures";
 import FeaturesSlider from "./components/Features";
+import Frequently from "./components/Frequently";
+import OtherFeature from "./components/SubFeatures";
+import Testimonials from "./components/Testimonials";
+import WhyUsImage from "../../../assets/HomeImg/whyusimg.png";
+
+// image imports
 import HeroImg from "../../../assets/HomeImg/Healthcare.png";
 import image1 from "../../../assets/images/FirstImagCustomView.svg";
 import image2 from "../../../assets/images/secondImagCustomview.svg";
 import Logo from "../../../assets/logo/logo_comsic_splash.svg";
-import OtherFeature from "./components/SubFeatures";
-import WhyUsImage from "../../../assets/HomeImg/whyusimg.png";
 
+// dynamic imports
 import { Link } from "react-router-dom";
 
 const LandingPage = () => {
@@ -19,6 +27,8 @@ const LandingPage = () => {
       <OurFeatures />
       <WhyUsComponents />
       <BrowseDepartments />
+      <Testimonials />
+      <Frequently />
     </React.Fragment>
   );
 };
@@ -199,6 +209,9 @@ const BrowseDepartments = () => {
               view all
             </button>
           </div>
+        </div>
+        <div className="browse_features">
+          <BrowseFeatures />
         </div>
         <div>
           <OtherFeature />

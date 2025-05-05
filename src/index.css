@@ -186,8 +186,6 @@ body {
   }
 }
 
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -244,8 +242,6 @@ body {
   }
 }
 
-
-
 @layer base {
   * {
     @apply border-border;
@@ -253,4 +249,12 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* additional css */
+.bg-testimonials {
+  background-image: url(./assets/HomeImg/bgtestimonials.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
