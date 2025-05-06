@@ -4,18 +4,32 @@ import React from "react";
 import BrowseFeatures from "./components/BrowseFeatures";
 import FeaturesSlider from "./components/Features";
 import Frequently from "./components/Frequently";
+import Footer from "./components/Footer";
 import OtherFeature from "./components/SubFeatures";
 import Testimonials from "./components/Testimonials";
 import WhyUsImage from "../../../assets/HomeImg/whyusimg.png";
 
 // image imports
+import DoctorMed from "../../../assets/HomeImg/doctorcal.png";
 import HeroImg from "../../../assets/HomeImg/Healthcare.png";
 import image1 from "../../../assets/images/FirstImagCustomView.svg";
 import image2 from "../../../assets/images/secondImagCustomview.svg";
+import Iphone from "../../../assets/HomeImg/iphone.png";
 import Logo from "../../../assets/logo/logo_comsic_splash.svg";
+import newProfile from "../../../assets/images/cosmic-display-profile-new.svg";
+
+// import ProfileMed from "../../../assets/HomeImg/profilemed.png";
+import profile2 from "../../../assets/images/cosmic-display-profile-2.svg";
+import profile3 from "../../../assets/images/cosmic-display-profile-3.svg";
+import profile4 from "../../../assets/images/cosmic-display-profile-4.svg";
 
 // dynamic imports
 import { Link } from "react-router-dom";
+import { BiLogoPlayStore } from "react-icons/bi";
+import { FaApple } from "react-icons/fa";
+
+// Shadcn imports
+import { Input } from "../../../components/ui/input";
 
 const LandingPage = () => {
   return (
@@ -29,6 +43,9 @@ const LandingPage = () => {
       <BrowseDepartments />
       <Testimonials />
       <Frequently />
+      <Download />
+      <SubFooter />
+      <Footer />
     </React.Fragment>
   );
 };
@@ -221,9 +238,156 @@ const BrowseDepartments = () => {
   );
 };
 
-// carousel effect
+// doctor call and med components
+
+const Download = () => {
+  return (
+    <section className="max-w-[80%] mx-auto py-16">
+      <h1 className="text-[#272EA7] text-center font-bold text-3xl tracking-wide my-4">
+        The future of healthcare, promoting timely convenience
+      </h1>
+      <div className="download_contents text-center">
+        <div className="text_contents">
+          <p className="leading-10 mb-4">
+            Our official App is available for download on App Store and Play
+            Store. <br /> Download Now.
+          </p>
+        </div>
+        <div className="flex justify-center">
+          <div className="btns flex gap-4 items-center">
+            <button className="flex gap-2 items-center  text-white bg-[#272EA7] py-3 px-6 rounded-md cursor-pointer">
+              <BiLogoPlayStore />
+              <span>App store</span>
+            </button>
+            <button className="flex gap-2 items-center text-white bg-[#272EA7] py-3 px-6 rounded-md cursor-pointer">
+              <FaApple />
+              <span>Play store</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="img_contents grid grid-cols-3 items-start gap-2s">
+        <div className="one">
+          <div>
+            <img src={DoctorMed} alt="" className="" />
+          </div>
+          <div className="relative top-[-30px] bg-white py-4 rounded-md shadow-md p-4">
+            <h1 className="text-lg font-semibold text-[#030303]">
+              virtual Consultation
+            </h1>
+            <p className="text-sm text-balance text-[#5B5959] leading-7">
+              Virtual Consultation with specialist to meet your health needs.
+            </p>
+          </div>
+        </div>
+        <div className="two">
+          <img src={Iphone} alt="" />
+        </div>
+        <div>
+          <div className="w-full flex flex-wrap gap-8 mt-8 bg-white py-4 rounded-md shadow-md">
+            <img src={profile2} className="h-[80px]" alt="image" />
+            <img src={profile3} className="h-[80px]" alt="image" />
+            <img src={profile4} className="h-[80px]" alt="image" />
+            <img src={profile2} className="h-[80px]" alt="image" />
+            <img src={newProfile} className="h-[80px]" alt="image" />
+          </div>
+          <div className="mt-2 bg-white py-4 rounded-md shadow-md p-4">
+            <h1 className="text-lg font-semibold text-[#030303]">
+              Profile management
+            </h1>
+            <p className="text-sm text-balance text-[#5B5959] leading-7">
+              Control Health history and data through profile management{" "}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="">
+        <SubDownloadComponents />
+      </div>
+    </section>
+  );
+};
+
+// subDownload components
+const SubDownloadComponents = () => {
+  const DataCount = [
+    {
+      count: "1k",
+      content: "Total application users",
+    },
+    {
+      count: "500+",
+      content: "Doctors who have joined us",
+    },
+    {
+      count: "50+",
+      content: "Pharmacies who have joined us",
+    },
+    {
+      count: "30+",
+      content: "Laboratories who have joined us",
+    },
+    {
+      count: "80%",
+      content: "Growth since Launch",
+    },
+  ];
+  return (
+    <section className="mt-6">
+      <div className="">
+        <div className="counts flex items-center justify-center gap-8">
+          {DataCount.map((items, index) => {
+            const isFirst = index === 0;
+            const isLast = index === DataCount.length - DataCount.length;
+
+            return (
+              <div
+                className={`text-center px-4 ${
+                  !isFirst && !isLast ? "border-l border-gray-300" : ""
+                }`}
+                key={index}
+              >
+                <h1 className="text-[#272EA7] text-2xl font-semibold">
+                  {items.count}
+                </h1>
+                <p className="text-[#030303] text-sm leading-6 tracking-wide mt-2">
+                  {items.content}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // sub footer
+const SubFooter = () => {
+  return (
+    <section className="bg-[#272EA7] text-center py-12">
+      <div className="max-w-[80%] mx-auto text-white">
+        <h1 className="capitalize font-semibold text-3xl my-4">
+          Sign Up for Our Newsletter
+        </h1>
+        <p className="my-4 text-base font-light tracking-widest">
+          Get weekly update about our products and services on your email
+        </p>
+        <div className="max-w-[50%] mx-auto my-6 mt-12">
+          <div className="flex">
+            <Input
+              placeholder="Enter email"
+              className="flex-grow outline-none placeholder:text-white rounded-l-md"
+            />
+            <button className="text-sm font-medium capitalize px-4 py-[6px] rounded-r-md bg-white text-[#272ea7] whitespace-nowrap cursor-pointer">
+              subscribe now
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 // footer section
 
