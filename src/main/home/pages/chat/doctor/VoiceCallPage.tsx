@@ -60,7 +60,7 @@ const VoiceCallPage = () => {
     const localVideoStream: MutableRefObject<HTMLVideoElement | null> = useRef(null)
     //const localAudioStream: MutableRefObject<HTMLAudioElement | null> = useRef(null)
     const remoteVideoSteam: MutableRefObject<HTMLVideoElement | null> = useRef(null)
-    
+
 
 
     const userSocketCon = useSelector((state: RootReducer) => state.socket)
@@ -192,6 +192,8 @@ const VoiceCallPage = () => {
 
 
 
+
+    
     useEffect(() => {
 
 
@@ -1019,13 +1021,13 @@ const VoiceCallPage = () => {
         }
 
 
-        if(userSocketCon.connected && userSocketCon.socket){
-              userSocketCon.socket.on('sessionID',(data:{sessionID:string})=>{
-        
-                store.dispatch(updateAppointmentSession({sessionID:data.sessionID}))
-        
-              })
-             }
+        if (userSocketCon.connected && userSocketCon.socket) {
+            userSocketCon.socket.on('sessionID', (data: { sessionID: string }) => {
+
+                store.dispatch(updateAppointmentSession({ sessionID: data.sessionID }))
+
+            })
+        }
 
 
         if (userSocketCon.connected && userSocketCon.socket) {
@@ -1066,14 +1068,10 @@ const VoiceCallPage = () => {
     useEffect(() => {
         if (!userSocketCon.isCallInitiated && userSocketCon.remoteConnected && userSocketCon.locallyConnected) {
             setCallState('connected')
-            
-            userSocketCon.socket?.emit('appointmentSessionStarted',{
-                doctorID:userSocketCon.remoteUserId,patientID:user.data?._id,startTime:Date.now(),caller:'doctor'
-              
-        
-               })
-        
-            
+
+
+
+
             startTimer()
             return
         }
@@ -1235,9 +1233,9 @@ const VoiceCallPage = () => {
                                     })
 
                                     userSocketCon.socket?.emit('appointmentSessionEnded', {
-                                        doctorID:userSocketCon.remoteUserId,patientID:user.data?._id,endTime:Date.now(),sessionID:userSocketCon.sessionID,duration:counter
+                                        doctorID: userSocketCon.remoteUserId, patientID: user.data?._id, endTime: Date.now(), sessionID: userSocketCon.sessionID, duration: counter
                                     })
-    
+
 
                                     await cancelMediaStream()
                                     console.log('fired...')
@@ -1391,10 +1389,10 @@ const VoiceCallPage = () => {
                                 })
 
                                 userSocketCon.socket?.emit('appointmentSessionEnded', {
-                                    doctorID:userSocketCon.remoteUserId,patientID:user.data?._id,endTime:Date.now(),sessionID:userSocketCon.sessionID,duration:counter
+                                    doctorID: userSocketCon.remoteUserId, patientID: user.data?._id, endTime: Date.now(), sessionID: userSocketCon.sessionID, duration: counter
                                 })
 
-                               
+
 
                                 await cancelMediaStream()
 
@@ -1434,7 +1432,11 @@ const VoiceCallPage = () => {
 
 
         <div className="h-full w-full hidden md:block col-span-2  bg-cosmic-bg-chat-background border-l border-l-white" >
+          
+          
             <div className='grid grid-cols-2 bg-white p-1 gap-2  '>
+               
+               
                 <div className='p-3'>
                     <p className='col-span-1 text-center w-full text-cosmic-primary-color'>Chat</p>
                     <p className='w-full h-[2px] bg-cosmic-primary-color mt-2 rounded-md'></p>
@@ -1450,11 +1452,15 @@ const VoiceCallPage = () => {
 
 
             <div className=' bg-white '>
+
+
                 <div className=" h-full flex justify-evenly place-items-center">
                     <img src={patientToCallDetails?.doctorImage ?? userSocketCon?.remoteCallerDetails?.profilePicture} className='h-[40px] w-[40px] rounded-full' />
                     <p>{patientToCallDetails?.doctorName ?? userSocketCon?.remoteCallerDetails?.profilePicture}</p>
                     <i className='fa fa-ellipsis-v' />
                 </div>
+
+
             </div>
 
 
@@ -1476,6 +1482,8 @@ const VoiceCallPage = () => {
                 <div className=" absolute bg-white w-full h-[33%] bottom-0 ">
 
                     <div className="grid grid-cols-3  ">
+
+
                         <div className="flex place-items-center  gap-3 col-span-2
      ">
 
@@ -1486,7 +1494,11 @@ const VoiceCallPage = () => {
                             <textarea placeholder="enter text" value={typedMessage} className=" mt-2 w-full outline-none resize-none h-[60px] p-2 overflow-y-auto  " onChange={(e) => {
                                 setTypeMessage(e.target.value)
                             }}></textarea>
+
+
                         </div>
+
+
                         <div className="w-full flex justify-end pe-6 gap-3 mt-2">
 
 
@@ -1513,6 +1525,8 @@ const VoiceCallPage = () => {
 
                                     })
                                 }
+
+
 
                                 if (!patientMessage) {
 

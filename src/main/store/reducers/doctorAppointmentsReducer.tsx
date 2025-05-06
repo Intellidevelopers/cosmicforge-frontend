@@ -5,6 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
     appointments:[{
+        _id?:string,
         appointmentDate
         : string
         appointmentStatus

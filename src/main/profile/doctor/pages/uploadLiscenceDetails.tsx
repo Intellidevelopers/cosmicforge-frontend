@@ -1,7 +1,7 @@
 import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar"
 import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobile"
 import lock from '../../../../assets/images/Security Lock green.png'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import success from '../../../../assets/images/uploadSccessful.png'
 import useGetImageBase64String from "../../patient/hooks/useGetImageBase64String"
 import Loader from "../../../generalComponents/Loader"
@@ -9,6 +9,11 @@ import { uploadCertificateOrLicence } from "../../service"
 import { useSelector } from "react-redux"
 import { RootReducer, store } from "../../../store/initStore"
 import { cacheDoctorCertificateAndLicence } from "../../../store/reducers/doctorCertificateAndLicence"
+import '@mediapipe/face_detection'
+import '@tensorflow/tfjs-core'
+import '@tensorflow/tfjs-backend-webgl'
+import * as faceDtection from '@tensorflow-models/face-detection'
+
 
 const UploadLiscenceDetails = () => {
 
@@ -16,6 +21,135 @@ const UploadLiscenceDetails = () => {
   // const [institution,setInstitution] = useState('')
   // const [certificateNo,setCertificateNo] = useState('')
   // const [date,setDate] = useState('')
+
+  const [isImageValidated, setImageValidated] = useState<boolean>(false)
+
+  const calculateEuclideanDistance = async (faceOneLandMark: any[], faceTwoLandMark: any[]) => {
+
+    let sum = 0
+
+    for (let i = 0; i < faceOneLandMark.length; i++) {
+      const dx = faceOneLandMark[i][0] - faceTwoLandMark[i][0]
+      const dy = faceOneLandMark[i][1] - faceTwoLandMark[i][1]
+      sum = + dx * dy + dy * dy
+
+    }
+
+    return Math.sqrt(sum / faceOneLandMark.length)
+
+  }
+
+  const detectImage = async (imageBase64: string, imageTwoBase64: string) => {
+
+    const image = document.createElement('img')
+    image.src = imageBase64
+
+
+
+    const imageTwo = document.createElement('img')
+    imageTwo.src = imageTwoBase64
+    try {
+
+
+
+      const model = faceDtection.SupportedModels.MediaPipeFaceDetector
+
+
+
+
+      const detector = await faceDtection.createDetector(model, { runtime: 'tfjs' })
+
+
+      const faceOneEstimate = await detector.estimateFaces(image)
+
+
+
+      const faceOneData: any[] = []
+
+      const faceTwoData: any[] = []
+
+      if (faceOneEstimate) {
+
+
+
+        faceOneEstimate[0].keypoints.forEach((e) => {
+          if (e.name === 'rightEye') {
+            faceOneData.push([Math.ceil(e.x), Math.ceil(e.y)])
+          }
+
+          if (e.name === 'leftEye') {
+            faceOneData.push([Math.ceil(e.x), Math.ceil(e.y)])
+          }
+
+          if (e.name === 'noseTip') {
+            faceOneData.push([Math.ceil(e.x), Math.ceil(e.y)])
+            return
+          }
+        })
+
+
+
+      }
+
+
+
+
+      const faceTwoEstimate = await detector.estimateFaces(imageTwo)
+
+      if (faceTwoEstimate) {
+
+
+
+        faceTwoEstimate[0].keypoints.forEach((e) => {
+          if (e.name === 'rightEye') {
+            faceTwoData.push([Math.ceil(e.x), Math.ceil(e.y)])
+          }
+
+          if (e.name === 'leftEye') {
+            faceTwoData.push([Math.ceil(e.x), Math.ceil(e.y)])
+          }
+
+          if (e.name === 'noseTip') {
+            faceTwoData.push([Math.ceil(e.x), Math.ceil(e.y)])
+            return
+          }
+        })
+
+
+
+      }
+
+
+      if (faceOneData.length > 0 && faceTwoData.length > 0) {
+        const distance = await calculateEuclideanDistance(faceOneData, faceTwoData)
+
+        if (distance > 550) {
+          setErrorMessage('Image provided does not match face on the id. Please provide a clear id and image of yourself.')
+          setShowUploadComp(false)
+          setImageValidated(false)
+          setLoading(false)
+        } else {
+
+          setImageValidated(true)
+        }
+      }
+
+    } catch (error) {
+
+      setErrorMessage('Image provided does not match face on the id. Please provide a clear id and image of yourself.')
+      setShowUploadComp(false)
+      setImageValidated(false)
+      setLoading(false)
+    }
+
+
+
+  }
+
+
+
+
+
 
   const [showUploadComp, setShowUploadComp] = useState(false)
   const [successfulUpload, setSuccessfulUpload] = useState(false)
@@ -49,6 +183,48 @@ const UploadLiscenceDetails = () => {
     type: "licence",
     photoWithLicence: ''
   })
+
+
+
+  useEffect(() => {
+
+    if (isImageValidated) {
+
+      (async () => {
+
+        try {
+
+
+
+          const result = await uploadCertificateOrLicence(formDetails, user.data?.token!!)
+
+          if (result.status === 200) {
+
+            store.dispatch(cacheDoctorCertificateAndLicence({ licence: result.data.licence, certification: null }))
+            setLoading(false)
+            setSuccessfulUpload(true)
+          }
+
+
+
+        } catch (error: any) {
+
+          if (error.name === 'AbortError') {
+            setLoading(false)
+            setShowUploadComp(false)
+            setErrorMessage('Timeout try again.')
+            return
+          }
+          setLoading(false)
+          setShowUploadComp(false)
+          setErrorMessage(error.message)
+        }
+      })()
+
+    }
+
+  }, [isImageValidated])
+
 
 
   return (
@@ -113,10 +289,15 @@ const UploadLiscenceDetails = () => {
                     const imageBase64 = await getImageBase64String(e.target.files[0])
                     setFormDetails({ ...formDetails, licenceImage: imageBase64 })
 
+
+
+
+
                   }
 
-                } catch (error) {
 
+                } catch (error: any) {
+                  alert(JSON.stringify(error))
                 }
 
 
@@ -182,33 +363,17 @@ const UploadLiscenceDetails = () => {
                 return
               }
 
+
               try {
 
                 setLoading(true)
                 setShowUploadComp(true)
-
-                const result = await uploadCertificateOrLicence(formDetails, user.data?.token!!)
-
-                if (result.status === 200) {
-                 
-               store.dispatch(cacheDoctorCertificateAndLicence({licence:result.data.licence,certification:null}))
-                  setLoading(false)
-                  setSuccessfulUpload(true)
-                }
+                await detectImage(formDetails.licenceImage!!, formDetails.photoWithLicence!!)
 
 
 
-              } catch (error: any) {
-
-                if(error.name === 'AbortError'){
-                  setLoading(false)
-                setShowUploadComp(false)
-                setErrorMessage('Timeout try again.')
-return
-                }
-                setLoading(false)
-                setShowUploadComp(false)
-                setErrorMessage(error.message)
+              } catch (error) {
+                alert(error)
               }
 
 
@@ -244,14 +409,14 @@ return
                 <div className="flex flex-col justify-center w-full items-center gap-1 border-black border-2 p-4 border-dashed max-w-[400px]">
                   <img src={success} alt="success" />
                   <p className="text-xs">File Upload Successful</p>
-                  <p className="mt-3 underline decoration-cosmic-color-lightBlue" onClick={()=>{
+                  <p className="mt-3 underline decoration-cosmic-color-lightBlue" onClick={() => {
                     setShowUploadComp(false)
                   }}>Cancel</p>
                 </div>
               </div>}
             {
               loading && <div>
-                <label htmlFor="liscence" className=" mr-2 mb-14 ">Uploading...</label>
+                <label htmlFor="liscence" className=" mr-2 mb-14 ">Uploading... this may take 2-3mins</label>
 
                 {
                   <Loader size="80px" />

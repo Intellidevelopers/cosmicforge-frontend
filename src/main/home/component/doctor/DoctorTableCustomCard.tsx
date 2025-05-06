@@ -1,7 +1,8 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { updateAppointmentSession } from "../../../store/reducers/userSocketReducer"
+import { RootReducer } from "../../../store/initStore"
 
 
 interface DoctorTableCustomCard {
@@ -11,7 +12,8 @@ interface DoctorTableCustomCard {
     appointmentmentTime: string,
     appointmentDate: string,
     patientId: string,
-    gender:string,
+    appointmentId: string,
+    gender: string,
     onStartSession: (details: {
         patientName: string,
         patientProfile: string, patientId: string
@@ -19,12 +21,18 @@ interface DoctorTableCustomCard {
 }
 
 
-const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTime, patientName, patientId, patientProfile,gender }: DoctorTableCustomCard
+
+
+
+const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTime, patientName, patientId, patientProfile, gender, appointmentId }: DoctorTableCustomCard
 
 
 
 ) => {
 
+    const userSocket = useSelector((state: RootReducer) => state.socket)
+
+    const user = useSelector((state: RootReducer) => state.user)
 
     const navigate = useNavigate()
 
@@ -43,53 +51,62 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
         details: {
             patientId: string
             profilePicture?: string,
-            
+
 
 
 
         }
     } | null>(null)
 
-   
+
 
     const date = new Date()
 
     const appoinmentStartTime = appointmentmentTime?.split('-')[0]
 
-    const appoinmentEndTime  = appointmentmentTime?.split('-')[1]
+    const appoinmentEndTime = appointmentmentTime?.split('-')[1]
 
+
+    const appoinmentDay = appointmentDate?.split(' ')[1].replace(/[a-z]/g, '')
 
     const appoinmentMonth = appointmentDate.split(' ')[2]
 
     const currentMonth = date.toLocaleDateString('en-Us', {
-        month:'short'
+        month: 'short'
     })
 
-    const currentTime =  date.toLocaleTimeString('en-Us', {
+    const currentTime = date.toLocaleTimeString('en-Us', {
         timeStyle: 'short'
     })
 
+    const dayInWeek = date.toLocaleString('en-Us', {
+        day: 'numeric'
+    })
 
 
 
 
-   
-
-
-   
 
 
 
-  
+    // alert(dayInWeek ===appoinmentDay )
 
-   
-   
+
+
+
+
+
+
+
+
+
+
     return <div>
         <div className='w-full inline-flex   
      mb-3 cursor-default md:hover:border md:hover:border-cosmic-primary-color rounded-full justify-evenly'     onClick={() => {
 
 
-                if (currentMonth === appoinmentMonth && (appoinmentStartTime.trim().toLowerCase().replace(' ','')===currentTime.trim().toLowerCase() || Number(currentTime.split(':')[0]) <Number(appoinmentEndTime.split(':')[0]) )) {
+                if (currentMonth === appoinmentMonth && dayInWeek === appoinmentDay && (appoinmentStartTime.trim().toLowerCase().replace(' ', '') === currentTime.trim().toLowerCase() || Number(currentTime.split(':')[0]) < Number(appoinmentEndTime.split(':')[0]))) {
                     //  onStartSession({ patientName, patientProfile, patientId })
 
                     setPatientWhoBookedAppopintmentDetails({
@@ -103,7 +120,7 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
                         details: {
                             patientId: patientId,
                             profilePicture: patientProfile,
-                          
+
                         }
 
                     })
@@ -119,7 +136,7 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
             <p className="min-w-[120px]   m-2  ">{appointmentDate}</p>
             <p className="min-w-[100px]   m-2  ">{appointmentmentTime}</p>
             {
-                (currentMonth === appoinmentMonth && (appoinmentStartTime.trim().toLowerCase().replace(' ','')===currentTime.trim().toLowerCase() || Number(currentTime.split(':')[0]) <Number(appoinmentEndTime.split(':')[0]) )) && <i className="fa fa-dot-circle text-blue-600 animate-pulse mt-3" />
+                (currentMonth === appoinmentMonth && currentMonth === appoinmentMonth && dayInWeek === appoinmentDay && (appoinmentStartTime.trim().toLowerCase().replace(' ', '') === currentTime.trim().toLowerCase() || Number(currentTime.split(':')[0]) < Number(appoinmentEndTime.split(':')[0]))) && <i className="fa fa-dot-circle text-blue-600 animate-pulse mt-3" />
             }
 
 
@@ -134,7 +151,16 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
                     setToggleStartSession(false)
                 }}>cancel</p>
                 <p className='bg-cosmic-primary-color p-2 text-white rounded-md' onClick={() => {
+
                     dispatch(updateAppointmentSession({ appointmentSessionStarted: true }))
+
+
+                    userSocket.socket?.emit('appointmentSessionStarted', {
+
+                        doctorID: user.data?._id, patientID: patientId, startTime: Date.now(), caller: 'doctor', appointmentId
+
+
+                    })
                     navigate('/doctor/messages', {
                         state: patientWhoBookedAppopintmentDetails
                     })

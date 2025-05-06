@@ -7,7 +7,7 @@ import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
 import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import { useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { RootReducer } from "../../../../store/initStore"
+import { RootReducer, store } from "../../../../store/initStore"
 import { updateAppointmentSession, updateCallInitialization, updateCallMode } from "../../../../store/reducers/userSocketReducer"
 import { useState, useEffect, MutableRefObject, useRef } from "react"
 
@@ -21,7 +21,7 @@ const DoctorMainChatPage = () => {
     const { audioData, isRecording, startRecording, stopRecording } = useGetAudioRecorder()
 
 
-    const subscription = useSelector((state:RootReducer)=>state.subscription.userSubcription)
+    const subscription = useSelector((state: RootReducer) => state.subscription.userSubcription)
 
 
     const [sendVoiceNote, setSendVoiceNote] = useState<boolean>(false)
@@ -49,6 +49,8 @@ const DoctorMainChatPage = () => {
         messageType: string,
         messageRead: boolean,
         message: string | null,
+
+
         details: {
             patientId: string
             profilePicture?: string,
@@ -59,18 +61,7 @@ const DoctorMainChatPage = () => {
             bio?: string,
             pricing?: string,
 
-            workAddress?: string,
-            experience?: {
 
-                hospitalName?: string,
-                NoOfPatientTreated?: string,
-                specializationAndDepartment?: string,
-                date?: string
-            },
-            workTime?: {
-                day?: string,
-                time?: string
-            }
 
 
 
@@ -182,6 +173,15 @@ const DoctorMainChatPage = () => {
 
 
     useEffect(() => {
+
+        if (userSocket.connected && userSocket.socket) {
+            userSocket.socket.on('sessionID', (data: { sessionID: string }) => {
+
+                store.dispatch(updateAppointmentSession({ sessionID: data.sessionID }))
+
+            })
+        }
+
         return () => {
             dispatch(updateAppointmentSession({ appointmentSessionStarted: false }))
         }
@@ -524,45 +524,60 @@ const DoctorMainChatPage = () => {
                         <div className="grid grid-cols-3  ">
 
 
-                            <div className="flex place-items-center gap-2  col-span-2">
+                            <div className="flex place-items-center gap-2  col-span-2  relative">
 
                                 <img src={chatSelected?.doctorImage} alt="profile-icon" className="w-[40px] h-[40px] rounded-full" />
                                 <p>{chatSelected?.doctorName}</p>
+
+
+                                <div className="h-full flex justify-start place-items-center cursor-default absolute right-0">
+                                <p className="bg-red-500 text-white p-2 rounded-lg" onClick={() => {
+
+                                    if (userSocket.sessionID) {
+                                        userSocket.socket?.emit('appointmentSessionEnded', {
+                                            doctorID: user.data?._id, patientID: userDetails?.details.patientId, endTime: Date.now(), sessionID: userSocket.sessionID,
+                                        })
+                                        navigate(-1)
+                                    }
+
+                                }}>end session</p>
+                            </div>
+
                             </div>
 
 
+                          
 
+                            {
+                                subscription?.planName !== "Free" && <div className={` ${userSocket.appointmentSessionStarted ? 'flex' : 'hidden'} w-full  justify-end  gap-3`}>
+                                    <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
 
-                         {
-                            subscription?.planName !=="Free" &&    <div className={` ${userSocket.appointmentSessionStarted ? 'flex' : 'hidden'} w-full  justify-end  gap-3`}>
-                                <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="voice-call" src={callIcon} onClick={() => {
+                                        if (userSocket.connected) {
+                                            dispatch(updateCallMode({ callMode: 'audio', socket: null }))
+                                            dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
+                                            navigate("/doctor/appointment/voice-call", {
+                                                state: {
+                                                    patientToCallDetails: chatSelected
+                                                }
+                                            })
+                                        }
 
-                                    if (userSocket.connected ) {
-                                        dispatch(updateCallMode({ callMode: 'audio', socket: null }))
-                                        dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
-                                        navigate("/doctor/appointment/voice-call", {
-                                            state: {
-                                                patientToCallDetails: chatSelected
-                                            }
-                                        })
-                                    }
+                                    }} />
+                                    <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} onClick={() => {
+                                        if (userSocket.connected) {
+                                            dispatch(updateCallMode({ callMode: 'video', socket: null }))
+                                            dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
+                                            navigate("/doctor/appointment/voice-call", {
+                                                state: {
+                                                    patientToCallDetails: chatSelected
+                                                }
+                                            })
+                                        }
+                                    }} />
+                                    <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />
+                                </div>
 
-                                }} />
-                                <img className="bg-cosmic-color-white-light rounded-full p-1 w-[30px] h-[30px]" alt="video-call" src={videoIcon} onClick={() => {
-                                    if (userSocket.connected ) {
-                                        dispatch(updateCallMode({ callMode: 'video', socket: null }))
-                                        dispatch(updateCallInitialization({ isCallInitiated: true, socket: null }))
-                                        navigate("/doctor/appointment/voice-call", {
-                                            state: {
-                                                patientToCallDetails: chatSelected
-                                            }
-                                        })
-                                    }
-                                }} />
-                                <i className="fa fa-ellipsis-v  mt-2 w-[40px] h-[40px] " />
-                            </div>
-
-                         }
+                            }
                         </div>
 
 
@@ -603,6 +618,7 @@ const DoctorMainChatPage = () => {
 
 
                             <div className="w-full flex justify-end pe-6 gap-3 mt-2">
+
                                 <div className={`w-[40px]  h-[40px] flex justify-center place-items-center border rounded-full ${isRecording && 'border-cosmic-primary-color animate-pulse'}`}>
                                     <img alt='mic' className=' ' src={micIcon} onMouseDown={() => {
                                         startRecording()

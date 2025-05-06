@@ -38,7 +38,7 @@ const HomeSideBarMobile = () => {
 
 
   return (
-    <div ref={sideBarRef} className="hidden md:hidden w-[60%] h-screen bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-[200]  cursor-default overflow-y-hidden">
+    <div ref={sideBarRef} className="hidden md:hidden w-[60%] h-dvh overflow-y-auto bg-home-slidder-color shadow-md shadow-black absolute left-0  p-4 z-[200]  cursor-default ">
 
       <div className="w-full ">
 

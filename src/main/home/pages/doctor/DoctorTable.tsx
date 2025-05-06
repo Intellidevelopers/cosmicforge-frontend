@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import { MutableRefObject, useEffect, useMemo, useRef, useState } from 'react'
 
 import DoctorTableCustomCard from '../../component/doctor/DoctorTableCustomCard'
 import { useSelector } from 'react-redux'
@@ -26,7 +26,64 @@ const DoctorTable = () => {
 
   const appoinmentsState = useSelector((state: RootReducer) => state.appointments.appointments)
 
-  const [appoinments, setAppointments] = useState(appoinmentsState)
+  const [appoinments, setAppointments] = useState<[{
+    _id?:string,
+    appointmentDate
+    : string
+    appointmentStatus
+    : string
+    appointmentTime
+    : string
+    appointmentType
+    : string
+    medicalPersonelID
+    : {
+      fullName: string,
+      lastName: string,
+      _id: string
+
+    } | null
+    patientID
+    : {
+      fullName: string,
+      lastName: string,
+      _id: string
+
+    } | null,
+
+    patientDetails: {
+      profilePicture: string,
+      vitalSigns:{
+        gender:string
+      }
+    },
+    medicalPersonelDetails: {
+      profilePicture: string | undefined,
+      department: string,
+      currentClinic: string,
+      specializationTitle: string,
+      workAddress: string
+    },
+    payment
+    : {
+      cardFee
+      : number
+      cardType
+      : string
+      consultationFee
+      : string
+      paymentReference
+      : string
+      paymentStatus
+      : string
+      total
+      : number
+      vat
+      : string
+    },
+
+
+  }] | null>(null)
 
  
 
@@ -56,6 +113,74 @@ const DoctorTable = () => {
   }, [window])
 
 
+  useMemo(()=>{
+
+    if(appoinmentsState){
+      const bookedAppointment = appoinmentsState.filter(appointment=>{
+        return appointment.appointmentStatus === 'booked'
+      })
+
+      setAppointments(bookedAppointment as [{
+        _id?:string,
+        appointmentDate
+        : string
+        appointmentStatus
+        : string
+        appointmentTime
+        : string
+        appointmentType
+        : string
+        medicalPersonelID
+        : {
+          fullName: string,
+          lastName: string,
+          _id: string
+
+        } | null
+        patientID
+        : {
+          fullName: string,
+          lastName: string,
+          _id: string
+
+        } | null,
+
+        patientDetails: {
+          profilePicture: string,
+          vitalSigns:{
+            gender:string
+          }
+        },
+        medicalPersonelDetails: {
+          profilePicture: string | undefined,
+          department: string,
+          currentClinic: string,
+          specializationTitle: string,
+          workAddress: string
+        },
+        payment
+        : {
+          cardFee
+          : number
+          cardType
+          : string
+          consultationFee
+          : string
+          paymentReference
+          : string
+          paymentStatus
+          : string
+          total
+          : number
+          vat
+          : string
+        },
+
+
+      }] | null)
+    }
+
+  },[appoinmentsState])
 
   return <div className="w-full  overflow-y-auto bg-white rounded-md relative">
 
@@ -341,7 +466,7 @@ const DoctorTable = () => {
 
       {
         appoinments && appoinments.length>0  && appoinments.map((appointment, index) => (
-          <DoctorTableCustomCard gender={appointment?.patientDetails?.vitalSigns?.gender} appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
+          <DoctorTableCustomCard appointmentId={appointment._id!!} gender={appointment?.patientDetails?.vitalSigns?.gender} appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
           //  alert(details.patientName)
 
          

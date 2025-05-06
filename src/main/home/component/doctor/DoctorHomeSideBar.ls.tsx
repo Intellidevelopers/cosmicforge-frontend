@@ -22,7 +22,7 @@ const dispatch = useDispatch()
 const user = useSelector((state:RootReducer)=>state.user)
   
   return (
-    <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-50 cursor-default">
+    <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black  overflow-y-auto  p-4 z-50 cursor-default">
       <div className="w-full mt-6 ">
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">

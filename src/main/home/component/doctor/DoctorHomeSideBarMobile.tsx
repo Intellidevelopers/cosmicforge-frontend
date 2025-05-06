@@ -27,7 +27,7 @@ const DoctorHomeSideBarMobile = () => {
     const user = useSelector((state: RootReducer) => state.user)
 
     return (
-        <div ref={sideBarRef} className="hidden  w-[60%] absolute h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-[300] cursor-default">
+        <div ref={sideBarRef} className="hidden  w-[60%] absolute h-dvh overflow-y-auto bg-home-slidder-color shadow-md shadow-black   p-4 z-[300] cursor-default">
             <div className="w-full mt-4 ">
 
                 <div className="w-full ">
