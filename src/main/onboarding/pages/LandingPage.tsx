@@ -8,6 +8,7 @@ import Footer from "./components/Footer";
 import OtherFeature from "./components/SubFeatures";
 import Testimonials from "./components/Testimonials";
 import WhyUsImage from "../../../assets/HomeImg/whyusimg.png";
+import ImageFeatures from "./components/ImageFeatures";
 
 // image imports
 import DoctorMed from "../../../assets/HomeImg/doctorcal.png";
@@ -37,6 +38,9 @@ const LandingPage = () => {
       <div className="bg-[#272EA74D]">
         <NavvigationComponent />
         <HeroBanner />
+      </div>
+      <div className="bg-[#272da72d]">
+        <ImageFeatures />
       </div>
       <OurFeatures />
       <WhyUsComponents />
