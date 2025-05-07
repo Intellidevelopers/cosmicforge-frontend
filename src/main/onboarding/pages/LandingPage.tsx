@@ -25,7 +25,7 @@ import profile3 from "../../../assets/images/cosmic-display-profile-3.svg";
 import profile4 from "../../../assets/images/cosmic-display-profile-4.svg";
 
 // dynamic imports
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BiLogoPlayStore } from "react-icons/bi";
 import { FaApple } from "react-icons/fa";
 
@@ -87,7 +87,7 @@ const NavvigationComponent = () => {
                 <li className="capitalize">{items.label}</li>
               </Link>
             ))}
-            <Link to={"/register"}>
+            <Link to={"/selectRole"}>
               <li className="capitalize text-white bg-[#272EA7] px-8 py-2 rounded-lg">
                 Register
               </li>
@@ -218,6 +218,9 @@ const WhyUsComponents = () => {
 
 // browse departments
 const BrowseDepartments = () => {
+  // navigation link
+  const navigate = useNavigate();
+
   return (
     <section className="bg-[#272EA74D] py-16">
       <div className="max-w-[80%] mx-auto">
@@ -226,9 +229,14 @@ const BrowseDepartments = () => {
             Browse by Departments
           </h1>
           <div className="btn">
-            <button className="text-white bg-[#272EA7] py-2 px-4 rounded-md cursor-pointer">
-              view all
-            </button>
+            <Link to={"/departments"}>
+              <button
+                onClick={() => navigate("/departments")}
+                className="text-white bg-[#272EA7] py-2 px-4 rounded-md cursor-pointer"
+              >
+                view all
+              </button>
+            </Link>
           </div>
         </div>
         <div className="browse_features">
