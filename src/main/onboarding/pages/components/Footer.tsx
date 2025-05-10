@@ -11,7 +11,7 @@ import { FaPhoneAlt } from "react-icons/fa";
 const FooterComponent = () => {
   return (
     <footer className="footer_bg">
-      <div className="max-w-[80%] mx-auto grid grid-cols-4 items-start gap-8 border-b border-white pb-4">
+      <div className="max-w-[80%] mx-auto grid grid-cols-4 items-start gap-0 border-b border-white pb-4">
         {/* logo element */}
         <div className="logo_info flex flex-col justify-between gap-[150px]">
           <div>
@@ -26,29 +26,31 @@ const FooterComponent = () => {
           </div>
         </div>
         {/* footer links */}
-        <div className="footer_links text-white">
+        <div className="footer_links text-white ml-8">
           <p className="w-fit font-extrabold">Quick links</p>
-          <div className="flex flex-col gap-8 font-light mt-8 w-fit">
+          <div className="flex flex-col gap-4 font-light mt-8 w-fit">
             <p>Home</p>
             <p>About us</p>
             <p>Features</p>
-            <p>Menu</p>
+            <p>Pricing</p>
+            <p>Blog </p>
+            <p>Shop</p>
+            <p>Forum</p>
+            <p>Promotion</p>
           </div>
         </div>
         {/* footer links */}
         <div className="footer_links text-white">
           <p className="w-fit font-extrabold">Legal</p>
-          <div className="flex flex-col gap-8 font-light mt-8 w-fit">
+          <div className="flex flex-col gap-4 font-light mt-8 w-fit">
             <p>Privacy Policy</p>
             <p>Terms & Conditions us</p>
-            <p>Services</p>
-            <p>Blog Post</p>
           </div>
         </div>
         {/* other footer links */}
         <div className="footer_links text-white">
           <p className="w-fit font-extrabold capitalize">Contact Us</p>
-          <div className="flex flex-col gap-8 font-light mt-8 md:w-full ">
+          <div className="flex flex-col gap-4 font-light mt-8 md:w-full ">
             <div className="flex gap-2">
               <img src={location} className="w-[20px] h-[20px]" />
               <p>2118, Thornbridge, Syracruse Connecticut 35624</p>

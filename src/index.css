@@ -252,9 +252,9 @@ body {
 }
 
 /* additional css */
-.bg-testimonials {
-  background-image: url(./assets/HomeImg/bgtestimonials.png);
-  background-position: center;
+.hero_banner {
+  background-image: url(./assets/HomeImg/bgWaves.png);
+  background-position: bottom;
   background-repeat: no-repeat;
   background-size: cover;
 }

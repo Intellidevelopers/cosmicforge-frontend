@@ -2,52 +2,65 @@ import React from "react";
 
 // components imports
 import BrowseFeatures from "./components/BrowseFeatures";
-import FeaturesSlider from "./components/Features";
+// import FeaturesSlider from "./components/Features";
 import Frequently from "./components/Frequently";
 import Footer from "./components/Footer";
-import OtherFeature from "./components/SubFeatures";
+import ShopComponent from "./components/ShopComponent";
+
+// import OtherFeature from "./components/SubFeatures";
 import Testimonials from "./components/Testimonials";
-import WhyUsImage from "../../../assets/HomeImg/whyusimg.png";
+// import WhyUsImage from "../../../assets/HomeImg/whyusimg.png";
 import ImageFeatures from "./components/ImageFeatures";
 
 // image imports
+import Borderline from "../../../assets/HomeImg/borderline.png";
+import Cart from "../../../assets/HomeImg/Shopping-Cart.png";
 import DoctorMed from "../../../assets/HomeImg/doctorcal.png";
 import HeroImg from "../../../assets/HomeImg/Healthcare.png";
-import image1 from "../../../assets/images/FirstImagCustomView.svg";
-import image2 from "../../../assets/images/secondImagCustomview.svg";
+// import image1 from "../../../assets/images/FirstImagCustomView.svg";
+// import image2 from "../../../assets/images/secondImagCustomview.svg";
 import Iphone from "../../../assets/HomeImg/iphone.png";
 import Logo from "../../../assets/logo/logo_comsic_splash.svg";
 import newProfile from "../../../assets/images/cosmic-display-profile-new.svg";
+import FeaturesImg from "../../../assets/HomeImg/Features-List.png";
+import Stethoscope from "../../../assets/HomeImg/Stethoscope.png";
 
 // import ProfileMed from "../../../assets/HomeImg/profilemed.png";
 import profile2 from "../../../assets/images/cosmic-display-profile-2.svg";
 import profile3 from "../../../assets/images/cosmic-display-profile-3.svg";
 import profile4 from "../../../assets/images/cosmic-display-profile-4.svg";
+import ContactImage from "../../../assets/HomeImg/contactImg.png";
 
 // dynamic imports
 import { Link, useNavigate } from "react-router-dom";
 import { BiLogoPlayStore } from "react-icons/bi";
 import { FaApple } from "react-icons/fa";
+import { GrLinkNext } from "react-icons/gr";
 
 // Shadcn imports
 import { Input } from "../../../components/ui/input";
+import { Textarea } from "../../../components/ui/textarea";
+import { Button } from "../../../components/ui/button";
 
 const LandingPage = () => {
   return (
     <React.Fragment>
-      <div className="bg-[#272EA74D]">
+      <div className="bg-[#272EA74D] bg-white">
         <NavvigationComponent />
         <HeroBanner />
+        <SubHeroBanner />
       </div>
-      <div className="bg-[#272da72d]">
+      <ShopComponent />
+      <BrowseDepartments />
+      <Subscription />
+      <RemoteHealthCare />
+      <div className="">
         <ImageFeatures />
       </div>
-      <OurFeatures />
-      <WhyUsComponents />
-      <BrowseDepartments />
       <Testimonials />
       <Frequently />
       <Download />
+      <ContactForm />
       <SubFooter />
       <Footer />
     </React.Fragment>
@@ -70,23 +83,47 @@ const NavvigationComponent = () => {
       href: "/features",
     },
     {
-      label: "prices",
+      label: "pricing",
+      href: "/prices",
+    },
+    {
+      label: "Blogs",
+      href: "/prices",
+    },
+    {
+      label: "Shop",
+      href: "/prices",
+    },
+    {
+      label: "Forum",
+      href: "/prices",
+    },
+    {
+      label: "Promotion",
       href: "/prices",
     },
   ];
   return (
     <nav>
       <div className="flex justify-between items-center max-w-[90%] mx-auto py-4">
-        <div>
+        <div className="flex gap-2 items-center">
           <img src={Logo} className="w-full h-[50px] col-span-1  " />
+          <Input
+            type="search"
+            className="py-[4px] rounded-md text-sm"
+            placeholder="search"
+          />
         </div>
         <div className="navigation_url">
-          <ul className="flex  space-x-16 items-center text-sm font-medium">
+          <ul className="flex gap-[26px] items-center text-sm font-medium">
             {navLinks.map((items, index) => (
               <Link to={items.href} key={index} className="">
                 <li className="capitalize">{items.label}</li>
               </Link>
             ))}
+            <Link to={"/selectRole"}>
+              <li className="capitalize text-[#272EA7]">Login</li>
+            </Link>
             <Link to={"/selectRole"}>
               <li className="capitalize text-white bg-[#272EA7] px-8 py-2 rounded-lg">
                 Register
@@ -101,8 +138,8 @@ const NavvigationComponent = () => {
 // body section
 const HeroBanner = () => {
   return (
-    <section className="min-h-screen">
-      <div className="hero_banner grid grid-cols-2 items-center gap-12 max-w-[80%] mx-auto">
+    <section className="hero_banner">
+      <div className="grid grid-cols-2 items-center gap-12 max-w-[80%] mx-auto">
         <div className="hero_text">
           <h1 className="text-black text-3xl font-semibold">
             <span className="text-[#272EA7]">Simplified</span> and{" "}
@@ -122,99 +159,143 @@ const HeroBanner = () => {
           </div>
         </div>
         <div className="hero_img relative">
-          <img src={HeroImg} alt="" className="opacity-60" />
-          <div className="absolute bg-[#272EA766] border border-[#272EA7] p-4 rounded-md top-[80%]">
+          <img src={HeroImg} alt="" className="" />
+          {/* <div className="absolute bg-[#272EA766] border border-[#272EA7] p-4 rounded-md top-[80%]">
             Need access to Remote Healthcare ? <br /> Cosmicforge is here to
             serve you.
-          </div>
+          </div> */}
         </div>
+      </div>
+    </section>
+  );
+};
+
+// const subHeroBanner
+const SubHeroBanner = () => {
+  // cons data for the sub banner
+  const SubData = [
+    {
+      imageLabel: FeaturesImg,
+      label: "Features",
+    },
+    {
+      imageLabel: Stethoscope,
+      label: "Consultation",
+    },
+    {
+      imageLabel: Cart,
+      label: "Shopping",
+    },
+  ];
+  return (
+    <section className="py-8 max-w-[80%] mx-auto">
+      <div className="grid grid-cols-3 items-start gap-8">
+        {SubData.map((items, index) => (
+          <div
+            className="border border-[#272EA7] rounded-md py-3 pt-12 px-3"
+            key={index}
+          >
+            <div className="imagess flex items-center justify-center">
+              <img src={items.imageLabel} alt="" className="w-[30%]" />
+            </div>
+            <div className="flex justify-between items-center">
+              <div>
+                <h1 className="text-[#272EA7] font-semibold">{items.label}</h1>
+                <p className="text-sm">Explore Now!</p>
+              </div>
+              <div>
+                <GrLinkNext />
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
 };
 
 // first section
-const OurFeatures = () => {
-  return (
-    <section className="py-6 pt-16 flex flex-col justify-center items-center bg-[#272da723]">
-      <div className="text-center my-4">
-        <h1 className="capitalize  text-[#272EA7] text-3xl font-bold">
-          Our Features
-        </h1>
-        <p className="text-[#5B5959] my-2">What we are offering you.</p>
-      </div>
-      <div className="carousel_effect max-w-[80%] mx-auto">
-        <FeaturesSlider />
-      </div>
-    </section>
-  );
-};
+// const OurFeatures = () => {
+//   return (
+//     <section className="py-6 pt-16 flex flex-col justify-center items-center bg-[#272da723]">
+//       <div className="text-center my-4">
+//         <h1 className="capitalize  text-[#272EA7] text-3xl font-bold">
+//           Our Features
+//         </h1>
+//         <p className="text-[#5B5959] my-2">What we are offering you.</p>
+//       </div>
+//       <div className="carousel_effect max-w-[80%] mx-auto">
+//         <FeaturesSlider />
+//       </div>
+//     </section>
+//   );
+// };
 
-// why us
-const WhyUsComponents = () => {
-  // map data
-  const whyData = [
-    {
-      id: "1",
-      label: "Qualified Medical Professionals",
-      contents:
-        "Our physicians are certified and licensed professionals, who provide patients with standard medical care",
-    },
-    {
-      id: "2",
-      label: "AI and Modern Technologies",
-      contents:
-        "Our physicians are certified and licensed professionals, who provide patients with standard medical care",
-    },
-    {
-      id: "3",
-      label: "Patient-Doctor Confidentiality",
-      contents:
-        "Our physicians are certified and licensed professionals, who provide patients with standard medical care",
-    },
-  ];
+// // why us
+// const WhyUsComponents = () => {
+//   // map data
+//   const whyData = [
+//     {
+//       id: "1",
+//       label: "Qualified Medical Professionals",
+//       contents:
+//         "Our physicians are certified and licensed professionals, who provide patients with standard medical care",
+//     },
+//     {
+//       id: "2",
+//       label: "AI and Modern Technologies",
+//       contents:
+//         "Our physicians are certified and licensed professionals, who provide patients with standard medical care",
+//     },
+//     {
+//       id: "3",
+//       label: "Patient-Doctor Confidentiality",
+//       contents:
+//         "Our physicians are certified and licensed professionals, who provide patients with standard medical care",
+//     },
+//   ];
 
-  return (
-    <section className="max-w-[80%] mx-auto mt-24">
-      <div className="flex justify-center items-center">
-        <div className="text-center">
-          <h1 className="capitalize  text-[#272EA7] text-3xl font-bold">
-            Why us?
-          </h1>
-          <p className="text-[#5B5959] my-2">Why you should trust us.</p>
-        </div>
-      </div>
-      <div className="grid grid-cols-2 items-center gap-4">
-        <div>
-          {whyData.map((items) => (
-            <div className="flex gap-4 items-start mb-6" key={items.id}>
-              <h1 className="flex items-center justify-center text-white bg-[#272EA7] w-12 h-8 rounded-full text-center">
-                {items.id}
-              </h1>
-              <div className="">
-                <h1 className="font-semibold">{items.label}</h1>
-                <p className="text-[#5B5959] leading-7 text-[14px] text-balance">
-                  {items.contents}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="relative">
-          <img src={WhyUsImage} alt="" className="absolute top-12 z-50" />
-          <div className="relative">
-            <img src={image1} alt="" />
-            <img
-              src={image2}
-              alt=""
-              className="absolute top-[10%] left-[2%] w-[90%]"
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+//   return (
+//     <section className="max-w-[80%] mx-auto mt-24">
+//       <div className="flex justify-center items-center">
+//         <div className="text-center">
+//           <h1 className="capitalize  text-[#272EA7] text-3xl font-bold">
+//             Why us?
+//           </h1>
+//           <p className="text-[#5B5959] my-2">Why you should trust us.</p>
+//         </div>
+//       </div>
+//       <div className="grid grid-cols-2 items-center gap-4">
+//         <div>
+//           {whyData.map((items) => (
+//             <div className="flex gap-4 items-start mb-6" key={items.id}>
+//               <h1 className="flex items-center justify-center text-white bg-[#272EA7] w-12 h-8 rounded-full text-center">
+//                 {items.id}
+//               </h1>
+//               <div className="">
+//                 <h1 className="font-semibold">{items.label}</h1>
+//                 <p className="text-[#5B5959] leading-7 text-[14px] text-balance">
+//                   {items.contents}
+//                 </p>
+//               </div>
+//             </div>
+//           ))}
+//         </div>
+//         <div className="relative">
+//           <img src={WhyUsImage} alt="" className="absolute top-12 z-50" />
+//           <div className="relative">
+//             <img src={image1} alt="" />
+//             <img
+//               src={image2}
+//               alt=""
+//               className="absolute top-[10%] left-[2%] w-[90%]"
+//             />
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
 
 // browse departments
 const BrowseDepartments = () => {
@@ -222,17 +303,22 @@ const BrowseDepartments = () => {
   const navigate = useNavigate();
 
   return (
-    <section className="bg-[#272EA74D] py-16">
-      <div className="max-w-[80%] mx-auto">
-        <div className="heading flex justify-between items-center">
-          <h1 className="text-[#272EA7] text-4xl font-semibold">
-            Browse by Departments
-          </h1>
+    <section className="py-16 bg-[#272EA7]">
+      <div className="max-w-[90%] mx-auto">
+        <div className="heading mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-white text-4xl font-semibold">
+              Need a specialist or Consultant?
+            </h1>
+            <p className="text-white text-base font-semibold">
+              Browse by Departments
+            </p>
+          </div>
           <div className="btn">
             <Link to={"/departments"}>
               <button
                 onClick={() => navigate("/departments")}
-                className="text-white bg-[#272EA7] py-2 px-4 rounded-md cursor-pointer"
+                className="text-[#272EA7] bg-white py-2 px-4 rounded-md cursor-pointer"
               >
                 view all
               </button>
@@ -242,8 +328,143 @@ const BrowseDepartments = () => {
         <div className="browse_features">
           <BrowseFeatures />
         </div>
-        <div>
-          <OtherFeature />
+      </div>
+    </section>
+  );
+};
+
+// subscription components
+const Subscription = () => {
+  // Subscription data
+  const SubscriptionData = [
+    {
+      plan: "Free plan",
+      suitable: "suitable to all premium subscribers",
+      price: "0.00",
+      listone: "Access to chat only.",
+      listtwo: "Access to 10 AI Chatbot Responses",
+      listThree: "Access to General & Emergency specialist only.",
+      listFour: "Access to Shop/Purchase",
+      listFive: "Access to Support",
+    },
+    {
+      plan: "Basic plan",
+      suitable: "suitable to all Basic subscribers",
+      price: "16,000.00",
+      listone: "Video Consultations and chat.",
+      listtwo: "Access to 50 AI Chatbot Responses",
+      listThree: "Access to 20 AI Diagnostic Requests.",
+      listFour: "Access to all Department Specialist.",
+      listFive: "Access to Shop/Purchase",
+      listSix: "Suitable for Individual account only",
+      listSeven: "Access to standard support",
+    },
+    {
+      plan: "Medium plan",
+      suitable: "suitable to all Medium subscribers",
+      price: "30,000.00",
+      listone: "Video Consultations and chat.",
+      listtwo: "Access to 100 AI Chatbot Responses",
+      listThree: "Access to 50 AI Diagnostic Requests.",
+      listFour: "Access to all Department Specialist.",
+      listFive: "Access to Shop/Purchase",
+      listSix: "Suitable for Family account ( 1 Adults & 2 or more Children ) ",
+      listSeven: "Access to First Aid Assistance.",
+      listEight: "Access to Standard support",
+    },
+    {
+      plan: "premium plan",
+      suitable: "suitable to all premium subscribers",
+      price: "60,000.00",
+      listone: "Video Consultations and chat.",
+      listtwo: "Access to Unlimited AI Chatbot Responses",
+      listThree: "Access to Unlimited AI Diagnostic Requests.",
+      listFour: "Access to all Department Specialist.",
+      listFive: "Access to Shop/Purchase",
+      listSix: "Suitable for Family account ( 2 Adults & 2 or more Children ) ",
+      listSeven: "Access to First Aid Assistance.",
+      listEight: "Access to Priority support",
+    },
+  ];
+
+  return (
+    <section className="subscription max-w-[90%] mx-auto my-32">
+      <div>
+        <div className="font-semibold text-black text-4xl flex flex-col items-center justify-center mb-4">
+          <h1 className="capitalize">Our subscription Plans</h1>
+          <img src={Borderline} alt="" className="relative left-[100px]" />
+          <p className="font-medium text-base">
+            Cosmicforge has the best plan for you!
+          </p>
+        </div>
+        <div className="grid grid-cols-4 gap-3 items-start text-sm">
+          {SubscriptionData.map((items, index) => {
+            const listItems = [
+              items.listone,
+              items.listtwo,
+              items.listThree,
+              items.listFour,
+              items.listFive,
+              items.listSix,
+              items.listSeven,
+              items.listEight,
+            ].filter(Boolean);
+
+            return (
+              <div
+                className="h-[550px] flex flex-col justify-between border border-[#272EA7] rounded-sm px-8 pr-2 py-6 shadow-md hover:text-white hover:bg-[#272EA7] duration-300 cursor-pointer"
+                key={index}
+              >
+                <div>
+                  <h1 className="font-medium capitalize text-base">
+                    {items.plan}
+                  </h1>
+                  <p className="text-[12px] my-4">{items.suitable}</p>
+                  <div className="price">
+                    <h1>
+                      <span className="text-3xl font-bold">{items.price}</span>
+                      /Month
+                    </h1>
+                  </div>
+                  <ul
+                    style={{ listStyleType: "disc" }}
+                    className="text-[12px] mt-4 leading-7 ml-2"
+                  >
+                    {listItems.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <div>
+                  <Button className="bg-blue-950 mt-4 w-[80%] cursor-pointer hover:bg-blue-950">
+                    Get started
+                  </Button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// Remote Healthcare
+const RemoteHealthCare = () => {
+  return (
+    <section className="bg-[#272EA7] text-white mt-8 py-20">
+      <div className="max-w-[80%] mx-auto text-center">
+        <h1 className="font-semibold text-3xl mb-4">
+          Remote Healthcare made available to you, anywhere and anytime...
+        </h1>
+        <p className="">
+          Gain access to healthcare services remotely, enjoy mind blowing
+          features just for you!
+        </p>
+        <div className="flex justify-center mt-8">
+          <Button className="text-[#272EA7] bg-white px-8 py-6 hover:bg-white duration-300">
+            Get Started
+          </Button>
         </div>
       </div>
     </section>
@@ -374,24 +595,77 @@ const SubDownloadComponents = () => {
   );
 };
 
+// contactform
+const ContactForm = () => {
+  return (
+    <section className="bg-[#0a0d1723]">
+      <div className="max-w-[80%] mx-auto grid grid-cols-2 items-center gap-4">
+        <div>
+          <img src={ContactImage} alt="" />
+        </div>
+        <div className="contact_form">
+          <div className="headers mb-4">
+            <h1 className="text-3xl text-[#272EA7] font-semibold mb-3">
+              Contact Form
+            </h1>
+            <p className="font-medium">
+              We are always here to listen, Leave us a message.
+            </p>
+          </div>
+          <form action="">
+            <div className="grid grid-cols-2 items-start gap-4 mb-2">
+              <Input
+                type="text"
+                className="outline-none bg-white"
+                placeholder="Last Name"
+              />
+              <Input
+                type="text"
+                className="bg-white outline-none"
+                placeholder="First Name"
+              />
+            </div>
+            <Input
+              type="email"
+              className="bg-white mb-2 outline-none"
+              placeholder="Email"
+            />
+            <Input
+              type="number"
+              className="bg-white mb-2 outline-none"
+              placeholder="Number"
+            />
+            <Textarea className="bg-white" placeholder="Message" />
+            <div className="flex justify-center items-center mt-4">
+              <Button className="bg-[#272EA7] text-white py-3 px-24 rounded-md hover:bg-blue-800 duration-200">
+                submit
+              </Button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 // sub footer
 const SubFooter = () => {
   return (
-    <section className="bg-[#272EA7] text-center py-12">
-      <div className="max-w-[80%] mx-auto text-white">
+    <section className="bg-white text-center py-12">
+      <div className="max-w-[80%] mx-auto text-[#272EA7]">
         <h1 className="capitalize font-semibold text-3xl my-4">
           Sign Up for Our Newsletter
         </h1>
-        <p className="my-4 text-base font-light tracking-widest">
+        <p className="my-4 text-sm font-light text-black">
           Get weekly update about our products and services on your email
         </p>
         <div className="max-w-[50%] mx-auto my-6 mt-12">
           <div className="flex">
             <Input
               placeholder="Enter email"
-              className="flex-grow outline-none placeholder:text-white rounded-l-md"
+              className="flex-grow outline-none placeholder:text-black rounded-l-md border-[#272EA7]"
             />
-            <button className="text-sm font-medium capitalize px-4 py-[6px] rounded-r-md bg-white text-[#272ea7] whitespace-nowrap cursor-pointer">
+            <button className="text-sm font-medium capitalize px-4 py-[6px] rounded-r-md bg-[#272EA7] text-white whitespace-nowrap cursor-pointer">
               subscribe now
             </button>
           </div>
