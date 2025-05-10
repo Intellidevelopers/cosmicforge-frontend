@@ -17,8 +17,8 @@ interface PatientUserProfileProps{
    profileType?: 'personal' | 'family',
    gender?:'male' | 'female',
    dateOfBirth?:string
-  }
-
+  },
+ 
   //doctor ptofile
 
   fullName?: string,
@@ -39,7 +39,8 @@ interface PatientUserProfileProps{
   workTime?: {
       day?: string,
       time?: string
-  }
+  },
+
    
 }
 

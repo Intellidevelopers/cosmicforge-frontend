@@ -1,55 +1,51 @@
-import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar"
-import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobile"
+import { Navigate, useNavigate } from 'react-router-dom'
+import deleteIcon from '../../../../assets/images/deleteIconAccount.png'
+import { settings } from "../utils/settings"
+import DoctorHomeNavBar from '../../../home/component/doctor/DoctorHomeNavBar'
+import DoctorNavBarMobile from '../../../home/component/doctor/DoctorNavBarMobile'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { RootReducer } from '../../../store/initStore'
 import qrCode from '../../../../assets/images/qr-code.png'
 import calender from '../../../../assets/images/Calendar.png'
 import users from '../../../../assets/images/Users.png'
-
+import bell from '../../../../assets/icons/Bell.png'
 import wallet from '../../../../assets/images/Coin Wallet.png'
-import patientIcon from '../../../../assets/images/patientsIcon.png'
-import appointmentIcon from '../../../../assets/images/appointmentsIcon.png'
-import certification from '../../../../assets/images/smallCert.png'
 
 
+const DoctorSettings = () => {
 
+    
+    const navigate = useNavigate()
 
-import { useSelector } from "react-redux"
-import { RootReducer } from "../../../store/initStore"
-import { Navigate, useNavigate } from "react-router-dom"
-
-
-
-const DoctorProfile = () => {
-
-  const navigate = useNavigate()
-
-
-
-  const user = useSelector((state: RootReducer) => state.user)
-
-  const appointment = useSelector((state: RootReducer) => state.appointments)
-
-  const doctorWallet = useSelector((state: RootReducer) => state.doctorWallet)
-
-  // const navigate = useNavigate()
-
-  if (!user.isAunthenticated) {
-
-    return <Navigate to={'/'} />
-  }
-
-
-  const formatAmout = (amount: number) => {
-    if (amount) {
-      amount = amount / 100
-      return new Intl.NumberFormat().format(amount)
+    const [toggleNotifs, setToggleNotifs] = useState(false)
+  
+    const user = useSelector((state: RootReducer) => state.user)
+  
+    const appointment = useSelector((state: RootReducer) => state.appointments)
+  
+    const doctorWallet = useSelector((state: RootReducer) => state.doctorWallet)
+  
+    // const navigate = useNavigate()
+  
+    if (!user.isAunthenticated) {
+  
+      return <Navigate to={'/'} />
     }
+  
+  
+    const formatAmout = (amount: number) => {
+      if (amount) {
+        amount = amount / 100
+        return new Intl.NumberFormat().format(amount)
+      }
+  
+      return 0
+    }
+  
+  
 
-    return 0
-  }
-
-
-  return (
-    <div className="overflow-y-scroll">
+    return  <div className="overflow-y-scroll">
       <DoctorHomeNavBar title="My Profile" />
       <DoctorNavBarMobile title="My Profile" />
       <div className="justify-center items-center flex flex-col ">
@@ -113,32 +109,50 @@ const DoctorProfile = () => {
                 </div>
               </div>
               <button type="button" className="bg-cosmic-primary-color text-white font-bold rounded-md p-2 w-[150px]" onClick={() => {
-                navigate('/doctor/edit-profile')
-              }}>Edit Profile</button>
+                navigate('/doctor/profile')
+              }}> Profile</button>
             </div>
           </div>
         </div>
 
         {/* SETINGS SECTION */}
         <div className="flex w-full flex-col justify-center items-center h-full mb-8">
+         
           <div className="flex-col w-[90%] h-full flex">
-            <div className="flex items-center justify-start rounded-md shadow-lg p-2">
-              <img src={patientIcon} alt="Patients" className="w-12 h-12 border-r-2 p-2" />
-              <p className="font-bold p-2">Patients</p>
+
+            <div className="flex justify-between items-center p-2 rounded-sm shadow-sm bg-white m-2">
+              <div className="flex items-center justify-start gap-6 ms-8 ">
+                <img src={bell} alt="bells" className="w-8 h-8 " />
+                <p className="font-bold p-2">Notification Toggle</p>
+              </div>
+              <div className={"rounded-full border-2  min-w-8 h-4  " + (toggleNotifs && 'bg-black')}
+                onClick={() => { setToggleNotifs(!toggleNotifs) }}
+              >
+                <div className={`rounded-[50%]  w-3 h-3 ${toggleNotifs ? 'translate-x-[100%] bg-white' : 'bg-black'}`}></div>
+              </div>
             </div>
-            <div className="flex items-center justify-start rounded-md shadow-lg p-2" onClick={() => {
-              navigate('/doctor/appointments')
+
+            {settings.map((setting, index) => (
+            <div key={index} className="  flex m-2 justify-between items-center p-2 rounded-sm shadow-md bg-white cursor-default " onClick={() => {
+
+                navigate(setting.path)
+
             }}>
-              <img src={appointmentIcon} alt="Appointments" className="w-12 h-12 border-r-2 p-2" />
-              <p className="font-bold p-2">Appointments</p>
-            </div>
-            <div className="flex items-center justify-start rounded-md shadow-lg p-2" onClick={() => { navigate('/doctor/certifications') }}>
-              <img src={certification} alt="Certifications" className="w-12 h-12 border-r-2 p-2" />
-              <p className="font-bold p-2">Certifications</p>
-            </div>
-          </div>
-          <div className="flex-col w-[90%] h-full flex">
-           
+                <div className="flex items-center justify-start   gap-6 ms-8 bg-transparent " >
+
+                    <img src={setting.image} alt="Certifications" className="w-8 h-8" />
+                    <p className={`font-bold p-2  ${setting.name === 'Log Out' && 'text-red-500'}`}>{setting.name}</p>
+                </div>
+                <i className={`fas fa-angle-right ${setting.name === 'Log Out' && 'text-red-500'}`}></i>
+            </div>))}
+
+
+
+
+        <div className="flex items-center justify-start rounded-sm shadow-sm bg-white m-2 p-2">
+            <img src={deleteIcon} alt="Delete My Account" className="w-8 h-8 " />
+            <p className="font-bold p-2 text-red-600 mr-4">Delete My Account</p>
+        </div>
 
 
            
@@ -147,7 +161,17 @@ const DoctorProfile = () => {
         </div>
       </div>
     </div>
-  )
+
+       
+   
 }
 
-export default DoctorProfile
+
+export default DoctorSettings
+
+
+
+
+
+
+

@@ -6,9 +6,12 @@ import totalEarningsIcon from "../../../../assets/icons/cosmic-doctor-earnings-i
 import DoctorChartGraph from "./DoctorChartGrap";
 import DoctorNavBarHome from "./DoctorNavBarMobile";
 import DoctorTotalEarningGraph from "./DoctorTotalEarningGraph";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
 import DoctorTable from "../../pages/doctor/DoctorTable";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { updateAppointmentSession } from "../../../store/reducers/userSocketReducer";
 
 //import DoctorTable from "../../pages/doctor/DoctorTable";
 
@@ -18,29 +21,60 @@ import DoctorTable from "../../pages/doctor/DoctorTable";
 const DoctorHomeBody = () => {
 
 
-const  appointments = useSelector((state:RootReducer)=>state.appointments)
+  const userSocket = useSelector((state: RootReducer) => state.socket)
 
-const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
+  const user = useSelector((state: RootReducer) => state.user)
+
+  const navigate = useNavigate()
+
+  const dispatch = useDispatch()
+
+  const [toggleStartSesion, setToggleStartSession] = useState<boolean>(false)
+
+  const [patientWhoBookedAppopintmentDetails, setPatientWhoBookedAppopintmentDetails] = useState<{
+    doctorImage: string,
+    doctorName: string,
+    lastMessageTime: string,
+    numberOfUnreadMessages: number,
+    messageType: string,
+    messageRead: boolean,
+    message: string | null,
+    details: {
+      patientId: string
+      profilePicture?: string,
 
 
- const formatAmout = (amount:number)=>{
-   if(amount){
-     amount = amount/100
-    return new Intl.NumberFormat().format(amount)
-   }
 
-   return 0
- }
 
- 
-  
+    }
+  } | null>(null)
+
+  const [appointmentId, setAppointmentId] = useState('')
+
+
+  const appointments = useSelector((state: RootReducer) => state.appointments)
+
+  const doctorWallet = useSelector((state: RootReducer) => state.doctorWallet)
+
+
+  const formatAmout = (amount: number) => {
+    if (amount) {
+      amount = amount / 100
+      return new Intl.NumberFormat().format(amount)
+    }
+
+    return 0
+  }
+
+
+
   return (
 
     <div className="w-full h-full  overflow-y-auto  ">
-      
+
       <DoctorHomeNavBar title="Dashboard" />
       <DoctorNavBarHome title="Dashboard" />
-      
+
 
       <div className="  w-full h-dvh  ">
 
@@ -58,7 +92,7 @@ const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
               </div>
               <div>
                 <p className="font-light mt-1">Appointments</p>
-                <p className="font-bold">{appointments.totalAppointments??0}</p>
+                <p className="font-bold">{appointments.totalAppointments ?? 0}</p>
               </div>
             </div>
           </div>
@@ -79,7 +113,7 @@ const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
 
                 <p className="font-light mt-1">Total Patients</p>
 
-                <p className="font-bold">{appointments.totalAppointments??0}</p>
+                <p className="font-bold">{appointments.totalAppointments ?? 0}</p>
               </div>
             </div>
 
@@ -106,7 +140,7 @@ const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
 
                 <p className="font-light mt-1">Total Earnings</p>
 
-                <p className="font-bold">₦ { doctorWallet.wallet?.amount?formatAmout(doctorWallet.wallet?.amount!!):0}</p>
+                <p className="font-bold">₦ {doctorWallet.wallet?.amount ? formatAmout(doctorWallet.wallet?.amount!!) : 0}</p>
 
               </div>
             </div>
@@ -126,15 +160,52 @@ const  doctorWallet = useSelector((state:RootReducer)=>state.doctorWallet)
         </div>
 
 
-       <div className="p-2 h-[400px]  overflow-x-hidden overflow-y-auto  ">
-        <div className={` ${ (appointments.appointments && appointments.totalAppointments>0) ? 'hidden':'block'} w-full h-full flex justify-center place-items-center`}>
-          <p>No appointment yet</p>
-        </div>
-      {
-        appointments.appointments && appointments.totalAppointments>0 && <DoctorTable/> 
-      }
-       </div>
+        <div className="p-2 h-[400px]  overflow-x-hidden overflow-y-auto  ">
+          <div className={` ${(appointments.appointments && appointments.totalAppointments > 0) ? 'hidden' : 'block'} w-full h-full flex justify-center place-items-center`}>
+            <p>No appointment yet</p>
+          </div>
+          {
+            appointments.appointments && appointments.totalAppointments > 0 && <DoctorTable onAppointmentClicked={(data: any, appointmentId: string) => {
+              setPatientWhoBookedAppopintmentDetails(data)
+              setAppointmentId(appointmentId)
+              setToggleStartSession(true)
 
+            }} />
+          }
+        </div>
+
+      </div>
+
+
+
+      <div className={`${toggleStartSesion ? 'block' : 'hidden'}  z-[1000] absolute bottom-0 w-full p-3  flex bg-white bg-opacity-80`}>
+        <p className='font-bold max-w-[50%]  mt-2'>You are about to start  this appoinment session click continue to start</p>
+
+        <div className='absolute bottom-0 w-full right-8   flex justify-end place-items-end p-2 gap-5 cursor-default'>
+          <p className='bg-red-600 p-2 text-white rounded-md mt-8 ' onClick={() => {
+             setToggleStartSession(false)
+          }}>cancel</p>
+          <p className='bg-cosmic-primary-color p-2 text-white rounded-md' onClick={() => {
+
+            if (appointmentIcon && patientWhoBookedAppopintmentDetails) {
+              dispatch(updateAppointmentSession({ appointmentSessionStarted: true }))
+
+
+              userSocket.socket?.emit('appointmentSessionStarted', {
+
+                doctorID: user.data?._id, patientID: patientWhoBookedAppopintmentDetails?.details.patientId, startTime: Date.now(), caller: 'doctor', appointmentId
+
+
+              })
+              navigate('/doctor/messages', {
+                state: patientWhoBookedAppopintmentDetails
+              })
+            }
+          }}>continue</p>
+        </div>
+        <div>
+
+        </div>
       </div>
 
     </div>

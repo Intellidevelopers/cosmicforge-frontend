@@ -52,9 +52,9 @@ const DoctorTotalEarningGraph = () => {
       }
 
 
-    return <div className=" w-full  md:h-[400px] p-6   bg-white rounded-md">
+    return <div className=" w-full  md:h-[400px] p-3   bg-white rounded-md">
 
-        <div className="p-4 ">
+        <div className="p-1">
             <p className="text-center font-bold">Total Earnings</p>
             <div>
               {/* <p className="text-center mt-2">3.2% from last month</p>*/}
@@ -65,7 +65,7 @@ const DoctorTotalEarningGraph = () => {
             {
                 chart: {
                     type: 'radialBar',
-                    height: 200
+                    height: 1500
                 },
 
                 series: [59],
@@ -108,7 +108,9 @@ const DoctorTotalEarningGraph = () => {
 
             }
         }
-            series={[percentage(wallet?.amount!!)]} type='radialBar' />
+            series={[percentage(wallet?.amount!!)]} type='radialBar' height={280} />
+
+
 
         <div className='flex gap-6 justify-center'>
             <div className='flex   place-items-center gap-1'>

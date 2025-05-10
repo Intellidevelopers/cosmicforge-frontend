@@ -143,7 +143,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isProfileActive: true,
                                 isEditProfileActive: false
                             })
-                            navigate('/doctor/profile')
+                            navigate('/doctor/settings')
                         }}>
                             <img alt="home" src={calenderIcon} />
                             <p>Profile</p>

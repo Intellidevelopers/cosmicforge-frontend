@@ -3,17 +3,17 @@ import callButton from '../../../../../assets/icons/call-button.svg'
 import videoButton from '../../../../../assets/icons/cosmic-video-call-button.svg'
 import muteMic from '../../../../../assets/icons/cosmic-mute-mic.svg'
 import messageIcon from '../../../../../assets/icons/cosmic-video-chat-icon.svg'
-import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
+//////import attachButton from '../../../../../assets/icons/cosmic-attach-icon.svg'
 //import micIcon from '../../../../../assets/icons/cosmic-chat-mic.svg'
-import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
+////import sendMessageIcon from '../../../../../assets/icons/cosmic-chat-send-message-icon.svg'
 import { MutableRefObject, useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer, store } from '../../../../store/initStore'
 import useGetMediaStream from '../../../hook/useGetMediaStream'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { tearDownConnection, updateAppointmentSession, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateUserCallingData } from '../../../../store/reducers/userSocketReducer'
+import { tearDownConnection, updateAppointmentSession, updateCallInitialization, updateCallMode, updateOfferOrAnswer, updatePeerConnectionInstance, updateUserCallingData } from '../../../../store/reducers/userSocketReducer'
 
-import DoctorChatMessage from '../../../component/chat/doctor/DoctorChatMessage'
+//import DoctorChatMessage from '../../../component/chat/doctor/DoctorChatMessage'
 
 
 const VoiceCallPage = () => {
@@ -77,7 +77,7 @@ const VoiceCallPage = () => {
 
     const [tempModeOfCall, setTempModeOfCall] = useState<'video' | 'audio' | null>(null)
 
-    const [typedMessage, setTypeMessage] = useState<string>('')
+    //const [typedMessage, setTypeMessage] = useState<string>('')
 
     const messageScrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
 
@@ -137,7 +137,7 @@ const VoiceCallPage = () => {
     const [acceptedRequestForModeChange, setAcceptedRequestForModeChange] = useState<boolean>()
 
 
-    const [patientMessage, setPatientMessage] = useState<{
+   /* const [patientMessage, setPatientMessage] = useState<{
 
         senderId: string,
         receiverId: string,
@@ -145,7 +145,7 @@ const VoiceCallPage = () => {
         message: string,
         timeStamp: string
     }[] | null
-    >(null)
+    >(null)*/
 
 
     const startTimer = () => {
@@ -292,14 +292,15 @@ const VoiceCallPage = () => {
 
 
 
-            const userId = patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId
+           // const userId = patientToCallDetails?.details.patientId ?? userSocketCon.remoteUserId
 
-            const chat = messagesFromServer.find(data => {
+          /*  const chat = messagesFromServer.find(data => {
                 return userId === data.details.patientId
             })
 
-            setPatientMessage(chat?.messages!!)
+           // setPatientMessage(chat?.messages!!)
 
+           */
             setTimeout(() => {
                 if (messageScrollRef.current) {
 
@@ -314,6 +315,7 @@ const VoiceCallPage = () => {
     }, [userSocketCon.userChats])
 
 
+   
 
 
 
@@ -1033,11 +1035,13 @@ const VoiceCallPage = () => {
         if (userSocketCon.connected && userSocketCon.socket) {
             userSocketCon.socket.on('failed_to_connect', () => {
                 setCallState('failed to connect')
+                store.dispatch(updateCallInitialization({isCallInitiated:false}))
             })
 
             if (userSocketCon.connected && userSocketCon.socket) {
                 userSocketCon.socket.on('on_call_ended', () => {
                     setCallState('call ended')
+                    store.dispatch(updateCallInitialization({isCallInitiated:false}))
                     stopAndClearTimer()
                 })
             }
@@ -1116,7 +1120,7 @@ const VoiceCallPage = () => {
     return <div className={`w-full grid grid-cols-5 h-full  bg-cosmic-bg-chat-background`}>
 
 
-        <div className={`${modeOfCall === 'video' ? 'block' : 'hidden'} h-full w-full md:col-span-3  col-span-5  relative`} >
+        <div className={`${modeOfCall === 'video' ? 'block' : 'hidden'} h-full w-full   col-span-5  relative`} >
 
             <div className="w-full h-full  grid grid-rows-5 relative">
 
@@ -1241,7 +1245,7 @@ const VoiceCallPage = () => {
                                     console.log('fired...')
                                     dispatch(tearDownConnection({ tearDown: true, socket: null }))
                                     stopAndClearTimer()
-                                    navigate("/doctor/home")
+                                    navigate(-1)
 
 
                                 }}>
@@ -1278,7 +1282,7 @@ const VoiceCallPage = () => {
 
 
 
-        <div className={`${modeOfCall === 'audio' ? 'block' : 'hidden'} h-full w-full md:col-span-3  col-span-5 `} >
+        <div className={`${modeOfCall === 'audio' ? 'block' : 'hidden'} h-full w-full   col-span-5 `} >
 
             <div className="w-full h-full  grid grid-rows-5">
 
@@ -1398,7 +1402,7 @@ const VoiceCallPage = () => {
 
                                 dispatch(tearDownConnection({ tearDown: true, socket: null }))
                                 stopAndClearTimer()
-                                navigate("/doctor/home")
+                                navigate(-1)
 
 
                             }}>
@@ -1429,8 +1433,8 @@ const VoiceCallPage = () => {
         </div>
 
 
-
-
+{
+    /**
         <div className="h-full w-full hidden md:block col-span-2  bg-cosmic-bg-chat-background border-l border-l-white" >
           
           
@@ -1462,6 +1466,7 @@ const VoiceCallPage = () => {
 
 
             </div>
+
 
 
             <div className=' w-full h-dvh  bg-cosmic-bg-chat-background relative'>
@@ -1600,7 +1605,9 @@ const VoiceCallPage = () => {
 
 
             </div>
-        </div>
+        </div> */
+}
+
 
     </div>
 

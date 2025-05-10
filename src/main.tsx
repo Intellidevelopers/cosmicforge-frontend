@@ -113,6 +113,7 @@ import UploadCertificateDetails from './main/profile/doctor/pages/uploadCertific
 import UploadLiscenceDetails from './main/profile/doctor/pages/uploadLiscenceDetails.tsx'
 import SelectLanguage from './main/profile/doctor/pages/selectLanguage.tsx'
 import PatientSettings from './main/profile/patient/pages/PatientSettings.tsx'
+import DoctorSettings from './main/profile/doctor/pages/DoctorSettings.tsx'
 
 
 const router = createBrowserRouter([
@@ -565,6 +566,10 @@ const router = createBrowserRouter([
           path: '/doctor/profile',
           element: <DoctorProfile/>
         },
+        {
+          path:'/doctor/settings',
+          element:<DoctorSettings/>
+        }
      
       
        
@@ -588,7 +593,7 @@ const router = createBrowserRouter([
       children:[
         {
           path:'',
-          element:<DoctorTable/>
+          element:<DoctorTable onAppointmentClicked={()=>{}}/>
         },
         {
           path:'calendar',
@@ -660,6 +665,8 @@ const router = createBrowserRouter([
       path: '/doctor/select-language',
       element: <SelectLanguage/>
     },
+
+
     
     
 

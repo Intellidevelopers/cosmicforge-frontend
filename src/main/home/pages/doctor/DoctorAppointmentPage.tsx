@@ -2,7 +2,7 @@ import DoctorAppointmentsMainBody from "../../component/doctor/DoctorAppointment
 
 const DoctorAppointmentPage = () => {
 
-    return <div className="w-full font-poppins">
+    return <div className="w-full font-poppins bg-[#F5F5F5]">
         <DoctorAppointmentsMainBody/>
     </div>
 }

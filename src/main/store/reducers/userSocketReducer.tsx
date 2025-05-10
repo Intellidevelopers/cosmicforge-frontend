@@ -113,7 +113,9 @@ workTime?: {
  
     }] | null
    
- }]| null
+ }]| null,
+ patientNavHistory?:string,
+ doctorNavHistory?:string
 
   }
 
@@ -151,7 +153,9 @@ workTime?: {
    
 
    //user chat state
-   userChats: null
+   userChats: null,
+   patientNavHistory:"",
+   doctorNavHistory:''
  }
 
  
@@ -275,6 +279,12 @@ workTime?: {
           state.sessionID = action.payload.sessionID?? state.sessionID
         },
 
+        updateNavigationHistory(state,action:PayloadAction<UserSocketProps>){
+          state.doctorNavHistory = action.payload.doctorNavHistory?? state.doctorNavHistory
+          state.patientNavHistory = action.payload.patientNavHistory?? state.patientNavHistory
+        },
+         
+        
 
 
 
@@ -285,7 +295,7 @@ workTime?: {
  })
 
  export const {connectSocket,updateUserCallingData,updateUserLocalStream,updateRemoteStream,updateOfferOrAnswer,updateRemoteDescription,updateLocalDescription,updatePeerConnectionInstance,tearDownConnection,updateRingTone,updateRemoteConnection,updateCallMode,updatePeerNewConnectionInstance,
-  updateUserChat,updateIncomingCall,updateCallInitialization,updateLocalConection,updateCallAnswered,updateNewAppointmentNotification,updateAppointmentSession
+  updateUserChat,updateIncomingCall,updateCallInitialization,updateLocalConection,updateCallAnswered,updateNewAppointmentNotification,updateAppointmentSession,updateNavigationHistory
  } =userSocketSlice.actions
 
 

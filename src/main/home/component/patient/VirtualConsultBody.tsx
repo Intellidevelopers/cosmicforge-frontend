@@ -894,7 +894,7 @@ const VirtualConsultBody = () => {
           dispatch(updateCallInitialization({ isCallInitiated: false }))
           dispatch(tearDownConnection({ tearDown: true, socket: null }))
           stopAndClearTimer()
-          navigate(-1)
+          navigate(store.getState().socket.patientNavHistory!!)
 
         }}>
           <i className="fa fa-times text-red-600 text-[20px]" aria-hidden="true"></i>
@@ -921,7 +921,7 @@ const VirtualConsultBody = () => {
 </div>
   }else{
 
-    navigate(-1)
+    navigate(store.getState().socket.patientNavHistory!!)
   return null
   }
 

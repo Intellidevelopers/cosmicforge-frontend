@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { RootReducer, store } from "../store/initStore"
 import { authenticateUser } from "../store/reducers/userReducers"
 import io from 'socket.io-client'
-import { connectSocket, tearDownConnection, updateCallAnswered, updateCallMode, updateIncomingCall, updateLocalConection, updateNewAppointmentNotification, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream, updateRingTone, updateUserCallingData, updateUserChat } from "../store/reducers/userSocketReducer"
+import { connectSocket, tearDownConnection, updateCallAnswered, updateCallMode, updateIncomingCall, updateLocalConection, updateNavigationHistory, updateNewAppointmentNotification, updateOfferOrAnswer, updatePeerConnectionInstance, updateRemoteConnection, updateRemoteStream, updateRingTone, updateUserCallingData, updateUserChat } from "../store/reducers/userSocketReducer"
 import { cacheDiagnosis } from "../store/reducers/diagnosisReducer"
 
 import NewCallUIPage from "../home/pages/chat/NewCallUIPage"
@@ -93,7 +93,7 @@ const MainRouterPage = () => {
 
         if (!isNewCall && userSocket.newInComingCall!! && path !== undefined) {
 
-
+           store.dispatch(updateNavigationHistory({patientNavHistory:pathname}))
 
             setNewCall(userSocket.newInComingCall!!)
             // if(!userSocket.localStream)

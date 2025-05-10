@@ -1,7 +1,7 @@
 import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar"
 import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobile"
 import lock from '../../../../assets/images/Security Lock green.png'
-import { useState } from "react"
+import {  useState } from "react"
 import success from '../../../../assets/images/uploadSccessful.png'
 import useGetImageBase64String from "../../patient/hooks/useGetImageBase64String"
 import { RootReducer, store } from "../../../store/initStore"
@@ -10,12 +10,20 @@ import Loader from "../../../generalComponents/Loader"
 import { cacheDoctorCertificateAndLicence } from "../../../store/reducers/doctorCertificateAndLicence"
 import { uploadCertificateOrLicence } from "../../service"
 
+
 const UploadCertificateDetails = () => {
 
   // const [fullName,setFullName] = useState('')
   // const [institution,setInstitution] = useState('')
   // const [certificateNo,setCertificateNo] = useState('')
   // const [date,setDate] = useState('')
+
+
+
+  
+    
+  
+    
 
   const [showUploadComp, setShowUploadComp] = useState(false)
   const [successfulUpload, setSuccessfulUpload] = useState(false)
@@ -49,6 +57,8 @@ const UploadCertificateDetails = () => {
     type: "certificate",
 
   })
+
+
 
 
   return (
@@ -152,6 +162,8 @@ const UploadCertificateDetails = () => {
 
                 setLoading(true)
                 setShowUploadComp(true)
+
+                
 
                 const result = await uploadCertificateOrLicence(formDetails, user.data?.token!!)
 
