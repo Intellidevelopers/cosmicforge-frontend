@@ -1,7 +1,7 @@
 import bell from '../../../../assets/icons/Bell.png'
 import earn from '../../../../assets/images/Transaction.png'
 import sub from '../../../../assets/images/Membership Card.png'
-import pWord from '../../../../assets/icons/password.png'
+import pWord from '../../../../assets/images/Membership Card.png'
 import AI from '../../../../assets/images/ai.png'
 import help from '../../../../assets/images/helpCenter.png'
 import language from '../../../../assets/images/languageGlobe.png'
@@ -19,13 +19,18 @@ const settings = [
     },
     {
         image:earn,
-        name:'Earnings',
-        path:'/doctor/earnings'
+        name:'Transaction History',
+        path:''
     },
     {
         image:sub,
         name:'Subscription',
-        path:'/doctor/subscription'
+        path:'/patient/subscription'
+    },
+    {
+        image:pWord,
+        name:'Review',
+        path:''
     },
     {
         image:pWord,

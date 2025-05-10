@@ -102,7 +102,9 @@ const PatientMainPP: React.FC = () => {
                             <div className="w-fit flex flex-row justify-center items-center h-[100%]">
                                 <img className="w-[50px] h-[50px] rounded-full" alt="profile-image" src={folderIcon} />
                             </div>
-                            <div className="border-l-[2px] pl-[5px] border-l-gray-300 flex flex-row items-center justify-start h-[100%]">
+                            <div className="border-l-[2px] pl-[5px] border-l-gray-300 flex flex-row items-center justify-start h-[100%]" onClick={()=>{
+                                
+                            }}>
                                 <span className="font-bold">Medical History</span>
                             </div>
                         </button>
@@ -120,10 +122,14 @@ const PatientMainPP: React.FC = () => {
                             <div className="w-fit flex flex-row justify-center items-center h-[100%]">
                                 <img className="w-[50px] h-[50px] rounded-full" alt="profile-image" src={calenderIcon} />
                             </div>
-                            <div className="border-l-[2px] pl-[5px] border-l-gray-300 flex flex-row items-center justify-start h-[100%]">
+                            <div className="border-l-[2px] pl-[5px] border-l-gray-300 flex flex-row items-center justify-start h-[100%]" onClick={()=>{
+                                navigate('/patient/calendar')
+                            }}>
                                 <span className="font-bold">Appointments</span>
                             </div>
                         </button>
+
+
 
                         <button className="bg-white hover:bg-gray-100 w-[100%] h-[60px] shadow-md flex p-2 flex-row justify-start items-center shadow-black/10">
                             <div className="w-fit flex flex-row justify-center items-center h-[100%]">
@@ -133,6 +139,10 @@ const PatientMainPP: React.FC = () => {
                                 <span className="font-bold">Doctors</span>
                             </div>
                         </button>
+
+
+
+                      
                     </div>
 
 

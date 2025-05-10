@@ -16,6 +16,7 @@ const FindASpecalistCustomViewBody = () => {
 
     const user = useSelector((state:RootReducer)=>state.user)
 
+     const subscription = useSelector((state:RootReducer)=>state.subscription.userSubcription)
      
 
     
@@ -28,6 +29,7 @@ const FindASpecalistCustomViewBody = () => {
             fullName?: string,
             lastName?:string,
         },
+        userCosmicID?:string,
         professionalTitle?: string,
         specialization?: string,
         currentClinic?: string,
@@ -45,18 +47,51 @@ const FindASpecalistCustomViewBody = () => {
             time?: string
         }}[]>([])
 
+    
+        const [doctorDetailsCache,setDoctorDetailsCache] = useState<{ 
+            userId:{
+                fullName?: string,
+                lastName?:string,
+            },
+            userCosmicID?:string,
+            professionalTitle?: string,
+            specialization?: string,
+            currentClinic?: string,
+            department?: string,
+            bio?: string,
+            pricing?: string,
+            experience?: {
+                hospitalName?: string,
+                NoOfPatientTreated?: string,
+                specializationAndDepartment?: string,
+                date?: string
+            },
+            workTime?: {
+                day?: string,
+                time?: string
+            }}[]>([])
+
+
     useEffect(() => {
+       
      
+        if((subscription?.planName?? 'Free') === 'Free' &&  (state.title.trim().toLowerCase()!== 'General Medicine'.trim().toLowerCase())){
+            setLoading(false)
+            setDoctorDetails([])
+        setCustomMessage('You can only access General Medicine on free plan')
+        return
+        }
 
        (async()=>{
         setLoading(true)
-      
+        setCustomMessage('No specialist available now')
         try {
             
           const result = await getDoctorsBySpecificDeparment(user.data?.token!!,state?.title)
           setLoading(false)
             if(result.status === 200){
                 setDoctorDetails(result.data)
+                setDoctorDetailsCache(result.data)
             }
           
 
@@ -76,10 +111,38 @@ const FindASpecalistCustomViewBody = () => {
         }
     })
 
+
+    const  [customMessage,setCustomMessage] = useState<string>('No specialist available now')
+
+
+    
+
     return (
         <div className="font-poppins w-full   relative  h-dvh overflow-x-hidden    overflow-y-hidden flex flex-col cursor-default">
 
-            <HomeNavBar title={state.title} onSearchFired={()=>{}} />
+            <HomeNavBar title={state.title} onSearchFired={(path,query)=>{
+                   
+                   if(path === state.title && query){
+                   
+
+                    const filter = doctorDetailsCache.filter(doctorDetails => {
+
+
+                        return new RegExp(`^${query.toLocaleLowerCase()}`).test(doctorDetails.userId.fullName?.toLocaleLowerCase()!!) || doctorDetails.userCosmicID === query ||new RegExp(`^${query.toLocaleLowerCase()}`).test(doctorDetails.userId.lastName?.toLocaleLowerCase()!!)
+          
+          
+                      })
+          
+                      
+                      if (filter.length > 0) {
+                        setDoctorDetails(filter )
+          
+                      }
+                    } else {
+                      setDoctorDetails(doctorDetailsCache)
+                    }
+                   
+            }} />
             <HomeMobileNavBar title={state.title} onSearchFired={()=>{}} />
 
             <div className="w-full  ">
@@ -150,9 +213,9 @@ const FindASpecalistCustomViewBody = () => {
                 </div>
 
                 <div className={`${(!loading && doctorDetails.length===0) ? 'flex' : 'hidden'}  w-full h-dvh  justify-center mt-[20%]`}>
-                    <p>No specialist available now</p>
+                    <p>{customMessage}</p>
                 </div>
-                <div className={`${(!loading) ? 'flex' : 'hidden'} w-full h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
+                <div className={`${(!loading ) ?'flex' : 'hidden'} w-full h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
 
                     {
                      doctorDetails.length>0 &&   doctorDetails.map((item, index) => (

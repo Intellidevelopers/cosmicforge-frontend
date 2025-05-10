@@ -5,6 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 
     appointments:[{
+        _id?:string,
         appointmentDate
         : string
         appointmentStatus
@@ -29,7 +30,10 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
         } | null,
 
         patientDetails:{
-            profilePicture:string
+            profilePicture:string,
+            vitalSigns:{
+                gender:string
+            }
         },
         medicalPersonelDetails:{
             profilePicture:string | undefined ,

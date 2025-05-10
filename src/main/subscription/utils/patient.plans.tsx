@@ -29,54 +29,45 @@ const patientPlans = [
             'Access to all Department Specialist.',
             'Access to Shop/Purchase.',
             'Suitable for Individual accounts only.',
-            'Access to Standard support.-'
+            'Access to Standard support.'
         ]
     },
     {
-        name:'Premium',
-        message:'Subscrie to all Premium Subscribers',
-        price:'0.00',
+        name:'Medium',
+        message:'Subscrie to all Medium Subscribers',
+        price:'30,000',
         duration:'year',
         active:true,
         commission:undefined,
         offers:[
-            'Access to Top Doctors.',
+            'Video Consultation and chat.',
+            'Access to 100 AI Chatbot Response.',
+            'Access to 50 AI Chatbot Requests.',
+            'Access to all Department Specialist.',
             'Access to Shop/Purchase.',
-            'AI Diagnosis.',
-            'Video Consultations and Chat.',
-            'Access to Reschedule Appointment.',
             'Access to First Aid Assistance.',
-            'Access to Priority Support.'
-        ]
-    },
-    {
-        name:'Free',
-        message:'Subscrie to all Subscribers',
-        price:'0.00',
-        duration:'month',
-        active:false,
-        commission:undefined,
-        offers:[
-            'Access to Regular Doctors.',
-            'Access to Shop/Purchase.',
-            'Access to Support.'
-        ]
-    },
-    {
-        name:'Basic',
-        message:'Subscrie to all Basic Plan Subscribers',
-        price:'0.00',
-        duration:'month',
-        active:false,
-        commission:undefined,
-        offers:[
-            'Access to Top Doctors.',
-            'Access to Shop/Purchase.',
-            'AI Diagnosis.',
-            'Video Consultations and Chat.',
             'Access to Standard Support.'
         ]
     },
+    {
+        name:'Premium',
+        message:'Subscrie to Premium Subscribers',
+        price:'60,000',
+        duration:'month',
+        active:false,
+        commission:undefined,
+        offers:[
+            'Video Consultation and chat.',
+            'Access to unlimited AI Chatbot Response.',
+            'Access to unlimited Chatbot Requests.',
+            'Access to all Department Specialist.',
+            'Access to Shop/Purchase.',
+            'Access to First Aid Assistance.',
+            'Access to Standard Support.'
+        ]
+    },
+  
+    
 ]
 
 export {patientPlans}

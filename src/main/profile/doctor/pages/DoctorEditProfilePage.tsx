@@ -106,21 +106,55 @@ const DoctorEditProfilePage = () => {
 
     const [successfulUpdate, setSuccessfulUpdate] = useState<boolean>(false)
 
-    return <div className="w-full h-full cursor-default ">
+    return <div className="w-full h-full cursor-default overflow-y-hidden bg-[#F5F5F5] ">
 
 
-        <div className={`${successfulUpdate ? 'flex' : 'hidden'}  absolute bg-gray-500 bg-opacity-30  justify-center place-items-center w-full h-dvh z-[200]`}>
-            <div className="bg-white w-[300px] h-[300px] rounded-md flex flex-col place-items-center gap-12 relative">
+        <div className={`${successfulUpdate ? 'flex' : 'hidden'}  absolute bg-gray-500 bg-opacity-30 flex justify-center place-items-center w-full h-screen  bottom-0 z-[200]`}>
+            <div className="bg-white w-[80%] h-[60%] rounded-md flex flex-col place-items-center gap-12 relative">
                 <p className="font-bold mt-8 text-[20px]">Update profile status</p>
                 <p className="text-green-600">Successfully Updated profile</p>
-                <p className="bg-cosmic-primary-color text-white p-2 rounded-md absolute right-4 bottom-2" onClick={() => {
+                <p className="bg-cosmic-primary-color text-white  rounded-md absolute right-4 bottom-2 p-4 w-[100px] text-center" onClick={() => {
                     setSuccessfulUpdate(false)
                 }}>ok</p>
             </div>
         </div>
 
+
+        <div className={`   ${(loading || errorMessage) ? 'flex' : 'hidden'} absolute bg-gray-500 bg-opacity-30 flex justify-center place-items-center w-full h-screen bottom-50 z-[200]`}>
+            <div className="bg-white w-[80%] h-[60%] rounded-md flex flex-col place-items-center gap-12 relative">
+                <div className="p-3 flex justify-center place-items-center h-full w-full ">
+                    {
+
+                        loading && <div className="flex flex-col gap-5 place-items-center">
+                            <h1 className="font-bold text-[20px]">Uploading please wait</h1>
+                            <Loader size="100px" />
+
+                        </div>
+
+                    }
+                    {
+
+
+                        errorMessage && <div className="flex flex-col gap-5 place-items-center">
+                            <h1 className="font-bold text-[20px]">Upload Status</h1>
+                            <p className="text-red-600 font-light">{errorMessage}</p>
+                            <p className="bg-cosmic-primary-color text-white  rounded-md absolute right-4 bottom-2 p-4 w-[100px] text-center" onClick={() => {
+                                setErrorMessage('')
+                            }}>Cancel</p>
+
+                        </div>
+                    }
+                </div>
+
+            </div>
+        </div>
+
+
+
+
         <DoctorHomeNavBar title="Edit Profile" />
         <DoctorNavBarHome title="Edit Profile" />
+
         <div className="  w-full h-dvh  relative ">
 
             <div className="w-full md:flex place-items-center gap-2 m-4 hidden " onClick={() => {
@@ -474,6 +508,12 @@ const DoctorEditProfilePage = () => {
                                 return
                             }
 
+                            if (!updatedData.department || !updatedData.workingHours?.time || !updatedData.workingHours.day) {
+
+                                setErrorMessage('Please fill the department,time and day fields ')
+                                return
+                            }
+
 
                             try {
                                 setLoading(true)
@@ -513,19 +553,11 @@ const DoctorEditProfilePage = () => {
 
 
 
+
                         }}>Save Changes</p>
                     </div>
 
-                    <div className="p-3 flex justify-center place-items-center ">
-                        {
 
-                            loading && <Loader size="30px" />
-
-                        }
-                        {
-                            errorMessage && <p className="text-red-600 font-light">{errorMessage}</p>
-                        }
-                    </div>
                 </div>
 
             </div>

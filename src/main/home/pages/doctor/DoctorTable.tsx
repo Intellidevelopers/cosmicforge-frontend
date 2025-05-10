@@ -1,6 +1,5 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 
-import DoctorTableCustomCard from '../../component/doctor/DoctorTableCustomCard'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../../store/initStore'
 
@@ -9,55 +8,204 @@ import { RootReducer } from '../../../store/initStore'
 enum AppointmentsTypes {
   upcomming = "Upcomming Appointments",
   past = "Past Appointments",
-  cancelled = "Cancalled Appointments"
+  cancelled = "Cancelled Appointments"
 }
 
-const DoctorTable = () => {
+interface DoctorInterfaceProps {
+  onAppointmentClicked: (data: {
+    doctorImage: string,
+    doctorName: string,
+    lastMessageTime: string,
+    numberOfUnreadMessages: number,
+    messageType: string,
+    messageRead: boolean,
+    message: string | null,
+    details: {
+      patientId: string
+      profilePicture?: string,
 
 
 
 
-  const [scrollWidth, setScrollWidth] = useState<number>(200)
-  const scrollRef: MutableRefObject<HTMLDivElement | null> = useRef(null)
+    }
+  }, appointmentId: string) => void
+}
+
+const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
+
   const [appointmentTypeSelected, setAppoinmentTypeSelected] = useState<'upcomming' | 'past' | 'cancelled'>('upcomming')
   const [activeAppointment, setActiveAppointment] = useState<string>(AppointmentsTypes.upcomming)
 
 
-
   const appoinmentsState = useSelector((state: RootReducer) => state.appointments.appointments)
 
-  const [appoinments, setAppointments] = useState(appoinmentsState)
+  const [appoinments, setAppointments] = useState<[{
+    _id?: string,
+    appointmentDate
+    : string
+    appointmentStatus
+    : string
+    appointmentTime
+    : string
+    appointmentType
+    : string
+    medicalPersonelID
+    : {
+      fullName: string,
+      lastName: string,
+      _id: string
+
+    } | null
+    patientID
+    : {
+      fullName: string,
+      lastName: string,
+      _id: string
+
+    } | null,
+
+    patientDetails: {
+      profilePicture: string,
+      vitalSigns: {
+        gender: string
+      }
+    },
+    medicalPersonelDetails: {
+      profilePicture: string | undefined,
+      department: string,
+      currentClinic: string,
+      specializationTitle: string,
+      workAddress: string
+    },
+    payment
+    : {
+      cardFee
+      : number
+      cardType
+      : string
+      consultationFee
+      : string
+      paymentReference
+      : string
+      paymentStatus
+      : string
+      total
+      : number
+      vat
+      : string
+    },
+
+
+  }] | null>(null)
+
 
  
 
-  useEffect(() => {
+
+  const date = new Date()
+
+  
+  let validateDate = (appointmentmentTime:string,appointmentDate:string ) => {
+    const appoinmentStartTime = appointmentmentTime?.split('-')[0]
+
+  const appoinmentEndTime = appointmentmentTime?.split('-')[1]
 
 
-    window.addEventListener('resize', () => {
-      setScrollWidth(scrollRef.current?.scrollWidth!!)
+  const appoinmentDay = appointmentDate?.split(' ')[1].replace(/[a-z]/g, '')
 
-    })
-    if (scrollRef) {
-      scrollRef.current?.addEventListener('scroll', () => {
+  const appoinmentMonth = appointmentDate.split(' ')[2]
 
-        // setScrollWidth(scrollRef.current?.scrollWidth!!)
+  const currentMonth = date.toLocaleDateString('en-Us', {
+      month: 'short'
+  })
+
+  const currentTime = date.toLocaleTimeString('en-Us', {
+      timeStyle: 'short'
+  })
+
+  const dayInWeek = date.toLocaleString('en-Us', {
+      day: 'numeric'
+  })
+
+   return  (currentMonth === appoinmentMonth && currentMonth === appoinmentMonth && dayInWeek === appoinmentDay && (appoinmentStartTime.trim().toLowerCase().replace(' ', '') === currentTime.trim().toLowerCase() || Number(currentTime.split(':')[0]) < Number(appoinmentEndTime.split(':')[0]))) && activeAppointment === 'upcomming'
+  }
+
+
+  useMemo(() => {
+
+    if (appoinmentsState) {
+      const bookedAppointment = appoinmentsState.filter(appointment => {
+        return appointment.appointmentStatus === 'booked'
       })
-      setScrollWidth(scrollRef.current?.scrollWidth!!)
-      // alert(window.innerWidth)
+
+      setAppointments(bookedAppointment as [{
+        _id?: string,
+        appointmentDate
+        : string
+        appointmentStatus
+        : string
+        appointmentTime
+        : string
+        appointmentType
+        : string
+        medicalPersonelID
+        : {
+          fullName: string,
+          lastName: string,
+          _id: string
+
+        } | null
+        patientID
+        : {
+          fullName: string,
+          lastName: string,
+          _id: string
+
+        } | null,
+
+        patientDetails: {
+          profilePicture: string,
+          vitalSigns: {
+            gender: string
+          }
+        },
+        medicalPersonelDetails: {
+          profilePicture: string | undefined,
+          department: string,
+          currentClinic: string,
+          specializationTitle: string,
+          workAddress: string
+        },
+        payment
+        : {
+          cardFee
+          : number
+          cardType
+          : string
+          consultationFee
+          : string
+          paymentReference
+          : string
+          paymentStatus
+          : string
+          total
+          : number
+          vat
+          : string
+        },
+
+
+      }] | null)
+     
     }
 
-    return () => {
-      window.removeEventListener('resize', () => { })
-    }
-  }, [window])
+  }, [appoinmentsState])
+
+  return <div className="w-full  overflow-y-auto  rounded-md bg-white  p-8 relative" >
 
 
 
-  return <div className="w-full  overflow-y-auto bg-white rounded-md relative">
-
-
-
-    <div className='p-10 absolute  top-[10%] md:top-[30%] w-full z-[1000] flex justify-center' >
+    {/* <div className='p-10 absolute  flex justify-center' >
       
     {
       /**
@@ -75,26 +223,33 @@ const DoctorTable = () => {
       }}>continue</p>
     </div>
     </div>
-       */
+       
     }
 
 
-    </div>
+    </div>*/}
 
-    <div className="grid grid-cols-6 p-4 sticky top-0 bg-white z-[100]">
+    <div className="grid grid-cols-6 p-4 sticky top-0  z-[100]">
 
       <div className="w-full col-span-4 md:col-span-5">
 
-        <p className="font-bold">{activeAppointment}</p>
+        <p className="font-bold" onClick={() => {
+          alert('gdgdg')
+        }}>{activeAppointment}</p>
       </div>
 
       <div className="w-full col-span-2 md:col-span-1 text-end">
+
         <select className='border rounded-md' value={appointmentTypeSelected} onChange={(e) => {
+
           setAppoinmentTypeSelected(e.target.value!! as 'upcomming' | 'past' | 'cancelled')
+
           const type = e.target.value!! as 'upcomming' | 'past' | 'cancelled'
+
           setActiveAppointment(AppointmentsTypes[type as keyof typeof AppointmentsTypes])
 
-          if (type === 'upcomming' && appoinmentsState) {
+
+          if (type === 'upcomming' && appoinmentsState && appoinmentsState.length > 0) {
             const filteredArray = appoinmentsState.filter((appoinment) => {
               return appoinment.appointmentStatus === 'booked'
             })
@@ -124,7 +279,10 @@ const DoctorTable = () => {
                 } | null,
 
                 patientDetails: {
-                  profilePicture: string
+                  profilePicture: string,
+                  vitalSigns: {
+                    gender: string
+                  }
                 },
                 medicalPersonelDetails: {
                   profilePicture: string | undefined,
@@ -190,7 +348,10 @@ const DoctorTable = () => {
                 } | null,
 
                 patientDetails: {
-                  profilePicture: string
+                  profilePicture: string,
+                  vitalSigns: {
+                    gender: string
+                  }
                 },
                 medicalPersonelDetails: {
                   profilePicture: string | undefined,
@@ -231,6 +392,7 @@ const DoctorTable = () => {
             const filteredArray = appoinmentsState.filter((appoinment) => {
               return appoinment.appointmentStatus === 'cancelled'
             })
+
             if (filteredArray.length > 0)
               setAppointments(filteredArray as [{
                 appointmentDate
@@ -257,7 +419,10 @@ const DoctorTable = () => {
                 } | null,
 
                 patientDetails: {
-                  profilePicture: string
+                  profilePicture: string,
+                  vitalSigns: {
+                    gender: string
+                  }
                 },
                 medicalPersonelDetails: {
                   profilePicture: string | undefined,
@@ -294,16 +459,92 @@ const DoctorTable = () => {
 
 
         }}>
-          <option className="text-end">upcomming</option>
-          <option className="text-end">cancelled</option>
-          <option className="text-end">past</option>
+          <option className='text-end' >upcomming</option>
+          <option className='text-end' >cancelled</option>
+          <option className='text-end' >past</option>
+
         </select>
       </div>
 
 
+
+
     </div>
 
-    <div ref={scrollRef} className=' w-full overflow-x-auto '>
+
+
+
+    <table className='w-full p-10 relative '>
+      <thead className='mb-8 relative' >
+        <tr className='border-b-[1px] relative border-b-black/30 font-poppins font-light  cursor-default' >
+          <th className='font-poppins font-light min-w-[15%] text-start ps-5'>Name</th>
+          <th className='font-poppins font-light'>Gender</th>
+          <th className='font-poppins font-light'>Date</th>
+          <th className='font-poppins font-light'>Time</th>
+          <th className='font-poppins font-light'>{''}</th>
+        </tr>
+      </thead>
+      <tbody className='relative ' >
+
+      
+        {
+          appoinments && appoinments.length > 0 && appoinments.map((appointment, index) => (
+
+            <tr className='border-b-[1px] relative border-b-black/30 font-poppins font-light  cursor-default ' key={index} onClick={() => {
+
+              onAppointmentClicked({
+                doctorImage: appointment.patientDetails.profilePicture,
+                doctorName: appointment.patientID?.lastName.concat(' ').concat(appointment?.patientID?.fullName)!!,
+                lastMessageTime: "",
+                numberOfUnreadMessages: 0,
+                messageType: "",
+                messageRead: false,
+                message: '',
+                details: {
+                  patientId: appointment.patientID?._id!!,
+                  profilePicture: appointment.patientDetails.profilePicture,
+
+                }
+              }, appointment._id!!)
+
+
+            }}>
+              <td ><div className='flex  place-items-center gap-4'>
+
+                <img className='bg-black bg-opacity-20 rounded-full w-[40px] h-[40px]' src={appointment?.patientDetails.profilePicture ?? '/'
+                } />
+                {appointment?.patientID?.fullName}
+
+              </div></td>
+
+              <td>{appointment?.patientDetails?.vitalSigns?.gender}</td>
+              <td>{appointment?.appointmentDate}</td>
+              <td>{appointment?.appointmentTime}</td>
+              <td> {
+                
+                
+                validateDate(appointment?.appointmentTime,appointment?.appointmentDate) &&
+                 
+                <i className="fa fa-dot-circle text-blue-600 animate-pulse mt-3" />
+              }</td>
+
+            </tr>
+
+          ))
+        }
+
+      </tbody>
+    </table>
+    {
+         !appoinments  && <p className='w-full text-center mt-8'>No Appointment yet</p>
+        }
+
+
+
+    {
+      /**
+       * 
+       * <div ref={scrollRef} className=' w-full overflow-x-auto '>
 
 
       <div className='w-full inline-flex   
@@ -327,8 +568,9 @@ const DoctorTable = () => {
 
 
       {
+        /*
         appoinments && appoinments.length>0  && appoinments.map((appointment, index) => (
-          <DoctorTableCustomCard appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
+          <DoctorTableCustomCard appointmentId={appointment._id!!} gender={appointment?.patientDetails?.vitalSigns?.gender} appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
           //  alert(details.patientName)
 
          
@@ -345,7 +587,10 @@ const DoctorTable = () => {
 
 
 
-    </div>
+      </div>
+       * 
+       */
+    }
 
 
 

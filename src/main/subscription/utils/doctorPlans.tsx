@@ -11,7 +11,7 @@ const DoctorPlans = [
             'Access to 20 Patients per month',
             'Regular Profile Listing',
             'Access to 50 AI Responses.',
-            'Video Consultation and Chat',
+            'Access to chat only',
             'Access to Support'
         ]
     },
@@ -27,8 +27,6 @@ const DoctorPlans = [
             'Regular Profile Listing.',
             'Access to 200 AI Responses.',
             'Video Consultation and Chat.',
-            'Access to Shop/Purchase.',
-            'Suitable for Individual accounts only.',
             'Access to Standard support.'
         ]
     },
@@ -63,6 +61,21 @@ const DoctorPlans = [
             'Video Consultation and Chat.',
             'Access to Priority Support.',
            
+        ]
+    },
+    {
+        name:'Proffessional',
+        message:'Subscribe to all Proffessional Plan Subscribers',
+        price:'100,000.00',
+        duration:'month',
+        active:false,
+        commission:'',
+        offers:[
+            'Access to 100 Patients per month.',
+            'Top Profile Listing',
+            'Access to 400 AI responses',
+            'Video Consultations and Chat.',
+            'Access to Priority Support.'
         ]
     },
 ]
