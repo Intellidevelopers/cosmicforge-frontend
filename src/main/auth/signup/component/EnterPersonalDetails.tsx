@@ -55,7 +55,7 @@ const EnterPersonalDetails: React.FC = () => {
         }
 
         if (!(/^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[@£$%^*&?!±|#€∞§¶]).{8,}$/.test(password))) {
-            setErrorMesage('Pasworwd must be atleast 8 characters, contain uppercase, lowercase, number and symbol.')
+            setErrorMesage('Password must be atleast 8 characters, contain uppercase, lowercase, number and symbol.')
             return
         }
         if (confirmPassword !== password) {
