@@ -54,6 +54,10 @@ const DoctorProfile = () => {
       <DoctorNavBarMobile title="My Profile" />
       <div className="justify-center items-center flex flex-col ">
 
+
+
+        
+
         <div className=" hidden md:flex w-full m-5 ps-8 pt-4  place-items-center gap-2 cursor-default hover:text-cosmic-primary-color" onClick={() => {
 
           navigate(-1)
@@ -119,7 +123,7 @@ const DoctorProfile = () => {
           </div>
         </div>
 
-        
+
 
         {/* SETINGS SECTION */}
         <div className="flex w-full flex-col justify-center items-center h-full mb-8">

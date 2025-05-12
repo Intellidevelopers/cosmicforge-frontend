@@ -311,6 +311,7 @@ const DoctorEditProfilePage = () => {
 
 
                     <div className="w-full mt-8">
+
                         <p className="text-cosmic-primary-color">Experience</p>
 
                         <div className="w-full grid grid-cols-2 gap-2">

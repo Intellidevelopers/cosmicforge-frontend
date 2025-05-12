@@ -143,6 +143,7 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
 
 
         </div>
+        
         <div className={` ${toggleStartSesion ? 'block' : 'hidden'} `}>
             <p className='font-bold  mt-2'>You are about to start  this appoinment session click continue to start</p>
 
