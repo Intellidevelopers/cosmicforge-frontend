@@ -30,7 +30,7 @@ const UploadLiscenceDetails = () => {
   const [capturedImage, setCapturedImage] = useState('')
   const { pathname } = useLocation()
 
-  const path = pathname?.split('/')[3]
+  const path = pathname?.split('/')[3] ?? ''
 
   const [imageCaptured, _] = useState(false)
 
@@ -416,6 +416,8 @@ const UploadLiscenceDetails = () => {
           onClick={async () => {
             setErrorMessage('')
 
+        
+
             if (path === '') {
 
               if (liscenseDetails && (!liscenseDetails.fullName || !liscenseDetails.LicenseNumber || !liscenseDetails.expiration || !liscenseDetails.license && !liscenseDetails.photoWithLicence)) {
@@ -535,7 +537,7 @@ const UploadLiscenceDetails = () => {
 
 
           }}
-        >{(path === '') ? 'Next' : (path === 'id') ? 'Next' : 'Verify'}</button>
+        >{(path !== 'face-id') ? 'Next'  : 'Verify'}</button>
 
         {
           errorMessage && <p className="text-red-600">{errorMessage}</p>
