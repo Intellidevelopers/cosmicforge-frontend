@@ -454,7 +454,7 @@ const UploadLiscenceDetails = () => {
 
             if (path === 'id') {
 
-              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument || !liscenseDetails.fullName || !liscenseDetails.LicenseNumber || !liscenseDetails.expiration || !liscenseDetails.license && !liscenseDetails.photoWithLicence)) {
+              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument )) {
                 setErrorMessage("Please enter the fields completely.")
                 return
               }
@@ -493,8 +493,8 @@ const UploadLiscenceDetails = () => {
 
 
 
-              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument)) {
-                setErrorMessage("Please enter the fields completely.")
+              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument  || !liscenseDetails.fullName || !liscenseDetails.LicenseNumber || !liscenseDetails.expiration || !liscenseDetails.license && !liscenseDetails.photoWithLicence)) {
+                setErrorMessage("One or teo fields are missing check please.")
                 return
               }
 
