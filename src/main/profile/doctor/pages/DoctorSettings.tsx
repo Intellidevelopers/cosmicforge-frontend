@@ -83,7 +83,7 @@ const DoctorSettings = () => {
             <div className="w-full  flex flex-col justify-center items-center gap-10">
 
 
-              <div className="w-[100%] flex gap-20 justify-center items-center mt-5">
+              <div className="w-[100%] flex md:gap-20 gap-4 justify-center items-center mt-5">
 
                 <div className="flex flex-col justify-center items-center">
                   <img src={calender} alt="calender" className="w-8 h-8" />

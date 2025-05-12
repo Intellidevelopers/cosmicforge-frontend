@@ -86,15 +86,19 @@ export  const getDoctorDeparmentsForLandingPage = async () => {
 }
 
 
-export  const uploadCertificateOrLicence  = async (data:{ fullName: string;
-   institution: string;
-   certificateNo?: string;
-   licenceNo?: string;
-   licenceImage?: string;
-   certificateImage?: string;
-   date: string;
+export  const uploadLicense  = async (data:{ fullName: string,
+   LicenseNumber: string,
+   license: string,
+   expiration: string,
+   country: string,
+   docummentType:string,
+   documentId: string,
+   documentHoldName: string,
+   documentImage: string,
+   pictureWithDocument: string,
+   doctorImage: string,
    type: "licence" | "certificate";
-   photoWithLicence?:string},token:string) => { 
+   photoWithLicence: string},token:string) => { 
 
       const abortController = new AbortController()
 

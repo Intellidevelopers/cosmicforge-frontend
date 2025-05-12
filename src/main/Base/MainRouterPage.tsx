@@ -316,8 +316,8 @@ const MainRouterPage = () => {
 
                     if (result.status === 200) {
 
-
-                        store.dispatch(cacheDoctorCertificateAndLicence({ licence: result.data.licence, certification: result.data.certification }))
+                   
+                        store.dispatch(cacheDoctorCertificateAndLicence({ licenceDetails: result.data.licenseDetails, certification: result.data.certification }))
 
 
                         return

@@ -114,6 +114,9 @@ import UploadLiscenceDetails from './main/profile/doctor/pages/uploadLiscenceDet
 import SelectLanguage from './main/profile/doctor/pages/selectLanguage.tsx'
 import PatientSettings from './main/profile/patient/pages/PatientSettings.tsx'
 import DoctorSettings from './main/profile/doctor/pages/DoctorSettings.tsx'
+import UploadLicensceFirstPage from './main/profile/doctor/pages/Licensce/UploadLicensceFirstPage.tsx'
+import LiscenceUploadID from './main/profile/doctor/pages/Licensce/LiscenceUploadID.tsx'
+import LicenceFaceId from './main/profile/doctor/pages/Licensce/LicenceFaceId.tsx'
 
 
 const router = createBrowserRouter([
@@ -654,8 +657,24 @@ const router = createBrowserRouter([
       element: <UploadCertificateDetails/>
     },
     {
-      path: '/doctor/liscence-details-upload',
-      element: <UploadLiscenceDetails/>
+      path: '/doctor/liscence-details-upload/',
+      element: <UploadLiscenceDetails/>,
+      children: [
+
+        {
+          path:'',
+          element:<UploadLicensceFirstPage/>
+        },
+        {
+          path:'id',
+          element:<LiscenceUploadID/>
+        },
+        {
+          path:'face-id',
+          element:<LicenceFaceId/>
+        }
+        
+      ]
     },
     {
       path: '/doctor/faqs',

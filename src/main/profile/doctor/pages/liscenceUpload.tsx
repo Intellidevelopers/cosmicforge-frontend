@@ -33,14 +33,13 @@ const LiscenceUpload = () => {
         >Upload New</button >
         <div className={`bg-white  rounded-md shadow-md  p-4 `}>
           <div className={`max-w-full bg-white overflow-hidden  p-4 max-h-[60vh] `}>
-            {<img src={licenceDetails.licence?.licenseImage??'/'} alt="Uploaded Image" className="w-full object-cover max-h-[60dvh]"/>}
+            {<img src={licenceDetails.licenceDetails?.license??'/'} alt="Uploaded Image" className="w-full object-cover max-h-[60dvh]"/>}
             {/* {uploadedFile && uploadedFile.type ==='application/pdf' && <embed src={preview} type="application/pdf" width='100%' height='300px' className="overflow-hidden" />} */}
           </div>
           <div className="flex justify-between flex-wrap items-center border-t border-black mt-2 w-full px-4">
-            <p className="font-bold">{licenceDetails.licence?.institution??'not uploaded yet.'}</p>
-            <p className="font-bold">{licenceDetails.licence?.fullName??'not uploaded yet.'}</p>
-            <p className="font-extralight">{licenceDetails.licence?.licenseNo??'no upload yet'}</p>
-            <p className="font-extralight">{licenceDetails.licence?.date??'no upload yet'}</p>
+            <p className="font-bold">{licenceDetails.licenceDetails?.fullName??'not uploaded yet.'}</p>
+            <p className="font-extralight">{licenceDetails.licenceDetails?.LicenseNumber??'no upload yet'}</p>
+            <p className="font-extralight">{licenceDetails.licenceDetails?.expiration??'no upload yet'}</p>
           </div>
         </div>
        </div>

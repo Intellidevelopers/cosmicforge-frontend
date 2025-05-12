@@ -87,7 +87,7 @@ const DoctorProfile = () => {
             <div className="w-full  flex flex-col justify-center items-center gap-10">
 
 
-              <div className="w-[100%] flex gap-20 justify-center items-center mt-5">
+              <div className="w-[100%] flex gap-5 md:gap-20 justify-center items-center mt-5">
 
                 <div className="flex flex-col justify-center items-center">
                   <img src={calender} alt="calender" className="w-8 h-8" />
@@ -118,6 +118,8 @@ const DoctorProfile = () => {
             </div>
           </div>
         </div>
+
+        
 
         {/* SETINGS SECTION */}
         <div className="flex w-full flex-col justify-center items-center h-full mb-8">

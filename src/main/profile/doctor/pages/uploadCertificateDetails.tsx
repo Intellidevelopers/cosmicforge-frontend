@@ -4,11 +4,11 @@ import lock from '../../../../assets/images/Security Lock green.png'
 import {  useState } from "react"
 import success from '../../../../assets/images/uploadSccessful.png'
 import useGetImageBase64String from "../../patient/hooks/useGetImageBase64String"
-import { RootReducer, store } from "../../../store/initStore"
-import { useSelector } from "react-redux"
+//import { RootReducer, /*store*/ } from "../../../store/initStore"
+//import { useSelector } from "react-redux"
 import Loader from "../../../generalComponents/Loader"
-import { cacheDoctorCertificateAndLicence } from "../../../store/reducers/doctorCertificateAndLicence"
-import { uploadCertificateOrLicence } from "../../service"
+//import { cacheDoctorCertificateAndLicence } from "../../../store/reducers/doctorCertificateAndLicence"
+
 
 
 const UploadCertificateDetails = () => {
@@ -26,13 +26,13 @@ const UploadCertificateDetails = () => {
     
 
   const [showUploadComp, setShowUploadComp] = useState(false)
-  const [successfulUpload, setSuccessfulUpload] = useState(false)
+  const [successfulUpload, /*setSuccessfulUpload*/] = useState(false)
 
-  const [loading, setLoading] = useState<boolean>(false)
+  const [loading, /*setLoading*/] = useState<boolean>(false)
 
   const { getImageBase64String } = useGetImageBase64String()
 
-  const user = useSelector((state: RootReducer) => state.user)
+ // const user = useSelector((state: RootReducer) => state.user)
 
   const [errorMessage, setErrorMessage] = useState<string>('')
 
@@ -158,7 +158,7 @@ const UploadCertificateDetails = () => {
                 return
               }
 
-              try {
+             /* try {
 
                 setLoading(true)
                 setShowUploadComp(true)
@@ -188,7 +188,7 @@ const UploadCertificateDetails = () => {
                 setLoading(false)
                 setShowUploadComp(false)
                 setErrorMessage(error.message)
-              }
+              }*/
 
 
 
