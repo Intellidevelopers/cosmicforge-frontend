@@ -15,9 +15,13 @@ import * as faceDtection from '@tensorflow-models/face-detection'
 import { Outlet, useLocation, useNavigate } from "react-router-dom"
 import Textextractor from 'tesseract.js'
 import { uploadLicense } from "../../service"
+import { Mutex } from 'async-mutex'
 
 
 const UploadLiscenceDetails = () => {
+
+
+  const mutex = new Mutex()
 
   // const [fullName,setFullName] = useState('')
   // const [institution,setInstitution] = useState('')
@@ -25,16 +29,18 @@ const UploadLiscenceDetails = () => {
   // const [date,setDate] = useState('')
 
 
+   
+
   const navigate = useNavigate()
 
-  const [processing,setProcessing] = useState(false)
+  const [processing, setProcessing] = useState(false)
 
   const [capturedImage, setCapturedImage] = useState('')
   const { pathname } = useLocation()
 
   const path = pathname?.split('/')[3] ?? ''
 
-  const [imageCaptured, _] = useState(false)
+  const [imageCaptured,] = useState(false)
 
   const [videoStream, setVideoStream] = useState<MediaStream | null>(null)
   const videoRef: MutableRefObject<HTMLVideoElement | null> = useRef(null)
@@ -59,34 +65,28 @@ const UploadLiscenceDetails = () => {
 
   const [activeState, setActivetate] = useState(0)
 
+  const [processingImage, setProcessingImage] = useState(false)
 
 
-  const calculateEuclideanDistance = async (faceOneLandMark: any[], faceTwoLandMark: any[]) => {
 
-    let sum = 0
 
-    for (let i = 0; i < faceOneLandMark.length; i++) {
-      const dx = faceOneLandMark[i][0] - faceTwoLandMark[i][0]
-      const dy = faceOneLandMark[i][1] - faceTwoLandMark[i][1]
-      sum = + dx * dy + dy * dy
 
-    }
 
-    return Math.sqrt(sum / faceOneLandMark.length)
+  const detectImage = async (imageBase64: string) => {
 
-  }
 
-  const detectImage = async (imageBase64: string, imageTwoBase64: string) => {
+  
+    const release = await mutex.acquire()
 
     const image = document.createElement('img')
     image.src = imageBase64
 
 
 
-    const imageTwo = document.createElement('img')
-    imageTwo.src = imageTwoBase64
-    try {
+   setProcessingImage(true)
 
+
+    try {
 
 
       const model = faceDtection.SupportedModels.MediaPipeFaceDetector
@@ -100,28 +100,18 @@ const UploadLiscenceDetails = () => {
       const faceOneEstimate = await detector.estimateFaces(image)
 
 
-
       const faceOneData: any[] = []
 
-      const faceTwoData: any[] = []
+     
 
       if (faceOneEstimate) {
 
-
+     
 
         faceOneEstimate[0].keypoints.forEach((e) => {
-          if (e.name === 'rightEye') {
-            faceOneData.push([Math.ceil(e.x), Math.ceil(e.y)])
-          }
 
-          if (e.name === 'leftEye') {
-            faceOneData.push([Math.ceil(e.x), Math.ceil(e.y)])
-          }
+          faceOneData.push([Math.ceil(e.x), Math.ceil(e.y)])
 
-          if (e.name === 'noseTip') {
-            faceOneData.push([Math.ceil(e.x), Math.ceil(e.y)])
-            return
-          }
         })
 
 
@@ -129,57 +119,26 @@ const UploadLiscenceDetails = () => {
       }
 
 
-
-
-      const faceTwoEstimate = await detector.estimateFaces(imageTwo)
-
-      if (faceTwoEstimate) {
-
-
-
-        faceTwoEstimate[0].keypoints.forEach((e) => {
-          if (e.name === 'rightEye') {
-            faceTwoData.push([Math.ceil(e.x), Math.ceil(e.y)])
-          }
-
-          if (e.name === 'leftEye') {
-            faceTwoData.push([Math.ceil(e.x), Math.ceil(e.y)])
-          }
-
-          if (e.name === 'noseTip') {
-            faceTwoData.push([Math.ceil(e.x), Math.ceil(e.y)])
-            return
-          }
-        })
-
-
-
-      }
-
-
-      if (faceOneData.length > 0 && faceTwoData.length > 0) {
-        const distance = await calculateEuclideanDistance(faceOneData, faceTwoData)
-
-        if (distance > 550) {
-          setFaceDetected(false)
-          // setErrorMessage('Image provided does not match face on the id. Please provide a clear id and image of yourself.')
-          // setShowUploadComp(false)
-          // setImageValidated(false)
-          // setLoading(false)
-        } else {
-
-          setCapturedImage(imageBase64)
+      if (faceOneData.length > 0) {
+        setCapturedImage(imageBase64)
           setFaceDetected(true)
-          // setImageValidated(true)
-        }
+          return
       }
+
+      setFaceDetected(false)
+      setProcessingImage(false)
+
+
 
     } catch (error) {
       setFaceDetected(false)
+      setProcessingImage(false)
       // setErrorMessage('Image provided does not match face on the id. Please provide a clear id and image of yourself.')
       // setShowUploadComp(false)
       // setImageValidated(false)
       // setLoading(false)
+    }finally{
+      release()
     }
 
 
@@ -315,6 +274,7 @@ const UploadLiscenceDetails = () => {
 
 
   useEffect(() => {
+
     if (videoStream && startFaceVerificationProcess)
       (async () => {
 
@@ -326,16 +286,24 @@ const UploadLiscenceDetails = () => {
 
           const canvasContext = canvas.getContext('2d')
 
+
           const draw = async () => {
+
             canvasContext?.drawImage(video, 0, 0, canvas.width, canvas.height)
 
-            await detectImage(canvas.toDataURL('image/png'), liscenseDetails?.license!!)
+            await detectImage(canvas.toDataURL('image/png'))
 
             requestAnimationFrame(draw)
 
+
           }
 
-          draw()
+          if (!faceDetected && !processingImage) {
+
+            await draw()
+
+          }
+
         }
 
 
@@ -418,7 +386,7 @@ const UploadLiscenceDetails = () => {
           onClick={async () => {
             setErrorMessage('')
 
-        
+
 
             if (path === '') {
 
@@ -439,7 +407,7 @@ const UploadLiscenceDetails = () => {
               Textextractor.recognize(liscenseDetails?.license!!, 'eng',
                 {}).then(({ data: { text } }) => {
                   const isLicenceValid = text.trim().toLowerCase().includes('Federal republic of nigeria'.trim().toLowerCase()) || text.trim().toLowerCase().includes('Medical & Dental Council Of Nigria'.trim().toLowerCase())
-                    setProcessing(false)
+                  setProcessing(false)
                   if (isLicenceValid) {
 
                     navigate('/doctor/liscence-details-upload/id')
@@ -457,7 +425,7 @@ const UploadLiscenceDetails = () => {
 
             if (path === 'id') {
 
-              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument )) {
+              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument)) {
                 setErrorMessage("Please enter the fields completely.")
                 return
               }
@@ -496,7 +464,7 @@ const UploadLiscenceDetails = () => {
 
 
 
-              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument  || !liscenseDetails.fullName || !liscenseDetails.LicenseNumber || !liscenseDetails.expiration || !liscenseDetails.license && !liscenseDetails.photoWithLicence)) {
+              if (liscenseDetails && (!liscenseDetails.country || !liscenseDetails.docummentType || !liscenseDetails.documentId || !liscenseDetails.documentHoldName || !liscenseDetails.documentImage || !liscenseDetails.pictureWithDocument || !liscenseDetails.fullName || !liscenseDetails.LicenseNumber || !liscenseDetails.expiration || !liscenseDetails.license && !liscenseDetails.photoWithLicence)) {
                 setErrorMessage("One or teo fields are missing check please.")
                 return
               }
@@ -540,7 +508,7 @@ const UploadLiscenceDetails = () => {
 
 
           }}
-        >{(path !== 'face-id') ? 'Next'  : 'Verify'}</button>
+        >{(path !== 'face-id') ? 'Next' : 'Verify'}</button>
 
         {
           errorMessage && <p className="text-red-600">{errorMessage}</p>
@@ -548,9 +516,9 @@ const UploadLiscenceDetails = () => {
 
         {
           processing && <div>
-   
-              <Loader size="40px"/>
-            </div>
+
+            <Loader size="40px" />
+          </div>
         }
       </div>
 
@@ -580,11 +548,11 @@ const UploadLiscenceDetails = () => {
           <p className="font-light text-center mt-10">Face the camera and hold your device steady.</p>
 
 
-          <div className={` w-full  flex-col place-items-center justify-center mt-8 `}>
+          <div className={` w-full  flex-col place-items-center justify-center mt-8 h-fit `}>
 
             <div className="ellipse   ">
               {
-                !imageCaptured && <video ref={videoRef} className={`ellipse border-[2px] ${faceDetected ? 'border-green-600' : 'border-red-700'}  object-fill h-full w-full bg-black bg-opacity-20`} autoPlay />
+                <video ref={videoRef} className={`ellipse border-[2px] ${faceDetected ? 'border-green-600' : 'border-red-700'}  object-fill h-full w-full bg-black bg-opacity-20`} autoPlay />
 
               }
 
@@ -641,7 +609,7 @@ const UploadLiscenceDetails = () => {
 
                         if (result.status === 200) {
 
-                          store.dispatch(cacheDoctorCertificateAndLicence({ licenceDetails: result.data.licenseDetails, certification: null }))
+                          store.dispatch(cacheDoctorCertificateAndLicence({ licenceDetails: result.data.licenseDetails, }))
                           setLoading(false)
                           setSuccessfulUpload(true)
                           return
@@ -699,7 +667,7 @@ const UploadLiscenceDetails = () => {
                 <i className="fa fa-times absolute right-2" onClick={() => {
                   if (successfulUpload) {
                     store.dispatch(cacheDoctorCertificateAndLicenceDetailsForUpload({ licenceDetails: null }))
-                    
+
                   }
                   setShowUploadComp(false)
                 }} />

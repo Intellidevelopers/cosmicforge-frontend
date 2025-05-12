@@ -20,7 +20,7 @@ const CertificationUpload = () => {
     //     }
     //   }
 
-    const certificateDetails = useSelector((state:RootReducer)=>state.doctorCertificateAndLicence)
+    const certificateDetails = useSelector((state:RootReducer)=>state.doctorCertificateAndLicence.certificationDetails)
   
     return (
     <div>
@@ -35,14 +35,14 @@ const CertificationUpload = () => {
         
         <div className={`bg-white  rounded-md shadow-md  p-4 `}>
           <div className={`max-w-full bg-white overflow-hidden  p-4 max-h-[60vh] `}>
-            {<img src={certificateDetails.certification?.certificateImage??'/'}  alt="No certificate uploaded yet" className="w-full bg-black bg-opacity-30 object-cover max-h-[60dvh]"/>}
+            {<img src={certificateDetails?.certificate??'/'}  alt="No certificate uploaded yet" className="w-full bg-black bg-opacity-30 object-cover max-h-[60dvh]"/>}
             {/* {uploadedFile && uploadedFile.type ==='application/pdf' && <embed src={preview} type="application/pdf" width='100%' height='300px' className="overflow-hidden" />} */}
           </div>
           <div className="flex justify-between flex-wrap items-center border-t border-black mt-2 w-full px-4">
-            <p className="font-bold">{certificateDetails.certification?.institution}</p>
-            <p className="font-bold">{certificateDetails.certification?.fullName??'not uploaded yet'}</p>
-            <p className="font-extralight">{certificateDetails.certification?.certificateNo}</p>
-            <p className="font-extralight">{certificateDetails.certification?.date}</p>
+            <p className="font-bold">{certificateDetails?.institution}</p>
+            <p className="font-bold">{certificateDetails?.fullName??'not uploaded yet'}</p>
+            <p className="font-extralight">{certificateDetails?.certificateNo}</p>
+            <p className="font-extralight">{certificateDetails?.date}</p>
           </div>
         </div>
        </div>

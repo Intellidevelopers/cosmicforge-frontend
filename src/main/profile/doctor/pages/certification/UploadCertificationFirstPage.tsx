@@ -13,7 +13,7 @@ let UploadCertificationFirstPage = () => {
     const dispatch = useDispatch()
 
 
-    const liscenseDetails = useSelector((state: RootReducer) => state.doctorCertificateAndLicence.uploadLicenseDetails)
+    const certificateDetails = useSelector((state: RootReducer) => state.doctorCertificateAndLicence.uploadCertificationDetails)
 
 
 
@@ -28,16 +28,16 @@ let UploadCertificationFirstPage = () => {
 
 
         <div className="flex flex-col gap-1">
-            <label htmlFor="fullName" className="">Full Name</label>
+            <label htmlFor="fullName" className="">Full Name:</label>
 
             <input type="text" name="fullName" id="fullName" className="bg-transparent border-black p-2 border rounded-md"
                 onChange={(e) => {
 
-                    if (liscenseDetails !== null)
+                    if (certificateDetails !== null)
                         dispatch(cacheDoctorCertificateAndLicenceDetailsForUpload({
-                            uploadLicenseDetails: {
-                                ...liscenseDetails!!,
-                                fullName: e.target.value
+                           uploadCertificationDetails: {
+                                ...certificateDetails!!,
+                                fullName:e.target.value
 
 
                             }
@@ -53,15 +53,15 @@ let UploadCertificationFirstPage = () => {
 
         <div className="flex flex-col gap-1  ">
 
-            <label htmlFor="liscenseNo" className="">Licence Number</label>
+            <label htmlFor="liscenseNo" className="">Institution:</label>
 
-            <input type="text" name="liscenseNo" id="liscenseNo" className="border-black p-2 border rounded-md bg-transparent"
+            <input type="text" name="institution" id="institution" className="border-black p-2 border rounded-md bg-transparent"
 
                 onChange={(e) => {
                     dispatch(cacheDoctorCertificateAndLicenceDetailsForUpload({
-                        uploadLicenseDetails: {
-                            ...liscenseDetails!!,
-                            LicenseNumber: e.target.value
+                        uploadCertificationDetails: {
+                            ...certificateDetails!!,
+                           institution:e.target.value
 
 
                         }
@@ -75,14 +75,37 @@ let UploadCertificationFirstPage = () => {
 
 
         <div className="flex flex-col gap-1">
-            <label htmlFor="expiration" className="font-bold">Expiration</label>
-            <input type="text" name="expiration" id="expiration" className="border-black p-2 border rounded-md bg-transparent"
+            <label htmlFor="certificateNo" className="">Certificate No:</label>
+            <input type="text" name="certificateNo" id="certificateNo" className="border-black p-2 border rounded-md bg-transparent"
                 onChange={(e) => {
 
                     dispatch(cacheDoctorCertificateAndLicenceDetailsForUpload({
-                        uploadLicenseDetails: {
-                            ...liscenseDetails!!,
-                            expiration: e.target.value
+                       uploadCertificationDetails: {
+                            ...certificateDetails!!,
+                            certificateNo: e.target.value
+
+
+                        }
+                    }))
+
+                }}
+            />
+        </div>
+
+
+
+        <div className="flex flex-col gap-1">
+
+            <label htmlFor="date" className="">Date:</label>
+
+            <input type="text" name="date" id="certificateNo" className="border-black p-2 border rounded-md bg-transparent"
+               
+               onChange={(e) => {
+
+                    dispatch(cacheDoctorCertificateAndLicenceDetailsForUpload({
+                       uploadCertificationDetails: {
+                            ...certificateDetails!!,
+                            date: e.target.value
 
 
                         }
@@ -95,9 +118,9 @@ let UploadCertificationFirstPage = () => {
 
 
         <div className="flex flex-col gap-1  ">
-            <label htmlFor="licence" className="">Licence </label>
+            <label htmlFor="certificate" className="">Certificate:</label>
 
-            <input type="file" name="lincense" id="lincense" className="border-black p-2 border rounded-md bg-transparent"
+            <input type="file" name="certificate" id="certificate" className="border-black p-2 border rounded-md bg-transparent"
 
 
 
@@ -110,9 +133,9 @@ let UploadCertificationFirstPage = () => {
                     if (e.target.files)
 
                         dispatch(cacheDoctorCertificateAndLicenceDetailsForUpload({
-                            uploadLicenseDetails: {
-                                ...liscenseDetails!!,
-                                license: await getImageBase64String(e.target.files[0]!!)
+                            uploadCertificationDetails: {
+                                ...certificateDetails!!,
+                                certificate: await getImageBase64String(e.target.files[0]!!)
 
 
                             }
@@ -125,16 +148,18 @@ let UploadCertificationFirstPage = () => {
 
 
         <div className="flex flex-col gap-1  ">
-            <label htmlFor="licence" className="">Hold Licensce and snap </label>
 
-            <input type="file" name="lincense" id="lincense" className="border-black p-2 border rounded-md bg-transparent"
-                onChange={async (e) => {
+            <label htmlFor="cfs" className="">Hold Ceertificate and snap </label>
+
+            <input type="file" name="cfs" id="cfs" className="border-black p-2 border rounded-md bg-transparent"
+               
+               onChange={async (e) => {
 
                     if (e.target.files)
                         dispatch(cacheDoctorCertificateAndLicenceDetailsForUpload({
-                            uploadLicenseDetails: {
-                                ...liscenseDetails!!,
-                                photoWithLicence: await getImageBase64String(e.target.files[0]!!)
+                            uploadCertificationDetails: {
+                                ...certificateDetails!!,
+                                photoWithCertification: await getImageBase64String(e.target.files[0]!!)
 
 
                             }

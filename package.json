@@ -25,6 +25,7 @@
     "@tensorflow/tfjs-converter": "^4.22.0",
     "@tensorflow/tfjs-core": "^4.22.0",
     "apexcharts": "^4.5.0",
+    "async-mutex": "^0.5.0",
     "bcryptjs": "^3.0.2",
     "canvasjs-react-charts": "^1.0.5",
     "country-list": "^2.3.0",

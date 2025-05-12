@@ -18,14 +18,22 @@ export interface DoctorCertificateAndLicenceProps {
     photoWithLicence: string
   } | null,
 
-  certification?: {
-    fullName: '',
+  certificationDetails?: {
+    fullName:string,
     institution: string,
     certificateNo: string,
-    certificateImage?: string,
     date: string,
-    type: "licence",
+    certificate: string,
+    country: string,
+    docummentType: string,
+    documentId: string,
+    documentHoldName: string,
+    documentImage: string,
+    pictureWithDocument: string,
+    doctorImage: string,
+    photoWithCertification: string
   } | null
+
 
   uploadLicenseDetails?: {
     fullName: string,
@@ -43,7 +51,10 @@ export interface DoctorCertificateAndLicenceProps {
     photoWithLicence: string
   } | null
 
+
+
   uploadCertificationDetails?: {
+    fullName:string,
     institution: string,
     certificateNo: string,
     date: string,
@@ -56,8 +67,11 @@ export interface DoctorCertificateAndLicenceProps {
     pictureWithDocument: string,
     doctorImage: string,
     type: "licence" | "certificate";
-    photoWithLicence: string
+    photoWithCertification: string
   } | null
+
+
+
 }
 
 
@@ -67,7 +81,7 @@ export interface DoctorCertificateAndLicenceProps {
 
 const initialState: DoctorCertificateAndLicenceProps = {
   licenceDetails: null,
-  certification: null,
+  certificationDetails: null,
 
   uploadLicenseDetails: {
     fullName: '',
@@ -77,7 +91,7 @@ const initialState: DoctorCertificateAndLicenceProps = {
     country: 'Nigeria',
     documentId: '',
     documentHoldName: '',
-    docummentType: 'NIN NO',
+    docummentType: 'NIN No',
     documentImage: '',
     pictureWithDocument: '',
     doctorImage: '',
@@ -87,6 +101,7 @@ const initialState: DoctorCertificateAndLicenceProps = {
 
 
   uploadCertificationDetails: {
+    fullName:'',
     institution: '',
     certificateNo: '',
     date: '',
@@ -94,12 +109,12 @@ const initialState: DoctorCertificateAndLicenceProps = {
     country: 'Nigeria',
     documentId: '',
     documentHoldName: '',
-    docummentType: 'NIN NO',
+    docummentType: 'NIN No',
     documentImage: '',
     pictureWithDocument: '',
     doctorImage: '',
-    type: "licence",
-    photoWithLicence: ''
+    type: "certificate",
+    photoWithCertification: ''
 
   }
 }
@@ -111,12 +126,13 @@ const doctorCertificateAndLicenceSlice = createSlice({
   reducers: {
     cacheDoctorCertificateAndLicence(state, action: PayloadAction<DoctorCertificateAndLicenceProps>) {
       state.licenceDetails = action.payload.licenceDetails ?? state.licenceDetails!!
-      state.certification = action.payload.certification ?? state.certification
+      state.certificationDetails = action.payload.certificationDetails ?? state.certificationDetails
 
 
     },
     cacheDoctorCertificateAndLicenceDetailsForUpload(state, action: PayloadAction<DoctorCertificateAndLicenceProps>) {
       state.uploadLicenseDetails = action.payload.uploadLicenseDetails ?? state.uploadLicenseDetails!!
+      state.uploadCertificationDetails = action.payload.uploadCertificationDetails ?? state.uploadCertificationDetails!!
 
 
 

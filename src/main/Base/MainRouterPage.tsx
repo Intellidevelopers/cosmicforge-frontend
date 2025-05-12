@@ -93,7 +93,7 @@ const MainRouterPage = () => {
 
         if (!isNewCall && userSocket.newInComingCall!! && path !== undefined) {
 
-           store.dispatch(updateNavigationHistory({patientNavHistory:pathname}))
+            store.dispatch(updateNavigationHistory({ patientNavHistory: pathname }))
 
             setNewCall(userSocket.newInComingCall!!)
             // if(!userSocket.localStream)
@@ -135,6 +135,7 @@ const MainRouterPage = () => {
             localStorage.setItem('loadedOnce', 'true')
 
         }
+
 
 
         if (isReferesh === 'true') {
@@ -227,7 +228,7 @@ const MainRouterPage = () => {
 
                     store.dispatch(connectSocket({ connected: true, socket }))
 
-                  
+
 
 
                 }
@@ -276,7 +277,7 @@ const MainRouterPage = () => {
 
                 } catch (error: any) {
 
-                   
+
 
                 }
 
@@ -316,8 +317,8 @@ const MainRouterPage = () => {
 
                     if (result.status === 200) {
 
-                   
-                        store.dispatch(cacheDoctorCertificateAndLicence({ licenceDetails: result.data.licenseDetails, certification: result.data.certification }))
+
+                        store.dispatch(cacheDoctorCertificateAndLicence({ licenceDetails: result.data.licenseDetails, certificationDetails: result.data.certificationDetails }))
 
 
                         return
