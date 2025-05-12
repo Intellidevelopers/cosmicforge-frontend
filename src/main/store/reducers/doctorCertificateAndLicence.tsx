@@ -2,13 +2,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface DoctorCertificateAndLicenceProps {
+
   licenceDetails?: {
     fullName: string,
     LicenseNumber: string,
     license: string,
     expiration: string,
     country: string,
-    docummentType:string,
+    docummentType: string,
     documentId: string,
     documentHoldName: string,
     documentImage: string,
@@ -32,7 +33,23 @@ export interface DoctorCertificateAndLicenceProps {
     license: string,
     expiration: string,
     country: string,
-    docummentType:string,
+    docummentType: string,
+    documentId: string,
+    documentHoldName: string,
+    documentImage: string,
+    pictureWithDocument: string,
+    doctorImage: string,
+    type: "licence" | "certificate";
+    photoWithLicence: string
+  } | null
+
+  uploadCertificationDetails?: {
+    institution: string,
+    certificateNo: string,
+    date: string,
+    certificate: string,
+    country: string,
+    docummentType: string,
     documentId: string,
     documentHoldName: string,
     documentImage: string,
@@ -46,24 +63,45 @@ export interface DoctorCertificateAndLicenceProps {
 
 
 
+
+
 const initialState: DoctorCertificateAndLicenceProps = {
   licenceDetails: null,
   certification: null,
 
-  uploadLicenseDetails:{  
+  uploadLicenseDetails: {
     fullName: '',
     license: '',
     LicenseNumber: '',
     expiration: '',
-    country: '',
+    country: 'Nigeria',
     documentId: '',
     documentHoldName: '',
-    docummentType:'',
+    docummentType: 'NIN NO',
     documentImage: '',
     pictureWithDocument: '',
     doctorImage: '',
     type: "licence",
-    photoWithLicence:''}
+    photoWithLicence: ''
+  },
+
+
+  uploadCertificationDetails: {
+    institution: '',
+    certificateNo: '',
+    date: '',
+    certificate: '',
+    country: 'Nigeria',
+    documentId: '',
+    documentHoldName: '',
+    docummentType: 'NIN NO',
+    documentImage: '',
+    pictureWithDocument: '',
+    doctorImage: '',
+    type: "licence",
+    photoWithLicence: ''
+
+  }
 }
 
 

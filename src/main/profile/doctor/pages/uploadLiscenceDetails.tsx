@@ -27,6 +27,8 @@ const UploadLiscenceDetails = () => {
 
   const navigate = useNavigate()
 
+  const [processing,setProcessing] = useState(false)
+
   const [capturedImage, setCapturedImage] = useState('')
   const { pathname } = useLocation()
 
@@ -356,7 +358,7 @@ const UploadLiscenceDetails = () => {
 
 
 
-      <div className='  cursor-default flex place-items-center gap-3 m-5' onClick={() => {
+      <div className=' hidden md:flex  cursor-default  place-items-center gap-3 m-5' onClick={() => {
         navigate(-1)
       }}>
         <i className='fa fa-arrow-left fa-2x' />
@@ -408,11 +410,11 @@ const UploadLiscenceDetails = () => {
 
 
 
-      <div className="flex justify-center place-items-center gap-6 mt-6">
+      <div className="md:flex justify-center place-items-center gap-6 mt-6">
 
 
         <button type="button"
-          className="min-w-[100px] p-2 bg-cosmic-primary-color font-bold text-white rounded-md"
+          className="min-w-[100px] p-2 bg-cosmic-primary-color font-bold text-white rounded-md mb-2"
           onClick={async () => {
             setErrorMessage('')
 
@@ -432,11 +434,12 @@ const UploadLiscenceDetails = () => {
                  * Extract text from the licence to check if it is valid
                  */
               }
+              setProcessing(true)
 
               Textextractor.recognize(liscenseDetails?.license!!, 'eng',
                 {}).then(({ data: { text } }) => {
                   const isLicenceValid = text.trim().toLowerCase().includes('Federal republic of nigeria'.trim().toLowerCase()) || text.trim().toLowerCase().includes('Medical & Dental Council Of Nigria'.trim().toLowerCase())
-
+                    setProcessing(false)
                   if (isLicenceValid) {
 
                     navigate('/doctor/liscence-details-upload/id')
@@ -468,12 +471,12 @@ const UploadLiscenceDetails = () => {
                  */
               }
 
-
+              setProcessing(true)
 
               Textextractor.recognize(liscenseDetails?.documentImage!!, 'eng',
                 {}).then(({ data: { text } }) => {
                   const isLicenceValid = text.trim().toLowerCase().includes('Federal republic of nigeria'.trim().toLowerCase())
-
+                  setProcessing(false)
                   if (isLicenceValid) {
 
                     navigate('/doctor/liscence-details-upload/face-id')
@@ -541,6 +544,13 @@ const UploadLiscenceDetails = () => {
 
         {
           errorMessage && <p className="text-red-600">{errorMessage}</p>
+        }
+
+        {
+          processing && <div>
+   
+              <Loader size="40px"/>
+            </div>
         }
       </div>
 
