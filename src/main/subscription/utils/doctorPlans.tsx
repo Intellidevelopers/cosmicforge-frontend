@@ -65,21 +65,21 @@ const DoctorPlans = [
            
         ]
     },
-    {
-        name:'Proffessional',
-        message:'Subscribe to all Proffessional Plan Subscribers',
-        price:'100,000.00',
-        duration:'month',
-        active:false,
-        commission:'',
-        offers:[
-            'Access to 100 Patients per month.',
-            'Top Profile Listing',
-            'Access to 400 AI responses',
-            'Video Consultations and Chat.',
-            'Access to Priority Support.'
-        ]
-    },
+    // {
+    //     name:'Proffessional',
+    //     message:'Subscribe to all Proffessional Plan Subscribers',
+    //     price:'100,000.00',
+    //     duration:'month',
+    //     active:false,
+    //     commission:'',
+    //     offers:[
+    //         'Access to 100 Patients per month.',
+    //         'Top Profile Listing',
+    //         'Access to 400 AI responses',
+    //         'Video Consultations and Chat.',
+    //         'Access to Priority Support.'
+    //     ]
+    // },
 ]
 
 export {DoctorPlans}
