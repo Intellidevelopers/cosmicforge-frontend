@@ -316,7 +316,7 @@ const DoctorMobileChatPage = () => {
 
                     messagesFromServer.push({
 
-                        doctorImage: senderProfile.userProfile.profilePicture,
+                        doctorImage: senderProfile?.userProfile?.profilePicture,
                         doctorName: senderProfile.userName,
                         lastMessageTime: data.messages[data.messages.length - 1].timeStamp!!,
                         numberOfUnreadMessages: 8,

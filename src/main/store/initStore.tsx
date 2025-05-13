@@ -11,6 +11,7 @@ import  appoinmentsReducer,{ DoctorAppointmentInterface } from "./reducers/docto
 import doctorWalletReducer,{ DoctorWalletProps } from "./reducers/doctorWalletReducer";
 import doctorCertificateAndLicenceReducer,{ DoctorCertificateAndLicenceProps } from "./reducers/doctorCertificateAndLicence";
 import searchQueryReducer,{ GeneralSearchReducerProps } from "./reducers/generalSearchReducer";
+import SubscriptionReducer,{ SubscriptionProps } from "./reducers/subscriptionReducer";
 
 
 
@@ -28,7 +29,8 @@ const persistConfig = {
     appointments:DoctorAppointmentInterface,
     doctorWallet:DoctorWalletProps
     doctorCertificateAndLicence:DoctorCertificateAndLicenceProps,
-    searchQuery:GeneralSearchReducerProps
+    searchQuery:GeneralSearchReducerProps,
+    subscription:SubscriptionProps
  }
 
 
@@ -40,7 +42,8 @@ const rootReducer =  combineReducers({
   appointments:appoinmentsReducer,
   doctorWallet:doctorWalletReducer,
   doctorCertificateAndLicence:doctorCertificateAndLicenceReducer,
-  searchQuery:searchQueryReducer
+  searchQuery:searchQueryReducer,
+  subscription:SubscriptionReducer
 })
 
 

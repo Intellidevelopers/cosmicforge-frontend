@@ -24,7 +24,7 @@ const BookAppointmentPhaseOnePage = () => {
 
 
 
-    return <div  ref ={bodyRef} className="relative bg-[#F5F5F5] bg-opacity-50  cursor-default  font-poppins w-full p-5 overflow-x-hidden  h-full  overflow-y-auto"
+    return <div  ref ={bodyRef} className="relative bg-[#F5F5F5] bg-opacity-50  cursor-default  font-poppins w-full p-5 overflow-x-hidden  h-full mb-20 overflow-y-auto"
     >
         <div className=" place-items-center gap-3 hidden md:flex " onClick={() => {
             navigate(-1)
@@ -106,7 +106,7 @@ const BookAppointmentPhaseOnePage = () => {
 
 
 
-        <div className="w-full p-8 flex justify-center">
+        <div className="w-full p-8 flex flex-col place-items-center justify-center">
             <p className="bg-cosmic-primary-color p-2 text-center text-white rounded-md w-[300px]" onClick={() => {
             setErrorMesage('')
 
@@ -144,10 +144,9 @@ const BookAppointmentPhaseOnePage = () => {
                 })
             
             }}>Continue</p>
-        </div>
 
 
-        {
+{
             loading && <div className="w-full m-3 flex justify-center">
                 <Loader size="50px" />
             </div>
@@ -158,6 +157,12 @@ const BookAppointmentPhaseOnePage = () => {
                 <p className="text-red-600">{errorMesage}</p>
             </div>
         }
+
+
+        </div>
+
+
+      
 
     </div>
 }

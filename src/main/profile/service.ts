@@ -86,15 +86,19 @@ export  const getDoctorDeparmentsForLandingPage = async () => {
 }
 
 
-export  const uploadCertificateOrLicence  = async (data:{ fullName: string;
-   institution: string;
-   certificateNo?: string;
-   licenceNo?: string;
-   licenceImage?: string;
-   certificateImage?: string;
-   date: string;
+export  const uploadLicense  = async (data:{ fullName: string,
+   LicenseNumber: string,
+   license: string,
+   expiration: string,
+   country: string,
+   docummentType:string,
+   documentId: string,
+   documentHoldName: string,
+   documentImage: string,
+   pictureWithDocument: string,
+   doctorImage: string,
    type: "licence" | "certificate";
-   photoWithLicence?:string},token:string) => { 
+   photoWithLicence: string},token:string) => { 
 
       const abortController = new AbortController()
 
@@ -125,5 +129,55 @@ export  const uploadCertificateOrLicence  = async (data:{ fullName: string;
    
   
 }
+
+
+
+export  const uploadCertificate  = async (data:{ fullName:string,
+   institution: string,
+   certificateNo: string,
+   date: string,
+   certificate: string,
+   country: string,
+   docummentType: string,
+   documentId: string,
+   documentHoldName: string,
+   documentImage: string,
+   pictureWithDocument: string,
+   doctorImage: string,
+   type: "licence" | "certificate";
+   photoWithCertification: string
+   },token:string) => { 
+
+      const abortController = new AbortController()
+
+      const signal = abortController.signal
+      
+
+      const timeOut = setTimeout(()=>{
+         abortController.abort()
+      },3*60*1000)
+
+ 
+
+      const response = await fetch(`${import.meta.env.VITE_BASE_REST_URL}/user/medics/certification/upload`,{
+         signal,
+          method:'post',
+         headers:{
+          "Authorization":`Bearer ${token}`,
+          "Content-Type":'application/json'
+         },
+         body:JSON.stringify(data)
+      })
+   
+     const result  = await response.json()  as ResponseBodyProps
+
+     clearTimeout(timeOut)
+   
+     return result
+   
+  
+}
+
+
 
 

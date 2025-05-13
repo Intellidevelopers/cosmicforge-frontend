@@ -17,12 +17,13 @@ interface PatientUserProfileProps{
    profileType?: 'personal' | 'family',
    gender?:'male' | 'female',
    dateOfBirth?:string
-  }
-
+  },
+ 
   //doctor ptofile
 
   fullName?: string,
   lastName?:string,
+  userCosmicID?:string,
   professionalTitle?: string,
   specialization?: string,
   currentClinic?: string,
@@ -38,7 +39,8 @@ interface PatientUserProfileProps{
   workTime?: {
       day?: string,
       time?: string
-  }
+  },
+
    
 }
 

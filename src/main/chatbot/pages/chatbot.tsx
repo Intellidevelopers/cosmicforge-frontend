@@ -18,34 +18,34 @@ import diagnosis from '../../../assets/search/searchDiagnosis.svg'
 
 
 const Chatbot = () => {
-  const searchCards:CustomHomeSearchCardProps[] | null = [{
-    title:'Run Diagnosis',
-    image:diagnosis,
-    navigationPath:'/patient/run-diagnosis'
+  const searchCards: CustomHomeSearchCardProps[] | null = [{
+    title: 'Run Diagnosis',
+    image: diagnosis,
+    navigationPath: '/patient/run-diagnosis'
   },
   {
-    title:'Book Appointment',
-    image:searchBookAppointment,
-    navigationPath:'/patient/find-a-specialist'
+    title: 'Book Appointment',
+    image: searchBookAppointment,
+    navigationPath: '/patient/find-a-specialist'
   },
-  
+
   {
-    title:'Find A Specialist',
-    image:searchFindASpecialist,
-    navigationPath:'/patient/find-a-specialist'
+    title: 'Find A Specialist',
+    image: searchFindASpecialist,
+    navigationPath: '/patient/find-a-specialist'
   },
   {
-    title:'First Aid',
-    image:searchFirstAid,
-    navigationPath:'/patient/first-aid'
+    title: 'First Aid',
+    image: searchFirstAid,
+    navigationPath: '/patient/first-aid'
   },
-  
+
   {
-    title:'Chat Bot',
-    image:searchChatBot,
-    navigationPath:'/patient/chatbot'
+    title: 'Chat Bot',
+    image: searchChatBot,
+    navigationPath: '/patient/chatbot'
   }
-  
+
   ]
   const [messages, setMessages] = useState<{ sender: 'user' | 'bot', message: string, timeStamp: string }[]>([]);
   const [input, setInput] = useState<string>('');
@@ -53,34 +53,97 @@ const Chatbot = () => {
 
   const userSocket = useSelector((state: RootReducer) => state.socket)
 
-  const userChatBot = useSelector((state:RootReducer)=>state.diagnosis.chatBot)
+  const userChatBot = useSelector((state: RootReducer) => state.diagnosis.chatBot)
 
-  const user = useSelector((state:RootReducer)=>state.user)
+  let [countChatForThisMonth, setCountChatForThisMonth] = useState<any[]>([])
+
+  const user = useSelector((state: RootReducer) => state.user)
 
 
-  const [toggleSearch,setToggleSearch] = useState<boolean>(false)
+  const [toggleSearch, setToggleSearch] = useState<boolean>(false)
+
+  const subscription = useSelector((state: RootReducer) => state.subscription)
+
+  const accessAccordingToSubscription = [
+    {
+      plan: 'Free',
+      access: 10
+    },
+
+    {
+      plan: 'Basic',
+      access: 50
+    },
+    {
+      plan: 'Medium',
+      access: 100
+    },
+  ]
+
+  useMemo(() => {
 
 
-  useMemo(()=>{
 
-  
-   if(userChatBot?.messages){
-    setMessages(userChatBot.messages as { sender: 'user' | 'bot', message: string, timeStamp: string }[] )
-   }
-  },[userChatBot])
+    if (userChatBot?.messages) {
+
+      setMessages(userChatBot.messages as { sender: 'user' | 'bot', message: string, timeStamp: string }[])
+
+      if ((subscription.userSubcription?.planName ?? 'Free') !== 'Premium') {
+
+        setCountChatForThisMonth(userChatBot.messages.filter((message) => {
+          return new Date(message.timeStamp!!).toLocaleString('en-Us', {
+            month: 'long'
+          }) === new Date().toLocaleString('en-Us', {
+            month: 'long'
+          })
+        })
+        )
+
+
+      }
+
+
+    }
+
+
+  }, [userChatBot])
+
+
+
 
   const handleSend = () => {
-    if (input.trim()) {
-      setMessages([...messages, { sender: 'user', message: input, timeStamp: Date.now().toLocaleString('en-Us')},{ sender: 'bot', message: 'typing....', timeStamp:Date.now().toLocaleString('en-Us') }]);
+  
+
+    let data:{plan: string; access: number} | undefined = undefined
+
+    if ((subscription.userSubcription?.planName ?? 'Free') !== 'Premium') {
+
+      data= accessAccordingToSubscription.find((sub) => {
+        return sub.plan === (subscription.userSubcription?.planName ?? 'Free')
+      })
+
+}
+
+    if (data?.access && (countChatForThisMonth.length >= data?.access)) {
+      setInput('');
+      setMessages([...messages, { sender: 'user', message: input, timeStamp: `${new Date(Date.now()).toLocaleDateString('en-US')}` }, { sender: 'bot', message: 'Sorry you are out of free triers for this month. Upgrade plan to enjoy using this feature.', timeStamp: `${new Date(Date.now()).toLocaleDateString('en-US')}` }]);
+
+      return
+    }
+
+
+
+    if (input.trim() && userSocket.connected) {
+      setMessages([...messages, {
+        sender: 'user', message: input, timeStamp: `${new Date().toISOString()}`
+      }, { sender: 'bot', message: 'typing....', timeStamp: `${new Date().toISOString()}` }]);
 
       setInput('');
       if (userSocket.socket && (input !== '' || undefined)) {
         userSocket.socket.emit('ai-chat', input)
 
 
-        userSocket.socket.on('ai-chatbot', (d: any) => {
-          setMessages(d.messages)
-        })
+
       }
       // Simulate a bot response
       /*  setTimeout(() => {
@@ -90,7 +153,12 @@ const Chatbot = () => {
 
     }
   };
+
+
+
+
   const lastMessageRef = useRef<HTMLDivElement>(null);
+
 
   useEffect(() => {
     if (lastMessageRef.current) {
@@ -98,87 +166,102 @@ const Chatbot = () => {
     }
   }, [messages]
   )
+
+
   const navigate = useNavigate()
   return (
-    <div className='w-full relative overflow-y-hidden'>
-      <HomeNavBar title='Chatbot' onSearchFired={(path)=>{
-       if(path === 'Chatbot'){
-        setToggleSearch(!toggleSearch)
-       }}
+    <div className='w-full relative overflow-y-hidden '>
+
+
+      <HomeNavBar title='Chatbot' onSearchFired={(path) => {
+        if (path === 'Chatbot') {
+          setToggleSearch(!toggleSearch)
+        }
+      }
       } />
-      <HomeMobileNavBar title='Chatbot' onSearchFired={(path)=>{
-       if(path === 'Chatbot'){
-        //setToggleSearch(!toggleSearch)
-       }}}/>
+      <HomeMobileNavBar title='Chatbot' onSearchFired={(path) => {
+        if (path === 'Chatbot') {
+          //setToggleSearch(!toggleSearch)
+        }
+      }} />
 
 
-
-
-{
-      toggleSearch && <div className="absolute  bg-white w-full  z-[600] min-h-[350px] p-10 md:flex flex-col place-items-center justify-center">
-       <div className="w-full h-[20px] relative ">
-       <i className="fa  font-bold text-[30px] fa-times absolute right-0 hover:text-cosmic-primary-color" onClick={()=>{
-        setToggleSearch(false)
-       }}/>
-
-     
-        </div>
-       
-       <div className="mt-6 bg-black bg-opacity-5 w-[90%] h-full flex  justify-center gap-8 p-8 flex-wrap  relative">
 
 
       {
-        searchCards  && searchCards.map((card)=>(
-          <CustomHomeSearchCard title={card.title} image={card.image} navigationPath={card.navigationPath} />
-        ))
-      }
-       
+        toggleSearch && <div className="absolute  bg-white w-full       z-[600] min-h-[350px] p-10 md:flex flex-col place-items-center justify-center">
+          <div className="w-full h-[20px] relative ">
+            <i className="fa  font-bold text-[30px] fa-times absolute right-0 hover:text-cosmic-primary-color" onClick={() => {
+              setToggleSearch(false)
+            }} />
 
+
+          </div>
+
+          <div className="mt-6 bg-black bg-opacity-5 w-[90%] h-full flex  justify-center gap-8 p-8 flex-wrap  relative">
+
+
+            {
+              searchCards && searchCards.map((card, key) => (
+                <CustomHomeSearchCard key={key} title={card.title} image={card.image} navigationPath={card.navigationPath} />
+              ))
+            }
+
+
+          </div>
         </div>
-     </div>
-     }
+      }
 
 
-      <div className=" flex  flex-col h-full overflow-hidden  bg-gray-100 ">
-    
-     
+      <div className=" flex  flex-col h-[80%] overflow-y-auto bg-gray-100   relative">
+
+
 
         <div className="flex-1 overflow-auto p-8" >
           {messages.map((data, index) => (
-            <>
-              <div key={index} className={`mb-4 flex m-4 ${data.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
-                {data.sender == 'bot' && <img src={robotProfilePic} alt="Profile" className='inline self-end rounded-[50%]  mr-2 h-8 w-8' />}
-                <div className={`inline-block p-3 rounded-lg shadow-lg ${data.sender === 'user' ? 'bg-cosmic-color-lightBlue text-white' : 'bg-white text-black'}`}>
-                  <p style={{ whiteSpace: 'pre-wrap' }}> {data.message}</p>
-                  <p className='text-xs mt-2 text-end'>{new Date(data.timeStamp).toLocaleTimeString('en-Us',{
-                  hour12:true})}</p>
-                </div>
-                {data.sender == 'user' && <img src={user.data?.profile?.profilePicture} alt="Profile" className='inline-flex self-end rounded-[50%]  ml-2 h-8 w-8' />}
+
+            <div key={index} className={`mb-4 flex m-4 ${data.sender === 'user' && 'justify-self-end'} `} ref={lastMessageRef}>
+              {data.sender == 'bot' && <img src={robotProfilePic} alt="Profile" className='inline self-end rounded-[50%]  mr-2 h-8 w-8' />}
+              <div className={`inline-block p-3 rounded-lg shadow-lg ${data.sender === 'user' ? 'bg-cosmic-color-lightBlue text-white' : 'bg-white text-black'}`}>
+                <p style={{ whiteSpace: 'pre-wrap' }}> {data.message}</p>
+                <p className='text-xs mt-2 text-end'>{new Date(data.timeStamp).toLocaleTimeString('en-Us', {
+                  hour12: true,
+                  timeStyle:'short'
+                })}</p>
               </div>
-            </>
+              {data.sender == 'user' && <img src={user.data?.profile?.profilePicture} alt="Profile" className='inline-flex self-end rounded-[50%]  ml-2 h-8 w-8' />}
+            </div>
+
           ))}
         </div>
-        <div className="flex-none p-4  bg-white border-t border-gray-300">
-          <div className="flex w-full">
-            <input
-              title='enter text'
-              placeholder=' '
-              name='chat'
-              type="text"
-              className="flex-1 p-2 border border-gray-300 rounded-l-lg focus:outline-none"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyUp={(e) => e.key === 'Enter' && handleSend()}
-            />
-            <div className="flex gap-2 ml-4">
-              <img src={mic} alt="Mic" className='w-8 cursor-pointer' />
-              {/* <div
+
+
+
+      </div>
+
+
+      <div className="flex-none p-4 w-full  bg-white border-t border-gray-300 absolute bottom-0">
+        <div className="flex w-full">
+
+          <input
+            title='enter text '
+            placeholder=' '
+            name='chat'
+            type="text"
+            className="flex-1 p-2 border w-[60%] border-gray-300 rounded-l-lg focus:outline-none"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyUp={(e) => e.key === 'Enter' && handleSend()}
+          />
+
+          <div className="flex gap-2 ml-4">
+            <img src={mic} alt="Mic" className='w-8 cursor-pointer' />
+            {/* <div
                 className="w-8 text-white p-2 rounded-r-lg"
                 
               >
               </div> */}
-              <img src={send} alt="Send" className='w-8 cursor-pointer' onClick={handleSend} />
-            </div>
+            <img src={send} alt="Send" className='w-8 cursor-pointer' onClick={handleSend} />
           </div>
         </div>
       </div>

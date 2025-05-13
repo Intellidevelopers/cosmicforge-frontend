@@ -1,12 +1,63 @@
 import Chart from 'react-apexcharts'
+import { useSelector } from 'react-redux'
+import { RootReducer } from '../../../store/initStore'
 const DoctorTotalEarningGraph = () => {
 
-    return <div className=" w-full  md:h-[400px] p-6   bg-white rounded-md">
+    const wallet = useSelector((state:RootReducer)=>state.doctorWallet.wallet)
 
-        <div className="p-4 ">
+    const formatAmout = (amount:number)=>{
+        if(amount){
+          amount = amount/100
+         return new Intl.NumberFormat().format(amount)
+        }
+     
+        return 0
+      }
+
+      const percentage = (amount:number)=>{
+        if(amount){
+          amount = amount/100
+        
+          if(amount<50000){
+            return 10
+          }
+
+          if(amount===50000 && amount<100000){
+            return 30
+          }
+
+
+          if(amount===100000 && amount<200000){
+            return 50
+          }
+
+
+          if(amount===200000 && amount<500000){
+            return 70
+          }
+
+          if(amount===500000 && amount<700000){
+            return 80
+          }
+
+          if( amount>700000){
+            return 100
+          }
+
+          return 0
+
+        }
+     
+        return 0
+      }
+
+
+    return <div className=" w-full  md:h-[400px] p-3   bg-white rounded-md">
+
+        <div className="p-1">
             <p className="text-center font-bold">Total Earnings</p>
             <div>
-                <p className="text-center mt-2">3.2% from last month</p>
+              {/* <p className="text-center mt-2">3.2% from last month</p>*/}
             </div>
         </div>
 
@@ -14,7 +65,7 @@ const DoctorTotalEarningGraph = () => {
             {
                 chart: {
                     type: 'radialBar',
-                    height: 200
+                    height: 1500
                 },
 
                 series: [59],
@@ -37,7 +88,7 @@ const DoctorTotalEarningGraph = () => {
                             value: {
 
                                 formatter: (_) => {
-                                    return '₦356K'
+                                    return ` ₦${formatAmout(wallet?.amount!!)}` 
                                 }
                             },
                             name: {
@@ -57,7 +108,9 @@ const DoctorTotalEarningGraph = () => {
 
             }
         }
-            series={[70]} type='radialBar' />
+            series={[percentage(wallet?.amount!!)]} type='radialBar' height={280} />
+
+
 
         <div className='flex gap-6 justify-center'>
             <div className='flex   place-items-center gap-1'>

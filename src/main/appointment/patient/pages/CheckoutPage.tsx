@@ -11,9 +11,8 @@ const CheckoutPage = () => {
     const navigate = useNavigate()
     const { state } = useLocation()
     const user = useSelector((state: RootReducer) => state.user)
-
     const amount: number = state?.pricing.replace(',', '')
-    return <div className="relative  bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full md:p-5 overflow-x-hidden h-full overflow-y-auto pb-8"
+    return <div className="relative  bg-[#F5F5F5] bg-opacity-50  cursor-default overflow-auto  font-poppins w-full md:p-5 overflow-x-hidden h-full overflow-y-auto pb-8 mb-20"
     >
         <div className=" place-items-center gap-3 hidden md:flex " onClick={() => {
             navigate(-1)
@@ -95,15 +94,15 @@ const CheckoutPage = () => {
 
 
 
-
-        <PaystackButton className="w-full" amount={Number(amount) * 100} email="ben@gmail.com" publicKey="pk_test_5064b4c81898b5c11f082d5fbabe15b2d00bfb07" onSuccess={async (e: {
+        <div className="mb-10 ">
+        <PaystackButton className="w-full" amount={Number(amount) * 100} email="ben@gmail.com" publicKey="pk_test_5064b4c81898b5c11f082d5fbabe15b2d00bfb07"  onSuccess={async (e: {
             reference: string, status: string
         }) => {
 
             
             if (e.reference) {
 
-               await book_appointment(user.data?.token!!, {
+           const t=    await book_appointment(user.data?.token!!, {
                     doctorId: state?.doctorId, date: state?.appointmentmentDetails.date, time: state?.appointmentmentDetails.time, appointmentType: state?.appointmentmentDetails.appointmentType, appointmentStatus: 'booked', payment: {
                         cardType: 'individual',
                         consultationFee: (Number(amount) * 100).toString(),
@@ -112,15 +111,17 @@ const CheckoutPage = () => {
                         vat: ''
                     }
                 })
-
+                alert(JSON.stringify(t))
                
             }
-            alert(JSON.stringify(e))
+           
         }}>
             <div className="mt-3 flex justify-center flex-col place-items-center">
                 <p className="bg-cosmic-primary-color w-[200px] p-2 m-2 text-center text-white border rounded-md font-light">Continue</p>
             </div>
         </PaystackButton>
+        </div>
+
     </div>
 }
 

@@ -182,3 +182,38 @@ html{
   }
  }
 
+
+ .PhoneInputCountryIcon {
+  width:20px;
+  height: 15;
+  
+ }
+
+ .PhoneInputInput {
+ display: none;
+ }
+
+ .PhoneInputCountry {
+  display: flex;
+width: 60%;
+  flex-direction: row-reverse;
+justify-content:start;align-items: center;
+  
+  }
+
+  .PhoneInputCountrySelect {
+    width:30%;
+    background-color: transparent;
+    outline: none;
+    }
+
+
+    .ellipse {
+      width: 210px;
+      height: 270px;
+      
+      border-radius: 50%;
+    }
+ 
+ 
+

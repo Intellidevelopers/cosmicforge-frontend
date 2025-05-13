@@ -27,7 +27,7 @@ const DoctorHomeSideBarMobile = () => {
     const user = useSelector((state: RootReducer) => state.user)
 
     return (
-        <div ref={sideBarRef} className="hidden  w-[60%] absolute h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-[300] cursor-default">
+        <div ref={sideBarRef} className="hidden  w-[60%] absolute h-dvh overflow-y-auto bg-home-slidder-color shadow-md shadow-black   p-4 z-[300] cursor-default">
             <div className="w-full mt-4 ">
 
                 <div className="w-full ">
@@ -39,7 +39,7 @@ const DoctorHomeSideBarMobile = () => {
 
                 <img alt="logo" src={logo} />
                 <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
-                    <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-4">
+                    <div className=" w-[80px] h-[80px] rounded-full bg-gray-500 mt-4">
                         <img alt="profile-image" className="h-[100%] w-[100%] rounded-full" src={user.data?.profile?.profilePicture ?? '/'} />
                     </div>
                     <p>Dr {user.data?.fullName}</p>
@@ -60,7 +60,7 @@ const DoctorHomeSideBarMobile = () => {
                         Edit Profile
                     </p>
 
-                    <div className="nav-bar-links-container w-full flex flex-col justify-center place-items-center gap-8">
+                    <div className="nav-bar-links-container w-full flex flex-col justify-center place-items-center gap-5">
                         <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={() => {
                             setActiveRoutePath({
                                 ...activeRoutePath,
@@ -143,7 +143,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isProfileActive: true,
                                 isEditProfileActive: false
                             })
-                            navigate('/doctor/profile')
+                            navigate('/doctor/settings')
                         }}>
                             <img alt="home" src={calenderIcon} />
                             <p>Profile</p>

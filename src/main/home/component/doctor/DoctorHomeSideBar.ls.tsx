@@ -22,13 +22,15 @@ const dispatch = useDispatch()
 const user = useSelector((state:RootReducer)=>state.user)
   
   return (
-    <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black   p-4 z-50 cursor-default">
+    <div className="   h-dvh bg-home-slidder-color shadow-md shadow-black  overflow-y-auto  p-4 z-50 cursor-default">
+      
       <div className="w-full mt-6 ">
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
-          <div className=" w-[100px] h-[100px] rounded-full bg-gray-500 mt-2">
+          <div className=" w-[80px] h-[80px] rounded-full bg-gray-500 mt-1">
             <img alt="profile-image " className="w-[100%] h-[100%] rounded-full" src={user.data?.profile?.profilePicture ??'/'} />
           </div>
+          <p>ID:<span className="text-sm font-light">{user.data?.profile?.userCosmicID}</span></p>
           <p>Dr {user.data?.fullName}</p>
           <p className={`font-extralight text-cosmic-primary-color ${(activeRoutePath.isEditProfileActive) && 'underline'}`} onClick={()=>{
               setActiveRoutePath({
@@ -45,8 +47,9 @@ const user = useSelector((state:RootReducer)=>state.user)
             Edit Profile
           </p>
 
-          <div className="nav-bar-links-container w-full flex flex-col justify-center place-items-center gap-8">
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+          <div className="nav-bar-links-container w-full flex flex-col justify-center place-items-center gap-5">
+            
+            <div className={`w-full flex justify-start min-h-10 ps-[16%] ms-5  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black    shadow-md font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active  rounded-md  hover:shadow-black hover:shadow-md  hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: true,
@@ -62,7 +65,7 @@ const user = useSelector((state:RootReducer)=>state.user)
               <p className="">Dashboard</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAppoinmentsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start hover:shadow-md ps-[16%]   ms-5 min-h-10  place-items-center gap-4 ${(activeRoutePath.isAppoinmentsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-md font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active  rounded-md  hover:shadow-black hover:shadow-md  hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -78,7 +81,7 @@ const user = useSelector((state:RootReducer)=>state.user)
               <p>Appointments</p>
             </div>
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isMessageActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex justify-start ps-[16%] ms-5 min-h-10  place-items-center gap-4 ${(activeRoutePath.isMessageActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-md font-semibold':'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active  rounded-md  hover:shadow-black hover:shadow-md hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -97,7 +100,7 @@ const user = useSelector((state:RootReducer)=>state.user)
 
            
 
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex ps-[16%] justify-start min-h-10  ms-5  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ?'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-md font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active  rounded-md  hover:shadow-black hover:shadow-md  hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -115,7 +118,7 @@ const user = useSelector((state:RootReducer)=>state.user)
           
 
   
-            <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isProfileActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={()=>{
+            <div className={`w-full flex ps-[16%] justify-start ms-5 min-h-10  place-items-center gap-4 ${(activeRoutePath.isProfileActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-md font-semibold':'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active  rounded-md  hover:shadow-black hover:shadow-md hover:font-semibold`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
                 isHomeActive: false,
@@ -125,13 +128,13 @@ const user = useSelector((state:RootReducer)=>state.user)
                 isProfileActive:true,
                 isEditProfileActive:false
               })
-              navigate('/doctor/profile')
+              navigate('/doctor/settings')
             }}>
               <img alt="home" src={calenderIcon} />
               <p>Profile</p>
             </div>
 
-            <div className="w-full flex justify-start ms-5 text-cosmic-color-warning-color  hover:underline ">
+            <div className="w-full flex justify-start ps-[16%] mt-3  ms-5 text-cosmic-color-warning-color  hover:underline ">
             <img alt="home" src={logOutIcon} />
 
               <p onClick={()=>{

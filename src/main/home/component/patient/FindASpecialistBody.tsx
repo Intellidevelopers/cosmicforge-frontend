@@ -41,6 +41,8 @@ const FindASpecialistBody = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [refresh, setRefresh] = useState<boolean>(false)
 
+  
+
 
   useMemo(() => {
 
@@ -116,6 +118,8 @@ const FindASpecialistBody = () => {
 
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col cursor-default">
+     
+     
       <HomeNavBar title="Find A Specialist" onSearchFired={(path, query) => {
 
         if (path === "Find A Specialist") {
@@ -146,11 +150,21 @@ const FindASpecialistBody = () => {
 
         }
       }} />
+
+
+
+
       <HomeMobileNavBar title="Find A Specialist" onSearchFired={() => {
 
 
       }} />
+
+
+
       <div className=" ps-0   pe-10   ">
+
+
+
         <div className="w-full m-5 flex place-items-center gap-3" onClick={() => {
           navigate(-1);
         }}>
