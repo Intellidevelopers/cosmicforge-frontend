@@ -1,5 +1,5 @@
 import "../../../../styles/browse.css";
-import Med from "../../../../assets/HomeImg/med.png";
+// import Med from "../../../../assets/HomeImg/med.png";
 import { getDoctorDeparmentsForLandingPage } from "../../../profile/service";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -23,18 +23,18 @@ const BrowseFeatures = () => {
       setDepartments(state?.departments.length > 0 ? state.departments : []);
     }
   }, []);
-  const BrowseData = [
-    { label: "General Med", image: Med },
-    { label: "Emergency Med", image: Med },
-    { label: "Cardiology", image: Med },
-    { label: "Neurology", image: Med },
-    { label: "OB-GYN", image: Med },
-    { label: "Denistry", image: Med },
-    { label: "Otolaryngology", image: Med },
-    { label: "Pediatrics", image: Med },
-    { label: "Psychiatry", image: Med },
-    { label: "Radiology", image: Med },
-  ];
+  // const BrowseData = [
+  //   { label: "General Med", image: Med },
+  //   { label: "Emergency Med", image: Med },
+  //   { label: "Cardiology", image: Med },
+  //   { label: "Neurology", image: Med },
+  //   { label: "OB-GYN", image: Med },
+  //   { label: "Denistry", image: Med },
+  //   { label: "Otolaryngology", image: Med },
+  //   { label: "Pediatrics", image: Med },
+  //   { label: "Psychiatry", image: Med },
+  //   { label: "Radiology", image: Med },
+  // ];
   const navigate = useNavigate();
 
   return (

@@ -1,4 +1,3 @@
-import React from "react";
 import user_centric_design from "../../../assets/features/user_centric_design.png";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";

@@ -1,4 +1,3 @@
-import React from "react";
 import health_bg from "../../../assets/features/health_edu_bg.png";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";
@@ -16,7 +15,7 @@ const HealthEduFeature = () => {
           <div></div>
           <div className="flex justify-between mx-24 pt-4">
             <Link to="/features/first_aid">
-              <ArrowLeftCircle className="w-10 h-10 text-white bg-gray-800 p-2 rounded-full hover:bg-gray-700 cursor-pointer"/>
+              <ArrowLeftCircle className="w-10 h-10 text-white bg-gray-800 p-2 rounded-full hover:bg-gray-700 cursor-pointer" />
             </Link>
 
             <Link to={"/features/vr"}>

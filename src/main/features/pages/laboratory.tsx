@@ -1,4 +1,3 @@
-import React from "react";
 import laboratory_bg from "../../../assets/features/labouratory_bg.png";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";

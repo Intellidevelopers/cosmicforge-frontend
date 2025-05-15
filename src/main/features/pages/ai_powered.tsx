@@ -1,4 +1,3 @@
-import React from "react";
 import ai_powered from "../../../assets/features/ai_powered.png";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";

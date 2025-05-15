@@ -1,12 +1,12 @@
 import logo from "../../../../assets/logo/logo_comsic_splash.svg";
 import fbIcon from "../../../../assets/icons/facebookIcon.svg";
 import instalIcon from "../../../../assets/icons/instagramIcon.svg";
-import youtubeIcon from "../../../../assets/icons/playstoreIcon.svg";
+// import youtubeIcon from "../../../../assets/icons/playstoreIcon.svg";
 import linkdin from "../../../../assets/icons/linkendIcon.svg";
-import twitterIcon from "../../../../assets/icons/XIcon.png";
+// import twitterIcon from "../../../../assets/icons/XIcon.png";
 import location from "../../../../assets/icons/cosmic-location-icon.svg";
 import email from "../../../../assets/icons/cosmic-email-icon.svg";
-import { FaPhoneAlt } from "react-icons/fa";
+// import { FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const FooterComponent = () => {

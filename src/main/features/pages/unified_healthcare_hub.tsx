@@ -1,6 +1,5 @@
-import React from "react";
 import unified_healthcare_bg from "../../../assets/features/unified_healthcare_hub.png";
-import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
+import { ArrowRightCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";
 import { Link } from "react-router-dom";
 

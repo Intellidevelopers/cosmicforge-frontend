@@ -1,6 +1,5 @@
-import React from "react";
 import simplified_process from "../../../assets/features/simplified_process.png";
-import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
+import { ArrowLeftCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";
 import { Link } from "react-router-dom";
 
