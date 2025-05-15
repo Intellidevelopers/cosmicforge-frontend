@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X } from "lucide-react"; // For hamburger icons
 
-import { Input } from "../../../../components/ui/input";
+// import { Input } from "../../../../components/ui/input";
 import { Link } from "react-router-dom";
 import Logo from "../../../../assets/logo/logo_comsic_splash.svg";
 import { useState } from "react";

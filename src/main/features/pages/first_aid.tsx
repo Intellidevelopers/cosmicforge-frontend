@@ -1,4 +1,3 @@
-import React from "react";
 import first_aid_bg from "../../../assets/features/first_aid_bg.png";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";

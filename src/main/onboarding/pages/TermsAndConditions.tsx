@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import Footer from "../pages/components/Footer";
-import { useLocation, useNavigate } from "react-router-dom";
+// import { useLocation, useNavigate } from "react-router-dom";
 import NavigationComponent from "./components/Navigation";
 
 function TermsAndConditions() {
-  const { state } = useLocation();
-  const navigate = useNavigate();
+  // const { state } = useLocation();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     if (window) {

@@ -5,17 +5,17 @@ import BrowseFeatures from "./components/BrowseFeatures";
 // import FeaturesSlider from "./components/Features";
 import Frequently from "./components/Frequently";
 import Footer from "./components/Footer";
-import ShopComponent from "./components/ShopComponent";
+// import ShopComponent from "./components/ShopComponent";
 
 // import OtherFeature from "./components/SubFeatures";
-import Testimonials from "./components/Testimonials";
+// import Testimonials from "./components/Testimonials";
 // import WhyUsImage from "../../../assets/HomeImg/whyusimg.png";
 // import ImageFeatures from "./components/ImageFeatures";
 import NavigationComponent from "./components/Navigation";
 
 // image imports
 import Borderline from "../../../assets/HomeImg/borderline.png";
-import Cart from "../../../assets/HomeImg/Shopping-Cart.png";
+// import Cart from "../../../assets/HomeImg/Shopping-Cart.png";
 import DoctorMed from "../../../assets/HomeImg/doctorcal.png";
 import HeroImg from "../../../assets/HomeImg/Healthcare.png";
 // import image1 from "../../../assets/images/FirstImagCustomView.svg";
@@ -23,24 +23,24 @@ import HeroImg from "../../../assets/HomeImg/Healthcare.png";
 import Iphone from "../../../assets/HomeImg/iphone.png";
 // import Logo from "../../../assets/logo/logo_comsic_splash.svg";
 import newProfile from "../../../assets/images/cosmic-display-profile-new.svg";
-import FeaturesImg from "../../../assets/HomeImg/Features-List.png";
-import Stethoscope from "../../../assets/HomeImg/Stethoscope.png";
+// import FeaturesImg from "../../../assets/HomeImg/Features-List.png";
+// import Stethoscope from "../../../assets/HomeImg/Stethoscope.png";
 
 // import ProfileMed from "../../../assets/HomeImg/profilemed.png";
 import profile2 from "../../../assets/images/cosmic-display-profile-2.svg";
 import profile3 from "../../../assets/images/cosmic-display-profile-3.svg";
 import profile4 from "../../../assets/images/cosmic-display-profile-4.svg";
-import ContactImage from "../../../assets/HomeImg/contactImg.png";
+// import ContactImage from "../../../assets/HomeImg/contactImg.png";
 
 // dynamic imports
 import { Link, useNavigate } from "react-router-dom";
 import { BiLogoPlayStore } from "react-icons/bi";
 import { FaApple } from "react-icons/fa";
-import { GrLinkNext } from "react-icons/gr";
+// import { GrLinkNext } from "react-icons/gr";
 
 // Shadcn imports
-import { Input } from "../../../components/ui/input";
-import { Textarea } from "../../../components/ui/textarea";
+// import { Input } from "../../../components/ui/input";
+// import { Textarea } from "../../../components/ui/textarea";
 import { Button } from "../../../components/ui/button";
 
 const LandingPage = () => {
@@ -108,20 +108,20 @@ const HeroBanner = () => {
 // const subHeroBanner
 const SubHeroBanner = () => {
   // cons data for the sub banner
-  const SubData = [
-    {
-      imageLabel: FeaturesImg,
-      label: "Features",
-    },
-    {
-      imageLabel: Stethoscope,
-      label: "Consultation",
-    },
-    {
-      imageLabel: Cart,
-      label: "Shopping",
-    },
-  ];
+  // const SubData = [
+  //   {
+  //     imageLabel: FeaturesImg,
+  //     label: "Features",
+  //   },
+  //   {
+  //     imageLabel: Stethoscope,
+  //     label: "Consultation",
+  //   },
+  //   {
+  //     imageLabel: Cart,
+  //     label: "Shopping",
+  //   },
+  // ];
   return (
     <section className="py-8 max-w-[80%] mx-auto">
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 items-start gap-8">
@@ -532,84 +532,84 @@ const SubDownloadComponents = () => {
 };
 
 // contactform
-const ContactForm = () => {
-  return (
-    <section className="bg-[#0a0d1723] pb-8">
-      <div className="max-w-[80%] mx-auto grid md:grid-cols-2 items-center gap-4">
-        <div>
-          <img src={ContactImage} alt="" />
-        </div>
-        <div className="contact_form">
-          <div className="headers mb-4">
-            <h1 className="text-3xl text-[#272EA7] font-semibold mb-3">
-              Contact Form
-            </h1>
-            <p className="font-medium">
-              We are always here to listen, Leave us a message.
-            </p>
-          </div>
-          <form action="">
-            <div className="grid grid-cols-2 items-start gap-4 mb-2">
-              <Input
-                type="text"
-                className="outline-none bg-white"
-                placeholder="Last Name"
-              />
-              <Input
-                type="text"
-                className="bg-white outline-none"
-                placeholder="First Name"
-              />
-            </div>
-            <Input
-              type="email"
-              className="bg-white mb-2 outline-none"
-              placeholder="Email"
-            />
-            <Input
-              type="number"
-              className="bg-white mb-2 outline-none"
-              placeholder="Number"
-            />
-            <Textarea className="bg-white" placeholder="Message" />
-            <div className="flex justify-center items-center mt-4">
-              <Button className="bg-[#272EA7] text-white py-3 px-24 rounded-md hover:bg-blue-800 duration-200">
-                submit
-              </Button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
-};
+// const ContactForm = () => {
+//   return (
+//     <section className="bg-[#0a0d1723] pb-8">
+//       <div className="max-w-[80%] mx-auto grid md:grid-cols-2 items-center gap-4">
+//         <div>
+//           <img src={ContactImage} alt="" />
+//         </div>
+//         <div className="contact_form">
+//           <div className="headers mb-4">
+//             <h1 className="text-3xl text-[#272EA7] font-semibold mb-3">
+//               Contact Form
+//             </h1>
+//             <p className="font-medium">
+//               We are always here to listen, Leave us a message.
+//             </p>
+//           </div>
+//           <form action="">
+//             <div className="grid grid-cols-2 items-start gap-4 mb-2">
+//               <Input
+//                 type="text"
+//                 className="outline-none bg-white"
+//                 placeholder="Last Name"
+//               />
+//               <Input
+//                 type="text"
+//                 className="bg-white outline-none"
+//                 placeholder="First Name"
+//               />
+//             </div>
+//             <Input
+//               type="email"
+//               className="bg-white mb-2 outline-none"
+//               placeholder="Email"
+//             />
+//             <Input
+//               type="number"
+//               className="bg-white mb-2 outline-none"
+//               placeholder="Number"
+//             />
+//             <Textarea className="bg-white" placeholder="Message" />
+//             <div className="flex justify-center items-center mt-4">
+//               <Button className="bg-[#272EA7] text-white py-3 px-24 rounded-md hover:bg-blue-800 duration-200">
+//                 submit
+//               </Button>
+//             </div>
+//           </form>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
 
-// sub footer
-const SubFooter = () => {
-  return (
-    <section className="bg-white text-center py-12">
-      <div className="max-w-[80%] mx-auto text-[#272EA7]">
-        <h1 className="capitalize font-semibold text-3xl my-4">
-          Sign Up for Our Newsletter
-        </h1>
-        <p className="my-4 text-sm font-light text-black">
-          Get weekly update about our products and services on your email
-        </p>
-        <div className="max-w[100%] md:max-w-[50%] mx-auto my-6 mt-12">
-          <div className="flex">
-            <Input
-              placeholder="Enter email"
-              className="flex-grow outline-none placeholder:text-black rounded-l-md border-[#272EA7]"
-            />
-            <button className="text-sm font-medium capitalize px-4 py-[6px] rounded-r-md bg-[#272EA7] text-white whitespace-nowrap cursor-pointer">
-              subscribe now
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+// // sub footer
+// const SubFooter = () => {
+//   return (
+//     <section className="bg-white text-center py-12">
+//       <div className="max-w-[80%] mx-auto text-[#272EA7]">
+//         <h1 className="capitalize font-semibold text-3xl my-4">
+//           Sign Up for Our Newsletter
+//         </h1>
+//         <p className="my-4 text-sm font-light text-black">
+//           Get weekly update about our products and services on your email
+//         </p>
+//         <div className="max-w[100%] md:max-w-[50%] mx-auto my-6 mt-12">
+//           <div className="flex">
+//             <Input
+//               placeholder="Enter email"
+//               className="flex-grow outline-none placeholder:text-black rounded-l-md border-[#272EA7]"
+//             />
+//             <button className="text-sm font-medium capitalize px-4 py-[6px] rounded-r-md bg-[#272EA7] text-white whitespace-nowrap cursor-pointer">
+//               subscribe now
+//             </button>
+//           </div>
+//         </div>
+//       </div>
+//     </section>
+//   );
+// };
 
 // footer section
 

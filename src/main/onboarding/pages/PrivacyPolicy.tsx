@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import Footer from "../pages/components/Footer";
-import aboutUsBg from "../../../assets/HomeImg/aboutUs.png";
-import Services from "../../../assets/HomeImg/Services.svg";
-import Services2 from "../../../assets/HomeImg/Services2.svg";
-import Services3 from "../../../assets/HomeImg/Services3.svg";
-import { useLocation, useNavigate } from "react-router-dom";
+// import aboutUsBg from "../../../assets/HomeImg/aboutUs.png";
+// import Services from "../../../assets/HomeImg/Services.svg";
+// import Services2 from "../../../assets/HomeImg/Services2.svg";
+// import Services3 from "../../../assets/HomeImg/Services3.svg";
+// import { useLocation, useNavigate } from "react-router-dom";
 import NavigationComponent from "./components/Navigation";
 
 function PrivacyPolicy() {
-  const { state } = useLocation();
-  const navigate = useNavigate();
+  // const { state } = useLocation();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     if (window) {

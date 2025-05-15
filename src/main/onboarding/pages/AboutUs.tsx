@@ -5,16 +5,16 @@ import Services from "../../../assets/HomeImg/Services.svg";
 import Services2 from "../../../assets/HomeImg/Services2.svg";
 import Services3 from "../../../assets/HomeImg/Services3.svg";
 
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function AboutUs() {
-  const { state } = useLocation();
+  // const { state } = useLocation();
   const navigate = useNavigate();
-  const data: {
-    title: string;
-    bodyText: string;
-    backgroundImage: string;
-    relatedPath: string;
-  } = state?.department!!;
+  // const data: {
+  //   title: string;
+  //   bodyText: string;
+  //   backgroundImage: string;
+  //   relatedPath: string;
+  // } = state?.department!!;
 
   useEffect(() => {
     if (window) {
