@@ -78,7 +78,7 @@ const DoctorHomeBody = () => {
 
       <div className="  w-full h-dvh  ">
 
-        <div className="w-full grid   grid-cols-6 md:p-4 md:gap-8">
+        <div className="w-full grid grid-cols-6 md:p-4 md:gap-8">
 
           <div className=" bg-cosmic-primary-color col-span-2 min-h-fit md:h-[120px] w-full rounded-md">
 

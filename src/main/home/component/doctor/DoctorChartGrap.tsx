@@ -135,7 +135,7 @@ const DoctorChartGraph = () => {
 
     <div className=" w-full  h-[400px]  bg-white rounded-md">
       <div className='w-full   p-4 flex  place-items-center gap-2'>
-        <p className='font-bold text-[16px] text-center min-w-[40%]'>Patient Appointment</p>
+        <p className='font-bold text-[16px] text-left min-w-[40%]'>Patient Appointment</p>
 
         <div className='flex w-full relative  gap-6'>
           <div className='flex place-items-center '>

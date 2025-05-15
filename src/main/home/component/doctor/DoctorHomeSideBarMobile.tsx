@@ -27,7 +27,7 @@ const DoctorHomeSideBarMobile = () => {
     const user = useSelector((state: RootReducer) => state.user)
 
     return (
-        <div ref={sideBarRef} className="hidden  w-[60%] absolute h-dvh overflow-y-auto bg-home-slidder-color shadow-md shadow-black   p-4 z-[300] cursor-default">
+        <div ref={sideBarRef} className="hidden  w-[60%] absolute h-dvh overflow-y-auto bg-home-slidder-color shadow-xsm shadow-black   p-4 z-[300] cursor-default">
             <div className="w-full mt-4 ">
 
                 <div className="w-full ">
@@ -61,7 +61,7 @@ const DoctorHomeSideBarMobile = () => {
                     </p>
 
                     <div className="nav-bar-links-container w-full flex flex-col justify-center place-items-center gap-5">
-                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={() => {
+                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isHomeActive) ? 'opacity-50 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md shadow-black shadow-xsm font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-sm hover:font-semibold`} onClick={() => {
                             setActiveRoutePath({
                                 ...activeRoutePath,
                                 isHomeActive: true,
@@ -78,7 +78,7 @@ const DoctorHomeSideBarMobile = () => {
                             <p className="">Dashboard</p>
                         </div>
 
-                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAppoinmentsActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={() => {
+                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAppoinmentsActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-sm font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-50 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-sm hover:font-semibold`} onClick={() => {
                             setActiveRoutePath({
                                 ...activeRoutePath,
                                 isHomeActive: false,
@@ -95,7 +95,7 @@ const DoctorHomeSideBarMobile = () => {
                             <p>Appointments</p>
                         </div>
 
-                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isMessageActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={() => {
+                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isMessageActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-sm font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue   hover:opacity-50 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-sm hover:font-semibold`} onClick={() => {
                             setActiveRoutePath({
                                 ...activeRoutePath,
                                 isHomeActive: false,
@@ -115,7 +115,7 @@ const DoctorHomeSideBarMobile = () => {
 
 
 
-                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={() => {
+                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isAnalyticsActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-sm font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-50 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-sm hover:font-semibold`} onClick={() => {
                             setActiveRoutePath({
                                 ...activeRoutePath,
                                 isHomeActive: false,
@@ -133,7 +133,7 @@ const DoctorHomeSideBarMobile = () => {
 
 
 
-                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isProfileActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-lg font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-100 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-lg hover:font-semibold`} onClick={() => {
+                        <div className={`w-full flex justify-start ms-5  place-items-center gap-4 ${(activeRoutePath.isProfileActive) ? 'opacity-100 text-cosmic-primary-color  bg-cosmic-color-nav-active p-1 rounded-md  shadow-black shadow-sm font-semibold' : 'opacity-50'} text-cosmic-color-lightBlue  hover:opacity-50 hover:text-cosmic-primary-color  hover:bg-cosmic-color-nav-active hover:p-1 rounded-md  hover:shadow-black hover:shadow-sm hover:font-semibold`} onClick={() => {
                             setActiveRoutePath({
                                 ...activeRoutePath,
                                 isHomeActive: false,
