@@ -8,7 +8,7 @@ import wallet from '../../../../assets/images/Coin Wallet.png'
 import patientIcon from '../../../../assets/images/patientsIcon.png'
 import appointmentIcon from '../../../../assets/images/appointmentsIcon.png'
 import certification from '../../../../assets/images/smallCert.png'
-
+import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
 
 
 
@@ -76,7 +76,7 @@ const DoctorProfile = () => {
 
 
             <div className="overflow-hidden flex justify-center items-center rounded-[50%] w-[150px] h-[150px]">
-              <img src={user.data?.profile?.profilePicture ?? '/'} alt="Doctor" className=" h-full  object-cover" />
+              <img src={user.data?.profile?.profilePicture ?? defaultProfile} alt="Doctor" className=" h-full  object-cover" />
             </div>
 
 

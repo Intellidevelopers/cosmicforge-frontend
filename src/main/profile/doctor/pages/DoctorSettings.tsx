@@ -11,7 +11,7 @@ import calender from '../../../../assets/images/Calendar.png'
 import users from '../../../../assets/images/Users.png'
 import bell from '../../../../assets/icons/Bell.png'
 import wallet from '../../../../assets/images/Coin Wallet.png'
-
+import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
 
 const DoctorSettings = () => {
 
@@ -67,7 +67,7 @@ const DoctorSettings = () => {
 
 
             <div className="overflow-hidden flex justify-center items-center rounded-[50%] w-[150px] h-[150px]">
-              <img src={user.data?.profile?.profilePicture ?? '/'} alt="Doctor" className=" h-full  object-cover" />
+              <img src={user.data?.profile?.profilePicture ?? defaultProfile} alt="Doctor" className=" h-full  object-cover" />
             </div>
 
 

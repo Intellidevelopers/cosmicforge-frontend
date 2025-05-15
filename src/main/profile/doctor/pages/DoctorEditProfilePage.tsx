@@ -8,6 +8,7 @@ import useGetImageBase64String from "../../patient/hooks/useGetImageBase64String
 import Loader from "../../../generalComponents/Loader"
 import { authenticateUser } from "../../../store/reducers/userReducers"
 import { useLocation, useNavigate } from "react-router-dom"
+import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
 
 
 export interface DoctorEditProfileProps {
@@ -62,7 +63,7 @@ const DoctorEditProfilePage = () => {
     const [loading, setLoading] = useState<boolean>(false)
 
     const [doctorEditProfileDetails, setDoctorEditProfileDetails] = useState<DoctorEditProfileProps>({
-        profilePicture: user.data?.profile?.profilePicture ?? null,
+        profilePicture: user.data?.profile?.profilePicture ?? defaultProfile,
         fullName: user.data?.fullName ?? '',
         lastName: user.data?.lastName ?? '',
         mobileNo: user.data?.profile?.mobileNo ?? '',
