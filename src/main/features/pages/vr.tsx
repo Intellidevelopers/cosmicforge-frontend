@@ -1,4 +1,3 @@
-import React from "react";
 import vr_bg from "../../../assets/features/vr_bg.png";
 import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
 import Footer from "../../onboarding/pages/components/Footer";
