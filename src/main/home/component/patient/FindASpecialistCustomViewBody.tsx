@@ -173,6 +173,9 @@ const FindASpecalistCustomViewBody = () => {
 
 
                     }}>All</p>
+
+
+
                     <p className={`${(activState.topRatings) && 'bg-cosmic-primary-color text-white '}  p-2  md:w-[40%] w-[50%] flex flex:1 justify-center place-items-center   rounded-md border border-cosmic-color-border-color hover:bg-cosmic-primary-color hover:text-white`} onClick={() => {
 
                         setActiveState({
@@ -215,7 +218,7 @@ const FindASpecalistCustomViewBody = () => {
                 <div className={`${(!loading && doctorDetails.length===0) ? 'flex' : 'hidden'}  w-full h-dvh  justify-center mt-[20%]`}>
                     <p>{customMessage}</p>
                 </div>
-                <div className={`${(!loading ) ?'flex' : 'hidden'} w-full h-dvh p-3   pb-10  flex-col gap-3 overflow-y-auto `}>
+                <div className={`${(!loading ) ?'flex' : 'hidden'} w-full h-[80vh]  p-3  pb-[100px]  flex-col gap-3 overflow-y-auto `}>
 
                     {
                      doctorDetails.length>0 &&   doctorDetails.map((item, index) => (

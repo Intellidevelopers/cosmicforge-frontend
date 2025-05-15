@@ -180,7 +180,7 @@ const FindASpecialistBody = () => {
             Go Back
           </p> */}
         </div>
-        <div className="w-full h-full">
+        <div className="w-full h-full ">
 
           {
             loading && <div className="w-full h-[100vh] flex justify-center place-items-center ">

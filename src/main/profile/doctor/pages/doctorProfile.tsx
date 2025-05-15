@@ -65,6 +65,7 @@ const DoctorProfile = () => {
           <i className="fa fa-angle-left fa-2xl " />
           <p>Go Back</p>
         </div>
+
         {/* INFO SECTION */}
 
         <div className="flex bg-white  flex-col items-center justify-center  rounded-lg p-10 m-6 shadow-lg w-[90%]">
@@ -127,22 +128,24 @@ const DoctorProfile = () => {
 
         {/* SETINGS SECTION */}
         <div className="flex w-full flex-col justify-center items-center h-full mb-8">
-          <div className="flex-col w-[90%] h-full flex">
-            <div className="flex items-center justify-start rounded-md shadow-lg p-2">
+          <div className="flex-col w-[90%] h-full flex gap-2">
+            <div className="flex items-center justify-start rounded-md  shadow-black  shadow-sm p-2 bg-white">
               <img src={patientIcon} alt="Patients" className="w-12 h-12 border-r-2 p-2" />
               <p className="font-bold p-2">Patients</p>
             </div>
-            <div className="flex items-center justify-start rounded-md shadow-lg p-2" onClick={() => {
+
+            <div className="flex items-center justify-start rounded-md shadow-black  shadow-sm p-2 bg-white" onClick={() => {
               navigate('/doctor/appointments')
             }}>
               <img src={appointmentIcon} alt="Appointments" className="w-12 h-12 border-r-2 p-2" />
               <p className="font-bold p-2">Appointments</p>
             </div>
-            <div className="flex items-center justify-start rounded-md shadow-lg p-2" onClick={() => { navigate('/doctor/certifications') }}>
+            <div className="flex items-center justify-start rounded-md shadow-black  shadow-sm  p-2 bg-white" onClick={() => { navigate('/doctor/certifications') }}>
               <img src={certification} alt="Certifications" className="w-12 h-12 border-r-2 p-2" />
               <p className="font-bold p-2">Certifications</p>
             </div>
           </div>
+
           <div className="flex-col w-[90%] h-full flex">
            
 

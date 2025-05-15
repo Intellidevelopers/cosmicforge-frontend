@@ -31,6 +31,7 @@ interface DoctorInterfaceProps {
   }, appointmentId: string) => void
 }
 
+
 const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
 
   const [appointmentTypeSelected, setAppoinmentTypeSelected] = useState<'upcomming' | 'past' | 'cancelled'>('upcomming')
@@ -99,35 +100,35 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
   }] | null>(null)
 
 
- 
+
 
 
   const date = new Date()
 
-  
-  let validateDate = (appointmentmentTime:string,appointmentDate:string ) => {
+
+  let validateDate = (appointmentmentTime: string, appointmentDate: string) => {
     const appoinmentStartTime = appointmentmentTime?.split('-')[0]
 
-  const appoinmentEndTime = appointmentmentTime?.split('-')[1]
+    const appoinmentEndTime = appointmentmentTime?.split('-')[1]
 
 
-  const appoinmentDay = appointmentDate?.split(' ')[1].replace(/[a-z]/g, '')
+    const appoinmentDay = appointmentDate?.split(' ')[1].replace(/[a-z]/g, '')
 
-  const appoinmentMonth = appointmentDate.split(' ')[2]
+    const appoinmentMonth = appointmentDate.split(' ')[2]
 
-  const currentMonth = date.toLocaleDateString('en-Us', {
+    const currentMonth = date.toLocaleDateString('en-Us', {
       month: 'short'
-  })
+    })
 
-  const currentTime = date.toLocaleTimeString('en-Us', {
+    const currentTime = date.toLocaleTimeString('en-Us', {
       timeStyle: 'short'
-  })
+    })
 
-  const dayInWeek = date.toLocaleString('en-Us', {
+    const dayInWeek = date.toLocaleString('en-Us', {
       day: 'numeric'
-  })
+    })
 
-   return  (currentMonth === appoinmentMonth && currentMonth === appoinmentMonth && dayInWeek === appoinmentDay && (appoinmentStartTime.trim().toLowerCase().replace(' ', '') === currentTime.trim().toLowerCase() || Number(currentTime.split(':')[0]) < Number(appoinmentEndTime.split(':')[0]))) && activeAppointment === 'upcomming'
+    return (currentMonth === appoinmentMonth && currentMonth === appoinmentMonth && dayInWeek === appoinmentDay && (appoinmentStartTime.trim().toLowerCase().replace(' ', '') === currentTime.trim().toLowerCase() || Number(currentTime.split(':')[0]) < Number(appoinmentEndTime.split(':')[0]))) && activeAppointment === 'upcomming'
   }
 
 
@@ -196,7 +197,7 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
 
 
       }] | null)
-     
+
     }
 
   }, [appoinmentsState])
@@ -204,37 +205,12 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
   return <div className="w-full  overflow-y-auto  rounded-md bg-white  p-8 relative" >
 
 
-
-    {/* <div className='p-10 absolute  flex justify-center' >
-      
-    {
-      /**
-       * <div className={` ${ toggleStartSesion? 'block':'hidden'}    h-[200px] w-[600px] bg-white shadow-black shadow-lg rounded-md relative`}>
-
-    <p className='font-bold text-center mt-20'>You are about to start  this appoinment session click continue to start</p>
-
-    <div className='absolute bottom-0  w-full  flex justify-end place-items-end p-2 gap-5 cursor-default'>
-      <p className='bg-red-600 p-2 text-white rounded-md' onClick={()=>{
-        setToggleStartSession(false)
-      }}>cancel</p>
-      <p className='bg-cosmic-primary-color p-2 text-white rounded-md' onClick={()=>{
-
-       
-      }}>continue</p>
-    </div>
-    </div>
-       
-    }
-
-
-    </div>*/}
-
     <div className="grid grid-cols-6 p-4 sticky top-0  z-[100]">
 
       <div className="w-full col-span-4 md:col-span-5">
 
         <p className="font-bold" onClick={() => {
-          alert('gdgdg')
+
         }}>{activeAppointment}</p>
       </div>
 
@@ -486,26 +462,27 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
       </thead>
       <tbody className='relative ' >
 
-      
+
         {
           appoinments && appoinments.length > 0 && appoinments.map((appointment, index) => (
 
             <tr className='border-b-[1px] relative border-b-black/30 font-poppins font-light  cursor-default ' key={index} onClick={() => {
 
-              onAppointmentClicked({
-                doctorImage: appointment.patientDetails.profilePicture,
-                doctorName: appointment.patientID?.lastName.concat(' ').concat(appointment?.patientID?.fullName)!!,
-                lastMessageTime: "",
-                numberOfUnreadMessages: 0,
-                messageType: "",
-                messageRead: false,
-                message: '',
-                details: {
-                  patientId: appointment.patientID?._id!!,
-                  profilePicture: appointment.patientDetails.profilePicture,
+              if (appointmentTypeSelected === 'upcomming' && validateDate(appointment?.appointmentTime, appointment?.appointmentDate))
+                onAppointmentClicked({
+                  doctorImage: appointment.patientDetails.profilePicture,
+                  doctorName: appointment.patientID?.lastName.concat(' ').concat(appointment?.patientID?.fullName)!!,
+                  lastMessageTime: "",
+                  numberOfUnreadMessages: 0,
+                  messageType: "",
+                  messageRead: false,
+                  message: '',
+                  details: {
+                    patientId: appointment.patientID?._id!!,
+                    profilePicture: appointment.patientDetails.profilePicture,
 
-                }
-              }, appointment._id!!)
+                  }
+                }, appointment._id!!)
 
 
             }}>
@@ -521,10 +498,10 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
               <td>{appointment?.appointmentDate}</td>
               <td>{appointment?.appointmentTime}</td>
               <td> {
-                
-                
-                validateDate(appointment?.appointmentTime,appointment?.appointmentDate) &&
-                 
+
+
+                validateDate(appointment?.appointmentTime, appointment?.appointmentDate) &&
+
                 <i className="fa fa-dot-circle text-blue-600 animate-pulse mt-3" />
               }</td>
 
@@ -536,8 +513,8 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
       </tbody>
     </table>
     {
-         !appoinments  && <p className='w-full text-center mt-8'>No Appointment yet</p>
-        }
+      !appoinments && <p className='w-full text-center mt-8'>No Appointment yet</p>
+    }
 
 
 

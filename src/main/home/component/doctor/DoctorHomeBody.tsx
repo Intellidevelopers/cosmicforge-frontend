@@ -178,6 +178,7 @@ const DoctorHomeBody = () => {
 
 
 
+
       <div className={`${toggleStartSesion ? 'block' : 'hidden'}  z-[1000] absolute bottom-0 w-full p-3  flex bg-white bg-opacity-80`}>
         <p className='font-bold max-w-[50%]  mt-2'>You are about to start  this appoinment session click continue to start</p>
 

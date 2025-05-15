@@ -120,20 +120,25 @@ const DoctorSettings = () => {
          
           <div className="flex-col w-[90%] h-full flex">
 
-            <div className="flex justify-between items-center p-2 rounded-sm shadow-sm bg-white m-2">
-              <div className="flex items-center justify-start gap-6 ms-8 ">
+            <div className="flex justify-between items-center p-2 mb-1 rounded-sm shadow-sm bg-white ">
+              <div className="flex items-center justify-start   gap-6 ms-8 bg-transparent  ">
                 <img src={bell} alt="bells" className="w-8 h-8 " />
                 <p className="font-bold p-2">Notification Toggle</p>
               </div>
+
+
+
               <div className={"rounded-full border-2  min-w-8 h-4  " + (toggleNotifs && 'bg-black')}
                 onClick={() => { setToggleNotifs(!toggleNotifs) }}
               >
                 <div className={`rounded-[50%]  w-3 h-3 ${toggleNotifs ? 'translate-x-[100%] bg-white' : 'bg-black'}`}></div>
               </div>
+
             </div>
 
+
             {settings.map((setting, index) => (
-            <div key={index} className="  flex m-2 justify-between items-center p-2 rounded-sm shadow-md bg-white cursor-default " onClick={() => {
+            <div key={index} className="  flex  m-[3px] justify-between items-center p-2 rounded-sm shadow-md bg-white cursor-default " onClick={() => {
 
                 navigate(setting.path)
 

@@ -10,6 +10,7 @@ import { sign_up_user_wih_google } from "../service/service";
 //import jwt from 'jsonwebtoken'
 import { useDispatch } from "react-redux";
 import { authenticateUser } from "../../../store/reducers/userReducers";
+
 //import bcrypt from "bcryptjs";
 
 
@@ -22,58 +23,15 @@ const SignUpMain: React.FC = () => {
 
     const [errorMessage, setErrorMessage] = useState<string>()
 
+
    
    
-    // const query = window.location.search
-
-    //const params = new URLSearchParams(query)
-
-   // const token = params.get('token')
-
-    //const decodedData = JSON.parse(JSON.stringify(jwt.decode(token!!)))
-   // const navigate = useNavigate()
 
     
 
-   /* if (decodedData && decodedData.token) {
+  
 
-        bcrypt.compare(import.meta.env.VITE_JSON_WEB_SECRET, decodedData.secretKey).then((result) => {
-
-            if (result) {
-                dispatch(authenticateUser({
-                    isAunthenticated: true, data: {
-                        email: decodedData.email,
-                        fullname: decodedData.fullName,
-                        lastName: decodedData.lastName,
-                        role: decodedData.role,
-                        token: decodedData.token
-                    }
-                }))
-
-                if (decodedData.role === 'client') {
-                    navigate('/patient/home',{replace:true})
-
-                    return
-                }
-
-                if (decodedData.role === 'doctor') {
-                    navigate('/doctor/home',{replace:true})
-                    return
-                }
-            } else {
-
-                setErrorMessage('failed to authenticate try again')
-            }
-        }).catch((err: any) => setErrorMessage(err.message))
-
-
-
-
-
-    }*/
-
-
-    const userRole: string | null = state?.userRole ?? ''
+    const userRole: string | null = state?.userRole 
 
 
      if(!userRole){
@@ -81,11 +39,16 @@ const SignUpMain: React.FC = () => {
         return <Navigate to={'/selectRole'} replace={true}/>
      }
 
+
+
+     
     return (
         <div className="h-screen w-screen ">
             <div className="md:h-[100%] md:w-[100%] h-[36%] w-[100%]">
                 <img src={OnboardImage} className="h-[100%] w-[100%]" alt="welcome image" />
             </div>
+
+
             <div className="md:bg-gradient-to-b  text-center pb-[50px] pt-[20px] flex flex-col md:justify-top justify-around items-center fixed bottom-0 md:h-[58%] h-[65%] md:rounded-t-0 rounded-t-[20px] w-screen backdrop-blur-[5px] md:bg-transparent bg-white from-transparent to-[#272EA7]/60">
 
                 <div className="flex flex-col items-center gap-[15px]">
@@ -102,10 +65,13 @@ const SignUpMain: React.FC = () => {
 
                 <div className="flex flex-col gap-[20px] w-[100%] items-center mt-[20px]">
                     <Link className="md:h-[40px] h-[45px] flex flex-col justify-center items-center font-bold rounded-[4px] md:w-[300px] w-[80%] bg-[#272EA7] text-white hover:bg-[#272EA7]/70 hover:scale-[105%]" to={'/account/signup/verify-email'} state={{ userRole }}>Sign Up with your Email address</Link>
+                   
                     <div className="flex flex-row gap-[20px] w-[100%] justify-center items-center">
                         <button className="md:h-[35px] w-[45px] h-[45px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                             <img src={fbIcon} alt="fb icon" className="h-[70%] w-[70%]" />
                         </button>
+
+
                         <button className="md:h-[35px] w-[45px] h-[45px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">
                             <img src={ggIcon} alt="gg icon" className="h-[70%] w-[70%]" onClick={async () => {
                                 setErrorMessage('')

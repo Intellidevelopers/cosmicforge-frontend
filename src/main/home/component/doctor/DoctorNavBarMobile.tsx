@@ -7,6 +7,7 @@ import { openSideBar } from "../../hook/patient/useGetSideBarMobileAnimation";
 import { useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
 import { useLocation, useNavigate } from 'react-router-dom';
+import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
 
  interface NavBarProps {
     title:string
@@ -46,11 +47,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
                   openSideBar()
                  }}></i>
                   <div className="flex gap-2 w-full  ">
-                  <img src={user.data?.profile?.profilePicture??'/'} className="h-[40px] w-[40px] rounded-full"  />
+
+                  <img src={user.data?.profile?.profilePicture??defaultProfile} className="h-[40px] w-[40px] rounded-full"  />
                    
                    <div className="w-full relative">
 
-                   <p className="font-semibold">Hi {user.data?.lastName}</p>
+                   <p className="font-semibold">Hi {user.data?.lastName ?? 'user'}</p>
                    <p className="font-light text-[14px]">How are you feeling today?</p>
                     </div>
                     <div className="absolute right-3 bottom-5   rounded-lg border  p-2 ">

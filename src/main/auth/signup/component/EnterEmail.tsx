@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import backIcon from "../../../../assets/icons/Forward.png";
 import IconContainer from "../../../generalComponents/IconContainer";
 import cosmicLogo from '../../../../assets/icons/cosmic forge logo 1.svg';
@@ -18,11 +18,31 @@ interface component {
 }
 
 const EnterEmail:React.FC<component> = ( { email, setEmail, step, setStep }) => {
+
+   const {state} = useLocation()
+     
+    const userRole: string | null = state?.userRole 
+
+
+    if(!userRole){
+
+       return <Navigate to={'/selectRole'} replace={true}/>
+    }
+
+
+
+
     const [ isLoading, setIsLoading ] = useState<boolean>(false);
     const [ notValidError, setNotValid ] = useState<boolean>(false);
     const  [errorMessage,setErrorMesage] = useState<string>('')
     const [ pageWidth, setPageWidth ] = useState('w-0');
     const [ pageOp, setPageOp ] = useState('opacity-0');
+
+
+
+
+
+
 
     useEffect( () => {
         setPageWidth('w-screen');

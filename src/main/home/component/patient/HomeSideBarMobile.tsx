@@ -13,7 +13,7 @@ import useGetSideBarMobileAnimation, { closeSideBar } from "../../hook/patient/u
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
 import { authenticateUser } from "../../../store/reducers/userReducers";
-
+import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
 
 
 
@@ -50,8 +50,10 @@ const HomeSideBarMobile = () => {
         <div className="user-profile-container w-full flex flex-col gap-1  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px]  rounded-full bg-gray-500">
 
-            <img className="w-[100px] h-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ?? '/'} />
+            <img className="w-[100px] h-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ?? defaultProfile} />
           </div>
+          
+          
           <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color'}  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
 
             setActiveRoutePath({

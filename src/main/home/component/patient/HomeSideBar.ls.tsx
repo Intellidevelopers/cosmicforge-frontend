@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authenticateUser } from "../../../store/reducers/userReducers";
 import { RootReducer } from "../../../store/initStore";
+import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
 
 const HomeSideBar = () => {
   const { activeRoutePath, setActiveRoutePath } = useGetActiveRoute()
@@ -19,12 +20,13 @@ const HomeSideBar = () => {
 
   const dispatch = useDispatch()
   return (
+
     <div className="  h-dvh overflow-y-auto bg-home-slidder-color shadow-md shadow-black/20   p-4 z-50 hidden md:flex cursor-default">
       <div className="w-full ">
         <img alt="logo" className="h-[50px] w-[60%] mx-auto" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
           <div className=" w-[100px] h-[100px] rounded-full bg-gray-500">
-            <img className="h-[100px] w-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ??'/'} />
+            <img className="h-[100px] w-[100px] rounded-full" alt="profile-image" src={user.data?.profile?.profilePicture ??defaultProfile} />
           </div>
           <p className={`${activeRoutePath.isProfileActive && 'underline decoration-cosmic-primary-color' }  font-extralight text-cosmic-primary-color hover:underline hover:decoration-cosmic-primary-color `} onClick={() => {
              navigate('/patient/profile')

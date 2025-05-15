@@ -12,6 +12,7 @@ import useGetDoctorActiveNavbarRoute from "../../hook/doctor/useGetDoctorActiveN
 import { useDispatch, useSelector } from "react-redux";
 import { RootReducer } from "../../../store/initStore";
 import { authenticateUser } from "../../../store/reducers/userReducers";
+import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
 
 const DoctorHomeSideBar = () => {
   const {activeRoutePath,setActiveRoutePath} = useGetDoctorActiveNavbarRoute()
@@ -28,7 +29,7 @@ const user = useSelector((state:RootReducer)=>state.user)
         <img alt="logo" src={logo} />
         <div className="user-profile-container w-full flex flex-col gap-4  justify-center place-items-center mt-2 ">
           <div className=" w-[80px] h-[80px] rounded-full bg-gray-500 mt-1">
-            <img alt="profile-image " className="w-[100%] h-[100%] rounded-full" src={user.data?.profile?.profilePicture ??'/'} />
+            <img alt="profile-image " className="w-[100%] h-[100%] rounded-full" src={user.data?.profile?.profilePicture ??defaultProfile} />
           </div>
           <p>ID:<span className="text-sm font-light">{user.data?.profile?.userCosmicID}</span></p>
           <p>Dr {user.data?.fullName}</p>
