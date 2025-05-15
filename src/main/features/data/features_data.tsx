@@ -9,7 +9,14 @@ import health_edu from "../../../assets/features/health_edu.png";
 import vr from "../../../assets/features/vr.png";
 import therapy from "../../../assets/features/therapy.png";
 
-export const what_we_offering = [
+export interface Offering {
+  img_url: string;
+  title: string;
+  description: string;
+  link: string;
+}
+
+export const what_we_offering: Offering[] = [
   {
     img_url: image_a,
     title: "Unified Healthcare Hub",
@@ -41,7 +48,7 @@ export const what_we_offering = [
   },
 ];
 
-export const other_feature_data = [
+export const other_feature_data: Offering[] = [
   {
     img_url: pharmacy,
     title: "Pharmacy",
@@ -86,6 +93,6 @@ export const other_feature_data = [
     title: "Therapy",
     description:
       "Enhance diagnosis, treatment, and patient engagement with immersive VR technology for both therapy and education.",
-      link: "/features/therapy",
+    link: "/features/therapy",
   },
 ];
