@@ -52,7 +52,7 @@ const FooterComponent = () => {
             <Link to={"/about-us"}>
               <p>About us</p>
             </Link>
-            <Link to={"/services"}>
+            <Link to={"/features"}>
               <p>Features</p>
             </Link>
             <Link to={"/pricing"}>
