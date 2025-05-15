@@ -155,7 +155,7 @@ const LoginPage: React.FC = () => {
                             <img src={appleIcon} alt="fb icon" className="h-[70%] w-[70%]" />
                         </button>
                     </div>
-                    <span className="mt-[15px] text-black text-[15px]">Don&apos;t have an account? <Link className="text-[#272EA7] hover:text-[#272EA7]/50" to={'/account/signup/verify-email'}>Sign Up</Link></span>
+                    <span className="mt-[15px] text-black text-[15px]">Don&apos;t have an account? <Link className="text-[#272EA7] hover:text-[#272EA7]/50" to={'/patient/account/signup/verify-email'}>Sign Up</Link></span>
 
                     <div className="md:w-[450px] text-center mt-[10px] w-[80%]">
                         <span className="mt-[17px] text-black text-[15px]">
