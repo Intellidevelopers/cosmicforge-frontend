@@ -8,8 +8,14 @@ import location from "../../../../assets/icons/cosmic-location-icon.svg";
 import email from "../../../../assets/icons/cosmic-email-icon.svg";
 // import { FaPhoneAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
 
 const FooterComponent = () => {
+  useEffect(() => {
+    if (window) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
   return (
     <footer className="footer_bg">
       <div className="max-w-[80%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-start gap-12 sm:gap-0 border-b border-white pb-4">
