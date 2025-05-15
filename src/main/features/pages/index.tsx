@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import FooterComponent from "../../onboarding/pages/components/Footer";
 import NavigationComponent from "../../onboarding/pages/components/Navigation";
-import { what_we_offering, other_feature_data } from "../data/features_data";
+import {
+  what_we_offering,
+  other_feature_data,
+  Offering,
+} from "../data/features_data";
 import right_arrow from "../../../assets/features/right_arrow.svg";
 import first from "../../../assets/features/1st.svg";
 import second from "../../../assets/features/2nd.svg";
@@ -47,7 +51,7 @@ const OurFeatures = () => {
   );
 };
 
-const WeOffering = (data) => {
+const WeOffering = (data: Offering) => {
   return (
     <div className="sm:w-1/5 h-[460px] bg-white rounded-[5px] p-4 mr-3 mb-5 relative">
       <img src={data.img_url} />
@@ -177,7 +181,7 @@ const OtherFeatures = () => {
   );
 };
 
-const features = (data) => {
+const features = (data: Offering) => {
   return (
     <div className="bg-white shadow-[1px_1px_10.5px_0px_rgba(0,0,0,0.1)] w-[350px] h-[338px] rounded-lg mb-10 mr-5 p-5 flex flex-col justify-between">
       <div>
