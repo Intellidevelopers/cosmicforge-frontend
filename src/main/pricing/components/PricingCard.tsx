@@ -8,22 +8,25 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onS
 
   return (
     <div
-      className={` rounded-lg border border-gray-200 shadow-sm overflow-hidden flex flex-col h-full ${
-        plan.isActive ? "bg-[#272EA7] cursor-default text-white!" : "bg-white transition-colors"
+      className={`group rounded-lg border border-gray-200 shadow-sm overflow-hidden flex flex-col h-full ${
+        plan.isActive
+          ? "bg-[#272EA7] cursor-default text-white"
+          : "bg-white hover:bg-[#272EA7] hover:text-white transition-colors duration-300"
       }`}
     >
       <div className="p-6 flex-grow">
         <h3
-          className={`text-xl font-bold  ${
-            plan.isActive ? "text-white cursor-default " : "text-gray-900 transition-colors"
+          className={`text-xl font-bold ${
+            plan.isActive ? "text-white cursor-default" : "text-gray-900 group-hover:text-white"
           }`}
-          //   className="text-xl font-bold text-gray-900"
         >
           {plan.name}
         </h3>
         <p
           className={`text-sm mt-1 ${
-            plan.isActive ? "text-white/80 cursor-default " : "text-gray-600 transition-colors"
+            plan.isActive
+              ? "text-white/80 cursor-default"
+              : "text-gray-600 group-hover:text-white/80"
           }`}
         >
           {plan.description}
@@ -31,19 +34,27 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onS
 
         <div className="mt-4 flex items-baseline">
           <span
-            className={`text-xl font-bold  ${
-              plan.isActive ? "text-white cursor-default " : "text-gray-900 transition-colors"
+            className={`text-xl font-bold ${
+              plan.isActive ? "text-white cursor-default" : "text-gray-900 group-hover:text-white"
             }`}
           >
             {currencySymbol} {formatPrice(price)}
           </span>
-          <span className="text-gray-500 ml-1 text-sm">/Month</span>
+          <span
+            className={`text-sm ml-1 ${
+              plan.isActive ? "text-white/80" : "text-gray-500 group-hover:text-white/80"
+            }`}
+          >
+            /Month
+          </span>
         </div>
 
         {category === "doctor" && plan.commissionRate && (
           <p
             className={`text-sm mt-1 ${
-              plan.isActive ? "text-white/80 cursor-default " : "text-gray-600 transition-colors"
+              plan.isActive
+                ? "text-white/80 cursor-default"
+                : "text-gray-600 group-hover:text-white/80"
             }`}
           >
             {plan.commissionRate}% commission per consultation
@@ -54,13 +65,19 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onS
           {plan.features.map((feature, index) => (
             <li key={index} className="flex items-start">
               <div className="flex-shrink-0">
-                <span className="text-[#272EA7] mr-2">•</span>
+                <span
+                  className={`${
+                    plan.isActive ? "text-white" : "text-[#272EA7] group-hover:text-white"
+                  } mr-2`}
+                >
+                  •
+                </span>
               </div>
               <p
-                className={`text-sm mt-1 ${
+                className={`text-sm ${
                   plan.isActive
-                    ? "text-white/80 cursor-default "
-                    : "text-gray-600 transition-colors"
+                    ? "text-white/80 cursor-default"
+                    : "text-gray-600 group-hover:text-white/80"
                 }`}
               >
                 {feature.text}
@@ -73,11 +90,12 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onS
       <div className="px-6 pb-6 mt-auto">
         <button
           onClick={() => onSelect(plan.id)}
-          className={`w-full py-3 px-4 rounded-md text-center  font-medium ${
+          className={`w-full py-3 px-4 rounded-md text-center font-medium ${
             plan.isActive
               ? "text-[#0d1380] bg-white cursor-default"
-              : "bg-[#272EA7] text-white hover:bg-[#232997]  transition-colors"
+              : "bg-[#272EA7] text-white hover:bg-[#232997] transition-colors"
           }`}
+          disabled={plan.isActive}
         >
           {plan.isActive ? "Active Plan" : "Choose Plan"}
         </button>

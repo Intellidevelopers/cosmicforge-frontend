@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { doctorPlans, patientPlans } from "./data";
 
 import { Currency } from "../types";
-import Footer from "../../onboarding/component/Footer";
+import Footer from "../../../main/onboarding/component/Footer";
 import NavigationComponent from "../../../main/onboarding/pages/components/Navigation";
 import PageHeader from "./PageHeader";
 import PricingCard from "./PricingCard";
@@ -39,9 +39,7 @@ const PricingPage: React.FC = () => {
           </div>
 
           <div className="mb-16">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">
-              Patient Billing Plans
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Patient Billing Plans</h2>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {patientPlans.map((plan) => (
                 <PricingCard
@@ -56,9 +54,7 @@ const PricingPage: React.FC = () => {
           </div>
 
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">
-              Doctor Billing Plans
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Doctor Billing Plans</h2>
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {doctorPlans.map((plan) => (
                 <PricingCard
