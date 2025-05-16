@@ -581,7 +581,7 @@ const router = createBrowserRouter([
           element:<DoctorSettings/>
         }
      
-      
+      //route here
        
       ]
     },
