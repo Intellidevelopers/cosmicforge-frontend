@@ -6,7 +6,6 @@ import HomeSideBarMobile from "../../home/component/patient/HomeSideBarMobile"
 import useGetCalendarActiveState from "../hook/useGetCalendarActiveState"
 import newAppointmentIcon from '../../../assets/icons/new-appoinment-icon.svg'
 import { useState } from "react"
-import { AlignCenter } from "lucide-react"
 
 const PatientCalendarMainBody = () => {
 
