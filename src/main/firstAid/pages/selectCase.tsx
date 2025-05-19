@@ -15,41 +15,46 @@ interface params {
 
 interface personCard {
   image:string;
-  title:string
+  title:string;
+  case:string | undefined;
 }
 
 const SelectCase = () => {
   const params = useParams<params>();
+  console.log(params)
   
 
 
   const persons: personCard[] = [
     {
       image:adultImg,
-      title:'Adult'
+      title:'Adult',
+      case:params?.case,
     },
     {
       image:childImg,
-      title:'Child'
+      title:'Child',
+      case:params?.case,
     },
     {
       image:infantImg,
-      title:'Infant'
+      title:'Infant',
+      case:params?.case,
     },
   ]
 
   return (
-    <>
+    <div className="relative">
       <HomeNavBar title={params.case ? params.case : ''}  onSearchFired={()=>{}}/>
       <HomeMobileNavBar title={params.case ? params.case : ''} onSearchFired={()=>{}}/>
-      <div className="  flex flex-col items-start gap-4 p-4 bg-white  ">
+      <div className="flex flex-col gap-4 border-2 h-[100%] px-3 bg-gray-100 pt-1 ">
         {
           persons.map((item,index)=>{
             return <SelectPersonCard key={index} image={item.image} title={item.title}/>
           })
         }
       </div>
-    </>
+    </div>
   )
 }
 

@@ -45,7 +45,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep, email } ) => {
             otpCode = otpCode.concat(val)
         });
         console.log(otpCode);
-        navigate('/account/password-reset/success')
+        navigate('/account/password-reset/new-password')
 
         // place api logic to confirm otp here
 
