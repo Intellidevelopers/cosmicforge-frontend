@@ -20,9 +20,23 @@ const HomeMainPage = () => {
 
       
  
-      if( user.data && user.data.role !== "client"){
-        return  <Navigate to={'/'} replace/>
-      }
+     
+
+
+       if( user.data && user.data.role !== "client" && user.data.role === "doctor"){
+      return  <Navigate to={'/doctor/home'}/>
+   
+    }
+
+     
+      if( user.data && user.data.role !== "client" && user.data.role !== "doctor"){
+      return  <Navigate to={'/'}/>
+   
+    }
+
+
+
+
 
     return (
         <div className="font-poppins relative w-full h-dvh bg-[#F5F5F5] flex flex-row  overflow-hidden">
