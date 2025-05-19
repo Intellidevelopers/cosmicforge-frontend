@@ -57,10 +57,10 @@ const RolePage:React.FC = () => {
                     <span className="text-[20px] font-extrabold">Welcome!</span>
                     <span className="font-light mt-2">How do you want to continue?</span>
 
-                    <div className="h-[350px] w-[60%] flex flex-row justify-between items-center gap-8  ">
+                    <div className="h-[350px] w-[85%] flex flex-row justify-between items-center gap-8  ">
 
 
-                        <button onClick={handleDoctorButton} className={`${isDoctorSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[45%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
+                        <button onClick={handleDoctorButton} className={`${isDoctorSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[50%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
                             <div className="md:h-[220px] h-[180px] w-[60%]">
                                 <img src={doctorImage} className="h-[100%] w-[100%]" alt='doctor role'/>
                             </div>
@@ -68,7 +68,7 @@ const RolePage:React.FC = () => {
                         </button>
 
 
-                        <button onClick={handlePatientButton} className={`${isPatientSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[45%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
+                        <button onClick={handlePatientButton} className={`${isPatientSelected?'border-[2px] border-[#272EA7] ':''}md:h-[300px] h-[250px] w-[50%] hover:scale-[102%] flex flex-col justify-between items-center bg-white rounded-[15px]`}>
                             <div className="md:h-[220px] h-[180px] md:w-[70%] w-[80%]">
                                 <img src={patientImage} className="h-[100%] w-[100%]" alt='doctor role'/>
                             </div>
@@ -79,12 +79,12 @@ const RolePage:React.FC = () => {
                 </div>
                 <div className="w-full flex justify-center place-items-center">
                 { !(isDoctorSelected || isPatientSelected) ? (
-                    <div className={`h-[48px] w-[50%] m-3 bg-[#272EA7]/70 text-white font-bold flex flex-row justify-center items-center rounded-[5px] mt-10`} >
+                    <div className={`h-[48px] w-[85%] m-3 bg-[#272EA7]/70 text-white font-bold flex flex-row justify-center items-center rounded-[5px] mt-10`} >
                         continue
                     </div>
                 ): (
                     //signup here
-                    <Link className="h-[48px] w-[50%] m-3 bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/account'} state={{userRole:accountRole}}>
+                    <Link className="h-[48px] w-[85%] m-3 bg-[#272EA7] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]" to={'/account'} state={{userRole:accountRole}}>
                         Continue
                     </Link> 
                 )}

@@ -104,9 +104,9 @@ const SignUpMain: React.FC = () => {
                 <div className="md:w-[450px] mt-[20px] w-[80%]">
                     <span className="mt-[20px] text-black text-[15px]">
                         By signing up or logging in, i accept the app&apos;s
-                        <Link className="md:text-white md:hover:text-[#272EA7] hover:text-[#272EA7]/50 text-[#272EA7]" to={'/terms-and-service'}>{' Terms of service '} </Link>
+                        <Link className="md:text-white md:hover:text-[#272EA7] hover:text-[#272EA7]/50 text-[#272EA7]" to={'/terms-and-conditions'}>{' Terms of service '} </Link>
                         and
-                        <Link className="md:text-white md:hover:text-[#272EA7] hover:text-[#272EA7]/50 text-[#272EA7]" to={'/privacy-policy'}>{' Privacy Policy'}</Link>
+                        <Link className="md:text-blue-600 md:hover:text-[#272EA7] hover:text-[#272EA7]/50 text-[#272EA7]" to={'/privacy-policy'}>{' Privacy Policy'}</Link>
                     </span>
                 </div>
 

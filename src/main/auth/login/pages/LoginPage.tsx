@@ -212,7 +212,7 @@ const LoginPage: React.FC = () => {
                 <div className="md:w-[450px] text-center mt-[10px] w-[80%]">
                     <span className="mt-[17px] text-black text-[15px]">
                         By signing up or logging in, i accept the app&apos;s
-                        <Link className="text-[#272EA7] hover:text-[#272EA7]/50" to={'/terms-and-service'}>{' Terms of service '} </Link>
+                        <Link className="text-[#272EA7] hover:text-[#272EA7]/50" to={'/terms-and-conditions'}>{' Terms of service '} </Link>
                         and
                         <Link className="text-[#272EA7] hover:text-[#272EA7]/50" to={'/privacy-policy'}>{' Privacy Policy'}</Link>
                     </span>

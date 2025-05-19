@@ -1,6 +1,9 @@
 import HomeNavBar from "./HomeNavBar";
 import aiImage from "../../../../assets/background/home-card-ai-diagnosis-image.svg";
 import auRealityImage from "../../../../assets/background/home-card-augmented-reality.svg";
+import therapyImage from "../../../../assets/background/therapy.png";
+import consultImage from "../../../../assets/background/consult.png";
+import educationImage from "../../../../assets/background/education.png";
 import SpecialistCard, { SpecialistCardProps } from "./SpecialistCard";
 import arrowIcon from "../../../../assets/icons/cosmic-arrow.svg";
 //import WellnessProductCard, { WellnessProductCardProps } from "./WellnessProductCard";
@@ -242,7 +245,33 @@ const HomeBody = () => {
     })()
   }, [])
 
+  const scrollRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+    if (!scrollContainer) return;
+
+    const scrollStep = 150;
+    const scrollInterval = 3000;
+
+    const interval = setInterval(() => {
+      if (!scrollContainer) return;
+
+      const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+
+      if (scrollContainer.scrollLeft + scrollStep >= maxScrollLeft) {
+        // If reached end, scroll back to start
+        scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        // Otherwise, scroll forward
+        scrollContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
+      }
+    }, scrollInterval);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const images = [aiImage, auRealityImage, therapyImage, educationImage, consultImage];
 
   return (
     <div className=" w-full  relative  h-dvh overflow-x-hidden    overflow-y-auto flex flex-col">
@@ -286,22 +315,26 @@ const HomeBody = () => {
      }
 
      
-      <div className="  ">
-        <div className="w-full  md:ps-10  md:justify-start md:pt-8  md:gap-12  inline-flex overflow-x-auto" style={{
-          scrollbarWidth: 'none',
+          <div className="  ">
+<div
+  ref={scrollRef}
+  className="w-full flex overflow-x-auto scroll-smooth snap-x snap-mandatory"
+  style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+>
+  {images.map((src, index) => (
+    <div
+      key={index}
+      className="flex-shrink-0 snap-start w-screen md:w-[600px] md:me-6 p-2"
+    >
+      <img
+        src={src}
+        alt={`Card ${index}`}
+        className="rounded-xl max-h-[400px] w-full object-cover"
+      />
+    </div>
+  ))}
+</div>
 
-        }}>
-          <img
-            src={aiImage}
-            alt="Ai diagnosis image"
-            className=" bg-blue-400 max-h-[125px] rounded-xl me-8 mt-1"
-          />
-          <img
-            src={auRealityImage}
-            alt="Ai diagnosis image"
-            className=" bg-orange-400   max-h-[125px] rounded-xl m-1"
-          />
-        </div>
 
        {
         latestAppointmentDetails !== null &&  <div className="w-full md:ps-10 md:mt-6 relative">
