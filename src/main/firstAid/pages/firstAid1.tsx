@@ -4,9 +4,22 @@ import HomeNavBar from '../../home/component/patient/HomeNavBar';
 import HomeMobileNavBar from "../../home/component/patient/HomeMobileNavBar";
 import cprImg from '../../../assets/images/cpr.png';
 import EmergentBox from '../components/emergentBox.tsx';
-import woundImg from '../../../assets/images/wound.png'
-import vomitingImg from '../../../assets/images/vomiting.png'
-import noseBleedImg from '../../../assets/images/noseBleed.png'
+import woundImg from '../../../assets/images/wound.png';
+import vomitingImg from '../../../assets/images/vomiting.png';
+import noseBleedImg from '../../../assets/images/noseBleed.png';
+import chokingImg from '../../../assets/images/choking.png';
+import bleedingImg from '../../../assets/images/bleeding.png';
+import fractureImg from '../../../assets/images/fracture.png';
+import faintingImg from '../../../assets/images/fainting.png';
+import allergyImg from '../../../assets/images/allergy.png';
+import sprainImg from '../../../assets/images/sprain.jpg';
+import poisoningImg from '../../../assets/images/poisoning.png';
+import animalBite from '../../../assets/images/animalBite.png';
+import burnsImg from '../../../assets/images/burns.png';
+import drowningImg from '../../../assets/images/drowning.jpg';
+import diarrheaImag from '../../../assets/images/diarrhea.jpg';
+
+
 import NonEmergentBox from '../components/nonEmergentBox.tsx';
 import UseNavigateToPath from '../hooks/navigateHook.tsx';
 
@@ -22,80 +35,83 @@ import CustomHomeSearchCard, { CustomHomeSearchCardProps } from '../../home/comp
 
 const FirstAid1 = () => {
 
-    const dummyImageSet: { image: string, title: string }[] = [
+    const dummyImageSet: { image: string, title: string, path:string }[] = [
         {
             image: cprImg,
-            title: 'CPR'
+            title: 'CPR',
+            path: 'CPR'
         },
         {
-            image: cprImg,
-            title: 'CPR'
+            image: chokingImg,
+            title: 'Choking',
+            path: 'Choking'
         },
         {
-            image: cprImg,
-            title: 'CPR'
+            image: bleedingImg,
+            title: 'Bleeding',
+            path: 'f/bleeding'
         },
         {
-            image: cprImg,
-            title: 'CPR'
+            image: burnsImg,
+            title: 'Burns',
+            path: 'f/burns'
         },
         {
-            image: cprImg,
-            title: 'CPR'
+            image: drowningImg,
+            title: 'Drowning',
+            path: 'f/drowning'
         },
         {
-            image: cprImg,
-            title: 'CPR'
+            image: animalBite,
+            title: 'Animal Bite',
+            path: 'f/Animal-Bite'
         },
         {
-            image: cprImg,
-            title: 'CPR'
-        },
-        {
-            image: cprImg,
-            title: 'CPR'
+            image: poisoningImg,
+            title: 'Poisoning',
+            path: 'f/poisoning'
         },
     ]
-    const dummyImageSet2: { image: string, title: string }[] = [
+    const dummyImageSet2: { image: string, title: string, path:string }[] = [
         {
             image: woundImg,
-            title: 'Wound'
+            title: 'Wound',
+            path:'f/wound'
         },
         {
-            image: woundImg,
-            title: 'Wound'
-        },
-        {
-            image: woundImg,
-            title: 'Wound'
+            image: fractureImg,
+            title: 'Fracture',
+            path:'f/fracture'
         },
         {
             image: vomitingImg,
-            title: 'Vomiting'
+            title: 'Vomiting',
+            path:'Vomiting'
         },
         {
-            image: vomitingImg,
-            title: 'Vomiting'
+            image: diarrheaImag,
+            title: 'Diarrhea',
+            path:'Diarrhea'
         },
         {
-            image: vomitingImg,
-            title: 'Vomiting'
-        },
-        {
-            image: noseBleedImg,
-            title: 'Nose Bleed'
-        },
-        {
-            image: noseBleedImg,
-            title: 'Nose Bleed'
+            image: sprainImg,
+            title: 'Sprained Ankle/ knee/ arm',
+            path:'f/sprain'
         },
         {
             image: noseBleedImg,
-            title: 'Nose Bleed'
+            title: 'Nose Bleed',
+            path:'NoseBleed'
         },
         {
-            image: noseBleedImg,
-            title: 'Nose Bleed'
+            image: faintingImg,
+            title: 'Fainting',
+            path:'f/fainting'
+        },
+        {
+            image: allergyImg,
+            title: 'Allergy',
+            path:'Allergy'
         },
     ]
 
@@ -178,14 +194,14 @@ const FirstAid1 = () => {
 
 
 
-            <div className=' p-4 flex flex-col gap-4 relative'>
+            <div className=' px-3 pb-3 flex flex-col gap-4 pt-2 relative'>
 
-                <div id="ambulance&sos" className='flex bg-white w-full space-x-4'>
-                    <div className='w-1/2 flex justify-center items-center rounded border shadow-md cursor-pointer' onClick={() => { navigate('find-an-ambulance') }}>
-                        <img src={ambulance} alt="Ambulance image" className='' />
+                <div id="ambulance&sos" className='flex w-full space-x-4'>
+                    <div className='w-1/2 flex justify-center bg-white md:h-[165px] h-[140px] items-center rounded border shadow-md cursor-pointer' onClick={() => { navigate('find-an-ambulance') }}>
+                        <img src={ambulance} alt="Ambulance image" className='md:h-[100px] h-[70px]' />
                     </div>
-                    <div className='w-1/2 flex justify-center items-center rounded border shadow-md cursor-pointer' onClick={() => { navigate('sos') }}>
-                        <img src={sos} alt="SOS" />
+                    <div className='w-1/2 flex justify-center bg-white md:h-[165px] h-[140px] items-center rounded border shadow-md cursor-pointer' onClick={() => { navigate('sos') }}>
+                        <img src={sos} alt="SOS" className='md:h-[100px] h-[70px]' />
                     </div>
                 </div>
                 <div id="emergent">
@@ -193,9 +209,14 @@ const FirstAid1 = () => {
                         <h2 className="font-bold">Emergent</h2>
                         <p className="text-purple-600 font-extralight text-[0.8rem] cursor-pointer md:hidden">View More</p>
                     </div>
-                    <div className='flex space-x-4 overflow-hidden'>
+                    <div className='flex md:hidden w-[100%] justify-evenly item-center flex-row overflow-hidden'>
+                        {dummyImageSet.slice(0, 3).map((item, index) => {
+                            return <EmergentBox path={item.path} image={item.image} key={index} width={'w-[32%]'} title={item.title} />
+                        })}
+                    </div>
+                    <div className='md:flex hidden justify-evenly gap-1 flex-row item-center overflow-hidden'>
                         {dummyImageSet.map((item, index) => {
-                            return <EmergentBox image={item.image} key={index} title={item.title} />
+                            return <EmergentBox path={item.path} image={item.image} key={index} width={'w-[120px]'} title={item.title} />
                         })}
                     </div>
                 </div>
@@ -204,9 +225,9 @@ const FirstAid1 = () => {
                         <h2 className="font-bold">Non-Emergent</h2>
                         <p className="text-purple-600 font-extralight text-[0.8rem] cursor-pointer md:hidden">View More</p>
                     </div>
-                    <div className=' overflow-hidden'>
+                    <div className='flex flex-col gap-2'>
                         {dummyImageSet2.map((item, index) => {
-                            return <NonEmergentBox image={item.image} key={index} title={item.title} />
+                            return <NonEmergentBox path={item.path} image={item.image} key={index} title={item.title} />
                         })}
                     </div>
                 </div>

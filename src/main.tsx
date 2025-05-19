@@ -121,6 +121,7 @@ import AboutUs from "./main/onboarding/pages/AboutUs.tsx";
 import PrivacyPolicy from "./main/onboarding/pages/PrivacyPolicy.tsx";
 import TermsAndConditions from "./main/onboarding/pages/TermsAndConditions.tsx";
 import DoctorSettings from "./main/profile/doctor/pages/DoctorSettings.tsx";
+import PatientSettings from "./main/profile/patient/pages/PatientSettings.tsx";
 
 const router = createBrowserRouter([
   {
@@ -422,6 +423,10 @@ const router = createBrowserRouter([
           {
             path: "/patient/first-aid",
             element: <FirstAid1 />,
+          },
+          {
+            path: "/patient/settings",
+            element: <PatientSettings />,
           },
           {
             path: "/patient/first-aid/find-an-ambulance",

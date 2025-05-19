@@ -41,7 +41,7 @@ const user = useSelector((state:RootReducer)=>state.user)
           </ul>
         </div>
       </div>
-      <PaystackButton disabled={active}    publicKey="pk_test_5064b4c81898b5c11f082d5fbabe15b2d00bfb07"  onSuccess={async(e)=>{
+      <PaystackButton disabled={active}    publicKey="pk_live_395226088f830b6c1369b497d49864128c7992dd"  onSuccess={async(e)=>{
 
         if(e.reference){
         try {

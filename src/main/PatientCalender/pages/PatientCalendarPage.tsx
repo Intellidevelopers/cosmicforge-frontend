@@ -189,14 +189,25 @@ const PatientCalendarPage = () => {
 
 
                     <div className="col-span-7 grid grid-cols-7 gap-2">
+  {days.length > 0 && days.map((day, index) => (
+    <div key={index}>
+      <p
+        className={`${
+          index === 0 || index === days.length - 1
+            ? 'bg-cosmic-color-warning-color hover:text-cosmic-color-warning-color hover:bg-white'
+            : 'bg-cosmic-primary-color'
+        } 
+        text-white text-center rounded-md 
+        xs:text-[10px] xs:w-[32px] 
+        md:w-[100px] md:text-sm 
+        w-[100%] py-2`}
+      >
+        {day}
+      </p>
+    </div>
+  ))}
+</div>
 
-
-                        {days.length > 0 && days.map((day, index) => (
-                            <div key={index}>
-                                <p className={`${(index === 0 || index === days.length - 1) ? 'bg-cosmic-color-warning-color hover:text-cosmic-color-warning-color hover:bg-white' : 'bg-cosmic-primary-color'} xs:w-[32px] w-[60px] p-1 md:m-1 text-center text-white rounded-md xs:text-[10px]`}>{day}</p>
-                            </div>
-                        ))}
-                    </div>
 
 
                     <div className="col-span-7 grid grid-cols-7 gap-3 mt-4">

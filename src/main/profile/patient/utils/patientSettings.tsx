@@ -60,7 +60,7 @@ const settings = [
     {
         image:privacyPolicy,
         name:'Privacy Policy',
-        path:''
+        path:'/privacy-policy'
     },
     {
         image:logOut,

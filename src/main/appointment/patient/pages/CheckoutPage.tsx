@@ -95,7 +95,7 @@ const CheckoutPage = () => {
 
 
         <div className="mb-10 ">
-        <PaystackButton className="w-full" amount={Number(amount) * 100} email="ben@gmail.com" publicKey="pk_test_5064b4c81898b5c11f082d5fbabe15b2d00bfb07"  onSuccess={async (e: {
+        <PaystackButton className="w-full" amount={Number(amount) * 100} email="ben@gmail.com" publicKey="pk_live_395226088f830b6c1369b497d49864128c7992dd"  onSuccess={async (e: {
             reference: string, status: string
         }) => {
 
