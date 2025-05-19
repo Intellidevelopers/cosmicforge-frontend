@@ -247,29 +247,29 @@ const HomeBody = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
+ useEffect(() => {
+  const scrollContainer = scrollRef.current;
+  if (!scrollContainer) return;
+
+  const scrollInterval = 3000;
+
+  const interval = setInterval(() => {
     if (!scrollContainer) return;
 
-    const scrollStep = 150;
-    const scrollInterval = 3000;
+    const scrollStep = scrollContainer.clientWidth; // Scroll per full card width
+    const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
 
-    const interval = setInterval(() => {
-      if (!scrollContainer) return;
+    if (scrollContainer.scrollLeft + scrollStep >= maxScrollLeft) {
+      // If reached end, scroll back to start
+      scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
+    } else {
+      scrollContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
+    }
+  }, scrollInterval);
 
-      const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+  return () => clearInterval(interval);
+}, []);
 
-      if (scrollContainer.scrollLeft + scrollStep >= maxScrollLeft) {
-        // If reached end, scroll back to start
-        scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
-      } else {
-        // Otherwise, scroll forward
-        scrollContainer.scrollBy({ left: scrollStep, behavior: 'smooth' });
-      }
-    }, scrollInterval);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const images = [aiImage, auRealityImage, therapyImage, educationImage, consultImage];
 
@@ -324,16 +324,17 @@ const HomeBody = () => {
   {images.map((src, index) => (
     <div
       key={index}
-      className="flex-shrink-0 snap-start w-screen md:w-[600px] md:me-6 p-2"
+      className="flex-shrink-0 snap-start w-screen md:w-[300px] md:me-4 p-2"
     >
       <img
         src={src}
         alt={`Card ${index}`}
-        className="rounded-xl max-h-[400px] w-full object-cover"
+        className="rounded-xl max-h-[300px] w-full object-cover"
       />
     </div>
   ))}
 </div>
+
 
 
        {
