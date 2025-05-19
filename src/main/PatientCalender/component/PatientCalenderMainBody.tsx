@@ -6,6 +6,7 @@ import HomeSideBarMobile from "../../home/component/patient/HomeSideBarMobile"
 import useGetCalendarActiveState from "../hook/useGetCalendarActiveState"
 import newAppointmentIcon from '../../../assets/icons/new-appoinment-icon.svg'
 import { useState } from "react"
+import { AlignCenter } from "lucide-react"
 
 const PatientCalendarMainBody = () => {
 
@@ -40,21 +41,19 @@ const PatientCalendarMainBody = () => {
             <div className="m-6 flex justify-end  ">
 
 
-                <div className="w-fit bg-cosmic-primary-color flex   rounded-md">
+                <div className="w-fit bg-cosmic-primary-color flex px-8 rounded-md">
                     <img className="" src={newAppointmentIcon} />
                     <p className=" w-fit p-2 rounded-md text-white" onClick={() => {
                         navigate('/patient/find-a-specialist')
                     }}>New</p>
-
-
                 </div>
 
 
             </div>
 
-            <div className="w-full md:m-6 flex justify-evenly cursor-default  gap-1 p-1">
+            <div className="w-full md:m-6 flex cursor-default justify-center gap-2 p-1">
 
-                <p className={`${activeState.calendar ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[100px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
+                <p className={`${activeState.calendar ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[150px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
                     setActiveState({
                         ...activeState,
                         calendar: true,
@@ -65,7 +64,7 @@ const PatientCalendarMainBody = () => {
                     })
                     navigate("/patient/calendar")
                 }}>Calender</p>
-                <p className={`${activeState.upcoming ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[100px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
+                <p className={`${activeState.upcoming ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[150px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
                     setActiveState({
                         ...activeState,
                         calendar: false,
@@ -75,7 +74,7 @@ const PatientCalendarMainBody = () => {
                     })
                     navigate("/patient/calendar/upcoming")
                 }}>Upcoming</p>
-                <p className={`${activeState.past ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[100px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
+                <p className={`${activeState.past ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[150px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
                     setActiveState({
                         ...activeState,
                         calendar: false,
@@ -85,7 +84,7 @@ const PatientCalendarMainBody = () => {
                     })
                     navigate("/patient/calendar/past")
                 }}>Past</p>
-                <p className={`${activeState.cancelled ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[100px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
+                <p className={`${activeState.cancelled ? 'bg-cosmic-primary-color text-white' : 'border text-black'} p-2 w-[150px] xs:text-[14px] text-center  rounded-md `} onClick={() => {
                     setActiveState({
                         ...activeState,
                         calendar: false,
