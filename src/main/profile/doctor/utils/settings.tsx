@@ -30,7 +30,7 @@ const settings = [
     {
         image:pWord,
         name:'Password',
-        path:''
+        path:'/doctor/settings/manage-password'
     },
     {
         image:AI,

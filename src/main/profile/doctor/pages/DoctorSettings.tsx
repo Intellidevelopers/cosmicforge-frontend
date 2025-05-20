@@ -50,27 +50,23 @@ const DoctorSettings = () => {
       <DoctorNavBarMobile title="My Profile" />
       <div className="justify-center items-center flex flex-col ">
 
-        <div className=" hidden md:flex w-full m-5 ps-8 pt-4  place-items-center gap-2 cursor-default hover:text-cosmic-primary-color" onClick={() => {
+        <div className=" hidden md:flex w-full m-2 ps-3 pt-2  place-items-center gap-2 cursor-default hover:text-cosmic-primary-color" onClick={() => {
 
           navigate(-1)
         }}>
-          <i className="fa fa-angle-left fa-2xl " />
+          <i className="fa fa-angle-left fa-xl " />
           <p>Go Back</p>
         </div>
         {/* INFO SECTION */}
 
-        <div className="flex bg-white  flex-col items-center justify-center  rounded-lg p-10 m-6 shadow-lg w-[90%]">
+        <div className="flex bg-white flex-col items-center justify-center rounded-lg p-5 m-6 shadow-lg w-[90%]">
 
           <img src={qrCode} alt='qrcode' className="w-8 self-end" />
 
-          <div className="w-full  flex flex-col justify-center items-center mt-4 gap-6">
-
-
+          <div className="w-full  flex flex-col justify-center items-center mt-0 gap-0">
             <div className="overflow-hidden flex justify-center items-center rounded-[50%] w-[150px] h-[150px]">
               <img src={user.data?.profile?.profilePicture ?? defaultProfile} alt="Doctor" className=" h-full  object-cover" />
             </div>
-
-
             <div className="flex justify-center items-center flex-col">
               <p className="font-extrabold text-cosmic-primary-color">{user.data?.lastName?.concat(' ').concat(user.data.fullName!!)}</p>
               <p className="text-sm">{user.data?.profile?.department}</p>
@@ -80,10 +76,10 @@ const DoctorSettings = () => {
                 <p>Lagos, Nigeria</p>
               </div>*/ }
             </div>
-            <div className="w-full  flex flex-col justify-center items-center gap-10">
+            <div className="w-full  flex flex-col justify-center items-center gap-5">
 
 
-              <div className="w-[100%] flex md:gap-20 gap-4 justify-center items-center mt-5">
+              <div className="w-[100%] flex md:gap-20 gap-4 justify-center items-center mt-2">
 
                 <div className="flex flex-col justify-center items-center">
                   <img src={calender} alt="calender" className="w-8 h-8" />
@@ -108,7 +104,7 @@ const DoctorSettings = () => {
                   </div>
                 </div>
               </div>
-              <button type="button" className="bg-cosmic-primary-color text-white font-bold rounded-md p-2 w-[150px]" onClick={() => {
+              <button type="button" className="bg-cosmic-primary-color hover:bg-cosmic-primary-color/50 text-white font-bold h-[40px] rounded-[7px] flex flex-row justify-center items-center w-[150px]" onClick={() => {
                 navigate('/doctor/profile')
               }}> Profile</button>
             </div>
