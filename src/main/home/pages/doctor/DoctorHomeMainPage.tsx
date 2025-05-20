@@ -21,9 +21,16 @@ const DoctorHomeMainPage = () => {
   
   
 
-  if( user.data && user.data.role !== "doctor" && user.data.role=== "patient"){
+  if( user.data && user.data.role !== "doctor" && user.data.role=== "client"){
       return  <Navigate to={'/patient/home'}/>
     }
+
+
+    if(user.data && user.data.role !== "doctor" && user.data.role !== "client"){
+      return <Navigate to={'/'}/>
+    }
+
+    
 
      
  
