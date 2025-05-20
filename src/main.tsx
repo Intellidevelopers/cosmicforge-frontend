@@ -122,6 +122,7 @@ import PrivacyPolicy from "./main/onboarding/pages/PrivacyPolicy.tsx";
 import TermsAndConditions from "./main/onboarding/pages/TermsAndConditions.tsx";
 import DoctorSettings from "./main/profile/doctor/pages/DoctorSettings.tsx";
 import PatientSettings from "./main/profile/patient/pages/PatientSettings.tsx";
+import DoctorManagePasswordPage from "./main/home/pages/doctor/DoctorManagePasswordPage.tsx";
 
 const router = createBrowserRouter([
   {
@@ -526,10 +527,10 @@ const router = createBrowserRouter([
         path: "/account/password-reset",
         element: <ResetLogins />,
       },
-      {
+      /*{
         path: "/account/password-reset/new-password",
         element: <EnterNewPassword />,
-      },
+      },*/
       {
         path: "/account/password-reset/success",
         element: <ResetSuccess />,
@@ -734,6 +735,11 @@ const router = createBrowserRouter([
         path: "/doctor/select-language",
         element: <SelectLanguage />,
       },
+      {
+         path: "/doctor/manage-password",
+        element: <DoctorManagePasswordPage/>
+
+      }
     ],
   },
 ]);
