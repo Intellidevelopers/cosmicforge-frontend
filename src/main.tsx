@@ -122,6 +122,8 @@ import PrivacyPolicy from "./main/onboarding/pages/PrivacyPolicy.tsx";
 import TermsAndConditions from "./main/onboarding/pages/TermsAndConditions.tsx";
 import DoctorSettings from "./main/profile/doctor/pages/DoctorSettings.tsx";
 import PatientSettings from "./main/profile/patient/pages/PatientSettings.tsx";
+import ManagePassword from "./main/profile/patient/pages/managePassword.tsx";
+import ManageDocPassword from "./main/profile/doctor/pages/managePassword.tsx";
 
 const router = createBrowserRouter([
   {
@@ -551,6 +553,10 @@ const router = createBrowserRouter([
         path: "/patient/analytics-coming-soon",
         element: <ComingSoon />,
       },
+      {
+        path:"/patient/manage-password",
+        element:<ManagePassword/>
+      },
 
       {
         path: "/patient/appointment",
@@ -618,6 +624,10 @@ const router = createBrowserRouter([
         {
           path:'/doctor/settings',
           element:<DoctorSettings/>
+        },
+        {
+          path:'/doctor/settings/manage-password',
+          element:<ManageDocPassword/>
         }
      
       //route here
