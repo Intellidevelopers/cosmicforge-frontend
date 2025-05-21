@@ -41,7 +41,6 @@ import DoctorSubscribe from "./main/subscription/pages/doctorSubscribe.tsx";
 import DoctorTable from "./main/home/pages/doctor/DoctorTable.tsx";
 import Earnings from "./main/earnings-withdrawal/pages/earnings.tsx";
 import EditPatientPP from "./main/profile/patient/pages/editPatientPP.tsx";
-import EnterNewPassword from "./main/auth/reset/pages/EnterNewPassword";
 import Faqs from "./main/profile/doctor/pages/faqs.tsx";
 import Favorites from "./main/favorites/pages/favorites";
 import FeatureIncoming from "./main/generalComponents/featureIncoming.tsx";
@@ -125,6 +124,12 @@ import PatientSettings from "./main/profile/patient/pages/PatientSettings.tsx";
 import DoctorManagePasswordPage from "./main/home/pages/doctor/DoctorManagePasswordPage.tsx";
 import ManagePassword from "./main/profile/patient/pages/managePassword.tsx";
 import ManageDocPassword from "./main/profile/doctor/pages/managePassword.tsx";
+import UploadLicensceFirstPage from "./main/profile/doctor/pages/Licensce/UploadLicensceFirstPage.tsx";
+import LiscenceUploadID from "./main/profile/doctor/pages/Licensce/LiscenceUploadID.tsx";
+import LicenceFaceId from "./main/profile/doctor/pages/Licensce/LicenceFaceId.tsx";
+import UploadCertificationFirstPage from "./main/profile/doctor/pages/certification/UploadCertificationFirstPage.tsx";
+import CertificateUploadID from "./main/profile/doctor/pages/certification/CertificateUploadID.tsx";
+import CertificateFaceId from "./main/profile/doctor/pages/certification/CertificateFaceId.tsx";
 
 const router = createBrowserRouter([
   {
@@ -555,8 +560,8 @@ const router = createBrowserRouter([
         element: <ComingSoon />,
       },
       {
-        path:"/patient/manage-password",
-        element:<ManagePassword/>
+        path: "/patient/manage-password",
+        element: <ManagePassword />
       },
 
       {
@@ -605,36 +610,39 @@ const router = createBrowserRouter([
         ],
       },
 
-    {
-      path: '/doctor',
-      element: <DoctorHomeMainPage />,
-      children: [
-        {
-          path: 'home',
-          element: <DoctorHome />
-        },
-        {
-          path:'/doctor/subscription',
-          element:<DoctorSubscribe/>
-        },
-        
-        {
-          path: '/doctor/profile',
-          element: <DoctorProfile/>
-        },
-        {
-          path:'/doctor/settings',
-          element:<DoctorSettings/>
-        },
-        {
-          path:'/doctor/settings/manage-password',
-          element:<ManageDocPassword/>
-        }
-     
-      //route here
-       
-      ]
-    },
+      {
+        path: '/doctor',
+        element: <DoctorHomeMainPage />,
+        children: [
+          {
+            path: 'home',
+            element: <DoctorHome />
+          },
+          {
+            path: '/doctor/subscription',
+            element: <DoctorSubscribe />
+          },
+
+          {
+            path: '/doctor/profile',
+            element: <DoctorProfile />
+          },
+          {
+            path: '/doctor/settings',
+            element: <DoctorSettings />
+          },
+          {
+            path: '/doctor/settings/manage-password',
+            element: <ManageDocPassword />
+          }
+
+          //route here
+
+        ]
+      },
+
+
+
       //please all doctor routes should be here
 
       {
@@ -721,22 +729,64 @@ const router = createBrowserRouter([
         path: "/doctor/certifications",
         element: <Certifications />,
       },
+
+
       {
         path: "/doctor/certification-upload",
         element: <CertificationUpload />,
       },
+
+
+
       {
         path: "/doctor/liscence-upload",
         element: <LiscenceUpload />,
       },
+
       {
         path: "/doctor/certificate-details-upload",
         element: <UploadCertificateDetails />,
+        children: [
+          {
+            path: '',
+            element: <UploadCertificationFirstPage />
+          },
+          {
+            path: 'id',
+            element: <CertificateUploadID />
+          },
+          {
+            path: 'face-id',
+            element: <CertificateFaceId />
+          }
+
+        ]
       },
+
+
+
       {
-        path: "/doctor/liscence-details-upload",
+        path: "/doctor/liscence-details-upload/",
         element: <UploadLiscenceDetails />,
+        children: [{
+          path: '',
+          element: <UploadLicensceFirstPage />
+        },
+        {
+          path: 'id',
+          element: <LiscenceUploadID />
+        },
+        {
+          path: 'face-id',
+          element: <LicenceFaceId />
+        }
+
+        ]
       },
+
+
+
+
       {
         path: "/doctor/faqs",
         element: <Faqs />,
@@ -746,8 +796,8 @@ const router = createBrowserRouter([
         element: <SelectLanguage />,
       },
       {
-         path: "/doctor/manage-password",
-        element: <DoctorManagePasswordPage/>
+        path: "/doctor/manage-password",
+        element: <DoctorManagePasswordPage />
 
       }
     ],

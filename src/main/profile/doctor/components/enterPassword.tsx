@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import lockIcon from '../../../../assets/images/managePass.png';
 
 
 interface props {
-    forwardFunction:()=>void;
+    forwardFunction:(passwordInput:string)=>void;
 }
 
 const EnterPassword:React.FC<props> = ( { forwardFunction } ) => {
+
+    const [password,setPassword] = useState('')
     const validateInput = () => {
         //add logic to validate input here and other API logic here
-        forwardFunction() // sends to next page
+
+        if(!password){
+            return
+        }
+        forwardFunction(password) // sends to next page
     }
     return (
                 <div className="flex flex-col items-center justify-start w-[100%] h-[100%]">
@@ -17,7 +23,9 @@ const EnterPassword:React.FC<props> = ( { forwardFunction } ) => {
                     <div className="h-[300px] flex flex-col justify-center pt-[25px] md:w-[50%] w-[90%] items-center gap-4 bg-white rounded-[10px] mt-[50px]">
                         <div className="flex flex-col md:w-[80%] w-[90%] gap-1">
                             <span>Enter Password</span>
-                            <input type="password" className="outline-none bg-gray-300 rounded-[7px] h-[45px] px-2 w-[100%]" placeholder="Enter your password..."/>
+                            <input type="password" className="outline-none bg-gray-300 rounded-[7px] h-[45px] px-2 w-[100%]" placeholder="Enter your password..." onChange={(e)=>{
+                             setPassword(e.target.value)
+                            }}/>
                         </div>
                         <button onClick={validateInput} className="hover:bg-[#272EA7]/70 bg-[#272EA7] md:w-[80%] w-[90%] h-[40px] rounded-[7px] mt-[20px] flex flex-row justify-center items-center text-white">Change Password</button>
                     </div>

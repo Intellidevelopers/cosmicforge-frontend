@@ -10,7 +10,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
             price:string,
             duration:string,
             offers:string[],
-            commission:number | undefined
+            commission:number | undefined,
+            usdPrice:string
         }]|null
         
 

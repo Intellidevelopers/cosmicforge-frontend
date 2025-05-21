@@ -8,12 +8,16 @@ import { useNavigate } from "react-router-dom";
 
 const ManageDocPassword: React.FC = () => {
     const [ presentPage, setPresentPage ] = useState(1);
+    const [password,setPassword] = useState('')
     
     const navigate = useNavigate();
     const nextPage = () => {
+        
         if ( presentPage < 4) {
             setPresentPage(presentPage+1);
+            return
         }
+
     }
 
     return (
@@ -28,9 +32,12 @@ const ManageDocPassword: React.FC = () => {
           <i className="fa fa-angle-left fa-xl " />
           <p>Go Back</p>
         </div>
-                { presentPage === 2 && <EnterNewPassword forwardFunction={nextPage}/> }
+                { presentPage === 2 && <EnterNewPassword passwordEnteredEarlier={password} forwardFunction={nextPage}/> }
                 { presentPage === 3 && <NewPasswordSuccess setPage={setPresentPage}/>}
-                { presentPage === 1 && <EnterPassword forwardFunction={nextPage}/>}
+                { presentPage === 1 && <EnterPassword forwardFunction={(e)=>{
+                    setPassword(e)
+                    nextPage()
+                }}/>}
             </div>
         </div>
     )

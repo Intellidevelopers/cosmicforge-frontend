@@ -7,11 +7,11 @@ import NewPasswordSuccess from "../components/newPasswordSucces";
 import EnterPassword from "../components/enterPassword";
 
 const ManagePassword: React.FC = () => {
-    const [ presentPage, setPresentPage ] = useState(1);
-
+    const [presentPage, setPresentPage] = useState(1);
+    const [password, setPassword] = useState('')
     const nextPage = () => {
-        if ( presentPage < 4) {
-            setPresentPage(presentPage+1);
+        if (presentPage < 4) {
+            setPresentPage(presentPage + 1);
         }
     }
 
@@ -22,12 +22,16 @@ const ManagePassword: React.FC = () => {
 
             </div>
             <div className="md:w-[75vw] w-full overflow-y-auto">
-                <HomeMobileNavBar title="Manage Password" onSearchFired={()=>{}} />
-                <HomeNavBar title="Manage Password" onSearchFired={()=>{}} />
+                <HomeMobileNavBar title="Manage Password" onSearchFired={() => { }} />
+                <HomeNavBar title="Manage Password" onSearchFired={() => { }} />
 
-                { presentPage === 2 && <EnterNewPassword forwardFunction={nextPage}/> }
-                { presentPage === 3 && <NewPasswordSuccess setPage={setPresentPage}/>}
-                { presentPage === 1 && <EnterPassword forwardFunction={nextPage}/>}
+                {presentPage === 2 && <EnterNewPassword passwordEnteredEarlier={password} forwardFunction={nextPage} />}
+                {presentPage === 3 && <NewPasswordSuccess setPage={setPresentPage} />}
+                {presentPage === 1 && <EnterPassword forwardFunction={(e) => {
+                    setPassword(e)
+                    nextPage()
+                }} />}
+
             </div>
         </div>
     )

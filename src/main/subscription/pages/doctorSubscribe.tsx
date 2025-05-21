@@ -49,7 +49,9 @@ const DoctorSubscribe = () => {
     <div className="overflow-y-auto mb-8">
         <DoctorHomeNavBar title="Subscription" />
         <DoctorNavBarMobile title="Subscription" />
+      
         <div className="flex justify-center md:justify-start  flex-wrap">
+
           {subcriptions?.map((plan,index)=>(
             <SubscribeComp key={index} {...plan}/>
           ))}

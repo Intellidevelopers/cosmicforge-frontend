@@ -421,7 +421,7 @@ const UploadLiscenceDetails = () => {
               return
             }
 
-
+          
 
             if (path === 'id') {
 
