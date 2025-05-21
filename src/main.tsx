@@ -645,25 +645,7 @@ const router = createBrowserRouter([
 
       //please all doctor routes should be here
 
-      {
-        path: "/doctor",
-        element: <DoctorHomeMainPage />,
-        children: [
-          {
-            path: "home",
-            element: <DoctorHome />,
-          },
-          {
-            path: "/doctor/subscription",
-            element: <DoctorSubscribe />,
-          },
-
-          {
-            path: "/doctor/profile",
-            element: <DoctorProfile />,
-          },
-        ],
-      },
+      
 
       {
         path: "/doctor/appointment",
