@@ -268,7 +268,7 @@ const MainRouterPage = () => {
 
                     if (result.status === 200) {
 
-                        store.dispatch(cacheSubscription({ userSubcription: result.data }))
+                        store.dispatch(cacheSubscription({ userSubcription: result.data,currentCurrencyMode:'NGN' }))
                     }
 
 
