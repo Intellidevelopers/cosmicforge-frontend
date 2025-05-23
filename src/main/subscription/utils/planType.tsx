@@ -5,5 +5,6 @@ export interface Plans {
     duration:string;
     active:boolean;
     offers:string[];
-    commission:number | undefined
+    commission:number | undefined,
+    usdPrice:string
 }

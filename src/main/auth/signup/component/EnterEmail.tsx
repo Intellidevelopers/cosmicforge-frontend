@@ -103,15 +103,18 @@ const EnterEmail:React.FC<component> = ( { email, setEmail, step, setStep }) => 
 
 
     return (
+
         <div className={`h-screen ${pageWidth} ${pageOp} bg-gray-100 overflow-hidden transition-all duration-500 ease-in-out md:px-0 px-[5%] flex flex-col justify-center items-center`}>
             <Link className="flex absolute md:top-[7%] top-[3%] flex-row gap-2 items-center font-bold md:w-[80%] w-[95%] h-fit" to={'/account'}>
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="35" deskSize="30"/>
                 <span className="flex font-light">Go back</span>
             </Link>
+
             <div className="md:w-[400px] md:h-fit h-screen md:text-center text-left flex flex-col md:pb-0 pb-[10%] justify-between items-center md:justify-around md:pt-0 pt-[20%]  gap-[15px] w-[100%]">
                 <div className="w-[80%] md:flex hidden h-[50px]">
                     <img src={cosmicLogo} alt="cosmic forge logo" className="h-[100%] w-[100%]"/>
                 </div>
+
                 <div className="flex flex-col justify-center place-items-center gap-2 w-[100%] mt-[10%]">
                     <span className="text-[23px] font-extrabold">Sign Up</span>
                     <span>Let's get you started.</span>
@@ -122,15 +125,19 @@ const EnterEmail:React.FC<component> = ( { email, setEmail, step, setStep }) => 
                         setStep(step+1)
                     }} >Go to otp page</span>
                 </div>
+
                 <button onClick={toNextScreen} className={`${isLoading?'bg-[#272EA7]/80':'bg-[#272EA7]'} h-[48px] w-[100%] md:mt-[80px] hover:bg-[#272EA7]/80 text-white font-bold flex flex-row justify-center items-center rounded-[5px]`}>
                     {isLoading?<Loader size="30px"/>:'Continue'}
                 </button> 
+
                 <div className="md:hidden flex flex-col w-[100%] text-center gap-[50px]">
                     <div className="flex text-[18px] text-gray-300 justify-evenly items-center flex-row gap-1">
                         <div className="w-[40%] h-[3px] bg-gray-300"></div>
                         <span>Or</span>
                         <div className="w-[40%] h-[3px] bg-gray-300"></div>
                     </div>
+
+                    
                     <div className="flex flex-col md:gap-[20px] gap-[15px] w-[100%] items-center">
                         <div className="flex flex-row gap-[20px] w-[100%] justify-center items-center">
                             <button className="w-[55px] h-[55px] hover:scale-[105%] flex flex-col justify-center items-center md:w-[35px] border-[1px] border-gray-300 rounded-[4px]">

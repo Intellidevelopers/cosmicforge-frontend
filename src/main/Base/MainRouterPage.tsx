@@ -139,7 +139,9 @@ const MainRouterPage = () => {
 
 
         if (isReferesh === 'true') {
+           
             (async () => {
+               
                 try {
 
 
@@ -159,6 +161,7 @@ const MainRouterPage = () => {
 
                     if (user.data?.role === 'client') {
                         dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
+                      
                         navigate("/patient/account", {
                             replace: true,
 
@@ -169,7 +172,9 @@ const MainRouterPage = () => {
 
 
                     if (user.data?.role === 'doctor') {
+
                         dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
+                       
                         navigate("/doctor/account", {
                             replace: true,
 
@@ -182,6 +187,7 @@ const MainRouterPage = () => {
                 } catch (error: any) {
 
                     if (!error.message.includes("failed to fetch"))
+                        
                         if (user.data?.token === 'client') {
                             dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
                             navigate("/patient/account", {
@@ -194,7 +200,9 @@ const MainRouterPage = () => {
 
 
                     if (user.data?.token === 'doctor') {
+
                         dispatch(authenticateUser({ isAunthenticated: false, data: {}, keepMeSignedIn: false, message: "sessionExpired" }))
+                    
                         navigate("/doctor/account", {
                             replace: true,
 

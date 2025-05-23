@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
    export interface SubscriptionProps {
-       userSubcription:{
+       userSubcription ?:{
         planName:string,
 
         generalSubscriptionDetails:[{
@@ -18,6 +18,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
        }|null
 
 
+       currentCurrencyMode: 'USD' | 'NGN'
+
+
     }
    
 
@@ -25,6 +28,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
  const  initialState:SubscriptionProps= {
    userSubcription:null,
+   currentCurrencyMode:'NGN'
   
  }
 
@@ -38,12 +42,22 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
            
             
           
+        },
+
+         updateCurrencyMode(state,action:PayloadAction<SubscriptionProps>){
+            state.currentCurrencyMode = action.payload.currentCurrencyMode?? state.currentCurrencyMode
+           
+            
+          
         }
+
+
+
     }
 
  })
 
- export const {cacheSubscription} =subscriptionSlice .actions
+ export const {cacheSubscription,updateCurrencyMode} =subscriptionSlice .actions
 
 
  export default subscriptionSlice.reducer

@@ -176,6 +176,9 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
     }
   }, [appoinmentsState]);
 
+
+
+
   return (
     <div className="w-full  overflow-y-auto  rounded-md bg-white  p-8 relative">
       <div className="grid grid-cols-6 p-4 sticky top-0  z-[100]">
@@ -394,6 +397,8 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
             <th className="font-poppins font-light">{""}</th>
           </tr>
         </thead>
+
+        
         <tbody className="relative ">
           {appoinments &&
             appoinments.length > 0 &&

@@ -71,6 +71,7 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
 
     const appoinmentMonth = appointmentDate.split(' ')[2]
 
+
     const currentMonth = date.toLocaleDateString('en-Us', {
         month: 'short'
     })
@@ -143,6 +144,8 @@ const DoctorTableCustomCard = ({ scrollWidth, appointmentDate, appointmentmentTi
 
 
         </div>
+
+        
         
         <div className={` ${toggleStartSesion ? 'block' : 'hidden'} `}>
             <p className='font-bold  mt-2'>You are about to start  this appoinment session click continue to start</p>

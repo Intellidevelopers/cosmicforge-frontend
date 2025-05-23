@@ -54,7 +54,7 @@ import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
                    <p className="font-semibold">Hi {user.data?.lastName?? 'user'}</p>
                    <p className="font-light text-[14px]">How are you feeling today?</p>
                     </div>
-                    
+
                     <div className="absolute right-1   rounded-lg border  p-2 ">
                     <img src={notificationIcon}  />
                     </div>
@@ -75,6 +75,7 @@ import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
               <div className={`font-extralight border p-[5px] w-[84%] rounded-md flex `} onClick={()=>{
                 onSearchFired(title)
               }}>
+                
                   <img alt='search' src={searchIcon} />
                   <textarea className='w-full resize-none h-[25px] outline-none bg-[#F5F5F5]' />
 
