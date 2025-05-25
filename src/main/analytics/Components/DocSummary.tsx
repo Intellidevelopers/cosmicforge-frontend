@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import optionsIcon from "../../../assets/icons/options.png";
 import groupIcon from "../../../assets/icons/group.png";
 import calIcon from "../../../assets/icons/calender.png";

@@ -1,8 +1,5 @@
 import React from "react";
 import backIcon from "../../../assets/icons/Forward.png";
-import bodyIcon from "../../../assets/icons/bodyicon.svg";
-import tapeIcon from "../../../assets/icons/tapeicon.svg";
-import rgbIcon from "../../../assets/icons/rgbicon.svg";
 import StepCountChart from "./StepCountChart";
 import TotalEarningsCard from "./TotalEarningsCard";
 
