@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DoctorHomeNavBar from "../../../home/component/doctor/DoctorHomeNavBar";
 import DoctorNavBarMobile from "../../../home/component/doctor/DoctorNavBarMobile";
 import DoctorHomeSideBar from "../../../home/component/doctor/DoctorHomeSideBar.ls";
