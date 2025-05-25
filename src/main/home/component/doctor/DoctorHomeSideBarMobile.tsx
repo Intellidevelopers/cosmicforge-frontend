@@ -72,7 +72,7 @@ const DoctorHomeSideBarMobile = () => {
                                 isEditProfileActive: false
                             })
                             closeSideBar()
-                            navigate('/doctor/home')
+                            navigate('/doctor/dashboard')
                         }}   >
                             <img alt="home" src={homeIcon} />
                             <p className="">Dashboard</p>

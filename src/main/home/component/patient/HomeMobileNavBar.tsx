@@ -19,16 +19,16 @@ import defaultProfile from '../../../../assets/icons/defaultProfile.jpg'
   const user = useSelector((state:RootReducer)=>state.user)
 
    
-  if(!user.isAunthenticated ){
-    return  <Navigate to={'/'} replace/>
+  // if(!user.isAunthenticated ){
+  //   return  <Navigate to={'/'} replace/>
  
-  }
+  // }
 
   
 
-  if( user.data && user.data.role !== "client"){
-    return  <Navigate to={'/'} replace/>
-  }
+  // if( user.data && user.data.role !== "client"){
+  //   return  <Navigate to={'/'} replace/>
+  // }
 
 
 

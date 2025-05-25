@@ -1,8 +1,8 @@
-import HomeNavBar from "../../home/component/patient/HomeNavBar";
-import HomeSideBar from "../../home/component/patient/HomeSideBar.ls";
+import HomeNavBar from "../../../home/component/patient/HomeNavBar";
+import HomeSideBar from "../../../home/component/patient/HomeSideBar.ls";
 import React from "react";
-import HomeMobileNavBar from "../../home/component/patient/HomeMobileNavBar";
-import successIllus from "../../../assets/icons//Busnesswoman thinking about work with questions hanging over her head.svg";
+import HomeMobileNavBar from "../../../home/component/patient/HomeMobileNavBar";
+import successIllus from "../../../../assets/icons//Busnesswoman thinking about work with questions hanging over her head.svg";
 import { Link } from "react-router-dom";
 
 

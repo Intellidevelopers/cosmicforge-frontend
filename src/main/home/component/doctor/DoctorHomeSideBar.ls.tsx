@@ -60,7 +60,7 @@ const user = useSelector((state:RootReducer)=>state.user)
                 isProfileActive:false,
                 isEditProfileActive:false
               })
-              navigate('/doctor/home')
+              navigate('/doctor/dashboard')
             }}   >
               <img alt="home" src={homeIcon} />
               <p className="">Dashboard</p>
