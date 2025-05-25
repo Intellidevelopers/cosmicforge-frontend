@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import backIcon from "../../../assets/icons/Forward.png";
 import SplineAreaChart from "./SplineAreaChart";
 
