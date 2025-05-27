@@ -1,20 +1,20 @@
-import HomeNavBar from "../../home/component/patient/HomeNavBar";
-import HomeSideBar from "../../home/component/patient/HomeSideBar.ls";
+import HomeNavBar from "../../../home/component/patient/HomeNavBar";
+import HomeSideBar from "../../../home/component/patient/HomeSideBar.ls";
 import React, { useState } from "react";
-import Summary from "../Components/Summary";
-import SpoTCard from "../Components/SpoTCard";
-import BptCard from "../Components/BptCard";
-import OverallHealth from "../Components/OverallHealth";
-import HPandPHCard from "../Components/HPandPHCard";
-import HomeMobileNavBar from "../../home/component/patient/HomeMobileNavBar";
-import MobileSummary from "../Components/MobileSummary";
-import diagnosis from '../../../assets/search/searchDiagnosis.svg'
+import Summary from "../../Components/Summary";
+import SpoTCard from "../../Components/SpoTCard";
+import BptCard from "../../Components/BptCard";
+import OverallHealth from "../../Components/OverallHealth";
+import HPandPHCard from "../../Components/HPandPHCard";
+import HomeMobileNavBar from "../../../home/component/patient/HomeMobileNavBar";
+import MobileSummary from "../../Components/MobileSummary";
+import diagnosis from '../../../../assets/search/searchDiagnosis.svg'
 
-import searchBookAppointment from '../../../assets/search/searchBookAppoinment.png'
-import searchFindASpecialist from '../../../assets/search/searchFindASpecialist.png'
-import searchFirstAid from '../../../assets/search/searchFirtstAid.png'
-import searchChatBot from '../../../assets/search/searchChatBot.png'
-import CustomHomeSearchCard, { CustomHomeSearchCardProps } from "../../home/component/patient/CustomHomeSearchCard";
+import searchBookAppointment from '../../../../assets/search/searchBookAppoinment.png'
+import searchFindASpecialist from '../../../../assets/search/searchFindASpecialist.png'
+import searchFirstAid from '../../../../assets/search/searchFirtstAid.png'
+import searchChatBot from '../../../../assets/search/searchChatBot.png'
+import CustomHomeSearchCard, { CustomHomeSearchCardProps } from "../../../home/component/patient/CustomHomeSearchCard";
 
 const PatientAnalytics: React.FC = () => {
 

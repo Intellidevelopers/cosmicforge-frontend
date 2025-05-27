@@ -22,7 +22,7 @@ import ChatPage from "./main/home/pages/chat/ChatPage";
 import Chatbot from "./main/chatbot/pages/chatbot.tsx";
 import CheckOutPage from "./main/shopScreens/pages/checkOutPage.tsx";
 import CheckoutPage from "./main/appointment/patient/pages/CheckoutPage";
-import ComingSoon from "./main/analytics/pages/ComingSoon";
+import ComingSoon from "./main/analytics/pages/Patient/ComingSoon.tsx";
 import ComingSoonPage from "./main/onboarding/pages/ComingSoonPage";
 import ConfirmWithdrawal from "./main/earnings-withdrawal/pages/confirmWithdrawal.tsx";
 import DepartmentOverview from "./main/onboarding/pages/DepartmentOverview.tsx";
@@ -74,7 +74,7 @@ import MissedAppointment from "./main/alerts/pages/missedAppointment.tsx";
 import NoCertificates from "./main/alerts/pages/noCertificates.tsx";
 import NoLiscenceAlert from "./main/alerts/pages/noLiscenceAlert.tsx";
 import PastAppointment from "./main/PatientCalender/pages/PastAppointment";
-import PatientAnalytics from "./main/analytics/pages/PatientAnalytics";
+import PatientAnalytics from "./main/analytics/pages/Patient/PatientAnalytics.tsx";
 import PatientCalendarPage from "./main/PatientCalender/pages/PatientCalendarPage";
 import PatientCalenderMainPage from "./main/PatientCalender/pages/PatientCalenderMainPage";
 import PatientMainPP from "./main/profile/patient/pages/patientMainPP.tsx";
@@ -130,6 +130,8 @@ import LicenceFaceId from "./main/profile/doctor/pages/Licensce/LicenceFaceId.ts
 import UploadCertificationFirstPage from "./main/profile/doctor/pages/certification/UploadCertificationFirstPage.tsx";
 import CertificateUploadID from "./main/profile/doctor/pages/certification/CertificateUploadID.tsx";
 import CertificateFaceId from "./main/profile/doctor/pages/certification/CertificateFaceId.tsx";
+import DoctorAnalytics from "./main/analytics/pages/Doctor/DoctorAnalytics.tsx";
+
 
 const router = createBrowserRouter([
   {
@@ -680,7 +682,6 @@ const router = createBrowserRouter([
         path: "/doctor/messages/chat",
         element: <DoctorMobileChatPage />,
       },
-
       {
         path: "/doctor/edit-profile",
         element: <DoctorEditProfilePage />,
@@ -781,10 +782,16 @@ const router = createBrowserRouter([
         path: "/doctor/manage-password",
         element: <DoctorManagePasswordPage />
 
-      }
+      },
+      {
+        path: "/doctor/analytics",
+        element: <DoctorAnalytics />,
+      },
+      
     ],
   },
 ]);
+
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>

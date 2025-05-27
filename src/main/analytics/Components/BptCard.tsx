@@ -17,7 +17,7 @@ const BptCard:React.FC = () => {
                 <span className="text-[14px] text-gray-500 font-extralight">Monitor your Blood pressure</span>
             </div>
             <div className="pt-[15px] w-[100%]">
-                <SplineAreaChart color={'#FF9AE4'}/>
+                <SplineAreaChart data={[ 3200, 2000, 3900, 4700, 6200, 4800, 6100, 8000, 6000, 3500, 2500, 4000 ]}  title="Blood Pressure" color={'#f472b6'}/>
             </div>
         </div>
     )

@@ -189,6 +189,8 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email,userRole} ) => {
                 <IconContainer image={backIcon} classes='rotate-180' mobileSize="35" deskSize="30"/>
                 <span className="md:flex hidden">Go back</span>
             </button>
+
+            
             <div className="md:w-[400px] md:h-fit h-screen md:text-center text-left  mt-6 flex flex-col md:pb-0 pb-[10%] justify-between items-center md:justify-around md:pt-0 pt-[30px]  gap-[15px] w-[100%]">
             <div className="w-[80%] md:flex hidden h-[50px]">
                     <img src={cosmicLogo} alt="cosmic forge logo" className="h-[100%] w-[100%]"/>
@@ -215,7 +217,7 @@ const EnterOtp:React.FC<components> = ( { step, setStep,email,userRole} ) => {
 
                     <div className="w-full mt-[6px] justify-center place-items-center font-light gap-2 flex">
                     <span className="text-left ">Did&apos;t receive the code?</span>
-                    <button className={"  text-[#272EA7] hover:underline decoration-blue-600  text-[16px] w-fit"} disabled={(!counter.startsWith('0') && !counter.endsWith('0'))} onClick={ async()=>{
+                    <button className={`${!(counter.startsWith('0'))?'text-gray-50':'text-[#272EA7] hover:underline decoration-blue-600 '}  text-[16px] w-fit`} disabled={(!counter.startsWith('0') && !counter.endsWith('0'))} onClick={ async()=>{
                         
                         setErrorMesage('')
                         stopAndClearTimer()

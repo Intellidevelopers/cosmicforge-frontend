@@ -33,6 +33,7 @@ const user = useSelector((state:RootReducer)=>state.user)
           </div>
           <p>ID:<span className="text-sm font-light">{user.data?.profile?.userCosmicID}</span></p>
           <p>Dr {user.data?.fullName}</p>
+
           <p className={`font-extralight text-cosmic-primary-color ${(activeRoutePath.isEditProfileActive) && 'underline'}`} onClick={()=>{
               setActiveRoutePath({
                 ...activeRoutePath,
@@ -111,6 +112,7 @@ const user = useSelector((state:RootReducer)=>state.user)
                 isProfileActive:false,
                 isEditProfileActive:false
               })
+               navigate('/doctor/analytics')
             }}>
               <img alt="analytics" src={analyticsIcon} />
               <p>Analytics</p>

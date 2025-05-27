@@ -17,7 +17,7 @@ const SpoTCard:React.FC = () => {
                 <span className="text-[14px] text-gray-500 font-extralight">Keep track of Oxygen Circulation</span>
             </div>
             <div className="pt-[15px] w-[100%]">
-                <SplineAreaChart color={'#7790FF'}/>
+                <SplineAreaChart data={[ 2300, 4000, 3000, 4600, 5900, 4000, 6100, 8000, 4400, 7500, 2900, 7000 ]} title="SPO" color={'blue'}/>
             </div>
         </div>
     )

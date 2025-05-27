@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
 
 import { useSelector } from "react-redux";
-import { RootReducer } from "../../../store/initStore";
+import { RootReducer } from "../../store/initStore";
 
 enum AppointmentsTypes {
-  upcomming = "Upcomming Appointments",
+  upcomming = "Upcoming Appointments",
   past = "Past Appointments",
   cancelled = "Cancelled Appointments",
 }
@@ -28,7 +28,7 @@ interface DoctorInterfaceProps {
   ) => void;
 }
 
-const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
+const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
   const [appointmentTypeSelected, setAppoinmentTypeSelected] = useState<
     "upcoming" | "past" | "cancelled"
   >("upcoming");
@@ -117,7 +117,7 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
         currentTime.trim().toLowerCase() ||
         Number(currentTime.split(":")[0]) <
           Number(appoinmentEndTime.split(":")[0])) &&
-      activeAppointment === "upcomming"
+      activeAppointment === "upcoming"
     );
   };
 
@@ -180,11 +180,11 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
 
 
   return (
-    <div className="w-full  overflow-y-auto  rounded-md bg-white  p-8 relative">
-      <div className="grid grid-cols-6 p-4 sticky top-0  z-[100]">
-        <div className="w-full col-span-4 md:col-span-5">
+    <div className="w-full  overflow-y-auto  rounded-md bg-white shadow-lg shadow-black/10  p-3 pb-[50px] relative">
+      <div className="grid grid-cols-6 p-3 p-t-0 sticky top-0  z-[100]">
+        <div className="w-full text-[18px] col-span-4 md:col-span-5">
           <p className="font-bold" onClick={() => {}}>
-            {activeAppointment}
+            Appointments
           </p>
         </div>
 
@@ -378,7 +378,7 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
               }
             }}
           >
-            <option className="text-end">upcomming</option>
+            <option className="text-end">upcoming</option>
             <option className="text-end">cancelled</option>
             <option className="text-end">past</option>
           </select>
@@ -387,14 +387,14 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
 
       <table className="w-full p-10 relative ">
         <thead className="mb-8 relative">
-          <tr className="border-b-[1px] relative border-b-black/30 font-poppins font-light  cursor-default">
+          <tr className="border-b-[1px] text-[13px] relative border-b-black/30 font-poppins font-light  cursor-default">
             <th className="font-poppins font-light min-w-[15%] text-start ps-5">
               Name
             </th>
             <th className="font-poppins font-light">Gender</th>
             <th className="font-poppins font-light">Date</th>
             <th className="font-poppins font-light">Time</th>
-            <th className="font-poppins font-light">{""}</th>
+            <th className="font-poppins font-light">Actions</th>
           </tr>
         </thead>
 
@@ -493,7 +493,7 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
       {
         /*
         appoinments && appoinments.length>0  && appoinments.map((appointment, index) => (
-          <DoctorTableCustomCard appointmentId={appointment._id!!} gender={appointment?.patientDetails?.vitalSigns?.gender} appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
+          <DoctorAppointmentsCustomCard appointmentId={appointment._id!!} gender={appointment?.patientDetails?.vitalSigns?.gender} appointmentDate={appointment.appointmentDate} appointmentmentTime={appointment.appointmentTime} patientName={appointment.patientID?.lastName.concat(' ').concat(appointment.patientID.fullName)!!} patientProfile={appointment.patientDetails.profilePicture} key={index} scrollWidth={scrollWidth} patientId={appointment.patientID?._id!!} onStartSession={() => {
           //  alert(details.patientName)
 
          
@@ -517,4 +517,4 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
   );
 };
 
-export default DoctorTable;
+export default DoctorAppointments;

@@ -3,16 +3,15 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 interface props {
-  color:string,
-  title:string,
-  data:number[],
+    title:string,
+    height:number,
 }
 
-const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
+const SplineAreaChart3: React.FC<props> = ( { title, height } ) => {
   const series = [
     {
       name: title,
-      data: data,
+      data: [3000, 4200, 3800, 5000, 6500, 5800, 7000, 300, 1000, 4000, 2700, 5992],
     },
   ];
 
@@ -27,7 +26,7 @@ const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
       enabled: false,
     },
     stroke: {
-      curve: "smooth",
+      curve: "straight",
       width: 3,
     },
     fill: {
@@ -36,7 +35,7 @@ const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
         shadeIntensity: 1,
         opacityFrom: 0.4,
         opacityTo: 0.1,
-        stops: [0, 95, 100],
+        stops: [0, 90, 100],
       },
     },
     xaxis: {
@@ -54,26 +53,21 @@ const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
         },
       },
     },
-    colors: [ color ], // blue-500 for male, pink-500 for female
+    colors: ["#3b82f6"], // Tailwind blue-500
     tooltip: {
       theme: "light",
     },
-    legend: {
-      position: "top",
-      horizontalAlign: "right",
-      fontFamily: "Inter, sans-serif",
-    },
     grid: {
-      borderColor: "#e5e7eb", // gray-200
+      borderColor: "#e5e7eb", // Tailwind gray-200
       strokeDashArray: 4,
     },
   };
 
   return (
     <div className="bg-white w-full">
-      <ReactApexChart options={options} series={series} type="area" height={200} />
+      <ReactApexChart options={options} series={series} type="area" height={height} />
     </div>
   );
 };
 
-export default SplineAreaChart;
+export default SplineAreaChart3;

@@ -58,6 +58,8 @@ const EnterPersonalDetails: React.FC = () => {
             setErrorMesage('Password must be atleast 8 characters, contain uppercase, lowercase, number and symbol.')
             return
         }
+
+        
         if (confirmPassword !== password) {
             setErrorMesage('password not match.')
             return

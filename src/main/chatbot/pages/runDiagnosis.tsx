@@ -111,6 +111,7 @@ const AiChatbot = () => {
       // Simulate a bot response
 
       if (userSocket.connected && userSocket) {
+        alert('jjjj')
         userSocket.socket?.emit('perform-diagnosis', input)
 
 
