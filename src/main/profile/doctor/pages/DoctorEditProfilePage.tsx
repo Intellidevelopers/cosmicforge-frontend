@@ -23,6 +23,7 @@ export interface DoctorEditProfileProps {
     department?: string,
     bio?: string,
     pricing?: string,
+    currency?: string,
     experience?: {
         hospitalName?: string,
         NoOfPatientTreated?: string,
@@ -62,6 +63,7 @@ const DoctorEditProfilePage = () => {
 
     const [loading, setLoading] = useState<boolean>(false)
 
+
     const [doctorEditProfileDetails, setDoctorEditProfileDetails] = useState<DoctorEditProfileProps>({
         profilePicture: user.data?.profile?.profilePicture ?? defaultProfile,
         fullName: user.data?.fullName ?? '',
@@ -70,9 +72,10 @@ const DoctorEditProfilePage = () => {
         professionalTitle: user.data?.profile?.professionalTitle ?? '',
         specialization: user.data?.profile?.specialization ?? '',
         currentClinic: user.data?.profile?.currentClinic ?? '',
-        department: user.data?.profile?.department ?? '',
+        department: user.data?.profile?.department ?? 'Cardiology',
         bio: user.data?.profile?.bio ?? '',
         pricing: user.data?.profile?.pricing ?? '',
+        currency: user.data?.profile?.currency ,
         experience: {
             hospitalName: user.data?.profile?.experience?.hospitalName ?? '',
             NoOfPatientTreated: user.data?.profile?.experience?.NoOfPatientTreated ?? '',
@@ -87,9 +90,13 @@ const DoctorEditProfilePage = () => {
 
 
 
+
+
     const [doctorsDep, setDoctorsDep] = useState<{ name: string, image: string }[]>()
 
     const { getImageBase64String } = useGetImageBase64String()
+
+
     useEffect(() => {
 
         (async () => {
@@ -177,6 +184,8 @@ const DoctorEditProfilePage = () => {
                                 imageFileRef.current?.click()
                             }
                         }}>Upload Image</p>
+
+
                         <p className="bg-white m-1  rounded-md p-1 text-center">Remove Image</p>
                         <input ref={imageFileRef} type="file" accept="image/*" hidden onChange={async (e) => {
                             if (e.target.files) {
@@ -301,19 +310,36 @@ const DoctorEditProfilePage = () => {
 
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="pricing">Pricing</label>
-                        <input value={doctorEditProfileDetails.pricing} type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e) => {
+                        <p><span className="font-bold">Note:</span> currency can only be selected once.</p>
+                        <select className="currency w-fit pe-8 pt-2 text-balance bg-transparent" disabled={doctorEditProfileDetails.currency !== '' || doctorEditProfileDetails.currency !== undefined} value={doctorEditProfileDetails.currency} onChange={(e) => {
                             setDoctorEditProfileDetails({
                                 ...doctorEditProfileDetails,
-                                pricing: e.target.value
+                                currency: e.target.value
                             })
+                        }}>
+                            <option className="usd">NGN</option>
+                            <option className="usd">USD</option>
+                        </select>
+                        <input value={doctorEditProfileDetails.pricing} type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e) => {
+
+                            if (Number.isInteger(Number(e.target.value.replace(/[,]/g, "")))) {
+
+                                setDoctorEditProfileDetails({
+                                    ...doctorEditProfileDetails,
+                                    pricing: new Intl.NumberFormat().format(Number(e.target.value.replace(/[,]/g, "")))
+                                })
+                            }
+
+
                         }} />
+
                     </div>
 
 
 
                     <div className="w-full mt-8">
 
-                        <p className="text-cosmic-primary-color">Experience</p>
+                        <p className="text-cosmic-primary-color font-bold">Experience</p>
 
                         <div className="w-full grid grid-cols-2 gap-2">
                             <div className="w-full col-span-2 md:col-span-1 flex flex-col gap-2 mt-8">
@@ -359,7 +385,11 @@ const DoctorEditProfilePage = () => {
                                 }} />
                             </div>
 
+
+
+
                             <div className="w-full col-span-2 md:col-span-1 flex flex-col gap-2 mt-8">
+
                                 <label htmlFor="startAndEndDate" className="text-[12px] md:text-[16px]">Start d/m/y - End d/m/y</label>
                                 <input value={doctorEditProfileDetails.experience?.date} type="text" className="w-full bg-transparent border p-2 rounded-md" id="startAndEndDate" onChange={(e) => {
                                     setDoctorEditProfileDetails({
@@ -380,12 +410,13 @@ const DoctorEditProfilePage = () => {
 
 
                     <div className="w-full mt-8">
-                        <p className="text-cosmic-primary-color ">Working hours</p>
-                        <p className="">Days</p>
+                        <p className="text-cosmic-primary-color font-bold pb-2">Working hours</p>
+                        <p className="font-bold mt-2">Days</p>
                         <div className="w-full grid grid-cols-2 gap-2">
                             <div className="w-full flex flex-col gap-2 mt-2">
                                 <label htmlFor="workingFrom">From</label>
                                 <select value={doctorEditProfileDetails.workingHours?.day?.split('-')[0] ?? doctorEditProfileDetails.workingHours?.day} className="w-full bg-transparent border p-2 rounded-md" id="workingFrom" onChange={(e) => {
+
                                     setDoctorEditProfileDetails({
                                         ...doctorEditProfileDetails,
                                         workingHours: {
@@ -411,6 +442,8 @@ const DoctorEditProfilePage = () => {
                                 <label htmlFor="workingTo">To</label>
 
                                 <select value={doctorEditProfileDetails.workingHours?.day?.split('-')[1]} className="w-full bg-transparent border p-2 rounded-md" id="workingTo" onChange={(e) => {
+
+
                                     setDoctorEditProfileDetails({
                                         ...doctorEditProfileDetails,
                                         workingHours: {
@@ -435,7 +468,7 @@ const DoctorEditProfilePage = () => {
 
                         </div>
 
-                        <p className="mt-6">Time</p>
+                        <p className="mt-6 font-bold">Time</p>
 
                         <div className="w-full grid grid-cols-2 gap-2">
 
@@ -497,18 +530,42 @@ const DoctorEditProfilePage = () => {
                             let updatedData = doctorEditProfileDetails
                             if (doctorEditProfileDetails.profilePicture?.includes('https')) {
                                 let { profilePicture, ...newData } = doctorEditProfileDetails
+
                                 updatedData = newData
                             }
+
+
                             const data = Object.entries(updatedData).every(([, value], _) => {
 
                                 return value === null || value === undefined || value === ""
                             })
+
 
                             if (data) {
                                 setErrorMessage('Atleast one field should be entered.')
 
                                 return
                             }
+
+                            if (!updatedData.currency) {
+                                setErrorMessage('currency not selected.')
+
+                                return
+                            }
+
+                            if(!updatedData.pricing || (updatedData.pricing === '0')){
+                                 setErrorMessage('please provide pricing.')
+
+                                return
+                            }
+
+                            if (updatedData.workingHours?.time && (updatedData.workingHours?.time?.split('-').length <= 1)) {
+                                setErrorMessage('Time not selected .')
+
+                                return
+                            }
+
+                            
 
                             if (!updatedData.department || !updatedData.workingHours?.time || !updatedData.workingHours.day) {
 
@@ -518,39 +575,39 @@ const DoctorEditProfilePage = () => {
 
 
                             try {
-                                setLoading(true)
-                                setErrorMessage('')
-                                const result = await updateDoctorProfile(updatedData, user.data?.token!!)
-                                setLoading(false)
-                                if (result.status === 200) {
-
-                                    if (result.token) {
-                                        dispatch(authenticateUser({ data: result.data }))
-                                        return
-                                    }
-                                    dispatch(authenticateUser({
-                                        data: {
-                                            ...result.data,
-                                            token: user.data?.token
-                                        }
-                                    }))
-
-                                    if (state && state.newAccount) {
-                                        navigate('/doctor/home')
-                                    } else {
-                                        setSuccessfulUpdate(true)
-                                    }
-                                    return
-                                }
-
-
-                                setErrorMessage(result.error ?? result.message)
-
-                            } catch (error) {
-                                console.log(error)
-                                setLoading(false)
-                                setErrorMessage('error occured try again')
-                            }
+                                  setLoading(true)
+                                  setErrorMessage('')
+                                  const result = await updateDoctorProfile(updatedData, user.data?.token!!)
+                                  setLoading(false)
+                                  if (result.status === 200) {
+  
+                                      if (result.token) {
+                                          dispatch(authenticateUser({ data: result.data }))
+                                          return
+                                      }
+                                      dispatch(authenticateUser({
+                                          data: {
+                                              ...result.data,
+                                              token: user.data?.token
+                                          }
+                                      }))
+  
+                                      if (state && state.newAccount) {
+                                          navigate('/doctor/home')
+                                      } else {
+                                          setSuccessfulUpdate(true)
+                                      }
+                                      return
+                                  }
+  
+  
+                                  setErrorMessage(result.error ?? result.message)
+  
+                              } catch (error) {
+                                  console.log(error)
+                                  setLoading(false)
+                                  setErrorMessage('error occured try again')
+                              }
 
 
 
