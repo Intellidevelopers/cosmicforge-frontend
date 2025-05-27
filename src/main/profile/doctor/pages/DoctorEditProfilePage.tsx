@@ -75,7 +75,7 @@ const DoctorEditProfilePage = () => {
         department: user.data?.profile?.department ?? 'Cardiology',
         bio: user.data?.profile?.bio ?? '',
         pricing: user.data?.profile?.pricing,
-        currency: user.data?.profile?.currency,
+        currency: (user.data?.profile?.currency === "NGN" || user.data?.profile?.currency === "USD" ) ? user.data?.profile?.currency : 'NGN',
         experience: {
             hospitalName: user.data?.profile?.experience?.hospitalName ?? '',
             NoOfPatientTreated: user.data?.profile?.experience?.NoOfPatientTreated ?? '',
