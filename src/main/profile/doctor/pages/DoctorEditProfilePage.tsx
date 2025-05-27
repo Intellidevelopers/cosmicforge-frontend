@@ -74,8 +74,8 @@ const DoctorEditProfilePage = () => {
         currentClinic: user.data?.profile?.currentClinic ?? '',
         department: user.data?.profile?.department ?? 'Cardiology',
         bio: user.data?.profile?.bio ?? '',
-        pricing: user.data?.profile?.pricing ?? '',
-        currency: user.data?.profile?.currency ,
+        pricing: user.data?.profile?.pricing,
+        currency: user.data?.profile?.currency,
         experience: {
             hospitalName: user.data?.profile?.experience?.hospitalName ?? '',
             NoOfPatientTreated: user.data?.profile?.experience?.NoOfPatientTreated ?? '',
@@ -87,6 +87,7 @@ const DoctorEditProfilePage = () => {
             time: user.data?.profile?.workTime?.time ?? ""
         }
     })
+
 
 
 
@@ -311,7 +312,7 @@ const DoctorEditProfilePage = () => {
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="pricing">Pricing</label>
                         <p><span className="font-bold">Note:</span> currency can only be selected once.</p>
-                        <select className="currency w-fit pe-8 pt-2 text-balance bg-transparent" disabled={doctorEditProfileDetails.currency !== '' || doctorEditProfileDetails.currency !== undefined} value={doctorEditProfileDetails.currency} onChange={(e) => {
+                        <select  className="currency w-fit pe-8 pt-2 text-balance bg-transparent" disabled={(user.data?.profile && (user.data?.profile.currency ===  'NGN' || user.data?.profile.currency ===  'USD'))} value={doctorEditProfileDetails.currency} onChange={(e) => {
                             setDoctorEditProfileDetails({
                                 ...doctorEditProfileDetails,
                                 currency: e.target.value

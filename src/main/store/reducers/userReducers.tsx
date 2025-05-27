@@ -30,7 +30,7 @@ interface PatientUserProfileProps{
   department?: string,
   bio?: string,
   pricing?: string,
-  currency?: 'NGN' | 'USD',
+  currency?: 'NGN' | 'USD' |  undefined,
   experience?: {
       hospitalName?: string,
       NoOfPatientTreated?: string,

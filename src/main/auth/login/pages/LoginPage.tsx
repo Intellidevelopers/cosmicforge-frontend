@@ -196,6 +196,7 @@ const LoginPage: React.FC = () => {
 
 
                         } catch (error) {
+                          
                             setErrorMesage("An error occured try again.")
                         }
                     }}>
