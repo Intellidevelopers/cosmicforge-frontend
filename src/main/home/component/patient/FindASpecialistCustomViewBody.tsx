@@ -45,7 +45,8 @@ const FindASpecalistCustomViewBody = () => {
         workTime?: {
             day?: string,
             time?: string
-        }}[]>([])
+        },
+    isVerified?:boolean}[]>([])
 
     
         const [doctorDetailsCache,setDoctorDetailsCache] = useState<{ 
@@ -69,7 +70,8 @@ const FindASpecalistCustomViewBody = () => {
             workTime?: {
                 day?: string,
                 time?: string
-            }}[]>([])
+            },
+        isVerified?:boolean}[]>([])
 
 
     useEffect(() => {
@@ -92,6 +94,7 @@ const FindASpecalistCustomViewBody = () => {
             if(result.status === 200){
                 setDoctorDetails(result.data)
                 setDoctorDetailsCache(result.data)
+                
             }
           
 

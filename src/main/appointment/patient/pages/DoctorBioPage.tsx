@@ -8,8 +8,8 @@ import ratedStar from '../../../../assets/icons/rated-star.svg'
 import { useEffect, useState } from "react"
 import Loader from "../../../generalComponents/Loader"
 //import ReviewCard from "../component/ReviewCard"
-import callButton from '../../../../assets/icons/call-button.svg'
-import videoButton from '../../../../assets/icons/cosmic-video-call-button.svg'
+//import callButton from '../../../../assets/icons/call-button.svg'
+//import videoButton from '../../../../assets/icons/cosmic-video-call-button.svg'
 import calender from '../../../../assets/icons/cosmic-dark-calender.svg'
 import time from '../../../../assets/icons/cosmic-clock-dark.svg'
 import cal from '../../../../assets/icons/home/cosmic-home-calander.svg'
@@ -53,12 +53,12 @@ const DoctorBioPage = () => {
 
     <div className="relative w-full  flex flex-col place-items-center  p-3  ">
 
-      <div className=" relative m-4  h-[350px]  md:h-[300px] w-full   border rounded-xl">
-        <img className="w-full h-full     bg-orange-400
-  " src={state?.doctorImage ?? '/'} style={{ objectPosition: 'top', objectFit: 'cover' }} />
+      <div className=" relative m-4  h-[350px]  md:h-[300px] w-full  aspect-square  border rounded-xl">
+        <img className="w-full h-full object-cover  object-center    bg-black bg-opacity-30
+  " src={state?.doctorImage ?? '/'} style={{  }} />
 
-        <div className="w-full h-fit md:h-[80px] absolute  bottom-0 bg-gradient-to-t from-cosmic-doc-gradient-1 to-cosmic-doc-gradient-2">
-          <div className="w-full flex place-items-center gap-3 h-full p-2 text-white justify-evenly flex-wrap">
+        <div className="w-full h-fit md:h-[80px] absolute ps-10 bottom-0 bg-gradient-to-t from-cosmic-doc-gradient-1 to-cosmic-doc-gradient-2  bg-cosmic-light-color-call bg-opacity-90">
+          <div className="w-full flex place-items-center gap-3 h-full p-2 text-white justify-between flex-wrap">
 
             <div>
               <p className="font-bold overflow-hidden  text-[14px] md:text-[16px]   min-w-[80px] max-w-[80px] md:max-w-fit  text-nowrap text-ellipsis">Dr {state.doctorName}</p>
@@ -68,21 +68,22 @@ const DoctorBioPage = () => {
 
             <div>
               <p className="font-bold">Patients</p>
-              <p className="font-light">1,500+</p>
+              <p className="font-light">{state.totalPatient}</p>
             </div>
 
             <div>
               <p className="font-bold">Ratings</p>
-              <p className="font-light">4.7</p>
+              <p className="font-light"></p>
             </div>
 
             <div>
-              <p className="font-bold">Location</p>
-              <p className="font-light">Lagos,Nig</p>
+              
             </div>
 
 
-            <div className=" flex gap-6">
+           {
+            /**
+             *  <div className=" flex gap-6">
               <div className=" h-[30px] w-[30px] bg-cosmic-doc-gradient-1 p-2 rounded-full flex justify-center place-items-center">
                 <img alt="call-btn" src={callButton} />
               </div>
@@ -92,6 +93,8 @@ const DoctorBioPage = () => {
               </div>
 
             </div>
+             */
+           }
 
 
           </div>

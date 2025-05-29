@@ -1,11 +1,7 @@
 import React from 'react';
 import HandCash from '../../assets/HomeImg/hand.png'
-import { useNavigate } from 'react-router-dom';
-
 
 const PaymentSuccessCard: React.FC = () => {
-
-   const navigate = useNavigate()
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
       <div className="bg-white rounded-md shadow-lg p-16 max-w-2xl w-full text-center">
@@ -20,9 +16,7 @@ const PaymentSuccessCard: React.FC = () => {
         <p className="text-gray-600 mb-6">
           Your payment was successfully processed.
         </p>
-        <button className="bg-[#272EA7] hover:bg-indigo-700 text-white font-medium py-2 w-[50%] px-6 rounded-md transition" onClick={()=>{
-          navigate('/doctor/home')  
-        }}>
+        <button className="bg-[#272EA7] hover:bg-indigo-700 text-white font-medium py-2 w-[50%] px-6 rounded-md transition">
           Home
         </button>
       </div>

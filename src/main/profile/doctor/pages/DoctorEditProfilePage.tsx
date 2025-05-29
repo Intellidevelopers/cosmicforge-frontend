@@ -565,7 +565,13 @@ const DoctorEditProfilePage = () => {
 
                                 return
                             }
+    
 
+                             if(updatedData.workingHours?.day && updatedData.workingHours?.day?.split('-').length<=0){
+                                   setErrorMessage('Day not selected.')
+
+                                return
+                             }
                             
 
                             if (!updatedData.department || !updatedData.workingHours?.time || !updatedData.workingHours.day) {
