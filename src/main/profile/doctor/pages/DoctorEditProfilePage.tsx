@@ -22,7 +22,11 @@ export interface DoctorEditProfileProps {
     currentClinic?: string,
     department?: string,
     bio?: string,
+    /** 
+     * This is representing the pricing for 15mins
+    */
     pricing?: string,
+    pricingForThirtyMins?:string,
     currency?: string,
     experience?: {
         hospitalName?: string,
@@ -75,6 +79,7 @@ const DoctorEditProfilePage = () => {
         department: user.data?.profile?.department ?? 'Cardiology',
         bio: user.data?.profile?.bio ?? '',
         pricing: user.data?.profile?.pricing,
+        pricingForThirtyMins: user.data?.profile?.pricingForThirtyMins ?? '',
         currency: (user.data?.profile?.currency === "NGN" || user.data?.profile?.currency === "USD" ) ? user.data?.profile?.currency : 'NGN',
         experience: {
             hospitalName: user.data?.profile?.experience?.hospitalName ?? '',
@@ -211,6 +216,8 @@ const DoctorEditProfilePage = () => {
                 </div>
 
 
+
+
                 <div className="w-full mt-4  p-6">
 
 
@@ -321,13 +328,42 @@ const DoctorEditProfilePage = () => {
                             <option className="usd">NGN</option>
                             <option className="usd">USD</option>
                         </select>
-                        <input value={doctorEditProfileDetails.pricing} type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e) => {
 
+                        <label className="font-bold mt-2">Standard Consultation Fee(15 mins or less)</label>
+                        <input onKeyDown={(e)=>{
+                            
+
+
+                               if(doctorEditProfileDetails.pricing === '0' && e.key.toLowerCase() === 'backspace'){
+                                   setDoctorEditProfileDetails({
+                                    ...doctorEditProfileDetails,
+                                    pricing: user.data?.profile?.pricing
+                                })
+                            return
+                            }
+                        }} value={doctorEditProfileDetails.pricing} type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e) => {
+                           
+                           
                             if (Number.isInteger(Number(e.target.value.replace(/[,]/g, "")))) {
 
                                 setDoctorEditProfileDetails({
                                     ...doctorEditProfileDetails,
                                     pricing: new Intl.NumberFormat().format(Number(e.target.value.replace(/[,]/g, "")))
+                                })
+                            }
+
+
+                        }} />
+
+
+                         <label className="font-bold mt-2">Standard Consultation Fee(30 mins or less)</label>
+                        <input value={doctorEditProfileDetails.pricingForThirtyMins} type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e) => {
+
+                            if (Number.isInteger(Number(e.target.value.replace(/[,]/g, "")))) {
+
+                                setDoctorEditProfileDetails({
+                                    ...doctorEditProfileDetails,
+                                    pricingForThirtyMins: new Intl.NumberFormat().format(Number(e.target.value.replace(/[,]/g, "")))
                                 })
                             }
 
@@ -555,10 +591,17 @@ const DoctorEditProfilePage = () => {
                             }
 
                             if(!updatedData.pricing || (updatedData.pricing === '0')){
-                                 setErrorMessage('please provide pricing.')
+                                 setErrorMessage('please provide pricing for 15mins.')
 
                                 return
                             }
+
+                            if(!updatedData.pricingForThirtyMins || (updatedData.pricingForThirtyMins === '0')){
+                                 setErrorMessage('please provide pricing for 30mins.')
+
+                                return
+                            }
+                            
 
                             if (updatedData.workingHours?.time && (updatedData.workingHours?.time?.split('-').length <= 1)) {
                                 setErrorMessage('Time not selected .')
