@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom"
+import {  Navigate, useLocation, useNavigate } from "react-router-dom"
 //import docImage from '../../../../assets/images/doctor-image.jpeg'
 //import Map from "../component/Map"
 
@@ -13,8 +13,26 @@ import Loader from "../../../generalComponents/Loader"
 import calender from '../../../../assets/icons/cosmic-dark-calender.svg'
 import time from '../../../../assets/icons/cosmic-clock-dark.svg'
 import cal from '../../../../assets/icons/home/cosmic-home-calander.svg'
+import { getSpecificDoctorAppointmentById } from "../../service"
+import { useSelector } from "react-redux"
+import { RootReducer } from "../../../store/initStore"
 
 
+
+const timeUtc = new Map<number, number>()
+
+timeUtc.set(1, 13)
+timeUtc.set(2, 14)
+timeUtc.set(3, 15)
+timeUtc.set(4, 16)
+timeUtc.set(5, 17)
+timeUtc.set(6, 18)
+timeUtc.set(7, 19)
+timeUtc.set(8, 20)
+timeUtc.set(9, 21)
+timeUtc.set(10, 22)
+timeUtc.set(11, 23)
+timeUtc.set(12, 24)
 
 const DoctorBioPage = () => {
 
@@ -28,6 +46,16 @@ const DoctorBioPage = () => {
 
   const { state } = useLocation()
 
+  if (!state) {
+
+    return <Navigate to={'/patient/find-a-specialist'} />
+
+  }
+
+  const user = useSelector((state: RootReducer) => state.user.data)
+
+
+  const [earliestAvailabilty,setEarliestAvailability] = useState<string>('')
 
 
   useEffect(() => {
@@ -39,6 +67,173 @@ const DoctorBioPage = () => {
     return () => {
       clearTimeout(t)
     }
+  }, [])
+
+
+  useEffect(() => {
+    (async () => {
+
+
+      try {
+
+        const result = await getSpecificDoctorAppointmentById(user?.token!!, state.doctorId)
+
+
+
+
+
+        if (result.status === 200) {
+
+          const appoinments = result.data.appointments
+
+       const time= state?.workingHour.time
+
+          // setDoctorsAppointmentDetails(appoinments)
+
+          if (appoinments.length>0 && time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))) {
+
+
+        
+
+
+
+
+            let startTime = time.split('-')[0]
+
+            let endTime = time.split('-')[1]
+
+
+
+
+            const startTimeHour = startTime.split(":")[0]
+            const startTimeMin = startTime.split(":")[1].replace(/[a-z A-Z]/g, '')
+
+            const startTimeMeridian = startTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+
+
+            const endTimeHour = endTime.split(":")[0]
+            const endTimeMin = endTime.split(":")[1].replace(/[a-z A-Z]/g, '')
+
+            const endTimeMeridian = endTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+            let startFormattedTime = new Date()
+
+
+            if (startTimeMeridian.trim() === 'pm') {
+
+              startFormattedTime.setHours(timeUtc.get(Number(startTimeHour))!!, startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
+
+            } else {
+              startFormattedTime.setHours(Number(startTimeHour), startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
+
+
+
+            }
+
+
+
+
+
+            let endFormattedTime = new Date()
+            endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+
+
+            let currentTime = new Date(startFormattedTime.getTime())
+
+
+
+            let earliestAvailabiltyFound = false
+
+            const date = new Date()
+
+            let selectedDay = date.toLocaleDateString('en-Us', {
+              day: 'numeric'
+            })
+
+            let selectedMonth = date.toLocaleDateString('en-Us', {
+              month: 'long'
+            })
+
+            let selectedYear = date.getFullYear()
+
+
+            while (currentTime <= endFormattedTime && !earliestAvailabiltyFound) {
+
+            
+
+
+              //display according to current time
+
+               const isTimeNotFound = appoinments.find((details: any) => {
+
+                const doctorSelectedDay = details.appointmentDate.split(' ')[1].replace(/[a-z]/g, '')
+                const doctorSelectedMonth = details.appointmentDate.split(' ')[2]
+                const doctorSelectedYear = details.appointmentDate.split(' ')[4]
+
+
+                
+
+
+                if (doctorSelectedDay === selectedDay && selectedMonth === doctorSelectedMonth && selectedYear === doctorSelectedYear ) {
+
+                  return true
+                } else {
+                  return false
+                }
+
+
+              })
+
+
+              if(!isTimeNotFound && date.getTime()<= currentTime.getTime()) {
+             const availableTime = currentTime.toLocaleTimeString('en-US', {
+                hour12: true,
+                timeStyle: 'short'
+              })
+              
+
+               const availableDate = currentTime.toLocaleDateString('en-US', {
+                dateStyle:'full'
+               
+              })
+
+              setEarliestAvailability(availableDate.concat(' ').concat(availableTime))
+
+              
+                earliestAvailabiltyFound = true
+                return
+              }
+
+
+              // console.log(app)
+
+
+              currentTime.setMinutes(currentTime.getMinutes() + 15)
+
+
+            }
+
+            // setAvailableTimeList(availableTime)
+
+          }
+
+          return
+        }
+
+
+
+
+
+      } catch (error) {
+
+
+
+      }
+
+    })()
+
   }, [])
 
 
@@ -56,10 +251,10 @@ const DoctorBioPage = () => {
     <div className="relative w-full  flex flex-col place-items-center  p-3  ">
 
       <div className=" relative m-4  h-[350px]  md:h-[300px] w-full  aspect-square  border rounded-xl">
-       
+
         <img className="w-full h-full object-cover  object-center    bg-black bg-opacity-30
   " src={state?.doctorImage ?? '/'} style={{}} />
-  
+
 
         <div className="w-full h-fit md:h-[80px] absolute ps-10 bottom-0 bg-gradient-to-t from-cosmic-doc-gradient-1 to-cosmic-doc-gradient-2  bg-cosmic-light-color-call bg-opacity-90">
           <div className="w-full flex place-items-center gap-3 h-full p-2 text-white justify-between flex-wrap">
@@ -172,7 +367,7 @@ const DoctorBioPage = () => {
 
       <div className="text-[12px] md:text-[14px]">
         <p>Earliest Availability</p>
-        <p>December 10, 2024 -12:00pm</p>
+        <p>{earliestAvailabilty}</p>
       </div>
 
       <i className="fa fa-angle-right me-2  mt-2 absolute top-2 right-1" />

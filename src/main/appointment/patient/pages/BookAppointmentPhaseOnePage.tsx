@@ -74,15 +74,10 @@ const BookAppointmentPhaseOnePage = () => {
 
                 if (result.status === 200) {
 
+                 const appoinments = result.data.appointments
 
-
-
-
-
-                    setDoctorsAppointmentDetails(result.data.appointments)
-
-
-
+                  setDoctorsAppointmentDetails(appoinments)
+            
                     return
                 }
 
@@ -116,7 +111,7 @@ const BookAppointmentPhaseOnePage = () => {
 
         const time = state.time
 
-        if (doctorsAppointmentDetails.length > 0 && time && time.split('-').length >= 1 || !time.split('-')[0].match(/[0-9]/g) || !time.split('-')[1].match(/[0-9]/g)) {
+        if (doctorsAppointmentDetails.length > 0 && time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))) {
 
             const date = new Date()
             let selectedDay
@@ -268,7 +263,7 @@ const BookAppointmentPhaseOnePage = () => {
                     const t = filteredData.find((details) => {
 
 
-                        if ((details.appointmentTime.split('-')[0].trim() === timeToAdd.trim() || details.appointmentTime.split('-')[1] === timeToAdd.trim())) {
+                        if ((details.appointmentTime.split('-')[0].trim() === timeToAdd.trim() || details.appointmentTime.split('-')[1] === timeToAdd.trim()) && details.medicalPersonelID._id===state?.doctorId) {
 
                             return true
 
@@ -298,9 +293,10 @@ const BookAppointmentPhaseOnePage = () => {
             } else {
 
 
+          if( time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))){
 
-
-                let availableTime: string[] = []
+          
+            let availableTime: string[] = []
 
 
 
@@ -378,6 +374,10 @@ const BookAppointmentPhaseOnePage = () => {
                 }
 
                 setAvailableTimeList(availableTime)
+        
+        }
+
+            
 
             }
 
