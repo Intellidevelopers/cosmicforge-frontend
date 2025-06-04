@@ -46,7 +46,7 @@ let CertificateUploadID = () => {
 
 
         <div className="flex flex-col gap-1  ">
-            <label htmlFor="LD Type" className="">LD Type</label>
+            <label htmlFor="LD Type" className="">I.D Type</label>
 
             <select className="bg-transparent  border-black p-2 border rounded-md" onChange={(e) => {
 

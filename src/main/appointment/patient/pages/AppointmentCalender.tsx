@@ -85,6 +85,7 @@ const AppointmentCalender = ({onDateSelected}:AppointmentCalenderProps) => {
 
     return (
         <div className={`  font-poppins w-full h-fit flex justify-center z-[100px]`}>
+
             <div className="w-full   p-4">
 
 
@@ -94,7 +95,7 @@ const AppointmentCalender = ({onDateSelected}:AppointmentCalenderProps) => {
 
                     <div className="w-full flex  justify-center place-items-center relative ">
                         <i
-                            className="fa fa-angle-left fa-2x top-1 hover:text-cosmic-primary-color "
+                            className="fa fa-angle-left fa-2x top-1 hover:text-cosmic-primary-color text-[24px] "
                             onClick={() => {
                                 if (currentMonth !== months[0]) {
                                     setCurrentMonth(months[months.findIndex((value) => value === currentMonth) - 1]);
@@ -102,11 +103,15 @@ const AppointmentCalender = ({onDateSelected}:AppointmentCalenderProps) => {
                             }}
                         ></i>
 
+
+
                         <div className="inline-flex p-2 w-[300px] justify-center">
                             <p className="font-bold text-cosmic-primary-color">{currentMonth}</p>
                         </div>
+
+                       
                         <i
-                            className="fa fa-angle-right fa-2x right-4 top-1 hover:text-cosmic-primary-color"
+                            className="fa fa-angle-right fa-2x right-4 top-1 hover:text-cosmic-primary-color  text-[24px] "
                             onClick={() => {
                                 if (currentMonth !== months[months.length - 1]) {
                                     setCurrentMonth(months[months.findIndex((value) => value === currentMonth) + 1]);
@@ -116,21 +121,29 @@ const AppointmentCalender = ({onDateSelected}:AppointmentCalenderProps) => {
                     </div>
                 </div>
 
+
+
+
                 <div className="w-full inline-flex justify-evenly"></div>
 
                 <div className="grid grid-cols-7">
-                    <div className="col-span-7 grid grid-cols-7 gap-2">
+                    <div className="col-span-7 grid grid-cols-7 gap-2 ">
                         {days.length > 0 && days.map((day, index) => (
-                            <div key={index}>
-                                <p className={`${(index === 0 || index === days.length - 1) ? 'bg-cosmic-color-warning-color hover:text-cosmic-color-warning-color hover:bg-white' : 'bg-cosmic-primary-color'} xs:w-[32px] w-[60px] p-1 md:m-1 text-center text-white rounded-md xs:text-[10px]`}>{day}</p>
+                            <div key={index} className={`${(index === 0 || index === days.length - 1) ? 'bg-cosmic-color-warning-color hover:text-cosmic-color-warning-color hover:bg-white' : 'bg-cosmic-primary-color'} xs:w-[32px] w-[95%] h-[50px] p-1 md:m-1 text-center text-white rounded-md xs:text-[10px] flex justify-center place-items-center`}>
+                                <p >{day}</p>
                             </div>
                         ))}
                     </div>
+
+
+
+
                     <div className="col-span-7 grid grid-cols-7 gap-3 mt-4">
                         {daysInMonth && new Array(daysInMonth).fill(0).map((_, index) => (
-                            (index === 0) && <p key={index} className={`${(selectedDay === index + 1) && ' border-cosmic-color-lightBlue border'}  xs:w-[32px] cursor-default hover:border hover:border-cosmic-color-lightBlue w-[60px] p-1 md:m-1 text-center rounded-md xs:text-[10px]`} style={{ gridColumn: firstDay }} onClick={() => setSelectedDay(index + 1)}>{index + 1}</p> ||
-                            (index + 1 === selectedDay) && <p key={index} className="xs:w-[32px] cursor-default hover:border hover:border-cosmic-color-lightBlue border border-cosmic-color-lightBlue w-[60px] p-1 md:m-1 text-center rounded-md xs:text-[10px]" onClick={() => setSelectedDay(index + 1)}>{index + 1}</p> ||
-                            <p key={index} className="xs:w-[32px] cursor-default hover:border hover:border-cosmic-color-lightBlue w-[48px] p-1 md:m-1 text-center rounded-md xs:text-[10px]" onClick={() => setSelectedDay(index + 1)}>{index + 1}</p>
+
+                            (index === 0) && <p key={index} className={`${(selectedDay === index + 1) && ' border-cosmic-color-lightBlue border'}   xs:w-[32px] cursor-default hover:border hover:border-cosmic-color-lightBlue w-[95%]  h-[50px] p-1 md:m-1 text-center rounded-md xs:text-[10px] flex justify-center place-items-center `} style={{ gridColumn: firstDay }} onClick={() => setSelectedDay(index + 1)}>{index + 1}</p> ||
+                            (index + 1 === selectedDay) && <p key={index} className="xs:w-[32px] cursor-default hover:border hover:border-cosmic-color-lightBlue border border-cosmic-color-lightBlue w-[95%]  h-[50px] p-1 md:m-1 text-center rounded-md xs:text-[10px]  flex justify-center place-items-center" onClick={() => setSelectedDay(index + 1)}>{index + 1}</p> ||
+                            <p key={index} className="xs:w-[32px] cursor-default hover:border hover:border-cosmic-color-lightBlue w-[90%] h-[50px] p-1 md:m-1 text-center rounded-md xs:text-[10px] flex justify-center place-items-center" onClick={() => setSelectedDay(index + 1)}>{index + 1}</p>
                         ))}
                     </div>
                 </div>

@@ -101,7 +101,7 @@ totalAppointments:number
  
   })
  
-  export const {updateAppointments} =appointmentSlice.actions
+  export const {updateAppointments} = appointmentSlice.actions
  
  
   export default appointmentSlice.reducer

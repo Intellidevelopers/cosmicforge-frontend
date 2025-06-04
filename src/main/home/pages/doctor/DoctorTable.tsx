@@ -10,6 +10,7 @@ enum AppointmentsTypes {
 }
 
 interface DoctorInterfaceProps {
+
   onAppointmentClicked?: (
     data: {
       doctorImage: string;
@@ -28,10 +29,28 @@ interface DoctorInterfaceProps {
   ) => void;
 }
 
+
+ const timeUtc = new Map<number, number>()
+
+    timeUtc.set(1, 13)
+    timeUtc.set(2, 14)
+    timeUtc.set(3, 15)
+    timeUtc.set(4, 16)
+    timeUtc.set(5, 17)
+    timeUtc.set(6, 18)
+    timeUtc.set(7, 19)
+    timeUtc.set(8, 20)
+    timeUtc.set(9, 21)
+    timeUtc.set(10, 22)
+    timeUtc.set(11, 23)
+    timeUtc.set(12, 24)
+
 const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
+
   const [appointmentTypeSelected, setAppoinmentTypeSelected] = useState<
     "upcoming" | "past" | "cancelled"
   >("upcoming");
+
   const [activeAppointment, setActiveAppointment] = useState<string>(
     AppointmentsTypes.upcomming
   );
@@ -86,9 +105,13 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
     | null
   >(null);
 
+
+  
+
   const date = new Date();
 
   let validateDate = (appointmentmentTime: string, appointmentDate: string) => {
+
     const appoinmentStartTime = appointmentmentTime?.split("-")[0];
 
     const appoinmentEndTime = appointmentmentTime?.split("-")[1];
@@ -98,27 +121,40 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
     const appoinmentMonth = appointmentDate.split(" ")[2];
 
     const currentMonth = date.toLocaleDateString("en-Us", {
-      month: "short",
+      month: "long",
     });
 
-    const currentTime = date.toLocaleTimeString("en-Us", {
-      timeStyle: "short",
-    });
 
     const dayInWeek = date.toLocaleString("en-Us", {
       day: "numeric",
     });
 
-    return (
-      currentMonth === appoinmentMonth &&
-      currentMonth === appoinmentMonth &&
-      dayInWeek === appoinmentDay &&
-      (appoinmentStartTime.trim().toLowerCase().replace(" ", "") ===
-        currentTime.trim().toLowerCase() ||
-        Number(currentTime.split(":")[0]) <
-          Number(appoinmentEndTime.split(":")[0])) &&
-      activeAppointment === "upcomming"
-    );
+
+     const startTimeMeridian =appoinmentStartTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+      const endTimeMeridian =appoinmentEndTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+      const startT = new Date()
+
+startT.setHours(startTimeMeridian==='pm'?timeUtc.get(Number(appoinmentStartTime.split(':')[0]))!!:Number(appoinmentStartTime.split(':')[0]),Number(appoinmentStartTime.split(':')[1].replace(/[a-z A-Z]/g,'')),0,0)
+
+
+
+
+const startE= new Date()
+
+
+
+startE.setHours(endTimeMeridian==='pm'?timeUtc.get(Number(appoinmentStartTime.split(':')[0]))!!:Number(appoinmentEndTime.split(':')[0]),Number(appoinmentEndTime.split(':')[1].replace(/[a-z A-Z]/g,'')))
+date.setSeconds(0)
+
+
+         
+    return  dayInWeek === appoinmentDay   && currentMonth === appoinmentMonth &&  (date.getTime() >= startT.getTime() && date.getTime()<=startE.getTime())  
+
+    
+
+     
   };
 
   useMemo(() => {
@@ -180,7 +216,8 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
 
 
   return (
-    <div className="w-full  overflow-y-auto  rounded-md bg-white  p-8 relative">
+    <div className="w-full  overflow-hidden  rounded-md bg-white  p-8 relative pb-20  ">
+
       <div className="grid grid-cols-6 p-4 sticky top-0  z-[100]">
         <div className="w-full col-span-4 md:col-span-5">
           <p className="font-bold" onClick={() => {}}>
@@ -211,10 +248,12 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                 appoinmentsState &&
                 appoinmentsState.length > 0
               ) {
+
                 const filteredArray = appoinmentsState.filter((appoinment) => {
                   return appoinment.appointmentStatus === "booked";
                 });
-                if (filteredArray.length > 0)
+              
+                if (filteredArray.length > 0){
                   setAppointments(
                     filteredArray as
                       | [
@@ -260,10 +299,14 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                         ]
                       | null
                   );
+                }
+                
                 else setAppointments(null);
 
                 return;
               }
+
+
 
               if (type === "past" && appoinmentsState) {
                 const filteredArray = appoinmentsState.filter((appoinment) => {
@@ -378,14 +421,16 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
               }
             }}
           >
-            <option className="text-end">upcomming</option>
+            <option className="text-end">upcoming</option>
             <option className="text-end">cancelled</option>
             <option className="text-end">past</option>
           </select>
         </div>
       </div>
 
-      <table className="w-full p-10 relative ">
+
+
+      <table className="w-full p-10 relative  mb-20 ">
         <thead className="mb-8 relative">
           <tr className="border-b-[1px] relative border-b-black/30 font-poppins font-light  cursor-default">
             <th className="font-poppins font-light min-w-[15%] text-start ps-5">

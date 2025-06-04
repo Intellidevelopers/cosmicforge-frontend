@@ -18,6 +18,24 @@ import { cacheSubscription } from "../store/reducers/subscriptionReducer"
 
 
 
+ const date = new Date();
+
+
+ const timeUtc = new Map<number, number>()
+
+    timeUtc.set(1, 13)
+    timeUtc.set(2, 14)
+    timeUtc.set(3, 15)
+    timeUtc.set(4, 16)
+    timeUtc.set(5, 17)
+    timeUtc.set(6, 18)
+    timeUtc.set(7, 19)
+    timeUtc.set(8, 20)
+    timeUtc.set(9, 21)
+    timeUtc.set(10, 22)
+    timeUtc.set(11, 23)
+    timeUtc.set(12, 24)
+
 
 const MainRouterPage = () => {
     const navigate = useNavigate()
@@ -74,9 +92,6 @@ const MainRouterPage = () => {
 
 
 
-
-
-
     const [isNewCall, setNewCall] = useState<boolean>(userSocket.newInComingCall!!)
 
     const [userCallingDetails, setUserCallingDetails] = useState<{
@@ -126,7 +141,8 @@ const MainRouterPage = () => {
         /* setTimeout(()=>{
          // navigate("/patient/calendar")
          },5000)*/
-
+     
+         
 
         const isReferesh = localStorage.getItem('loadedOnce')
 
@@ -503,10 +519,26 @@ const MainRouterPage = () => {
 
             socket.on('appointmentReminder', (e: any) => {
 
-                if (!userSocket.isNewAppointmentNotification && user.data?.role === "Doctor")
-                    dispatch(updateNewAppointmentNotification({ isNewAppointmentNotification: true, totalAppointments: e.totalAppointmentsForToday }))
 
-                //alert(JSON.stringify(e))
+                const appointments:any[] = e.appointments
+
+                if(appointments){
+alert(JSON.stringify(appointments))
+                   appointments.forEach(appointment=>{
+
+                        const isValid = validateDate(appointment.appoinmentTime,appointment.appoinmentDate)
+
+                        if(isValid){
+
+                             dispatch(updateNewAppointmentNotification({ isNewAppointmentNotification: true, totalAppointments: e.totalAppointmentsForToday }))
+
+
+                        }
+                    })
+                }
+               
+                   
+               
             })
 
 
@@ -596,6 +628,7 @@ const MainRouterPage = () => {
 
                 dispatch(cacheDiagnosis({ chatBot: { messages: data.messages } }))
             })
+
 
             socket.on('disconnect', () => {
                 dispatch(connectSocket({ connected: false, socket: null }))
@@ -1079,7 +1112,7 @@ const MainRouterPage = () => {
              * Reminder screen
              */
 
-            store.getState().socket.isNewAppointmentNotification && <div className={`  cursor-default  w-full h-fit flex  absolute bg-transparent   top-0  z-[1000] md:p-8 p-2    justify-center`}>
+       store.getState().socket.isNewAppointmentNotification &&     <div className={`  cursor-default  w-full h-fit flex  absolute bg-transparent   top-0  z-[1000] md:p-8 p-2    justify-center`}>
 
                 <div className="w-full bg-white md:h-[160px] h-[180px] rounded-md shadow-black shadow-sm">
 
@@ -1107,7 +1140,7 @@ const MainRouterPage = () => {
 
                                 dispatch(updateNewAppointmentNotification({ isNewAppointmentNotification: false, totalAppointments: 0 }))
 
-                                navigate('/patient/calendar')
+                                navigate('/doctor/appointments')
                             }}>view</p>
 
                             <p className="absolute  bottom-0 right-20 flex gap-4 bg-red-600  p-1  rounded-md text-white " onClick={() => {
@@ -1130,6 +1163,57 @@ const MainRouterPage = () => {
 
 }
 
+
+
+
+
+
+  let validateDate = (appointmentmentTime: string, appointmentDate: string) => {
+
+    const appoinmentStartTime = appointmentmentTime?.split("-")[0];
+
+    const appoinmentEndTime = appointmentmentTime?.split("-")[1];
+
+    const appoinmentDay = appointmentDate?.split(" ")[1].replace(/[a-z]/g, "");
+
+    const appoinmentMonth = appointmentDate.split(" ")[2];
+
+    const currentMonth = date.toLocaleDateString("en-Us", {
+      month: "long",
+    });
+
+
+    const dayInWeek = date.toLocaleString("en-Us", {
+      day: "numeric",
+    });
+
+
+     const startTimeMeridian =appoinmentStartTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+      const endTimeMeridian =appoinmentEndTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+      const startT = new Date()
+
+startT.setHours(startTimeMeridian==='pm'?timeUtc.get(Number(appoinmentStartTime.split(':')[0]))!!:Number(appoinmentStartTime.split(':')[0]),Number(appoinmentStartTime.split(':')[1].replace(/[a-z A-Z]/g,'')),0,0)
+
+
+
+
+const startE= new Date()
+
+
+
+startE.setHours(endTimeMeridian==='pm'?timeUtc.get(Number(appoinmentStartTime.split(':')[0]))!!:Number(appoinmentEndTime.split(':')[0]),Number(appoinmentEndTime.split(':')[1].replace(/[a-z A-Z]/g,'')))
+date.setSeconds(0)
+
+
+         
+    return  dayInWeek === appoinmentDay   && currentMonth === appoinmentMonth &&  (date.getTime() >= startT.getTime() && date.getTime()<=startE.getTime())  
+
+    
+
+     
+  };
 
 
 

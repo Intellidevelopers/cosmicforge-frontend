@@ -51,11 +51,15 @@ const DoctorBioPage = () => {
       <p>back</p>
     </div>
 
+
+
     <div className="relative w-full  flex flex-col place-items-center  p-3  ">
 
       <div className=" relative m-4  h-[350px]  md:h-[300px] w-full  aspect-square  border rounded-xl">
+       
         <img className="w-full h-full object-cover  object-center    bg-black bg-opacity-30
-  " src={state?.doctorImage ?? '/'} style={{  }} />
+  " src={state?.doctorImage ?? '/'} style={{}} />
+  
 
         <div className="w-full h-fit md:h-[80px] absolute ps-10 bottom-0 bg-gradient-to-t from-cosmic-doc-gradient-1 to-cosmic-doc-gradient-2  bg-cosmic-light-color-call bg-opacity-90">
           <div className="w-full flex place-items-center gap-3 h-full p-2 text-white justify-between flex-wrap">
@@ -77,24 +81,24 @@ const DoctorBioPage = () => {
             </div>
 
             <div>
-              
-            </div>
-
-
-           {
-            /**
-             *  <div className=" flex gap-6">
-              <div className=" h-[30px] w-[30px] bg-cosmic-doc-gradient-1 p-2 rounded-full flex justify-center place-items-center">
-                <img alt="call-btn" src={callButton} />
-              </div>
-
-              <div className=" h-[30px] w-[30px] bg-cosmic-doc-gradient-1 p-2 rounded-full flex justify-center place-items-center">
-                <img alt="call-btn" src={videoButton} />
-              </div>
 
             </div>
-             */
-           }
+
+
+            {
+              /**
+               *  <div className=" flex gap-6">
+                <div className=" h-[30px] w-[30px] bg-cosmic-doc-gradient-1 p-2 rounded-full flex justify-center place-items-center">
+                  <img alt="call-btn" src={callButton} />
+                </div>
+  
+                <div className=" h-[30px] w-[30px] bg-cosmic-doc-gradient-1 p-2 rounded-full flex justify-center place-items-center">
+                  <img alt="call-btn" src={videoButton} />
+                </div>
+  
+              </div>
+               */
+            }
 
 
           </div>
@@ -127,7 +131,12 @@ const DoctorBioPage = () => {
 
       <div className="md-3 mt-5">
         <p className="font-bold">Pricing</p>
-        <p className="font-light">₦{state.pricing}</p>
+
+        <div>
+          <p className="mt-2">Standard Consultation fee for 15mins session:<span className="ms-1">{state.currency === 'NGN' ? '₦' : '$'}{state.pricing}</span></p>
+          <p className="mt-2">Standard Consultation fee for 30mins session:<span className="ms-1">{state.currency === 'NGN' ? '₦' : '$'}{state.pricingForThirtyMins ?? 0}</span></p>
+        </div>
+
       </div>
     </div>
 
@@ -184,7 +193,10 @@ const DoctorBioPage = () => {
             bio: state?.bio,
             title: state?.title,
             workingHour: state?.workingHour,
-            doctorId: state?.doctorId
+            doctorId: state?.doctorId,
+            time: state?.workingHour.time,
+            currency: state.currency,
+            pricingForThirtyMins: state.pricingForThirtyMins,
           }
         })
       }}>
@@ -232,6 +244,9 @@ const DoctorBioPage = () => {
           }
         </div>
       </div>
+
+
+
 
       <div className="w-full ">
         <p className="">Reviews</p>
@@ -327,11 +342,11 @@ const DoctorBioPage = () => {
             </div>
           }
           {
-           /* !loadingServerData && new Array(10).fill(0).map((_, index) => (
-              <ReviewCard key={index} clientName="Janet Opeyemi" comment="Dr. Josh Olawale was really Integral to my treatment process. I’m grateful for him." clientProfile={docImage} ratings={4} time="3sec ago" />
-            ))*/
+            /* !loadingServerData && new Array(10).fill(0).map((_, index) => (
+               <ReviewCard key={index} clientName="Janet Opeyemi" comment="Dr. Josh Olawale was really Integral to my treatment process. I’m grateful for him." clientProfile={docImage} ratings={4} time="3sec ago" />
+             ))*/
 
-              <p>No review now.</p>
+            <p>No review now.</p>
           }
         </div>
 

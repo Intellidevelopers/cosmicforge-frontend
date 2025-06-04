@@ -195,14 +195,14 @@ html{
 
  .PhoneInputCountry {
   display: flex;
-width: 60%;
+width: '200px';
   flex-direction: row-reverse;
 justify-content:start;align-items: center;
   
   }
 
   .PhoneInputCountrySelect {
-    width:30%;
+    width:100%;
     background-color: transparent;
     outline: none;
     }

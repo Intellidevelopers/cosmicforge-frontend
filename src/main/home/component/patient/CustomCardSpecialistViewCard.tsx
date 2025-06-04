@@ -23,7 +23,8 @@ export interface CustomCardSpecialistViewCardProps {
         department?: string,
         bio?: string,
         pricing?: string,
-
+        pricingForThirtyMins?:string,
+currency?: 'NGN' | 'USD' |  undefined,
         workAddress?: string,
         experience?: {
 
@@ -65,11 +66,13 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                     clinic: details.currentClinic,
                     address: details.workAddress,
                     pricing: details.pricing,
+                    pricingForThirtyMins:details.pricingForThirtyMins,
                     bio: details.bio,
                     title: state.title,
                     workingHour: details.workTime,
                     doctorId: details.userId._id,
-                    details: details
+                    details: details,
+                    currency:details.currency
                 }
             })
         }}>
@@ -86,8 +89,11 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                 <img className="bg-black bg-opacity-30 object-cover h-full w-full " src={details.profilePicture} />
             </div>
 
+
             <div className="w-full flex flex-col gap-4 md:ms-4 relative">
+
                 <div className='flex  place-items-center mt-2'>
+
                     <p className="font-bold text-[14px]  ">Dr {details?.userId?.fullName ?? details?.userId?.lastName}</p>
                     
                     {
@@ -95,6 +101,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                     }
 
                 </div>
+
                 <div className='absolute mt-2 right-2  text-[14px]  flex md:ustify-center  place-items-center gap-2'>
                     {
                        
@@ -108,6 +115,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
 
 
                 </div>
+
                 <p className="font-extralight"> {details.specialization}</p>
                 <p className="font-extralight"> {details.currentClinic}</p>
                 <p className="font-extralight">  {''}</p>
@@ -138,6 +146,7 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                         <img src={callIcon} alt="call button" />
                     </div>  */}
 
+
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
                         navigate('/patient/messages/chat', {
                             state: {
@@ -155,8 +164,10 @@ const CustomCardSpecialistViewCard = ({ details }: CustomCardSpecialistViewCardP
                         <img src={messageButton} alt="mesage button" />
                     </div>
 
+
                     <div className="w-[40px] h-[40px] bg-cosmic-color-border-color hover:bg-cosmic-primary-color rounded-md flex justify-center place-items-center" onClick={() => {
-                        navigate('/patient/appointment/bio', {
+                      
+                      navigate('/patient/appointment/bio', {
                             state: {
                                 doctorImage: details.profilePicture,
                                 doctorName: details.userId.fullName,

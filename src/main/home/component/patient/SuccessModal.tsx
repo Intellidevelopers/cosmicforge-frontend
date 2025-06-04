@@ -1,14 +1,23 @@
-import React from 'react';
-import HandCash from '../../assets/HomeImg/hand.png'
+
+import HandCash from '../../../../assets/HomeImg/hand.png'
 import { useNavigate } from 'react-router-dom';
 
+  interface PaymentSuccessProps {
+    onClose :() => void
+  }
 
-const PaymentSuccessCard: React.FC = () => {
+
+const PaymentSuccessCard = ({onClose}:PaymentSuccessProps) => {
 
    const navigate = useNavigate()
+   
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-4">
-      <div className="bg-white rounded-md shadow-lg p-16 max-w-2xl w-full text-center">
+    
+      <div className="bg-white rounded-md shadow-lg p-16 max-w-2xl w-full h-[60%] text-center relative">
+
+        <i className='fa fa-times absolute text-xl right-5 hover:text-red-600 top-2' onClick={()=>{
+          onClose()
+        }} /> 
         <div className="text-7xl mb-6">
           {/* Emoji or image */}
           <img src={HandCash} alt="Success" className="mx-auto w-32 h-32 mb-6" />
@@ -26,7 +35,7 @@ const PaymentSuccessCard: React.FC = () => {
           Home
         </button>
       </div>
-    </div>
+    
   );
 };
 

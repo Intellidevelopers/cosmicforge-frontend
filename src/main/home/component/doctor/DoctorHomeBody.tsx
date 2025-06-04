@@ -160,9 +160,12 @@ const DoctorHomeBody = () => {
         </div>
 
 
-        <div className="p-2 h-[400px]  overflow-x-hidden overflow-y-auto  ">
+        <div className="p-2 min-h-[400px]  overflow-x-hidden overflow-y-hidden  ">
           <div className={` ${(appointments.appointments && appointments.totalAppointments > 0) ? 'hidden' : 'block'} w-full h-full flex justify-center place-items-center`}>
+           
             <p>No appointment yet</p>
+          
+          
           </div>
           {
             appointments.appointments && appointments.totalAppointments > 0 && <DoctorTable onAppointmentClicked={(data: any, appointmentId: string) => {
