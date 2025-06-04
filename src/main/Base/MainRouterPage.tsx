@@ -523,7 +523,7 @@ const MainRouterPage = () => {
                 const appointments:any[] = e.appointments
 
                 if(appointments){
-alert(JSON.stringify(appointments))
+//alert(JSON.stringify(appointments))
                    appointments.forEach(appointment=>{
 
                         const isValid = validateDate(appointment.appoinmentTime,appointment.appoinmentDate)
