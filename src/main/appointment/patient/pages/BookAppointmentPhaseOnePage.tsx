@@ -22,6 +22,8 @@ const BookAppointmentPhaseOnePage = () => {
 
     const [availableTimeList, setAvailableTimeList] = useState<any[]>()
 
+    const [udpatedDate,setUpdatedDate] = useState<string>()
+
 
     if (!state) {
 
@@ -74,10 +76,10 @@ const BookAppointmentPhaseOnePage = () => {
 
                 if (result.status === 200) {
 
-                 const appoinments = result.data.appointments
+                    const appoinments = result.data.appointments
 
-                  setDoctorsAppointmentDetails(appoinments)
-            
+                    setDoctorsAppointmentDetails(appoinments)
+
                     return
                 }
 
@@ -176,6 +178,8 @@ const BookAppointmentPhaseOnePage = () => {
 
                 let availableTime: string[] = []
 
+                let availableTimeCache: string[] = []
+
 
 
 
@@ -217,7 +221,23 @@ const BookAppointmentPhaseOnePage = () => {
 
 
                 let endFormattedTime = new Date()
-                endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+
+
+                if (endTimeMeridian.trim() === 'am') {
+                    let newDate = new Date()
+                    endFormattedTime = new Date(newDate.getTime() + 24 * 60 * 60 * 1000)
+
+                    endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+
+                } else {
+
+
+                    endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+                }
+
 
 
 
@@ -237,11 +257,13 @@ const BookAppointmentPhaseOnePage = () => {
                     //display according to current time
 
                     const recentTime = new Date()
-                    if(recentTime.getTime()<= currentTime.getTime()){
-                       availableTime.push(timeToAdd)
+                    if (recentTime.getTime() <= currentTime.getTime()) {
+                        availableTimeCache.push(timeToAdd)
+                        availableTime.push(timeToAdd)
                     }
 
-                    
+
+
 
 
 
@@ -263,7 +285,7 @@ const BookAppointmentPhaseOnePage = () => {
                     const t = filteredData.find((details) => {
 
 
-                        if ((details.appointmentTime.split('-')[0].trim() === timeToAdd.trim() || details.appointmentTime.split('-')[1] === timeToAdd.trim()) && details.medicalPersonelID._id===state?.doctorId) {
+                        if ((details.appointmentTime.split('-')[0].trim() === timeToAdd.trim() || details.appointmentTime.split('-')[1] === timeToAdd.trim()) && details.medicalPersonelID._id === state?.doctorId) {
 
                             return true
 
@@ -287,97 +309,113 @@ const BookAppointmentPhaseOnePage = () => {
 
                 })
 
-                setAvailableTimeList(filteredTimeData)
+
+                if (filteredTimeData.length > 0) {
+
+                    setAvailableTimeList(filteredTimeData)
+                    return
+                }
+
+                setAvailableTimeList(availableTimeCache)
+
+
+
+
+
+
+
+
 
 
             } else {
 
 
-          if( time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))){
-
-          
-            let availableTime: string[] = []
+                if (time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))) {
 
 
-
-
-                let startTime = time.split('-')[0]
-
-                let endTime = time.split('-')[1]
+                    let availableTime: string[] = []
 
 
 
 
-                const startTimeHour = startTime.split(":")[0]
-                const startTimeMin = startTime.split(":")[1].replace(/[a-z A-Z]/g, '')
+                    let startTime = time.split('-')[0]
 
-                const startTimeMeridian = startTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
-
-
-
-                const endTimeHour = endTime.split(":")[0]
-                const endTimeMin = endTime.split(":")[1].replace(/[a-z A-Z]/g, '')
-
-                const endTimeMeridian = endTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
-
-                let startFormattedTime = new Date()
-
-
-                if (startTimeMeridian.trim() === 'pm') {
-
-                    startFormattedTime.setHours(timeUtc.get(Number(startTimeHour))!!, startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
-
-                } else {
-                    startFormattedTime.setHours(Number(startTimeHour), startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
-
-
-
-                }
+                    let endTime = time.split('-')[1]
 
 
 
 
+                    const startTimeHour = startTime.split(":")[0]
+                    const startTimeMin = startTime.split(":")[1].replace(/[a-z A-Z]/g, '')
 
-                let endFormattedTime = new Date()
-                endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
-
-
-
-                let currentTime = new Date(startFormattedTime.getTime())
+                    const startTimeMeridian = startTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
 
 
 
+                    const endTimeHour = endTime.split(":")[0]
+                    const endTimeMin = endTime.split(":")[1].replace(/[a-z A-Z]/g, '')
+
+                    const endTimeMeridian = endTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+                    let startFormattedTime = new Date()
 
 
-                while (currentTime <= endFormattedTime) {
+                    if (startTimeMeridian.trim() === 'pm') {
 
-                    const timeToAdd = currentTime.toLocaleTimeString('en-US', {
-                        hour12: true,
-                        timeStyle: 'short'
-                    })
+                        startFormattedTime.setHours(timeUtc.get(Number(startTimeHour))!!, startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
 
-                    //display according to current time
+                    } else {
+                        startFormattedTime.setHours(Number(startTimeHour), startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
 
-                    const recentTime = new Date()
-                    if(recentTime.getTime()<= currentTime.getTime()){
-                       availableTime.push(timeToAdd)
+
+
                     }
 
 
 
-                    // console.log(app)
 
 
-                    currentTime.setMinutes(currentTime.getMinutes() + 15)
+                    let endFormattedTime = new Date()
+                    endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
 
+
+
+                    let currentTime = new Date(startFormattedTime.getTime())
+
+
+
+
+
+
+                    while (currentTime <= endFormattedTime) {
+
+                        const timeToAdd = currentTime.toLocaleTimeString('en-US', {
+                            hour12: true,
+                            timeStyle: 'short'
+                        })
+
+                        //display according to current time
+
+                        const recentTime = new Date()
+                        if (recentTime.getTime() <= currentTime.getTime()) {
+                            availableTime.push(timeToAdd)
+                        }
+
+
+
+                        // console.log(app)
+
+
+                        currentTime.setMinutes(currentTime.getMinutes() + 15)
+
+
+                    }
+
+                    setAvailableTimeList(availableTime)
 
                 }
 
-                setAvailableTimeList(availableTime)
-        
-        }
 
-            
 
             }
 
@@ -464,20 +502,44 @@ const BookAppointmentPhaseOnePage = () => {
 
                                 setTimeSelected(d)
 
+                                if ((d.split(':')[1].replace(/[0-9]/g, '').trim().toLowerCase() === 'am')) {
+                                    let newDate = new Date()
+                                    let t = new Date(newDate.getTime() + 24 * 60 * 60 * 1000)
 
-                                const time = new Date()
+                                    t.setHours(Number(d.split(':')[0])=== 12?24:Number(d.split(':')[0]), Number(d.split(':')[1].replace(/[a-z A-Z]/g, '') === '00' ? 0 : d.split(':')[1].replace(/[a-z A-Z]/g, '')), 0, 0)
 
-                                time.setHours((d.split(':')[1].replace(/[0-9]/g, '').trim().toLowerCase() === 'pm') && (Number(d.split(':')[0]) !== 12) ? timeUtc.get(Number(d.split(':')[0]))!! : Number(d.split(':')[0]), Number(d.split(':')[1].replace(/[a-z A-Z]/g, '') === '00' ? 0 : d.split(':')[1].replace(/[a-z A-Z]/g, '')), 0, 0)
+                                    t.setMinutes(t.getMinutes() + 15)
+                                    
+                                    setUpdatedDate(t.toLocaleDateString('en-Us',{
+                                            dateStyle:'long'
+                                        }))
+                                    setAppointmentmentDetails({
+                                        ...appointmentmentDetails,
+                                        
+                                        time: d.concat('-').concat(t.toLocaleTimeString('en-US', {
+                                            timeStyle: 'short'
+                                        }))!!,
 
-                                time.setMinutes(time.getMinutes() + 15)
+                                    })
 
-                                setAppointmentmentDetails({
-                                    ...appointmentmentDetails,
-                                    time: d.concat('-').concat(new Date(time).toLocaleTimeString('en-US', {
-                                        timeStyle: 'short'
-                                    }))!!,
+                                } else {
 
-                                })
+                                    const time = new Date()
+
+                                    time.setHours((d.split(':')[1].replace(/[0-9]/g, '').trim().toLowerCase() === 'pm') && (Number(d.split(':')[0]) !== 12) ? timeUtc.get(Number(d.split(':')[0]))!! : Number(d.split(':')[0]), Number(d.split(':')[1].replace(/[a-z A-Z]/g, '') === '00' ? 0 : d.split(':')[1].replace(/[a-z A-Z]/g, '')), 0, 0)
+
+                                    time.setMinutes(time.getMinutes() + 15)
+
+                                    setAppointmentmentDetails({
+                                        ...appointmentmentDetails,
+                                        time: d.concat('-').concat(new Date(time).toLocaleTimeString('en-US', {
+                                            timeStyle: 'short'
+                                        }))!!,
+
+                                    })
+
+                                }
+
 
 
 
@@ -581,6 +643,7 @@ const BookAppointmentPhaseOnePage = () => {
                 }
 
 
+      
 
                 const isValid = availableTimeList?.find((item) => {
                     return item === appointmentmentDetails.time.split('-')[1]
@@ -638,6 +701,7 @@ const BookAppointmentPhaseOnePage = () => {
                         doctorId: state?.doctorId,
                         currency: state,
                         pricingForThirtyMins: state.pricingForThirtyMins,
+                        udpatedDate
 
                     }
                 })

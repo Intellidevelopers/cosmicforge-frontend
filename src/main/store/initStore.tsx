@@ -21,6 +21,8 @@ const persistConfig = {
     whitelist:['user',]
 }
 
+
+
  export interface RootReducer {
     user:UserProps,
     socket:UserSocketProps,

@@ -1,4 +1,4 @@
-import {  Navigate, useLocation, useNavigate } from "react-router-dom"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 //import docImage from '../../../../assets/images/doctor-image.jpeg'
 //import Map from "../component/Map"
 
@@ -55,7 +55,7 @@ const DoctorBioPage = () => {
   const user = useSelector((state: RootReducer) => state.user.data)
 
 
-  const [earliestAvailabilty,setEarliestAvailability] = useState<string>('')
+  const [earliestAvailabilty, setEarliestAvailability] = useState<string>('Doctor not available now.')
 
 
   useEffect(() => {
@@ -86,15 +86,17 @@ const DoctorBioPage = () => {
 
           const appoinments = result.data.appointments
 
-       const time= state?.workingHour.time
+          const time = state?.workingHour.time
 
           // setDoctorsAppointmentDetails(appoinments)
 
-          if (appoinments.length>0 && time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))) {
 
 
-        
+          if (appoinments.length > 0 && time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))) {
 
+
+
+            
 
 
 
@@ -136,9 +138,21 @@ const DoctorBioPage = () => {
 
 
             let endFormattedTime = new Date()
-            endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
 
 
+            if (endTimeMeridian.trim() === 'am') {
+              let newDate = new Date()
+              endFormattedTime = new Date(newDate.getTime() + 24 * 60 * 60 * 1000)
+
+              endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+
+            } else {
+
+
+              endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+            }
 
             let currentTime = new Date(startFormattedTime.getTime())
 
@@ -161,22 +175,22 @@ const DoctorBioPage = () => {
 
             while (currentTime <= endFormattedTime && !earliestAvailabiltyFound) {
 
-            
+
 
 
               //display according to current time
 
-               const isTimeNotFound = appoinments.find((details: any) => {
+              const isTimeNotFound = appoinments.find((details: any) => {
 
                 const doctorSelectedDay = details.appointmentDate.split(' ')[1].replace(/[a-z]/g, '')
                 const doctorSelectedMonth = details.appointmentDate.split(' ')[2]
                 const doctorSelectedYear = details.appointmentDate.split(' ')[4]
 
 
-                
 
 
-                if (doctorSelectedDay === selectedDay && selectedMonth === doctorSelectedMonth && selectedYear === doctorSelectedYear ) {
+
+                if (doctorSelectedDay === selectedDay && selectedMonth === doctorSelectedMonth && selectedYear === doctorSelectedYear) {
 
                   return true
                 } else {
@@ -187,21 +201,21 @@ const DoctorBioPage = () => {
               })
 
 
-              if(!isTimeNotFound && date.getTime()<= currentTime.getTime()) {
-             const availableTime = currentTime.toLocaleTimeString('en-US', {
-                hour12: true,
-                timeStyle: 'short'
-              })
-              
+              if (!isTimeNotFound && date.getTime() <= currentTime.getTime()) {
+                const availableTime = currentTime.toLocaleTimeString('en-US', {
+                  hour12: true,
+                  timeStyle: 'short'
+                })
 
-               const availableDate = currentTime.toLocaleDateString('en-US', {
-                dateStyle:'full'
-               
-              })
 
-              setEarliestAvailability(availableDate.concat(' ').concat(availableTime))
+                const availableDate = currentTime.toLocaleDateString('en-US', {
+                  dateStyle: 'full'
 
-              
+                })
+
+                setEarliestAvailability(availableDate.concat(' ').concat(availableTime))
+
+
                 earliestAvailabiltyFound = true
                 return
               }

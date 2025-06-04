@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom"
+import { Navigate, useLocation, useNavigate } from "react-router-dom"
 
 import editIcon from '../../../../assets/icons/cosmic-edit-button.svg'
 import cal from '../../../../assets/icons/home/cosmic-home-calander.svg'
@@ -16,6 +16,12 @@ import { useState } from "react"
 const CheckoutPage = () => {
     const navigate = useNavigate()
     const { state } = useLocation()
+
+     if (!state) {
+    
+            return <Navigate to={'/patient/find-a-specialist'} />
+    
+        }
     const user = useSelector((state: RootReducer) => state.user)
 
 
@@ -107,7 +113,7 @@ const CheckoutPage = () => {
 
                 <div className="text-[12px] md:text-[14px]">
                     <p className="font-bold">{state?.appointmentmentDetails.appointmentType} Appointment</p>
-                    <p className="font-light mt-2">{state?.appointmentmentDetails.date}, {state?.appointmentmentDetails.time}</p>
+                    <p className="font-light mt-2">{state?.udpatedDate??state?.appointmentmentDetails.date}, {state?.appointmentmentDetails.time}</p>
                 </div>
 
 

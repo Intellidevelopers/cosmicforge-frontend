@@ -73,7 +73,7 @@ let CertificateUploadID = () => {
         </div>
 
         <div className="flex flex-col gap-1">
-            <label htmlFor="LD Number" className="">LD Number</label>
+            <label htmlFor="LD Number" className="">I.D Number</label>
             <input type="text" name="LD Number" id="LD Number" className="border-black p-2 border rounded-md bg-transparent"
                 onChange={(e) => {
 
@@ -109,7 +109,7 @@ let CertificateUploadID = () => {
 
 
         <div className="flex flex-col gap-1  ">
-            <label htmlFor="ld" className="">LD</label>
+            <label htmlFor="ld" className="">I.D</label>
 
             <input type="file" name="ld" id="ld" className="border-black p-2 border rounded-md bg-transparent"
 
@@ -139,7 +139,7 @@ let CertificateUploadID = () => {
 
 
         <div className="flex flex-col gap-1  ">
-            <label htmlFor="ldPhoto" className="">Hold LD and take a picture </label>
+            <label htmlFor="ldPhoto" className="">Hold I.D and take a picture </label>
 
             <input type="file" name="ldPhoto" id="ldPhoto" className="border-black p-2 border rounded-md bg-transparent"
 
