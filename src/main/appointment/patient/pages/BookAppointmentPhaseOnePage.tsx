@@ -22,7 +22,7 @@ const BookAppointmentPhaseOnePage = () => {
 
     const [availableTimeList, setAvailableTimeList] = useState<any[]>()
 
-    const [udpatedDate,setUpdatedDate] = useState<string>()
+    const [udpatedDate, setUpdatedDate] = useState<string>()
 
 
     if (!state) {
@@ -376,9 +376,21 @@ const BookAppointmentPhaseOnePage = () => {
 
 
                     let endFormattedTime = new Date()
-                    endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
 
 
+                    if (endTimeMeridian.trim() === 'am') {
+                        let newDate = new Date()
+                        endFormattedTime = new Date(newDate.getTime() + 24 * 60 * 60 * 1000)
+
+                        endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+
+                    } else {
+
+
+                        endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+                    }
 
                     let currentTime = new Date(startFormattedTime.getTime())
 
@@ -506,16 +518,16 @@ const BookAppointmentPhaseOnePage = () => {
                                     let newDate = new Date()
                                     let t = new Date(newDate.getTime() + 24 * 60 * 60 * 1000)
 
-                                    t.setHours(Number(d.split(':')[0])=== 12?24:Number(d.split(':')[0]), Number(d.split(':')[1].replace(/[a-z A-Z]/g, '') === '00' ? 0 : d.split(':')[1].replace(/[a-z A-Z]/g, '')), 0, 0)
+                                    t.setHours(Number(d.split(':')[0]) === 12 ? 24 : Number(d.split(':')[0]), Number(d.split(':')[1].replace(/[a-z A-Z]/g, '') === '00' ? 0 : d.split(':')[1].replace(/[a-z A-Z]/g, '')), 0, 0)
 
                                     t.setMinutes(t.getMinutes() + 15)
-                                    
-                                    setUpdatedDate(t.toLocaleDateString('en-Us',{
-                                            dateStyle:'long'
-                                        }))
+
+                                    setUpdatedDate(t.toLocaleDateString('en-Us', {
+                                        dateStyle: 'long'
+                                    }))
                                     setAppointmentmentDetails({
                                         ...appointmentmentDetails,
-                                        
+
                                         time: d.concat('-').concat(t.toLocaleTimeString('en-US', {
                                             timeStyle: 'short'
                                         }))!!,
@@ -643,7 +655,7 @@ const BookAppointmentPhaseOnePage = () => {
                 }
 
 
-      
+
 
                 const isValid = availableTimeList?.find((item) => {
                     return item === appointmentmentDetails.time.split('-')[1]
