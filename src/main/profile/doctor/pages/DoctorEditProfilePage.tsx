@@ -26,7 +26,7 @@ export interface DoctorEditProfileProps {
      * This is representing the pricing for 15mins
     */
     pricing?: string,
-    pricingForThirtyMins?:string,
+    pricingForThirtyMins?: string,
     currency?: string,
     experience?: {
         hospitalName?: string,
@@ -50,11 +50,11 @@ const DoctorEditProfilePage = () => {
 
     const imageFileRef: MutableRefObject<HTMLInputElement | null> = useRef(null)
 
-    const days = ['Monday', 'Tuesday', 'Wednessday', 'thursday', 'Friday', 'Saturday', 'Sunday']
+    const days = ['Monday', 'Tuesday', 'Wednessday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
 
-    const time = ['12:00pm', '12:15pm', '12:30pm', '1:00pm', '1:15pm', '1:30pm', '2:00pm', '2:15pm', '2:30pm', '3:00pm', '3:15pm', '3:30pm', '4:00pm', '4:15pm', '4:30pm', '5:00am', '5:15am', '5:30am', '5:00pm', '5:15pm', '5:30pm', '6:00am', '6:15am', '6:30am', '6:00pm', '6:15pm', '6:30pm',
-        '7:00am', '7:15am', '7:30am', '7:00pm', '7:15pm', '7:30pm', '8:00am', '8:15am', '8:30am', '8:00pm', '8:15pm', '8:30pm', '8:00am', '8:15am', '8:30am', '8:00pm', '8:15pm', '8:30pm', '9:00am', '9:15am', '9:30am', '9:00pm', '9:15pm', '9:30pm', '10:00am', '10:15am', '10:30am', '10:00pm', '10:15pm', '10:30pm',
-        '11:00am', '11:15am', '11:30am', '11:00pm', '11:15pm', '11:30pm'
+    const time = ['5:00am', '5:15am', '5:30am', '6:00am', '6:15am', '6:30am', '7:00am', '7:15am', '7:30am', '8:00am', '8:15am', '8:30am', '9:15am', '9:30am', '10:00am', '10:15am', '10:30am', '11:00am', '11:15am', '11:30am', '12:00pm', '12:15pm', '12:30pm', '1:00pm', '1:15pm', '1:30pm', '2:00pm', '2:15pm', '2:30pm', '3:00pm', '3:15pm', '3:30pm', '4:00pm', '4:15pm', '4:30pm', '5:00pm', '5:15pm', '5:30pm', '6:00pm', '6:15pm', '6:30pm',
+        '7:00pm', '7:15pm', '7:30pm', '8:15pm', '8:30pm', '9:00pm', '9:15pm', '9:30pm', '10:00pm', '10:15pm', '10:30pm',
+        '11:00pm', '11:15pm', '11:30pm'
     ]
 
 
@@ -80,7 +80,7 @@ const DoctorEditProfilePage = () => {
         bio: user.data?.profile?.bio ?? '',
         pricing: user.data?.profile?.pricing,
         pricingForThirtyMins: user.data?.profile?.pricingForThirtyMins ?? '',
-        currency: (user.data?.profile?.currency === "NGN" || user.data?.profile?.currency === "USD" ) ? user.data?.profile?.currency : 'NGN',
+        currency: (user.data?.profile?.currency === "NGN" || user.data?.profile?.currency === "USD") ? user.data?.profile?.currency : 'NGN',
         experience: {
             hospitalName: user.data?.profile?.experience?.hospitalName ?? '',
             NoOfPatientTreated: user.data?.profile?.experience?.NoOfPatientTreated ?? '',
@@ -88,8 +88,8 @@ const DoctorEditProfilePage = () => {
             date: user.data?.profile?.experience?.date ?? ''
         },
         workingHours: {
-            day: user.data?.profile?.workTime?.day ?? "",
-            time: user.data?.profile?.workTime?.time ?? ""
+            day: user.data?.profile?.workTime?.day ?? "Monday-Friday",
+            time: user.data?.profile?.workTime?.time ?? "5:00am-5:15am"
         }
     })
 
@@ -319,7 +319,7 @@ const DoctorEditProfilePage = () => {
                     <div className="w-full flex flex-col gap-2 mt-8">
                         <label htmlFor="pricing">Pricing</label>
                         <p><span className="font-bold">Note:</span> currency can only be selected once.</p>
-                        <select  className="currency w-fit pe-8 pt-2 text-balance bg-transparent" disabled={(user.data?.profile && (user.data?.profile.currency ===  'NGN' || user.data?.profile.currency ===  'USD'))} value={doctorEditProfileDetails.currency} onChange={(e) => {
+                        <select className="currency w-fit pe-8 pt-2 text-balance bg-transparent" disabled={(user.data?.profile && (user.data?.profile.currency === 'NGN' || user.data?.profile.currency === 'USD'))} value={doctorEditProfileDetails.currency} onChange={(e) => {
                             setDoctorEditProfileDetails({
                                 ...doctorEditProfileDetails,
                                 currency: e.target.value
@@ -330,20 +330,20 @@ const DoctorEditProfilePage = () => {
                         </select>
 
                         <label className="font-bold mt-2">Standard Consultation Fee(15 mins or less)</label>
-                        <input onKeyDown={(e)=>{
-                            
+                        <input onKeyDown={(e) => {
 
 
-                               if(doctorEditProfileDetails.pricing === '0' && e.key.toLowerCase() === 'backspace'){
-                                   setDoctorEditProfileDetails({
+
+                            if (doctorEditProfileDetails.pricing === '0' && e.key.toLowerCase() === 'backspace') {
+                                setDoctorEditProfileDetails({
                                     ...doctorEditProfileDetails,
                                     pricing: user.data?.profile?.pricing
                                 })
-                            return
+                                return
                             }
                         }} value={doctorEditProfileDetails.pricing} type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e) => {
-                           
-                           
+
+
                             if (Number.isInteger(Number(e.target.value.replace(/[,]/g, "")))) {
 
                                 setDoctorEditProfileDetails({
@@ -356,7 +356,7 @@ const DoctorEditProfilePage = () => {
                         }} />
 
 
-                         <label className="font-bold mt-2">Standard Consultation Fee(30 mins or less)</label>
+                        <label className="font-bold mt-2">Standard Consultation Fee(30 mins or less)</label>
                         <input value={doctorEditProfileDetails.pricingForThirtyMins} type="text" className="w-full bg-transparent border p-2 rounded-md" id="pricing" onChange={(e) => {
 
                             if (Number.isInteger(Number(e.target.value.replace(/[,]/g, "")))) {
@@ -590,32 +590,32 @@ const DoctorEditProfilePage = () => {
                                 return
                             }
 
-                            if(!updatedData.pricing || (updatedData.pricing === '0')){
-                                 setErrorMessage('please provide pricing for 15mins.')
+                            if (!updatedData.pricing || (updatedData.pricing === '0')) {
+                                setErrorMessage('please provide pricing for 15mins.')
 
                                 return
                             }
 
-                            if(!updatedData.pricingForThirtyMins || (updatedData.pricingForThirtyMins === '0')){
-                                 setErrorMessage('please provide pricing for 30mins.')
+                            if (!updatedData.pricingForThirtyMins || (updatedData.pricingForThirtyMins === '0')) {
+                                setErrorMessage('please provide pricing for 30mins.')
 
                                 return
                             }
-                            
+
 
                             if (updatedData.workingHours?.time && (updatedData.workingHours?.time?.split('-').length <= 1)) {
                                 setErrorMessage('Time not selected .')
 
                                 return
                             }
-    
 
-                             if(updatedData.workingHours?.day && updatedData.workingHours?.day?.split('-').length<=0){
-                                   setErrorMessage('Day not selected.')
+
+                            if (updatedData.workingHours?.day && updatedData.workingHours?.day?.split('-').length <= 0) {
+                                setErrorMessage('Day not selected.')
 
                                 return
-                             }
-                            
+                            }
+
 
                             if (!updatedData.department || !updatedData.workingHours?.time || !updatedData.workingHours.day) {
 
@@ -625,39 +625,39 @@ const DoctorEditProfilePage = () => {
 
 
                             try {
-                                  setLoading(true)
-                                  setErrorMessage('')
-                                  const result = await updateDoctorProfile(updatedData, user.data?.token!!)
-                                  setLoading(false)
-                                  if (result.status === 200) {
-  
-                                      if (result.token) {
-                                          dispatch(authenticateUser({ data: result.data }))
-                                          return
-                                      }
-                                      dispatch(authenticateUser({
-                                          data: {
-                                              ...result.data,
-                                              token: user.data?.token
-                                          }
-                                      }))
-  
-                                      if (state && state.newAccount) {
-                                          navigate('/doctor/home')
-                                      } else {
-                                          setSuccessfulUpdate(true)
-                                      }
-                                      return
-                                  }
-  
-  
-                                  setErrorMessage(result.error ?? result.message)
-  
-                              } catch (error) {
-                                  console.log(error)
-                                  setLoading(false)
-                                  setErrorMessage('error occured try again')
-                              }
+                                setLoading(true)
+                                setErrorMessage('')
+                                const result = await updateDoctorProfile(updatedData, user.data?.token!!)
+                                setLoading(false)
+                                if (result.status === 200) {
+
+                                    if (result.token) {
+                                        dispatch(authenticateUser({ data: result.data }))
+                                        return
+                                    }
+                                    dispatch(authenticateUser({
+                                        data: {
+                                            ...result.data,
+                                            token: user.data?.token
+                                        }
+                                    }))
+
+                                    if (state && state.newAccount) {
+                                        navigate('/doctor/home')
+                                    } else {
+                                        setSuccessfulUpdate(true)
+                                    }
+                                    return
+                                }
+
+
+                                setErrorMessage(result.error ?? result.message)
+
+                            } catch (error) {
+                                console.log(error)
+                                setLoading(false)
+                                setErrorMessage('error occured try again')
+                            }
 
 
 
