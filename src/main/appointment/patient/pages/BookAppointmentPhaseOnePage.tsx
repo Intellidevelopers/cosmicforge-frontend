@@ -432,6 +432,105 @@ const BookAppointmentPhaseOnePage = () => {
             }
 
 
+        }else{
+
+               if (time && time.split('-').length >= 1 && (time.split('-')[0].match(/[0-9]/g) && time.split('-')[1].match(/[0-9]/g))) {
+
+
+                    let availableTime: string[] = []
+
+
+
+
+                    let startTime = time.split('-')[0]
+
+                    let endTime = time.split('-')[1]
+
+
+
+
+                    const startTimeHour = startTime.split(":")[0]
+                    const startTimeMin = startTime.split(":")[1].replace(/[a-z A-Z]/g, '')
+
+                    const startTimeMeridian = startTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+
+
+                    const endTimeHour = endTime.split(":")[0]
+                    const endTimeMin = endTime.split(":")[1].replace(/[a-z A-Z]/g, '')
+
+                    const endTimeMeridian = endTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+
+                    let startFormattedTime = new Date()
+
+
+                    if (startTimeMeridian.trim() === 'pm') {
+
+                        startFormattedTime.setHours(timeUtc.get(Number(startTimeHour))!!, startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
+
+                    } else {
+                        startFormattedTime.setHours(Number(startTimeHour), startTimeMin.includes('00') ? Number(0) : Number(startTimeMin), 0, 0)
+
+
+
+                    }
+
+
+
+
+
+                    let endFormattedTime = new Date()
+
+
+                    if (endTimeMeridian.trim() === 'am') {
+                        let newDate = new Date()
+                        endFormattedTime = new Date(newDate.getTime() + 24 * 60 * 60 * 1000)
+
+                        endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+
+                    } else {
+
+
+                        endFormattedTime.setHours((endTimeMeridian.trim() === 'pm') ? timeUtc.get(Number(endTimeHour))!! : Number(endTimeHour), endTimeMin.includes('00') ? Number(0) : Number(endTimeMin), 0, 0)
+
+                    }
+
+                    let currentTime = new Date(startFormattedTime.getTime())
+
+
+
+
+
+
+                    while (currentTime <= endFormattedTime) {
+
+                        const timeToAdd = currentTime.toLocaleTimeString('en-US', {
+                            hour12: true,
+                            timeStyle: 'short'
+                        })
+
+                        //display according to current time
+
+                        const recentTime = new Date()
+                        if (recentTime.getTime() <= currentTime.getTime()) {
+                            availableTime.push(timeToAdd)
+                        }
+
+
+
+                        // console.log(app)
+
+
+                        currentTime.setMinutes(currentTime.getMinutes() + 15)
+
+
+                    }
+
+                    setAvailableTimeList(availableTime)
+
+                }
+
         }
     }, [appointmentmentDetails.date, doctorsAppointmentDetails])
 
