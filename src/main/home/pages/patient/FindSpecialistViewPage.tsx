@@ -1,13 +1,7 @@
-import FindASpecalistCustomViewBody from "../../component/patient/FindASpecialistCustomViewBody"
-
+import FindASpecalistCustomViewBody from "../../component/patient/FindASpecialistCustomViewBody";
 
 const FindSpecialistViewPage = () => {
+  return <FindASpecalistCustomViewBody />;
+};
 
-    return (
-
-        <FindASpecalistCustomViewBody/>
-    )
-}
-
-
-export default FindSpecialistViewPage
+export default FindSpecialistViewPage;

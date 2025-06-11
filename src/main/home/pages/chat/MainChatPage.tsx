@@ -1,9 +1,7 @@
-import ChatBody from "../../component/chat/ChatBody"
-
+import ChatBody from "../../component/chat/ChatBody";
 
 const MainChatPage = () => {
-   return <ChatBody/>
-}
+  return <ChatBody />;
+};
 
-
-export default MainChatPage
+export default MainChatPage;

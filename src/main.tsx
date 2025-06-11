@@ -132,7 +132,6 @@ import CertificateUploadID from "./main/profile/doctor/pages/certification/Certi
 import CertificateFaceId from "./main/profile/doctor/pages/certification/CertificateFaceId.tsx";
 import DoctorAnalytics from "./main/analytics/pages/Doctor/DoctorAnalytics.tsx";
 
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -563,7 +562,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/patient/manage-password",
-        element: <ManagePassword />
+        element: <ManagePassword />,
       },
 
       {
@@ -613,41 +612,36 @@ const router = createBrowserRouter([
       },
 
       {
-        path: '/doctor',
+        path: "/doctor",
         element: <DoctorHomeMainPage />,
         children: [
           {
-            path: 'home',
-            element: <DoctorHome />
+            path: "home",
+            element: <DoctorHome />,
           },
           {
-            path: '/doctor/subscription',
-            element: <DoctorSubscribe />
+            path: "/doctor/subscription",
+            element: <DoctorSubscribe />,
           },
 
           {
-            path: '/doctor/profile',
-            element: <DoctorProfile />
+            path: "/doctor/profile",
+            element: <DoctorProfile />,
           },
           {
-            path: '/doctor/settings',
-            element: <DoctorSettings />
+            path: "/doctor/settings",
+            element: <DoctorSettings />,
           },
           {
-            path: '/doctor/settings/manage-password',
-            element: <ManageDocPassword />
-          }
+            path: "/doctor/settings/manage-password",
+            element: <ManageDocPassword />,
+          },
 
           //route here
-
-        ]
+        ],
       },
 
-
-
       //please all doctor routes should be here
-
-      
 
       {
         path: "/doctor/appointment",
@@ -713,13 +707,10 @@ const router = createBrowserRouter([
         element: <Certifications />,
       },
 
-
       {
         path: "/doctor/certification-upload",
         element: <CertificationUpload />,
       },
-
-
 
       {
         path: "/doctor/liscence-upload",
@@ -731,44 +722,38 @@ const router = createBrowserRouter([
         element: <UploadCertificateDetails />,
         children: [
           {
-            path: '',
-            element: <UploadCertificationFirstPage />
+            path: "",
+            element: <UploadCertificationFirstPage />,
           },
           {
-            path: 'id',
-            element: <CertificateUploadID />
+            path: "id",
+            element: <CertificateUploadID />,
           },
           {
-            path: 'face-id',
-            element: <CertificateFaceId />
-          }
-
-        ]
+            path: "face-id",
+            element: <CertificateFaceId />,
+          },
+        ],
       },
-
-
 
       {
         path: "/doctor/liscence-details-upload/",
         element: <UploadLiscenceDetails />,
-        children: [{
-          path: '',
-          element: <UploadLicensceFirstPage />
-        },
-        {
-          path: 'id',
-          element: <LiscenceUploadID />
-        },
-        {
-          path: 'face-id',
-          element: <LicenceFaceId />
-        }
-
-        ]
+        children: [
+          {
+            path: "",
+            element: <UploadLicensceFirstPage />,
+          },
+          {
+            path: "id",
+            element: <LiscenceUploadID />,
+          },
+          {
+            path: "face-id",
+            element: <LicenceFaceId />,
+          },
+        ],
       },
-
-
-
 
       {
         path: "/doctor/faqs",
@@ -780,23 +765,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/doctor/manage-password",
-        element: <DoctorManagePasswordPage />
-
+        element: <DoctorManagePasswordPage />,
       },
       {
         path: "/doctor/analytics",
         element: <DoctorAnalytics />,
       },
-      
     ],
   },
 ]);
-
 
 createRoot(document.getElementById("root")!).render(
   <Provider store={store}>
     <PersistGate persistor={persistore}>
       <RouterProvider router={router} />
     </PersistGate>
-  </Provider>
+  </Provider>,
 );

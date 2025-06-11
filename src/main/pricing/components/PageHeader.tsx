@@ -16,7 +16,9 @@ const PageHeader: React.FC = () => {
           <div className="mb-8 md:mb-0 text-center md:text-left z-10">
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-wide text-gray-200">
               <span className="block">BECOME A</span>
-              <span className="block mt-2 md:mt-3 text-4xl md:text-6xl lg:text-7xl">MEMBER</span>
+              <span className="block mt-2 md:mt-3 text-4xl md:text-6xl lg:text-7xl">
+                MEMBER
+              </span>
             </h1>
           </div>
 

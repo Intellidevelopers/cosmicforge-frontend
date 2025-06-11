@@ -94,7 +94,10 @@ const Shop = () => {
         <div className=" hidden mt-12 w-full gap-8 flex-col place-items-center ">
           {shopCategories &&
             shopCategories.map((item, index) => (
-              <div key={index} className="flex flex-col overflow-hidden w-[88%]">
+              <div
+                key={index}
+                className="flex flex-col overflow-hidden w-[88%]"
+              >
                 <div className="flex justify-between">
                   <div className="flex place-items-center gap-4">
                     <h2 className="font-bold">{item}</h2>
@@ -106,8 +109,14 @@ const Shop = () => {
                     </p>
                   </div>
                   <div className="flex gap-6">
-                    <i onClick={() => scrollLeft(index)} className="fas fa-arrow-left"></i>
-                    <i onClick={() => scrollRight(index)} className="fas fa-arrow-right"></i>
+                    <i
+                      onClick={() => scrollLeft(index)}
+                      className="fas fa-arrow-left"
+                    ></i>
+                    <i
+                      onClick={() => scrollRight(index)}
+                      className="fas fa-arrow-right"
+                    ></i>
                   </div>
                 </div>
                 <div
@@ -155,10 +164,16 @@ const Shop = () => {
 
       <div className="flex flex-col gap-4  absolute md:relative h-full justify-center   items-center  w-full  ">
         <div className="relative w-[300px] flex justify-center items-center">
-          <img src={incomingPic} alt="Feature unavailable" className="relative z-1" />
+          <img
+            src={incomingPic}
+            alt="Feature unavailable"
+            className="relative z-1"
+          />
           <div className="absolute w-full h-20  left-0 bottom-0 z-10 bg-gradient-to-t from-white to-transparent"></div>
         </div>
-        <p className="text-center">We are currently working on bringing this feature to you</p>
+        <p className="text-center">
+          We are currently working on bringing this feature to you
+        </p>
         <button
           type="button"
           className="p-1 w-[200px] bg-cosmic-primary-color text-white rounded-md "

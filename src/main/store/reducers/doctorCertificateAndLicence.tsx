@@ -1,148 +1,138 @@
-
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface DoctorCertificateAndLicenceProps {
-
   licenceDetails?: {
-    fullName: string,
-    LicenseNumber: string,
-    license: string,
-    expiration: string,
-    country: string,
-    docummentType: string,
-    documentId: string,
-    documentHoldName: string,
-    documentImage: string,
-    pictureWithDocument: string,
-    doctorImage: string,
-    photoWithLicence: string
-  } | null,
+    fullName: string;
+    LicenseNumber: string;
+    license: string;
+    expiration: string;
+    country: string;
+    docummentType: string;
+    documentId: string;
+    documentHoldName: string;
+    documentImage: string;
+    pictureWithDocument: string;
+    doctorImage: string;
+    photoWithLicence: string;
+  } | null;
 
   certificationDetails?: {
-    fullName:string,
-    institution: string,
-    certificateNo: string,
-    date: string,
-    certificate: string,
-    country: string,
-    docummentType: string,
-    documentId: string,
-    documentHoldName: string,
-    documentImage: string,
-    pictureWithDocument: string,
-    doctorImage: string,
-    photoWithCertification: string
-  } | null
-
+    fullName: string;
+    institution: string;
+    certificateNo: string;
+    date: string;
+    certificate: string;
+    country: string;
+    docummentType: string;
+    documentId: string;
+    documentHoldName: string;
+    documentImage: string;
+    pictureWithDocument: string;
+    doctorImage: string;
+    photoWithCertification: string;
+  } | null;
 
   uploadLicenseDetails?: {
-    fullName: string,
-    LicenseNumber: string,
-    license: string,
-    expiration: string,
-    country: string,
-    docummentType: string,
-    documentId: string,
-    documentHoldName: string,
-    documentImage: string,
-    pictureWithDocument: string,
-    doctorImage: string,
+    fullName: string;
+    LicenseNumber: string;
+    license: string;
+    expiration: string;
+    country: string;
+    docummentType: string;
+    documentId: string;
+    documentHoldName: string;
+    documentImage: string;
+    pictureWithDocument: string;
+    doctorImage: string;
     type: "licence" | "certificate";
-    photoWithLicence: string
-  } | null
-
-
+    photoWithLicence: string;
+  } | null;
 
   uploadCertificationDetails?: {
-    fullName:string,
-    institution: string,
-    certificateNo: string,
-    date: string,
-    certificate: string,
-    country: string,
-    docummentType: string,
-    documentId: string,
-    documentHoldName: string,
-    documentImage: string,
-    pictureWithDocument: string,
-    doctorImage: string,
+    fullName: string;
+    institution: string;
+    certificateNo: string;
+    date: string;
+    certificate: string;
+    country: string;
+    docummentType: string;
+    documentId: string;
+    documentHoldName: string;
+    documentImage: string;
+    pictureWithDocument: string;
+    doctorImage: string;
     type: "licence" | "certificate";
-    photoWithCertification: string
-  } | null
-
-
-
+    photoWithCertification: string;
+  } | null;
 }
-
-
-
-
-
 
 const initialState: DoctorCertificateAndLicenceProps = {
   licenceDetails: null,
   certificationDetails: null,
 
   uploadLicenseDetails: {
-    fullName: '',
-    license: '',
-    LicenseNumber: '',
-    expiration: '',
-    country: 'Nigeria',
-    documentId: '',
-    documentHoldName: '',
-    docummentType: 'NIN No',
-    documentImage: '',
-    pictureWithDocument: '',
-    doctorImage: '',
+    fullName: "",
+    license: "",
+    LicenseNumber: "",
+    expiration: "",
+    country: "Nigeria",
+    documentId: "",
+    documentHoldName: "",
+    docummentType: "NIN No",
+    documentImage: "",
+    pictureWithDocument: "",
+    doctorImage: "",
     type: "licence",
-    photoWithLicence: ''
+    photoWithLicence: "",
   },
 
-
   uploadCertificationDetails: {
-    fullName:'',
-    institution: '',
-    certificateNo: '',
-    date: '',
-    certificate: '',
-    country: 'Nigeria',
-    documentId: '',
-    documentHoldName: '',
-    docummentType: 'NIN No',
-    documentImage: '',
-    pictureWithDocument: '',
-    doctorImage: '',
+    fullName: "",
+    institution: "",
+    certificateNo: "",
+    date: "",
+    certificate: "",
+    country: "Nigeria",
+    documentId: "",
+    documentHoldName: "",
+    docummentType: "NIN No",
+    documentImage: "",
+    pictureWithDocument: "",
+    doctorImage: "",
     type: "certificate",
-    photoWithCertification: ''
-
-  }
-}
-
+    photoWithCertification: "",
+  },
+};
 
 const doctorCertificateAndLicenceSlice = createSlice({
   name: "doctorCertificateAndLicence",
   initialState,
   reducers: {
-    cacheDoctorCertificateAndLicence(state, action: PayloadAction<DoctorCertificateAndLicenceProps>) {
-      state.licenceDetails = action.payload.licenceDetails ?? state.licenceDetails!!
-      state.certificationDetails = action.payload.certificationDetails ?? state.certificationDetails
-
-
+    cacheDoctorCertificateAndLicence(
+      state,
+      action: PayloadAction<DoctorCertificateAndLicenceProps>,
+    ) {
+      state.licenceDetails =
+        action.payload.licenceDetails ?? state.licenceDetails!!;
+      state.certificationDetails =
+        action.payload.certificationDetails ?? state.certificationDetails;
     },
-    cacheDoctorCertificateAndLicenceDetailsForUpload(state, action: PayloadAction<DoctorCertificateAndLicenceProps>) {
-      state.uploadLicenseDetails = action.payload.uploadLicenseDetails ?? state.uploadLicenseDetails!!
-      state.uploadCertificationDetails = action.payload.uploadCertificationDetails ?? state.uploadCertificationDetails!!
+    cacheDoctorCertificateAndLicenceDetailsForUpload(
+      state,
+      action: PayloadAction<DoctorCertificateAndLicenceProps>,
+    ) {
+      state.uploadLicenseDetails =
+        action.payload.uploadLicenseDetails ?? state.uploadLicenseDetails!!;
+      state.uploadCertificationDetails =
+        action.payload.uploadCertificationDetails ??
+        state.uploadCertificationDetails!!;
+    },
+  },
+});
 
+export const {
+  cacheDoctorCertificateAndLicence,
+  cacheDoctorCertificateAndLicenceDetailsForUpload,
+} = doctorCertificateAndLicenceSlice.actions;
 
-
-    }
-
-  }
-
-})
-
-export const { cacheDoctorCertificateAndLicence, cacheDoctorCertificateAndLicenceDetailsForUpload } = doctorCertificateAndLicenceSlice.actions
-
-
-export default doctorCertificateAndLicenceSlice.reducer
+export default doctorCertificateAndLicenceSlice.reducer;

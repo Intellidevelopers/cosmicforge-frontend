@@ -1,15 +1,11 @@
-import AppointmentMainBody from "../component/AppointmentMainBody"
-
+import AppointmentMainBody from "../component/AppointmentMainBody";
 
 const AppointmentMainPage = () => {
-
-    return   <div className="w-full">
-    
-    <AppointmentMainBody/>
-        
+  return (
+    <div className="w-full">
+      <AppointmentMainBody />
     </div>
-}
+  );
+};
 
-
-
-export default AppointmentMainPage
+export default AppointmentMainPage;

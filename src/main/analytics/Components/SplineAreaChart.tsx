@@ -3,12 +3,12 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 interface props {
-  color:string,
-  title:string,
-  data:number[],
+  color: string;
+  title: string;
+  data: number[];
 }
 
-const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
+const SplineAreaChart: React.FC<props> = ({ color, title, data }) => {
   const series = [
     {
       name: title,
@@ -40,7 +40,20 @@ const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
       },
     },
     xaxis: {
-      categories: ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
       labels: {
         style: {
           fontFamily: "Inter, sans-serif",
@@ -54,7 +67,7 @@ const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
         },
       },
     },
-    colors: [ color ], // blue-500 for male, pink-500 for female
+    colors: [color], // blue-500 for male, pink-500 for female
     tooltip: {
       theme: "light",
     },
@@ -71,7 +84,12 @@ const SplineAreaChart: React.FC<props> = ( { color, title, data } ) => {
 
   return (
     <div className="bg-white w-full">
-      <ReactApexChart options={options} series={series} type="area" height={200} />
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="area"
+        height={200}
+      />
     </div>
   );
 };

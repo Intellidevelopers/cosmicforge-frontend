@@ -1,5 +1,5 @@
-import React from 'react';
-import HandCash from '../../assets/HomeImg/hand.png'
+import React from "react";
+import HandCash from "../../assets/HomeImg/hand.png";
 
 const PaymentSuccessCard: React.FC = () => {
   return (
@@ -7,7 +7,11 @@ const PaymentSuccessCard: React.FC = () => {
       <div className="bg-white rounded-md shadow-lg p-16 max-w-2xl w-full text-center">
         <div className="text-7xl mb-6">
           {/* Emoji or image */}
-          <img src={HandCash} alt="Success" className="mx-auto w-32 h-32 mb-6" />
+          <img
+            src={HandCash}
+            alt="Success"
+            className="mx-auto w-32 h-32 mb-6"
+          />
 
           {/* Or replace with an <img> if you want the exact image */}
           {/* <img src="/path/to/your/image.png" alt="Success" className="mx-auto w-24 h-24 mb-6" /> */}

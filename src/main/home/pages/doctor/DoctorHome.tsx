@@ -1,11 +1,11 @@
-import DoctorHomeBody from "../../component/doctor/DoctorHomeBody"
+import DoctorHomeBody from "../../component/doctor/DoctorHomeBody";
 
- const DoctorHome = () => {
-    return (
-        <div className="w-full">
-         <DoctorHomeBody/>
-        </div>
-    )
- }
+const DoctorHome = () => {
+  return (
+    <div className="w-full">
+      <DoctorHomeBody />
+    </div>
+  );
+};
 
- export default DoctorHome
+export default DoctorHome;

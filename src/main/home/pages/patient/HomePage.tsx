@@ -1,10 +1,7 @@
-import HomeBody from "../../component/patient/HomeBody"
+import HomeBody from "../../component/patient/HomeBody";
 
 const HomePage = () => {
+  return <HomeBody />;
+};
 
-    return (
-        <HomeBody/>
-    )
-}
-
-export default HomePage
+export default HomePage;

@@ -2,7 +2,12 @@ import { PricingCardProps } from "../types";
 import React from "react";
 import { formatPrice } from "../utils";
 
-const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onSelect }) => {
+const PricingCard: React.FC<PricingCardProps> = ({
+  plan,
+  currency,
+  category,
+  onSelect,
+}) => {
   const price = currency === "USD" ? plan.priceUSD : plan.priceNGN;
   const currencySymbol = currency === "USD" ? "$" : "₦";
 
@@ -17,7 +22,9 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onS
       <div className="p-6 flex-grow">
         <h3
           className={`text-xl font-bold ${
-            plan.isActive ? "text-white cursor-default" : "text-gray-900 group-hover:text-white"
+            plan.isActive
+              ? "text-white cursor-default"
+              : "text-gray-900 group-hover:text-white"
           }`}
         >
           {plan.name}
@@ -35,14 +42,18 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onS
         <div className="mt-4 flex items-baseline">
           <span
             className={`text-xl font-bold ${
-              plan.isActive ? "text-white cursor-default" : "text-gray-900 group-hover:text-white"
+              plan.isActive
+                ? "text-white cursor-default"
+                : "text-gray-900 group-hover:text-white"
             }`}
           >
             {currencySymbol} {formatPrice(price)}
           </span>
           <span
             className={`text-sm ml-1 ${
-              plan.isActive ? "text-white/80" : "text-gray-500 group-hover:text-white/80"
+              plan.isActive
+                ? "text-white/80"
+                : "text-gray-500 group-hover:text-white/80"
             }`}
           >
             /Month
@@ -67,7 +78,9 @@ const PricingCard: React.FC<PricingCardProps> = ({ plan, currency, category, onS
               <div className="flex-shrink-0">
                 <span
                   className={`${
-                    plan.isActive ? "text-white" : "text-[#272EA7] group-hover:text-white"
+                    plan.isActive
+                      ? "text-white"
+                      : "text-[#272EA7] group-hover:text-white"
                   } mr-2`}
                 >
                   •

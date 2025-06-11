@@ -3,7 +3,7 @@ import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 
-const StepCountChart:React.FC = () => {
+const StepCountChart: React.FC = () => {
   const chartRef = useRef<am4charts.XYChart | null>(null);
 
   useEffect(() => {
@@ -29,18 +29,18 @@ const StepCountChart:React.FC = () => {
       { category: "Dec", value: 90 },
     ];
 
-      // Find the maximum value in the data
-      const maxValue = Math.max(...rawData.map((item) => item.value));
+    // Find the maximum value in the data
+    const maxValue = Math.max(...rawData.map((item) => item.value));
 
-      // Normalize data to percentages
-      const normalizedData = rawData.map((item) => ({
-        category: item.category,
-        value: (item.value / maxValue) * 100, // Convert to percentage
-      }));
-  
-      chart.data = normalizedData;
+    // Normalize data to percentages
+    const normalizedData = rawData.map((item) => ({
+      category: item.category,
+      value: (item.value / maxValue) * 100, // Convert to percentage
+    }));
 
-         // Create X-axis (category axis)
+    chart.data = normalizedData;
+
+    // Create X-axis (category axis)
     const categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
     categoryAxis.dataFields.category = "category";
     categoryAxis.renderer.grid.template.location = 0;
@@ -52,7 +52,6 @@ const StepCountChart:React.FC = () => {
     valueAxis.max = 100; // Set maximum value to 100%
     valueAxis.strictMinMax = true; // Enforce the min and max values
     valueAxis.numberFormatter.numberFormat = "#'%'"; // Format as percentages
-
 
     // Create series (column series)
     const series = chart.series.push(new am4charts.ColumnSeries());
@@ -70,8 +69,6 @@ const StepCountChart:React.FC = () => {
       gradient.addColor(am4core.color("#450603")); // End color (right)
       return gradient;
     });
-
-    
 
     // Add rounded corners to bars (top and bottom)
     series.columns.template.column.cornerRadiusTopLeft = 40;

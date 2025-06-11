@@ -1,51 +1,44 @@
-import HomeMobileNavBar from "../../home/component/patient/HomeMobileNavBar"
-import HomeNavBar from "../../home/component/patient/HomeNavBar"
-import ambulanceSmall from '../../../assets/images/ambulanceSmall.png'
-import fireStation from '../../../assets/images/fireStation.png'
-import police from '../../../assets/images/police.png'
-import SosComponent from "../components/sosComponent"
-
-
+import HomeMobileNavBar from "../../home/component/patient/HomeMobileNavBar";
+import HomeNavBar from "../../home/component/patient/HomeNavBar";
+import ambulanceSmall from "../../../assets/images/ambulanceSmall.png";
+import fireStation from "../../../assets/images/fireStation.png";
+import police from "../../../assets/images/police.png";
+import SosComponent from "../components/sosComponent";
 
 const SosPage = () => {
-
-
-interface personCard {
-  image:string;
-  title:string
-}
-
-  
-
+  interface personCard {
+    image: string;
+    title: string;
+  }
 
   const sos: personCard[] = [
     {
-      image:ambulanceSmall,
-      title:'Ambulance'
+      image: ambulanceSmall,
+      title: "Ambulance",
     },
     {
-      image:fireStation,
-      title:'Fire Station'
+      image: fireStation,
+      title: "Fire Station",
     },
     {
-      image:police,
-      title:'Police'
+      image: police,
+      title: "Police",
     },
-  ]
+  ];
 
   return (
     <>
-      <HomeNavBar title='SOS' onSearchFired={()=>{}}/>
-      <HomeMobileNavBar title='SOS' onSearchFired={()=>{}}/>
+      <HomeNavBar title="SOS" onSearchFired={() => {}} />
+      <HomeMobileNavBar title="SOS" onSearchFired={() => {}} />
       <div className="  flex flex-col items-start gap-4 p-4 bg-white  ">
-        {
-            sos.map((item,index)=>{
-                return <SosComponent key={index} image={item.image} title={item.title}/>
-              })
-        }
+        {sos.map((item, index) => {
+          return (
+            <SosComponent key={index} image={item.image} title={item.title} />
+          );
+        })}
       </div>
     </>
-  )
-}
+  );
+};
 
-export default SosPage
+export default SosPage;

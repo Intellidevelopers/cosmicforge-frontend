@@ -3,15 +3,17 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 interface props {
-    title:string,
-    height:number,
+  title: string;
+  height: number;
 }
 
-const SplineAreaChart3: React.FC<props> = ( { title, height } ) => {
+const SplineAreaChart3: React.FC<props> = ({ title, height }) => {
   const series = [
     {
       name: title,
-      data: [3000, 4200, 3800, 5000, 6500, 5800, 7000, 300, 1000, 4000, 2700, 5992],
+      data: [
+        3000, 4200, 3800, 5000, 6500, 5800, 7000, 300, 1000, 4000, 2700, 5992,
+      ],
     },
   ];
 
@@ -39,7 +41,20 @@ const SplineAreaChart3: React.FC<props> = ( { title, height } ) => {
       },
     },
     xaxis: {
-      categories: ["Jan", "Feb", "Mar", "April", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec"],
+      categories: [
+        "Jan",
+        "Feb",
+        "Mar",
+        "April",
+        "May",
+        "June",
+        "July",
+        "Aug",
+        "Sept",
+        "Oct",
+        "Nov",
+        "Dec",
+      ],
       labels: {
         style: {
           fontFamily: "Inter, sans-serif",
@@ -65,7 +80,12 @@ const SplineAreaChart3: React.FC<props> = ( { title, height } ) => {
 
   return (
     <div className="bg-white w-full">
-      <ReactApexChart options={options} series={series} type="area" height={height} />
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="area"
+        height={height}
+      />
     </div>
   );
 };

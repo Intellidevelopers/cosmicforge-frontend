@@ -1,16 +1,7 @@
-import FindASpecialistBody from "../../component/patient/FindASpecialistBody"
-
-
-
-
+import FindASpecialistBody from "../../component/patient/FindASpecialistBody";
 
 const FindASpecialistCardPage = () => {
-    
-    
-    return(
-        <FindASpecialistBody/>
-    )
-}
+  return <FindASpecialistBody />;
+};
 
-
-export default FindASpecialistCardPage
+export default FindASpecialistCardPage;

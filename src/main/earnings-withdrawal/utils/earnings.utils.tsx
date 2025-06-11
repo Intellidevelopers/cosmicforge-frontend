@@ -1,124 +1,124 @@
 const tableData = [
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:300000,
-        status:'successful',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:670000,
-        status:'pending',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:50000,
-        status:'failed',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:300000,
-        status:'successful',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:670000,
-        status:'pending',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:50000,
-        status:'failed',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:300000,
-        status:'successful',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:670000,
-        status:'pending',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:50000,
-        status:'failed',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:300000,
-        status:'successful',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:670000,
-        status:'pending',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:50000,
-        status:'failed',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:300000,
-        status:'successful',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:670000,
-        status:'pending',
-        action:'details'
-    },
-    {
-        date:'12th December, 2025',
-        time: '10:00 AM',
-        id:'CPO1234444',
-        amount:50000,
-        status:'failed',
-        action:'details'
-    },
-]
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 300000,
+    status: "successful",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 670000,
+    status: "pending",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 50000,
+    status: "failed",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 300000,
+    status: "successful",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 670000,
+    status: "pending",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 50000,
+    status: "failed",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 300000,
+    status: "successful",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 670000,
+    status: "pending",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 50000,
+    status: "failed",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 300000,
+    status: "successful",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 670000,
+    status: "pending",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 50000,
+    status: "failed",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 300000,
+    status: "successful",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 670000,
+    status: "pending",
+    action: "details",
+  },
+  {
+    date: "12th December, 2025",
+    time: "10:00 AM",
+    id: "CPO1234444",
+    amount: 50000,
+    status: "failed",
+    action: "details",
+  },
+];
 
-export {tableData}
+export { tableData };

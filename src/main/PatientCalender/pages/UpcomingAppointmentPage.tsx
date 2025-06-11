@@ -1,301 +1,240 @@
-import { useSelector } from "react-redux"
-import { RootReducer } from "../../store/initStore"
-import CustomPatientAppointmentCard from "../component/CustomPatientAppointmentCard"
-import { useOutletContext } from "react-router-dom"
-import { useMemo, useState } from "react"
+import { useSelector } from "react-redux";
+import { RootReducer } from "../../store/initStore";
+import CustomPatientAppointmentCard from "../component/CustomPatientAppointmentCard";
+import { useOutletContext } from "react-router-dom";
+import { useMemo, useState } from "react";
 
-  const UpcomingAppointmentPage = () =>{
+const UpcomingAppointmentPage = () => {
+  const data: { searchText: string } = useOutletContext();
 
+  let appointments = useSelector(
+    (state: RootReducer) => state.appointments.appointments,
+  );
 
-    const data:{searchText:string} = useOutletContext()
+  const [upcomingAppointment, setUpcomingAppointment] = useState<
+    | [
+        {
+          appointmentDate: string;
+          appointmentStatus: string;
+          appointmentTime: string;
+          appointmentType: string;
+          medicalPersonelID: {
+            fullName: string;
+            lastName: string;
+            _id: string;
+          } | null;
+          patientID: {
+            fullName: string;
+            lastName: string;
+            _id: string;
+          } | null;
 
+          patientDetails: {
+            profilePicture: string;
+          };
+          medicalPersonelDetails: {
+            profilePicture: string | undefined;
+            department: string;
+            currentClinic: string;
+            specializationTitle: string;
+            workAddress: string;
+          };
+          payment: {
+            cardFee: number;
+            cardType: string;
+            consultationFee: string;
+            paymentReference: string;
+            paymentStatus: string;
+            total: number;
+            vat: string;
+          };
 
-   
-
-    let appointments = useSelector((state:RootReducer)=>state.appointments.appointments)
-
-    const [upcomingAppointment,setUpcomingAppointment] = useState< [{
-      appointmentDate
-      : string
-      appointmentStatus
-      :string
-      appointmentTime
-      :string
-      appointmentType
-      :string
-      medicalPersonelID
-      :{
-          fullName:string,
-          lastName:string,
-          _id:string
-
-      } | null
-      patientID
-      :{
-          fullName:string,
-          lastName:string,
-          _id:string
-
-      } | null,
-
-      patientDetails:{
-          profilePicture:string
-      },
-      medicalPersonelDetails:{
-          profilePicture:string | undefined ,
-          department:string,
-          currentClinic:string,
-          specializationTitle:string,
-          workAddress:string
-      },
-      payment
-      : {
-          cardFee
-          :number
-          cardType
-          : string
-          consultationFee
-          :string
-          paymentReference
-          :string
-          paymentStatus
-          :string 
-          total
-          :number
-          vat
-          :string
-      },
-
-
-paymentStatus?:string
-
-      
-     
-  }] | null>(null)
-
-  const [upcomingAppointmentCache,setUpcomingAppointmentCache] = useState< [{
-    appointmentDate
-    : string
-    appointmentStatus
-    :string
-    appointmentTime
-    :string
-    appointmentType
-    :string
-    medicalPersonelID
-    :{
-        fullName:string,
-        lastName:string,
-        _id:string
-
-    } | null
-    patientID
-    :{
-        fullName:string,
-        lastName:string,
-        _id:string
-
-    } | null,
-
-    patientDetails:{
-        profilePicture:string
-    },
-    medicalPersonelDetails:{
-        profilePicture:string | undefined ,
-        department:string,
-        currentClinic:string,
-        specializationTitle:string,
-        workAddress:string
-    },
-    payment
-    : {
-        cardFee
-        :number
-        cardType
-        : string
-        consultationFee
-        :string
-        paymentReference
-        :string
-        paymentStatus
-        :string 
-        total
-        :number
-        vat
-        :string
-    },
-
-
-paymentStatus?:string
-
-    
-   
-}] | null>(null)
-
-    
-useMemo(()=>{
-  if(data.searchText && upcomingAppointmentCache){
-
-    
-    const filter = upcomingAppointmentCache.filter(appointment=>{
-
-      return new RegExp(`^${data.searchText?.toLocaleLowerCase()}`).test(appointment.medicalPersonelDetails.department.toLocaleLowerCase()!!)
-    
-    })
-
-    if(filter.length>0){
-      setUpcomingAppointment(filter as [{
-        appointmentDate
-        : string
-        appointmentStatus
-        :string
-        appointmentTime
-        :string
-        appointmentType
-        :string
-        medicalPersonelID
-        :{
-            fullName:string,
-            lastName:string,
-            _id:string
-   
-        } | null
-        patientID
-        :{
-            fullName:string,
-            lastName:string,
-            _id:string
-   
-        } | null,
-   
-        patientDetails:{
-            profilePicture:string
+          paymentStatus?: string;
         },
-        medicalPersonelDetails:{
-            profilePicture:string | undefined ,
-            department:string,
-            currentClinic:string,
-            specializationTitle:string,
-            workAddress:string
+      ]
+    | null
+  >(null);
+
+  const [upcomingAppointmentCache, setUpcomingAppointmentCache] = useState<
+    | [
+        {
+          appointmentDate: string;
+          appointmentStatus: string;
+          appointmentTime: string;
+          appointmentType: string;
+          medicalPersonelID: {
+            fullName: string;
+            lastName: string;
+            _id: string;
+          } | null;
+          patientID: {
+            fullName: string;
+            lastName: string;
+            _id: string;
+          } | null;
+
+          patientDetails: {
+            profilePicture: string;
+          };
+          medicalPersonelDetails: {
+            profilePicture: string | undefined;
+            department: string;
+            currentClinic: string;
+            specializationTitle: string;
+            workAddress: string;
+          };
+          payment: {
+            cardFee: number;
+            cardType: string;
+            consultationFee: string;
+            paymentReference: string;
+            paymentStatus: string;
+            total: number;
+            vat: string;
+          };
+
+          paymentStatus?: string;
         },
-        payment
-        : {
-            cardFee
-            :number
-            cardType
-            : string
-            consultationFee
-            :string
-            paymentReference
-            :string
-            paymentStatus
-            :string 
-            total
-            :number
-            vat
-            :string
-        },
-   
-   
-   paymentStatus?:string
-   
-        
-       
-    }] | null)
-    }
-  
-  }
-},[data])
+      ]
+    | null
+  >(null);
 
-useMemo(()=>{
-  if(appointments && appointments.length>0){
+  useMemo(() => {
+    if (data.searchText && upcomingAppointmentCache) {
+      const filter = upcomingAppointmentCache.filter((appointment) => {
+        return new RegExp(`^${data.searchText?.toLocaleLowerCase()}`).test(
+          appointment.medicalPersonelDetails.department.toLocaleLowerCase()!!,
+        );
+      });
 
-   const  appointmentFiltered  = appointments.filter((appointment)=>{
-    return appointment.appointmentStatus === "booked"
-    }) as [{
-     appointmentDate
-     : string
-     appointmentStatus
-     :string
-     appointmentTime
-     :string
-     appointmentType
-     :string
-     medicalPersonelID
-     :{
-         fullName:string,
-         lastName:string,
-         _id:string
+      if (filter.length > 0) {
+        setUpcomingAppointment(
+          filter as
+            | [
+                {
+                  appointmentDate: string;
+                  appointmentStatus: string;
+                  appointmentTime: string;
+                  appointmentType: string;
+                  medicalPersonelID: {
+                    fullName: string;
+                    lastName: string;
+                    _id: string;
+                  } | null;
+                  patientID: {
+                    fullName: string;
+                    lastName: string;
+                    _id: string;
+                  } | null;
 
-     } | null
-     patientID
-     :{
-         fullName:string,
-         lastName:string,
-         _id:string
+                  patientDetails: {
+                    profilePicture: string;
+                  };
+                  medicalPersonelDetails: {
+                    profilePicture: string | undefined;
+                    department: string;
+                    currentClinic: string;
+                    specializationTitle: string;
+                    workAddress: string;
+                  };
+                  payment: {
+                    cardFee: number;
+                    cardType: string;
+                    consultationFee: string;
+                    paymentReference: string;
+                    paymentStatus: string;
+                    total: number;
+                    vat: string;
+                  };
 
-     } | null,
-
-     patientDetails:{
-         profilePicture:string,
-         vitalSigns:{
-          gender:string
+                  paymentStatus?: string;
+                },
+              ]
+            | null,
+        );
       }
-     },
-     medicalPersonelDetails:{
-         profilePicture:string | undefined ,
-         department:string,
-         currentClinic:string,
-         specializationTitle:string,
-         workAddress:string
-     },
-     payment
-     : {
-         cardFee
-         :number
-         cardType
-         : string
-         consultationFee
-         :string
-         paymentReference
-         :string
-         paymentStatus
-         :string 
-         total
-         :number
-         vat
-         :string
-     },
+    }
+  }, [data]);
 
+  useMemo(() => {
+    if (appointments && appointments.length > 0) {
+      const appointmentFiltered = appointments.filter((appointment) => {
+        return appointment.appointmentStatus === "booked";
+      }) as
+        | [
+            {
+              appointmentDate: string;
+              appointmentStatus: string;
+              appointmentTime: string;
+              appointmentType: string;
+              medicalPersonelID: {
+                fullName: string;
+                lastName: string;
+                _id: string;
+              } | null;
+              patientID: {
+                fullName: string;
+                lastName: string;
+                _id: string;
+              } | null;
 
-paymentStatus?:string
+              patientDetails: {
+                profilePicture: string;
+                vitalSigns: {
+                  gender: string;
+                };
+              };
+              medicalPersonelDetails: {
+                profilePicture: string | undefined;
+                department: string;
+                currentClinic: string;
+                specializationTitle: string;
+                workAddress: string;
+              };
+              payment: {
+                cardFee: number;
+                cardType: string;
+                consultationFee: string;
+                paymentReference: string;
+                paymentStatus: string;
+                total: number;
+                vat: string;
+              };
 
-     
-    
- }] | null
+              paymentStatus?: string;
+            },
+          ]
+        | null;
 
-setUpcomingAppointment(appointmentFiltered)
+      setUpcomingAppointment(appointmentFiltered);
 
-setUpcomingAppointmentCache(appointmentFiltered)
+      setUpcomingAppointmentCache(appointmentFiltered);
+    }
+  }, [appointments]);
 
-  }
-},[appointments])
+  const user = useSelector((state: RootReducer) => state.user);
 
-  const user = useSelector((state:RootReducer)=>state.user)
-  
-    return <div className="w-full p-3 ">
+  return (
+    <div className="w-full p-3 ">
       <p className="font-bold ">Upcoming Appointment</p>
       <div className="mt-4 w-full flex flex-col gap-4">
-      
-         
-      {
-       upcomingAppointment &&  upcomingAppointment.map((appoinment,i)=>(
-          <CustomPatientAppointmentCard key={i} docImage={appoinment.medicalPersonelDetails.profilePicture!!} userName={user.data?.lastName?.concat(user.data.fullName!!)!!} dateInFull={appoinment.appointmentDate.concat(",").concat(appoinment.appointmentTime)!!} paymentStatus={appoinment.paymentStatus!!}/>
-        ))
-       }
+        {upcomingAppointment &&
+          upcomingAppointment.map((appoinment, i) => (
+            <CustomPatientAppointmentCard
+              key={i}
+              docImage={appoinment.medicalPersonelDetails.profilePicture!!}
+              userName={user.data?.lastName?.concat(user.data.fullName!!)!!}
+              dateInFull={
+                appoinment.appointmentDate
+                  .concat(",")
+                  .concat(appoinment.appointmentTime)!!
+              }
+              paymentStatus={appoinment.paymentStatus!!}
+            />
+          ))}
       </div>
     </div>
-  }
+  );
+};
 
-
-  export default UpcomingAppointmentPage
+export default UpcomingAppointmentPage;

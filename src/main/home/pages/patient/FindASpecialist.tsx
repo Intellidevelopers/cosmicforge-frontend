@@ -1,12 +1,7 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
 
+const FindASpecialist = () => {
+  return <Outlet />;
+};
 
-const FindASpecialist = () =>{
-    return (
-
-      <Outlet/>
-    )
-}
-
-
-export default FindASpecialist
+export default FindASpecialist;

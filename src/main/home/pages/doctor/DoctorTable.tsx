@@ -10,7 +10,6 @@ enum AppointmentsTypes {
 }
 
 interface DoctorInterfaceProps {
-
   onAppointmentClicked?: (
     data: {
       doctorImage: string;
@@ -25,38 +24,36 @@ interface DoctorInterfaceProps {
         profilePicture?: string;
       };
     },
-    appointmentId: string
+    appointmentId: string,
   ) => void;
 }
 
+const timeUtc = new Map<number, number>();
 
- const timeUtc = new Map<number, number>()
-
-    timeUtc.set(1, 13)
-    timeUtc.set(2, 14)
-    timeUtc.set(3, 15)
-    timeUtc.set(4, 16)
-    timeUtc.set(5, 17)
-    timeUtc.set(6, 18)
-    timeUtc.set(7, 19)
-    timeUtc.set(8, 20)
-    timeUtc.set(9, 21)
-    timeUtc.set(10, 22)
-    timeUtc.set(11, 23)
-    timeUtc.set(12, 24)
+timeUtc.set(1, 13);
+timeUtc.set(2, 14);
+timeUtc.set(3, 15);
+timeUtc.set(4, 16);
+timeUtc.set(5, 17);
+timeUtc.set(6, 18);
+timeUtc.set(7, 19);
+timeUtc.set(8, 20);
+timeUtc.set(9, 21);
+timeUtc.set(10, 22);
+timeUtc.set(11, 23);
+timeUtc.set(12, 24);
 
 const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
-
   const [appointmentTypeSelected, setAppoinmentTypeSelected] = useState<
     "upcoming" | "past" | "cancelled"
   >("upcoming");
 
   const [activeAppointment, setActiveAppointment] = useState<string>(
-    AppointmentsTypes.upcomming
+    AppointmentsTypes.upcomming,
   );
 
   const appoinmentsState = useSelector(
-    (state: RootReducer) => state.appointments.appointments
+    (state: RootReducer) => state.appointments.appointments,
   );
 
   const [appoinments, setAppointments] = useState<
@@ -100,18 +97,14 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
             total: number;
             vat: string;
           };
-        }
+        },
       ]
     | null
   >(null);
 
-
-  
-
   const date = new Date();
 
   let validateDate = (appointmentmentTime: string, appointmentDate: string) => {
-
     const appoinmentStartTime = appointmentmentTime?.split("-")[0];
 
     const appoinmentEndTime = appointmentmentTime?.split("-")[1];
@@ -124,37 +117,47 @@ const DoctorTable = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
       month: "long",
     });
 
-
     const dayInWeek = date.toLocaleString("en-Us", {
       day: "numeric",
     });
 
+    const startTimeMeridian = appoinmentStartTime
+      .split(":")[1]
+      .replace(/[0-9]/g, "")
+      .toLowerCase();
 
-     const startTimeMeridian =appoinmentStartTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+    const endTimeMeridian = appoinmentEndTime
+      .split(":")[1]
+      .replace(/[0-9]/g, "")
+      .toLowerCase();
 
-      const endTimeMeridian =appoinmentEndTime.split(":")[1].replace(/[0-9]/g, '').toLowerCase()
+    const startT = new Date();
 
-      const startT = new Date()
+    startT.setHours(
+      startTimeMeridian === "pm"
+        ? timeUtc.get(Number(appoinmentStartTime.split(":")[0]))!!
+        : Number(appoinmentStartTime.split(":")[0]),
+      Number(appoinmentStartTime.split(":")[1].replace(/[a-z A-Z]/g, "")),
+      0,
+      0,
+    );
 
-startT.setHours(startTimeMeridian==='pm'?timeUtc.get(Number(appoinmentStartTime.split(':')[0]))!!:Number(appoinmentStartTime.split(':')[0]),Number(appoinmentStartTime.split(':')[1].replace(/[a-z A-Z]/g,'')),0,0)
+    const startE = new Date();
 
+    startE.setHours(
+      endTimeMeridian === "pm"
+        ? timeUtc.get(Number(appoinmentStartTime.split(":")[0]))!!
+        : Number(appoinmentEndTime.split(":")[0]),
+      Number(appoinmentEndTime.split(":")[1].replace(/[a-z A-Z]/g, "")),
+    );
+    date.setSeconds(0);
 
-
-
-const startE= new Date()
-
-
-
-startE.setHours(endTimeMeridian==='pm'?timeUtc.get(Number(appoinmentStartTime.split(':')[0]))!!:Number(appoinmentEndTime.split(':')[0]),Number(appoinmentEndTime.split(':')[1].replace(/[a-z A-Z]/g,'')))
-date.setSeconds(0)
-
-
-         
-    return  dayInWeek === appoinmentDay   && currentMonth === appoinmentMonth &&  (date.getTime() >= startT.getTime() && date.getTime()<=startE.getTime())  
-
-    
-
-     
+    return (
+      dayInWeek === appoinmentDay &&
+      currentMonth === appoinmentMonth &&
+      date.getTime() >= startT.getTime() &&
+      date.getTime() <= startE.getTime()
+    );
   };
 
   useMemo(() => {
@@ -205,19 +208,15 @@ date.setSeconds(0)
                   total: number;
                   vat: string;
                 };
-              }
+              },
             ]
-          | null
+          | null,
       );
     }
   }, [appoinmentsState]);
 
-
-
-
   return (
     <div className="w-full  overflow-hidden  rounded-md bg-white  p-8 relative pb-20  ">
-
       <div className="grid grid-cols-6 p-4 sticky top-0  z-[100]">
         <div className="w-full col-span-4 md:col-span-5">
           <p className="font-bold" onClick={() => {}}>
@@ -231,7 +230,7 @@ date.setSeconds(0)
             value={appointmentTypeSelected}
             onChange={(e) => {
               setAppoinmentTypeSelected(
-                e.target.value!! as "upcoming" | "past" | "cancelled"
+                e.target.value!! as "upcoming" | "past" | "cancelled",
               );
 
               const type = e.target.value!! as
@@ -240,7 +239,7 @@ date.setSeconds(0)
                 | "cancelled";
 
               setActiveAppointment(
-                AppointmentsTypes[type as keyof typeof AppointmentsTypes]
+                AppointmentsTypes[type as keyof typeof AppointmentsTypes],
               );
 
               if (
@@ -248,12 +247,11 @@ date.setSeconds(0)
                 appoinmentsState &&
                 appoinmentsState.length > 0
               ) {
-
                 const filteredArray = appoinmentsState.filter((appoinment) => {
                   return appoinment.appointmentStatus === "booked";
                 });
-              
-                if (filteredArray.length > 0){
+
+                if (filteredArray.length > 0) {
                   setAppointments(
                     filteredArray as
                       | [
@@ -295,18 +293,14 @@ date.setSeconds(0)
                               total: number;
                               vat: string;
                             };
-                          }
+                          },
                         ]
-                      | null
+                      | null,
                   );
-                }
-                
-                else setAppointments(null);
+                } else setAppointments(null);
 
                 return;
               }
-
-
 
               if (type === "past" && appoinmentsState) {
                 const filteredArray = appoinmentsState.filter((appoinment) => {
@@ -355,9 +349,9 @@ date.setSeconds(0)
                               total: number;
                               vat: string;
                             };
-                          }
+                          },
                         ]
-                      | null
+                      | null,
                   );
                 else setAppointments(null);
 
@@ -411,9 +405,9 @@ date.setSeconds(0)
                               total: number;
                               vat: string;
                             };
-                          }
+                          },
                         ]
-                      | null
+                      | null,
                   );
                 else setAppointments(null);
 
@@ -428,8 +422,6 @@ date.setSeconds(0)
         </div>
       </div>
 
-
-
       <table className="w-full p-10 relative  mb-20 ">
         <thead className="mb-8 relative">
           <tr className="border-b-[1px] relative border-b-black/30 font-poppins font-light  cursor-default">
@@ -443,7 +435,6 @@ date.setSeconds(0)
           </tr>
         </thead>
 
-        
         <tbody className="relative ">
           {appoinments &&
             appoinments.length > 0 &&
@@ -456,7 +447,7 @@ date.setSeconds(0)
                     appointmentTypeSelected === "upcoming" &&
                     validateDate(
                       appointment?.appointmentTime,
-                      appointment?.appointmentDate
+                      appointment?.appointmentDate,
                     )
                   )
                     onAppointmentClicked?.(
@@ -476,7 +467,7 @@ date.setSeconds(0)
                             appointment.patientDetails.profilePicture,
                         },
                       },
-                      appointment._id ?? ""
+                      appointment._id ?? "",
                     );
                 }}
               >
@@ -497,7 +488,7 @@ date.setSeconds(0)
                   {" "}
                   {validateDate(
                     appointment?.appointmentTime,
-                    appointment?.appointmentDate
+                    appointment?.appointmentDate,
                   ) && (
                     <i className="fa fa-dot-circle text-blue-600 animate-pulse mt-3" />
                   )}

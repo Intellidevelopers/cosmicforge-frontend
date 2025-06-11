@@ -1,13 +1,11 @@
-import VirtualConsultBody from "../../component/patient/VirtualConsultBody"
+import VirtualConsultBody from "../../component/patient/VirtualConsultBody";
 
-const VirtualConsultPage = () =>{
+const VirtualConsultPage = () => {
+  return (
+    <div className="w-full">
+      <VirtualConsultBody />
+    </div>
+  );
+};
 
-    return (
-        <div className="w-full">
-            <VirtualConsultBody/>
-        </div>
-    )
-}
-
-
-export default VirtualConsultPage
+export default VirtualConsultPage;

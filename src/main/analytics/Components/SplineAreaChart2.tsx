@@ -69,7 +69,12 @@ const SplineAreaChart2: React.FC = () => {
 
   return (
     <div className="bg-white w-full">
-      <ReactApexChart options={options} series={series} type="area" height={240} />
+      <ReactApexChart
+        options={options}
+        series={series}
+        type="area"
+        height={240}
+      />
     </div>
   );
 };

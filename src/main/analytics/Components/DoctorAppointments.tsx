@@ -24,7 +24,7 @@ interface DoctorInterfaceProps {
         profilePicture?: string;
       };
     },
-    appointmentId: string
+    appointmentId: string,
   ) => void;
 }
 
@@ -33,11 +33,11 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
     "upcoming" | "past" | "cancelled"
   >("upcoming");
   const [activeAppointment, setActiveAppointment] = useState<string>(
-    AppointmentsTypes.upcomming
+    AppointmentsTypes.upcomming,
   );
 
   const appoinmentsState = useSelector(
-    (state: RootReducer) => state.appointments.appointments
+    (state: RootReducer) => state.appointments.appointments,
   );
 
   const [appoinments, setAppointments] = useState<
@@ -81,7 +81,7 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
             total: number;
             vat: string;
           };
-        }
+        },
       ]
     | null
   >(null);
@@ -169,15 +169,12 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                   total: number;
                   vat: string;
                 };
-              }
+              },
             ]
-          | null
+          | null,
       );
     }
   }, [appoinmentsState]);
-
-
-
 
   return (
     <div className="w-full  overflow-y-auto  rounded-md bg-white shadow-lg shadow-black/10  p-3 pb-[50px] relative">
@@ -194,7 +191,7 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
             value={appointmentTypeSelected}
             onChange={(e) => {
               setAppoinmentTypeSelected(
-                e.target.value!! as "upcoming" | "past" | "cancelled"
+                e.target.value!! as "upcoming" | "past" | "cancelled",
               );
 
               const type = e.target.value!! as
@@ -203,7 +200,7 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                 | "cancelled";
 
               setActiveAppointment(
-                AppointmentsTypes[type as keyof typeof AppointmentsTypes]
+                AppointmentsTypes[type as keyof typeof AppointmentsTypes],
               );
 
               if (
@@ -256,9 +253,9 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                               total: number;
                               vat: string;
                             };
-                          }
+                          },
                         ]
-                      | null
+                      | null,
                   );
                 else setAppointments(null);
 
@@ -312,9 +309,9 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                               total: number;
                               vat: string;
                             };
-                          }
+                          },
                         ]
-                      | null
+                      | null,
                   );
                 else setAppointments(null);
 
@@ -368,9 +365,9 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                               total: number;
                               vat: string;
                             };
-                          }
+                          },
                         ]
-                      | null
+                      | null,
                   );
                 else setAppointments(null);
 
@@ -398,7 +395,6 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
           </tr>
         </thead>
 
-        
         <tbody className="relative ">
           {appoinments &&
             appoinments.length > 0 &&
@@ -411,7 +407,7 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                     appointmentTypeSelected === "upcoming" &&
                     validateDate(
                       appointment?.appointmentTime,
-                      appointment?.appointmentDate
+                      appointment?.appointmentDate,
                     )
                   )
                     onAppointmentClicked?.(
@@ -431,7 +427,7 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                             appointment.patientDetails.profilePicture,
                         },
                       },
-                      appointment._id ?? ""
+                      appointment._id ?? "",
                     );
                 }}
               >
@@ -452,7 +448,7 @@ const DoctorAppointments = ({ onAppointmentClicked }: DoctorInterfaceProps) => {
                   {" "}
                   {validateDate(
                     appointment?.appointmentTime,
-                    appointment?.appointmentDate
+                    appointment?.appointmentDate,
                   ) && (
                     <i className="fa fa-dot-circle text-blue-600 animate-pulse mt-3" />
                   )}

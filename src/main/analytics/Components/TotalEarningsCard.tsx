@@ -2,10 +2,10 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 
 interface props {
-    h:number;
+  h: number;
 }
 
-const TotalEarningsCard: React.FC<props> = ( { h } ) => {
+const TotalEarningsCard: React.FC<props> = ({ h }) => {
   const chartOptions: ApexCharts.ApexOptions = {
     chart: {
       type: "donut",
@@ -18,26 +18,26 @@ const TotalEarningsCard: React.FC<props> = ( { h } ) => {
     dataLabels: {
       enabled: false,
     },
-   plotOptions: {
-        pie: {
-            donut: {
-            size: "75%",
-            labels: {
-                show: true, // ✅ MUST be true
-                name: {
-                show: true,
-                formatter: () => "Earnings",
-                },
-                value: {
-                show: true,
-                formatter: () => "₦ 356 K",
-                },
-                total: {
-                show: false, // keep this false to avoid default behavior
-                },
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "75%",
+          labels: {
+            show: true, // ✅ MUST be true
+            name: {
+              show: true,
+              formatter: () => "Earnings",
             },
+            value: {
+              show: true,
+              formatter: () => "₦ 356 K",
             },
+            total: {
+              show: false, // keep this false to avoid default behavior
+            },
+          },
         },
+      },
     },
     stroke: {
       show: false,
@@ -57,7 +57,7 @@ const TotalEarningsCard: React.FC<props> = ( { h } ) => {
           options={chartOptions}
           series={chartSeries}
           type="donut"
-          height={h?h:170}
+          height={h ? h : 170}
         />
       </div>
       <div className="flex justify-around mt-4 text-sm">
